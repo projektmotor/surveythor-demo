@@ -1,0 +1,3 @@
+survey_new:
+    path: /survey/new
+    defaults: { _controller: survey_backend_controller:newAction }
