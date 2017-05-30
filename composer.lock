@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b68943fd143892104857de6d13b3e5e5",
-    "content-hash": "dcb99391b6ff5a1b465552d5c8b6c9bc",
+    "hash": "c62d737de8f253fd2ece94af1cd24067",
+    "content-hash": "5db5737a3b7504e4b1837a70cc7d3faf",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -937,6 +937,52 @@
             "time": "2014-01-12 16:20:24"
         },
         {
+            "name": "koala-framework/composer-extra-assets",
+            "version": "v2.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/koala-framework/composer-extra-assets.git",
+                "reference": "8421543ac20ee59f5171e7b36a8830b7070a57cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/koala-framework/composer-extra-assets/zipball/8421543ac20ee59f5171e7b36a8830b7070a57cb",
+                "reference": "8421543ac20ee59f5171e7b36a8830b7070a57cb",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "mouf/nodejs-installer": ">=1.0.2 <2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.5.*"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Kwf\\ComposerExtraAssets\\Plugin",
+                "mouf": {
+                    "nodejs": {
+                        "version": ">=0.10"
+                    }
+                },
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kwf\\ComposerExtraAssets\\": "Kwf/ComposerExtraAssets"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "description": "Composer Plugin for installing Assets using native npm/bower",
+            "homepage": "https://github.com/koala-framework/composer-extra-assets",
+            "time": "2016-09-07 08:58:41"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.22.1",
             "source": {
@@ -1013,6 +1059,62 @@
                 "psr-3"
             ],
             "time": "2017-03-13 07:08:03"
+        },
+        {
+            "name": "mouf/nodejs-installer",
+            "version": "v1.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thecodingmachine/nodejs-installer.git",
+                "reference": "8e995c32384c329593159ec924276364ae5f5071"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thecodingmachine/nodejs-installer/zipball/8e995c32384c329593159ec924276364ae5f5071",
+                "reference": "8e995c32384c329593159ec924276364ae5f5071",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0.0",
+                "ext-openssl": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "composer/composer": "*"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": [
+                    "Mouf\\NodeJsInstaller\\NodeJsPlugin"
+                ],
+                "mouf": {
+                    "logo": "node-js.png"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mouf\\NodeJsInstaller\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Négrier",
+                    "email": "d.negrier@thecodingmachine.com",
+                    "homepage": "http://mouf-php.com"
+                }
+            ],
+            "description": "An installer package that let's you install NodeJS and NPM as a Composer dependency.",
+            "homepage": "http://mouf-php.com/packages/mouf/nodejs-installer",
+            "keywords": [
+                "installer",
+                "nodejs",
+                "npm"
+            ],
+            "time": "2016-11-17 08:47:39"
         },
         {
             "name": "paragonie/random_compat",

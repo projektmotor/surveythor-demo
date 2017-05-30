@@ -30,7 +30,9 @@ framework:
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     fragments: ~
     http_method_override: true
-    assets: ~
+    assets:
+        base_urls:
+            - "%assets_base_url%"
     php_errors:
         log: true
 

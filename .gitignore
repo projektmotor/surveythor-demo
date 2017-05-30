@@ -43,3 +43,4 @@
 /vendor/
 .vimrc
 .ctags
+node_modules/

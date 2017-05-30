@@ -1,1 +1,16 @@
-{{ form(form) }}
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.questions) }}
+
+    {{ form_end(form) }}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('/js/bundle.js') }}"></script>
+    <script src="{{ asset('/web/js/survey.js') }}"></script>
+{% endblock %}

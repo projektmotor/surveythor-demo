@@ -33,7 +33,8 @@
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.2.*",
         "twig/twig": "^1.0||^2.0",
-        "qafoolabs/no-framework-bundle": "^2.4"
+        "qafoolabs/no-framework-bundle": "^2.4",
+        "koala-framework/composer-extra-assets": "^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
@@ -67,6 +68,18 @@
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
+        },
+        "mouf": {
+            "nodejs": {
+                "version": "7.9.0"
+            }
+        },
+        "extra": {
+            "expose-npm-packages": true
+        },
+        "require-npm": {
+            "jquery": "3.2.1",
+            "webpack": "2.6.1"
         },
         "branch-alias": null
     }

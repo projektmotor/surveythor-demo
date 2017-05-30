@@ -17,3 +17,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    # webpack dev server starten
+    # ./vendor/bin/node node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --colors --port 8090 --content-base=web/
+    assets_base_url: "http://localhost:8090"
