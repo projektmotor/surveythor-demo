@@ -1,0 +1,25 @@
+PM\SurveythorBundle\Entity\Question:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\QuestionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        text:
+            type: text
+
+    oneToMany:
+        answers:
+            targetEntity: PM\SurveythorBundle\Entity\Answer
+            mappedBy: question
+
+    manyToOne:
+        survey:
+            targetEntity: PM\SurveythorBundle\Entity\Survey
+            inversedBy: questions
+
+    lifecycleCallbacks: {  }

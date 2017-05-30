@@ -1,0 +1,28 @@
+PM\SurveythorBundle\Entity\Survey:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\SurveyRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        description:
+            type: text
+            nullable: true
+
+    oneToMany:
+        questions:
+            targetEntity: PM\SurveythorBundle\Entity\Question
+            mappedBy: survey
+
+        resultRanges:
+            targetEntity: PM\SurveythorBundle\Entity\ResultRange
+            mappedBy: survey
+
+    lifecycleCallbacks: {  }
