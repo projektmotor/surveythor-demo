@@ -1,8 +1,11 @@
 var webpack = require('webpack');
 var node_dir = __dirname + '/node_modules';
+var assets_dir = __dirname + '/app/Resources/PMSurveythorBundle/assets';
 
 module.exports = {
-    entry   : "./web/js/surveythor.js",
+    entry   : {
+        survey: assets_dir + '/js/pages/survey.js',
+    },
     plugins: [
         new webpack.ProvidePlugin({
             $: "jquery",
@@ -16,7 +19,7 @@ module.exports = {
         }
     },
     output: {
-        filename: "bundle.js",
+        filename: "[name].bundle.js",
         path : __dirname + 'web/js/',
         publicPath : '/js/',
     },

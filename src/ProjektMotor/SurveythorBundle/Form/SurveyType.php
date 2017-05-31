@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
  */
 class SurveyType extends AbstractType
 {
-    const FORM_NAME = 'pm_surveythor_backend_survey';
+    const FORM_NAME = 'pm_surveythor_survey';
 
     /**
      * {@inheritDoc}
@@ -27,7 +27,11 @@ class SurveyType extends AbstractType
                 'entry_type' => QuestionType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => true
+                'by_reference' => true,
+                'entry_options' => array(
+                    'label' => false
+                ),
+                'prototype_name' => '__question__'
             ))
             ->add('submit', SubmitType::class)
         ;

@@ -16,6 +16,8 @@ PM\SurveythorBundle\Entity\Question:
         answers:
             targetEntity: PM\SurveythorBundle\Entity\Answer
             mappedBy: question
+            cascade:
+                - persist
 
     manyToOne:
         survey:

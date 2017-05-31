@@ -5,6 +5,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use PM\SurveythorBundle\Entity\Dto\Question;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use PM\SurveythorBundle\Form\AnswerType;
 
 /**
  * QuestionType
@@ -12,7 +14,7 @@ use PM\SurveythorBundle\Entity\Dto\Question;
  */
 class QuestionType extends AbstractType
 {
-    const FORM_NAME = '';
+    const FORM_NAME = 'pm_surveythor_question';
 
     /**
      * {@inheritDoc}
@@ -20,7 +22,17 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
+            ->add('text')
+            ->add('answers', CollectionType::class, array(
+                'entry_type' => AnswerType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => true,
+                'entry_options' => array(
+                    'label' => false
+                ),
+                'prototype_name' => '__answer__'
+            ))
         ;
     }
 

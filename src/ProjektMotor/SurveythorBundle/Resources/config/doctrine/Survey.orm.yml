@@ -20,6 +20,8 @@ PM\SurveythorBundle\Entity\Survey:
         questions:
             targetEntity: PM\SurveythorBundle\Entity\Question
             mappedBy: survey
+            cascade:
+                - persist
 
         resultRanges:
             targetEntity: PM\SurveythorBundle\Entity\ResultRange
