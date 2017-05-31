@@ -11,5 +11,6 @@
 
 
 {% block javascripts %}
+    {{ parent() }}
     <script src="{{ asset('/js/survey.bundle.js') }}"></script>
 {% endblock %}
