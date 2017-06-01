@@ -4,9 +4,37 @@
     {{ form_start(form) }}
 
     {{ form_row(form.title) }}
-    {{ form_row(form.questions) }}
+    <div class="form-row">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            {{ form_widget(form.questions) }}
+        </div>
+        <a href="#" class="btn btn-primary" id="add-question">Add a new question</a>
+        <a href="#" class="btn btn-primary" id="save-question">Save dis question</a>
+    </div>
 
     {{ form_end(form) }}
+
+    <div id="default-panel">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+                <div class="row">
+                    <div class="col-md-11">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"></a>
+                        </h4>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="pull-right">
+                            <a href="#" class="remove-panel">x</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body"></div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 

@@ -23,4 +23,7 @@ module.exports = {
         path : __dirname + 'web/js/',
         publicPath : '/js/',
     },
+    devServer: {
+        port: 8080
+    }
 };

@@ -7,6 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use PM\SurveythorBundle\Entity\Dto\Question;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use PM\SurveythorBundle\Form\AnswerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * QuestionType
@@ -22,7 +23,9 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text')
+            ->add('text', TextType::class, array(
+                'attr' => array('class' => 'title-field')
+            ))
             ->add('answers', CollectionType::class, array(
                 'entry_type' => AnswerType::class,
                 'allow_add' => true,

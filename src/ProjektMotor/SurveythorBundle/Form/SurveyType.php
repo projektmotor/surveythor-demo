@@ -6,7 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use PM\SurveythorBundle\Entity\Dto\Survey;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * SurveyType
@@ -22,8 +22,8 @@ class SurveyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('questions', CollectionType::class, array(
+            ->add('title', TextType::class, array())
+            ->add('questions', QuestionCollectionType::class, array(
                 'entry_type' => QuestionType::class,
                 'allow_add' => true,
                 'allow_delete' => true,

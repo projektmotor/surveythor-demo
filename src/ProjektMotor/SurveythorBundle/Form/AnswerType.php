@@ -21,7 +21,9 @@ class AnswerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text', TextType::class, array())
+            ->add('text', TextType::class, array(
+                'attr' => array('class' => 'title-field')
+            ))
             ->add('points')
         ;
     }

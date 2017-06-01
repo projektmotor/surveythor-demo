@@ -16,20 +16,26 @@ projektmotor.Survey = function (surveyParams) {
     ;
 
    $.extend(params, {//{{{
-        questionCollectionHolder: '#survey_questions'
+        surveyForm: 'form[name=survey]',
+        questionCollectionHolder: '#survey_questions',
+        addQuestionLink: 'a#add-question',
+        saveQuestionLink: 'a#save-question'
     }, surveyParams);//}}}
 
     question = {//{{{
         init: function () {
-            question.bindAdd();
+            $(params.saveQuestionLink).css('display', 'none');
             $(params.questionCollectionHolder).data('index', 0);
+            $('.question.panel').css('display', 'none');
+            $('#default-panel').css('display', 'none');
+
+            question.bindAdd();
+            //question.bindSave();
+            question.bindTitleFields();
         },
         bindAdd: function () {
-            var addQuestionLink = $('<a href="#" class="add-question">Add a question</a>');
-            var newLink = $('<span></span>').append(addQuestionLink);
+            var newLink = $(params.addQuestionLink);
             var questionCollectionHolder = $(params.questionCollectionHolder);
-
-            questionCollectionHolder.append(newLink);
 
             newLink.click(function (e) {
                 e.preventDefault();
@@ -40,17 +46,53 @@ projektmotor.Survey = function (surveyParams) {
                 var newAnswerLink = $('<span></span>').append(addAnswerLink);
                 var questionIndex = $(params.questionCollectionHolder).data('index') - 1;
                 var answerCollectionHolder = $('#survey_questions_'+ questionIndex +'_answers');
+                //var saveQuestionLink = $(params.saveQuestionLink);
 
                 if (typeof answerCollectionHolder.data('index') == 'undefined') {
                     answerCollectionHolder.data('index', 0);
                 }
 
+                //$(params.addQuestionLink).css('display', 'none');
+                //$('#survey_questions_' + questionIndex).append(saveQuestionLink);
+                //saveQuestionLink.css('display', 'inline-block');
+
                 answerCollectionHolder.append(newAnswerLink);
+                $('.question.panel').css('display', 'inline-block');
 
                 addAnswerLink.click(function (e) {
                     e.preventDefault();
                     helpers.addFormFromPrototype(answerCollectionHolder, newAnswerLink, '__answer__');
+                    newAnswerLink.detach();
+                    answerCollectionHolder.append(newAnswerLink);
                 });
+            });
+        },
+        //bindSave: function () {
+        //    var saveLink = $(params.saveQuestionLink);
+
+        //    saveLink.click(function () {
+        //        var form = $(this).closest('form');
+
+        //        $.ajax({
+        //            url: form.attr('action'),
+        //            method: 'post',
+        //            data: form.serialize(),
+        //            success: function () {
+        //                // close all accordeons
+        //                $(params.surveyForm).find('.in').each(function () {
+        //                    $(params.addQuestionLink).css('display', 'inline-block');
+        //                    $(params.saveQuestionLink).css('display', 'none');
+        //                    $(this).removeClass('in');
+        //                });
+        //            }
+        //        });
+        //    });
+        //},
+        bindTitleFields: function () {
+            $('body').delegate('.title-field', 'keydown', function() {
+                var panelTitle = $(this).closest('.panel').children('.panel-heading').find('h4 a');
+                console.log(panelTitle);
+                panelTitle.text($(this).val());
             });
         }
     };//}}}
@@ -61,11 +103,27 @@ projektmotor.Survey = function (surveyParams) {
             var index = collectionHolder.data('index');
             var re = new RegExp(prototypeName, 'g');
             var newForm = prototype.replace(re, index);
+            var id = helpers.makeId();
 
             collectionHolder.data('index', index + 1);
 
-            var newFormDiv = $('<div></div>').append(newForm);
-            newLink.before(newFormDiv);
+            var newFormDiv = $($('#default-panel').html());
+            $(newFormDiv).find('a.collapsed').attr('href', '#' + id);
+            $(newFormDiv).find('a.collapsed').attr('aria-controls', id);
+            $(newFormDiv).find('div.panel-collapse').attr('id', id);
+            $(newFormDiv).find('div.panel').attr('id', 'panel-' + id);
+
+            $(newFormDiv).find('.panel-body').append(newForm);
+            collectionHolder.append(newFormDiv);
+        },
+        makeId: function () {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for( var i=0; i < 5; i++ )
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            return text;
         }
     };//}}}
 
