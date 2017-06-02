@@ -27,9 +27,15 @@ class Question
      */
     private $survey;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $parentAnswers;
+
     public function __construct()
     {
         $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->parentAnswers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -117,5 +123,47 @@ class Question
     public function setSurvey($survey)
     {
         $this->survey = $survey;
+    }
+
+    /**
+     * Get parentAnswers.
+     *
+     * @return parentAnswers.
+     */
+    public function getParentAnswers()
+    {
+        return $this->parentAnswers;
+    }
+
+    /**
+     * Set parentAnswers.
+     *
+     * @param parentAnswers the value to set.
+     */
+    public function setParentAnswers($parentAnswers)
+    {
+        $this->parentAnswers = $parentAnswers;
+    }
+
+    /**
+     * @param \PM\SurveythorBundle\Entity\Answer $answer
+     * @return Question
+     */
+    public function addParentAnswer(\PM\SurveythorBundle\Entity\Answer $answer)
+    {
+        if (!$this->parentAnswers->contains($answer)) {
+            $this->parentAnswers->add($answer);
+            $answer->setChildQuestion($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \PM\SurveythorBundle\Entity\Answer $answer
+     */
+    public function removeParentAnswer(\PM\SurveythorBundle\Entity\Answer $answer)
+    {
+        $this->parentAnswers->removeElement($answer);
     }
 }

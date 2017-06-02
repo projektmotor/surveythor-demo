@@ -4,17 +4,17 @@ namespace PM\SurveythorBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use PM\SurveythorBundle\Entity\Answer;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use PM\SurveythorBundle\Entity\Dto\Question;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * AnswerType
+ * ChildQuestionType
  * @author Rombo Kraft <kraft@projektmotor.de>
  */
-class AnswerType extends AbstractType
+class ChildQuestionType extends AbstractType
 {
-    const FORM_NAME = 'pm_surveythor_answer';
+    const FORM_NAME = 'pm_surveythor_child_question';
 
     /**
      * {@inheritDoc}
@@ -25,21 +25,19 @@ class AnswerType extends AbstractType
             ->add('text', TextType::class, array(
                 'attr' => array('class' => 'title-field')
             ))
-            ->add('points')
-            ->add('childQuestions', QuestionCollectionType::class, array(
-                'label' => false,
-                'entry_type' => ChildQuestionType::class,
+            ->add('answers', CollectionType::class, array(
+                'entry_type' => ChildQuestionAnswerType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => true,
                 'entry_options' => array(
                     'label' => false
                 ),
-                'prototype_name' => '__child_question__',
-                'attr' => array('class' => 'child-question-prototype')
+                'prototype_name' => '__child_question_answer__',
+                'attr' => array('class' => 'child-question-answer-prototype')
             ))
-
         ;
+
     }
 
     /**
@@ -48,7 +46,7 @@ class AnswerType extends AbstractType
     public function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Answer::class
+            'data_class' => ''
         ));
     }
 

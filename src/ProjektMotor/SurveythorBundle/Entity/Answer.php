@@ -35,9 +35,13 @@ class Answer
     /**
      * @var \PM\SurveythorBundle\Entity\Question
      */
-    private $childQuestion;
+    private $childQuestions;
 
 
+    public function __construct()
+    {
+        $this->childQuestions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     /**
      * Get id
      *
@@ -141,22 +145,44 @@ class Answer
     }
 
     /**
-     * Get childQuestion.
+     * Get childQuestions.
      *
-     * @return childQuestion.
+     * @return childQuestions.
      */
-    public function getChildQuestion()
+    public function getChildQuestions()
     {
-        return $this->childQuestion;
+        return $this->childQuestions;
     }
 
     /**
-     * Set childQuestion.
+     * Set childQuestions.
      *
-     * @param childQuestion the value to set.
+     * @param childQuestions the value to set.
      */
-    public function setChildQuestion($childQuestion)
+    public function setChildQuestions($childQuestions)
     {
-        $this->childQuestion = $childQuestion;
+        $this->childQuestions = $childQuestions;
+    }
+
+    /**
+     * @param \PM\SurveythorBundle\Entity\Question $question
+     * @return Answer
+     */
+    public function addChildQuestion(\PM\SurveythorBundle\Entity\Question $question)
+    {
+        if (!$this->childQuestions->contains($question)) {
+            $this->childQuestions->add($question);
+            $question->addParentAnswer($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \PM\SurveythorBundle\Entity\Question $question
+     */
+    public function removeChildQuestion(\PM\SurveythorBundle\Entity\Question $question)
+    {
+        $this->childQuestions->removeElement($question);
     }
 }

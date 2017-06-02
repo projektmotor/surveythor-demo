@@ -6,7 +6,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use PM\SurveythorBundle\Entity\Dto\Question;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use PM\SurveythorBundle\Form\AnswerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
@@ -34,7 +33,8 @@ class QuestionType extends AbstractType
                 'entry_options' => array(
                     'label' => false
                 ),
-                'prototype_name' => '__answer__'
+                'prototype_name' => '__answer__',
+                'attr' => array('class' => 'question-answer-prototype')
             ))
         ;
     }

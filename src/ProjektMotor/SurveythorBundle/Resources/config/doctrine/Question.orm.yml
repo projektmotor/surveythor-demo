@@ -24,4 +24,9 @@ PM\SurveythorBundle\Entity\Question:
             targetEntity: PM\SurveythorBundle\Entity\Survey
             inversedBy: questions
 
+    manyToMany:
+        parentAnswers:
+            targetEntity: PM\SurveythorBundle\Entity\Answer
+            mappedBy: childQuestions
+
     lifecycleCallbacks: {  }
