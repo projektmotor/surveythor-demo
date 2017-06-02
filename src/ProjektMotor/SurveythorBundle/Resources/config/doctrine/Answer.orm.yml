@@ -27,5 +27,7 @@ PM\SurveythorBundle\Entity\Answer:
         childQuestions:
             targetEntity: PM\SurveythorBundle\Entity\Question
             inversedBy: childQuestion
+            cascade:
+                - persist
 
     lifecycleCallbacks: {  }

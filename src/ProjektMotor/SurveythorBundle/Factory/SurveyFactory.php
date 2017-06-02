@@ -26,6 +26,21 @@ class SurveyFactory
                 $answer->setText($dtoAnswer['text']);
                 $answer->setPoints($dtoAnswer['points']);
 
+                foreach ($dtoAnswer['childQuestions'] as $dtoChildQuestion) {
+                    $childQuestion = new Question();
+                    $childQuestion->setText($dtoChildQuestion['text']);
+
+                    foreach ($dtoChildQuestion['answers'] as $dtoChildQuestionAnswer) {
+                        $childQuestionAnswer = new Answer();
+                        $childQuestionAnswer->setText($dtoChildQuestionAnswer['text']);
+                        $childQuestionAnswer->setPoints($dtoChildQuestionAnswer['points']);
+
+                        $childQuestion->addAnswer($childQuestionAnswer);
+                    }
+
+                    $answer->addChildQuestion($childQuestion);
+                }
+
                 $question->addAnswer($answer);
             }
 

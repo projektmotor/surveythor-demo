@@ -153,7 +153,7 @@ class Question
     {
         if (!$this->parentAnswers->contains($answer)) {
             $this->parentAnswers->add($answer);
-            $answer->setChildQuestion($this);
+            $answer->addChildQuestion($this);
         }
 
         return $this;
