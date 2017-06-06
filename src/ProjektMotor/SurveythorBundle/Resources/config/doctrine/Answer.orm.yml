@@ -11,7 +11,7 @@ PM\SurveythorBundle\Entity\Answer:
     fields:
         text:
             type: text
-        points:
+        value:
             type: integer
         event:
             type: string

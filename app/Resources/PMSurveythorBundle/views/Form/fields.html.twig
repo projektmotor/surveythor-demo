@@ -11,11 +11,40 @@
                 <div class="panel-heading" role="tab" id="question_{{ id }}">
                     <h4 class="panel-title">
                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            New question
+                            {{ child.vars.value.text }}
                         </a>
                     </h4>
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="question_{{ id }}">
+                    <div class="panel-body">
+                        {{- form_row(child) -}}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {{- form_rest(form) -}}
+    </div>
+{% endblock %}
+
+
+{% block answer_collection_widget %}
+    {% if prototype is defined %}
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+    {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form.parent is empty -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+        {% for child in form %}
+            <div class="panel panel-default answer">
+                <div class="panel-heading" role="tab" id="answer_{{ id }}">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            {{ child.vars.value.text }}
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="answer_{{ id }}">
                     <div class="panel-body">
                         {{- form_row(child) -}}
                     </div>

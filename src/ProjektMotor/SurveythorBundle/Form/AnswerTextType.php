@@ -9,12 +9,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
- * ChildQuestionAnswerType
+ * AnswerTextType
  * @author Rombo Kraft <kraft@projektmotor.de>
  */
-class ChildQuestionAnswerType extends AbstractType
+class AnswerTextType extends AbstractType
 {
-    const FORM_NAME = 'pm_surveythor_child_question_answer';
+    const FORM_NAME = 'pm_surveythor_answer';
 
     /**
      * {@inheritDoc}
@@ -25,7 +25,18 @@ class ChildQuestionAnswerType extends AbstractType
             ->add('text', TextType::class, array(
                 'attr' => array('class' => 'title-field')
             ))
-            ->add('points')
+            ->add('childQuestions', QuestionCollectionType::class, array(
+                'label' => false,
+                'entry_type' => QuestionType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => true,
+                'entry_options' => array(
+                    'label' => false
+                ),
+                'prototype_name' => '__question__',
+                'attr' => array('class' => 'child-question-prototype')
+            ))
         ;
     }
 

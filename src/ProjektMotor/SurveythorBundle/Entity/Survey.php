@@ -1,6 +1,7 @@
 <?php
-
 namespace PM\SurveythorBundle\Entity;
+
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Survey
@@ -158,5 +159,24 @@ class Survey
     public function removeResultRange(\PM\SurveythorBundle\Entity\ResultRange $range)
     {
         $this->resultRanges->removeElement($range);
+    }
+
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->getQuestions()->count() < 1) {
+            $context->buildViolation('A Survey should have at least one Question')
+                ->atPath('questions')
+                ->addViolation()
+            ;
+        } else {
+            foreach ($this->getQuestions() as $question) {
+                if ($question['text'] == '') {
+                    $context->buildViolation('A question should have a text.')
+                        ->atPath('questions')
+                        ->addViolation()
+                        ;
+                }
+            }
+        }
     }
 }

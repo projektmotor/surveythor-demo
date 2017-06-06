@@ -1,7 +1,9 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+<div id="survey">
     {{ form_start(form) }}
+    {{ form_errors(form) }}
 
     {{ form_row(form.title) }}
     <div class="form-row">
@@ -17,13 +19,13 @@
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingThree">
                 <div class="row">
-                    <div class="col-md-11">
+                    <div class="col-md-6">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"></a>
                         </h4>
                     </div>
-                    <div class="col-md-1">
-                        <div class="pull-right">
+                    <div class="col-md-6">
+                        <div class="pull-right question-toolbox">
                             <a href="#" class="remove-panel">x</a>
                         </div>
                     </div>

@@ -4,3 +4,4 @@ services:
         arguments:
             - "@survey_repository"
             - "@survey_factory"
+            - "@form.factory"

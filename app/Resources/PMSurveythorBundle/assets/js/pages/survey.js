@@ -24,13 +24,13 @@ projektmotor.Survey = function (surveyParams) {
     question = {//{{{
         init: function () {
             $(params.questionCollectionHolder).data('index', 0);
-            $('.question.panel').css('display', 'none');
             $('#default-panel').css('display', 'none');
 
             question.bindAdd();
             question.bindAddChildQuestion();
             question.bindTitleFields();
             question.bindRemovePanel();
+            question.bindTypeSelect();
         },
         bindAdd: function () {
             var newLink = $(params.addQuestionLink);
@@ -40,7 +40,6 @@ projektmotor.Survey = function (surveyParams) {
                 e.preventDefault();
 
                 helpers.addFormFromPrototype(questionCollectionHolder);
-                helpers.addAnswerLink($(params.questionCollectionHolder));
 
                 $('.question.panel').css('display', 'block');
             });
@@ -48,11 +47,12 @@ projektmotor.Survey = function (surveyParams) {
         bindAddChildQuestion: function () {
             $('body').delegate('.add-child-question', 'click', function(e) {
                 e.preventDefault();
-                var collectionHolder = $(this).parents('div').prev().find('.child-question-prototype');
-                console.log(collectionHolder);
+                var collectionHolder = $(this).closest('.question-answer-prototype');
+                var index = collectionHolder.data('index') - 1;
+                var collectionHolderId = $(this).parents('.question-answer-prototype').attr('id') + '_' + index + '_childQuestions';
 
-                helpers.addFormFromPrototype(collectionHolder, '__child_question__');
-                helpers.addAnswerLink($(collectionHolder), true);
+                collectionHolder = $('#' + collectionHolderId);
+                helpers.addFormFromPrototype(collectionHolder, '__question__');
             });
         },
         bindTitleFields: function () {
@@ -68,6 +68,23 @@ projektmotor.Survey = function (surveyParams) {
                 var id = $(this).attr('id').substr(7);
                 $('#panel-' + id).remove();
             });
+        },
+        bindTypeSelect: function () {
+            $('body').delegate('.question-type-select', 'change', function () {
+                var form = $(this).closest('form');
+                var url = form.attr('action');
+                var containerId = $(this).attr('id').substring(0, $(this).attr('id').length - 5);
+
+                $.ajax({
+                    data: form.serialize(),
+                    url: url,
+                    method: 'post',
+                    success: function (response) {
+                        $('#' + containerId).html($(response).find('#' + containerId).html());
+                        helpers.addAnswerLink(containerId);
+                    }
+                });
+            });
         }
     };//}}}
 
@@ -78,6 +95,7 @@ projektmotor.Survey = function (surveyParams) {
             var re = new RegExp(prototypeName, 'g');
             var id = helpers.makeId();
             var newFormDiv = $($('#default-panel').html());
+
 
             if (typeof index == 'undefined') {
                 index = 0;
@@ -104,45 +122,27 @@ projektmotor.Survey = function (surveyParams) {
 
             return text;
         },
-        addAnswerLink: function (collectionHolder, isChildQuestion = false) {
+        addAnswerLink: function (containerId) {
             var addAnswerLink = $('<a href="#" class="add-question">Add an answer</a>');
             var newAnswerLink = $('<div></div>').append(addAnswerLink);
-            var prototypeName = '__answer__';
-            var selector = '.question-answer-prototype';
-            var index, answerCollectionHolder;
+            var answerCollectionHolder, isChildQuestion;
 
-            if (isChildQuestion) {
-                selector = '.child-question-answer-prototype';
-                prototypeName = '__child_question_answer__';
-            }
-            answerCollectionHolder = $('body').find(selector);
-            index = collectionHolder.find(selector).length - 1;
-            if (index > 0) {
-                answerCollectionHolder = $(selector + ':eq('+index+')');
-            }
-
-            if (typeof collectionHolder.data('index') == 'undefined') {
-                collectionHolder.data('index', 0);
-            }
-
-            if (typeof answerCollectionHolder.data('index') == 'undefined') {
-                answerCollectionHolder.data('index', 0);
-            }
+            answerCollectionHolder = $('#' + containerId + '_answers');
 
             answerCollectionHolder.append(newAnswerLink);
 
             addAnswerLink.click(function (e) {
                 e.preventDefault();
 
-                var answerIndex = answerCollectionHolder.data('index');
+                var answerIndex = typeof answerCollectionHolder.data('index') == 'undefined' ? 0 : answerCollectionHolder.data('index')
+                ;
                 var addChildQuestionLink = $('<a href="#" class="add-child-question">Add a child question</a>');
-                var newChildQuestionLink = $('<div></div>').append(addChildQuestionLink);
 
-                helpers.addFormFromPrototype(answerCollectionHolder, prototypeName);
+                helpers.addFormFromPrototype(answerCollectionHolder, '__answer__');
 
-                if (!isChildQuestion) {
-                    $(answerCollectionHolder).append(newChildQuestionLink);
-                }
+                $(answerCollectionHolder)
+                    .find('.question-toolbox:eq('+ (answerIndex) +')')
+                    .append(addChildQuestionLink);
 
                 newAnswerLink.detach();
                 answerCollectionHolder.append(newAnswerLink);

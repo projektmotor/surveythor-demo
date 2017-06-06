@@ -20,7 +20,7 @@ class Answer
     /**
      * @var int
      */
-    private $points;
+    private $value;
 
     /**
      * @var string
@@ -77,27 +77,27 @@ class Answer
     }
 
     /**
-     * Set points
+     * Set value
      *
-     * @param integer $points
+     * @param integer $value
      *
      * @return Answer
      */
-    public function setPoints($points)
+    public function setValue($value)
     {
-        $this->points = $points;
+        $this->value = $value;
 
         return $this;
     }
 
     /**
-     * Get points
+     * Get value
      *
      * @return int
      */
-    public function getPoints()
+    public function getValue()
     {
-        return $this->points;
+        return $this->value;
     }
 
     /**

@@ -32,6 +32,12 @@ class Question
      */
     private $parentAnswers;
 
+    /**
+     * @var string
+     */
+    private $type;
+
+
     public function __construct()
     {
         $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
@@ -165,5 +171,25 @@ class Question
     public function removeParentAnswer(\PM\SurveythorBundle\Entity\Answer $answer)
     {
         $this->parentAnswers->removeElement($answer);
+    }
+
+    /**
+     * Get type.
+     *
+     * @return type.
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set type.
+     *
+     * @param type the value to set.
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }

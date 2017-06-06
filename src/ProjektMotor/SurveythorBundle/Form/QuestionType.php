@@ -4,9 +4,15 @@ namespace PM\SurveythorBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use PM\SurveythorBundle\Entity\Dto\Question;
+//use PM\SurveythorBundle\Entity\Dto\Question;
+use PM\SurveythorBundle\Entity\Question;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
  * QuestionType
@@ -22,21 +28,68 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text', TextType::class, array(
-                'attr' => array('class' => 'title-field')
-            ))
-            ->add('answers', CollectionType::class, array(
-                'entry_type' => AnswerType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => true,
-                'entry_options' => array(
-                    'label' => false
+            ->add('type', ChoiceType::class, array(
+                'choices' => array(
+                    'text question' => 'text',
+                    'multiple choice question' => 'mc'
                 ),
-                'prototype_name' => '__answer__',
-                'attr' => array('class' => 'question-answer-prototype')
+                'attr' => array(
+                    'class' => 'question-type-select'
+                ),
+                'placeholder' => ''
             ))
+            ->add('text', HiddenType::class)
         ;
+
+        $formModifier = function (FormInterface $form, $type = null) {
+            if (null !== $type) {
+                switch ($type) {
+                    case 'text':
+                        $answerType = AnswerTextType::class;
+                        break;
+                    default:
+                        $answerType = AnswerMultipleChoiceType::class;
+                        break;
+                }
+
+                $form
+                    ->remove('text')
+                    ->add('text', TextType::class, array(
+                        'attr' => array('class' => 'title-field')
+                    ))
+                    ->add('answers', AnswerCollectionType::class, array(
+                        'entry_type' => $answerType,
+                        'allow_add' => true,
+                        'allow_delete' => true,
+                        'by_reference' => true,
+                        'entry_options' => array(
+                            'label' => false
+                        ),
+                        'prototype_name' => '__answer__',
+                        'attr' => array('class' => 'question-answer-prototype')
+                    ))
+                ;
+            }
+        };
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($formModifier) {
+                $data = $event->getData();
+
+                if (!is_null($data)) {
+                    $formModifier($event->getForm(), $data->getType());
+                }
+            }
+        );
+
+        $builder->get('type')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($formModifier) {
+                $type = $event->getForm()->getData();
+                $formModifier($event->getForm()->getParent(), $type);
+            }
+        );
     }
 
     /**
