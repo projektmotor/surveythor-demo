@@ -23,8 +23,11 @@ projektmotor.Survey = function (surveyParams) {
 
     question = {//{{{
         init: function () {
-            $(params.questionCollectionHolder).data('index', 0);
             $('#default-panel').css('display', 'none');
+
+            $('.question-answer-prototype').each(function () {
+                helpers.addAnswerLink($(this).parent('div').parent('div').attr('id'));
+            });
 
             question.bindAdd();
             question.bindAddChildQuestion();
@@ -38,9 +41,7 @@ projektmotor.Survey = function (surveyParams) {
 
             newLink.click(function (e) {
                 e.preventDefault();
-
                 helpers.addFormFromPrototype(questionCollectionHolder);
-
                 $('.question.panel').css('display', 'block');
             });
         },
@@ -64,9 +65,7 @@ projektmotor.Survey = function (surveyParams) {
         bindRemovePanel: function () {
             $('body').delegate('a.remove-panel', 'click', function (e) {
                 e.preventDefault();
-
-                var id = $(this).attr('id').substr(7);
-                $('#panel-' + id).remove();
+                $(this).closest('.panel').remove();
             });
         },
         bindTypeSelect: function () {
@@ -96,9 +95,8 @@ projektmotor.Survey = function (surveyParams) {
             var id = helpers.makeId();
             var newFormDiv = $($('#default-panel').html());
 
-
             if (typeof index == 'undefined') {
-                index = 0;
+                index = collectionHolder.children('.panel').length;
                 collectionHolder.prop('data-index', index);
             }
             var newForm = prototype.replace(re, index);
@@ -107,7 +105,6 @@ projektmotor.Survey = function (surveyParams) {
             $(newFormDiv).find('a.collapsed').attr('href', '#' + id);
             $(newFormDiv).find('a.collapsed').attr('aria-controls', id);
             $(newFormDiv).find('div.panel-collapse').attr('id', id);
-            $(newFormDiv).find('a.remove-panel').attr('id', 'remove-' + id);
 
             $(newFormDiv).find('.panel-body').append(newForm);
             collectionHolder.append(newFormDiv);
@@ -126,15 +123,17 @@ projektmotor.Survey = function (surveyParams) {
             var addAnswerLink = $('<a href="#" class="add-question">Add an answer</a>');
             var newAnswerLink = $('<div></div>').append(addAnswerLink);
             var answerCollectionHolder, isChildQuestion;
+            console.log(containerId);
 
             answerCollectionHolder = $('#' + containerId + '_answers');
-
             answerCollectionHolder.append(newAnswerLink);
 
             addAnswerLink.click(function (e) {
                 e.preventDefault();
 
-                var answerIndex = typeof answerCollectionHolder.data('index') == 'undefined' ? 0 : answerCollectionHolder.data('index')
+                var answerIndex = typeof answerCollectionHolder.data('index') == 'undefined'
+                    ? answerCollectionHolder.children('.panel').length
+                    : answerCollectionHolder.data('index')
                 ;
                 var addChildQuestionLink = $('<a href="#" class="add-child-question">Add a child question</a>');
 

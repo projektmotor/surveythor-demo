@@ -1,0 +1,11 @@
+survey_index:
+    path: /
+    defaults: { _controller: survey_backend_controller:indexAction }
+
+survey_new:
+    path: /new
+    defaults: { _controller: survey_backend_controller:formAction }
+
+survey_edit:
+    path: /edit/{id}
+    defaults: { _controller: survey_backend_controller:formAction }

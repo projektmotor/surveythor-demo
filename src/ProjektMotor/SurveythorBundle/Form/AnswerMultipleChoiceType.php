@@ -25,7 +25,9 @@ class AnswerMultipleChoiceType extends AbstractType
             ->add('text', TextType::class, array(
                 'attr' => array('class' => 'title-field')
             ))
-            ->add('value')
+            ->add('value', TextType::class, array(
+                'label' => 'points'
+            ))
             ->add('childQuestions', QuestionCollectionType::class, array(
                 'label' => false,
                 'entry_type' => QuestionType::class,
@@ -44,7 +46,7 @@ class AnswerMultipleChoiceType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function setDefaultOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => Answer::class

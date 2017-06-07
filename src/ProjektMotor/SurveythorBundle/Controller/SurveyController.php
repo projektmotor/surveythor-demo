@@ -2,15 +2,14 @@
 namespace PM\SurveythorBundle\Controller;
 
 use QafooLabs\MVC\FormRequest;
+use QafooLabs\MVC\RedirectRoute;
 use PM\SurveythorBundle\Form\SurveyType;
 use PM\SurveythorBundle\Form\QuestionType;
 use PM\SurveythorBundle\Repository\SurveyRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use PM\SurveythorBundle\Factory\SurveyFactory;
-use QafooLabs\Bundle\NoFrameworkBundle\Request\SymfonyFormRequest;
-use Symfony\Component\Form\FormFactory;
 use PM\SurveythorBundle\Entity\Survey;
+use PM\SurveythorBundle\Factory\SurveyFactory;
 
 /**
  * SurveyController
@@ -24,48 +23,55 @@ class SurveyController
     private $surveyRepository;
 
     /**
-     * @var formFactory
-     */
-    private $formFactory;
-
-    /**
      * @var surveyFactory
      */
     private $surveyFactory;
 
+    /**
+     * __construct
+     *
+     * @param SurveyRepository $surveyRepository
+     * @param SurveyFactory $surveyFactory
+     */
     public function __construct(
         SurveyRepository $surveyRepository,
-        SurveyFactory $surveyFactory,
-        FormFactory $formFactory
+        SurveyFactory $surveyFactory
     ) {
         $this->surveyRepository = $surveyRepository;
         $this->surveyFactory = $surveyFactory;
-        $this->formFactory = $formFactory;
     }
 
     /**
-     * newAction
+     * indexAction
+     */
+    public function indexAction()
+    {
+        return array(
+            'surveys' => $this->surveyRepository->findAll()
+        );
+    }
+
+    /**
+     * formAction
      *
      * @param FormRequest $formRequest
+     * @param Request $request
+     * @param Survey $survey
      */
-    public function newAction(FormRequest $formRequest, Request $request)
+    public function formAction(FormRequest $formRequest, Request $request, Survey $survey = null)
     {
-        if (!$formRequest->handle(SurveyType::class, new Survey())) {
+        $survey = null === $survey ? new Survey() : $survey;
+        if (!$formRequest->handle(SurveyType::class, $survey)
+            || $request->isXmlHttpRequest()
+        ) {
             return array(
                 'form' => $formRequest->createFormView()
             );
         }
-        if ($request->isXmlHttpRequest()) {
-            return array(
-                'form' => $formRequest->createFormView()
-            );
-        } else {
-            $survey = $formRequest->getValidData();
-            dump($survey);
-            die();
-            $this->surveyRepository->save($survey);
 
-            return new Response('thanks brother/sister');
-        }
+        $survey = $formRequest->getValidData();
+        $this->surveyRepository->save($survey);
+
+        return new RedirectRoute('survey_index');
     }
 }

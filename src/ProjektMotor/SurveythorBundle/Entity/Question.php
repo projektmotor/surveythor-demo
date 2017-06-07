@@ -2,6 +2,8 @@
 
 namespace PM\SurveythorBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Question
  */
@@ -40,8 +42,8 @@ class Question
 
     public function __construct()
     {
-        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->parentAnswers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->answers = new ArrayCollection();
+        $this->parentAnswers = new ArrayCollection();
     }
 
 
@@ -129,6 +131,8 @@ class Question
     public function setSurvey($survey)
     {
         $this->survey = $survey;
+
+        return $this;
     }
 
     /**

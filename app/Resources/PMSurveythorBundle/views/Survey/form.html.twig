@@ -6,12 +6,12 @@
     {{ form_errors(form) }}
 
     {{ form_row(form.title) }}
-    <div class="form-row">
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            {{ form_widget(form.questions) }}
+        <div class="form-row">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                {{ form_widget(form.questions) }}
+            </div>
         </div>
-        <a href="#" class="btn btn-primary" id="add-question">Add a new question</a>
-    </div>
+    <a href="#" class="btn btn-primary" id="add-question">Add a new question</a>
 
     {{ form_end(form) }}
 

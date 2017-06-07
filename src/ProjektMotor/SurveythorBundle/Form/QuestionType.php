@@ -43,22 +43,13 @@ class QuestionType extends AbstractType
 
         $formModifier = function (FormInterface $form, $type = null) {
             if (null !== $type) {
-                switch ($type) {
-                    case 'text':
-                        $answerType = AnswerTextType::class;
-                        break;
-                    default:
-                        $answerType = AnswerMultipleChoiceType::class;
-                        break;
-                }
-
-                $form
-                    ->remove('text')
-                    ->add('text', TextType::class, array(
+                $form->add('text', TextType::class, array(
                         'attr' => array('class' => 'title-field')
-                    ))
-                    ->add('answers', AnswerCollectionType::class, array(
-                        'entry_type' => $answerType,
+                ));
+
+                if ($type == 'mc') {
+                    $form->add('answers', AnswerCollectionType::class, array(
+                        'entry_type' => AnswerMultipleChoiceType::class,
                         'allow_add' => true,
                         'allow_delete' => true,
                         'by_reference' => true,
@@ -67,8 +58,8 @@ class QuestionType extends AbstractType
                         ),
                         'prototype_name' => '__answer__',
                         'attr' => array('class' => 'question-answer-prototype')
-                    ))
-                ;
+                    ));
+                }
             }
         };
 
@@ -95,7 +86,7 @@ class QuestionType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function setDefaultOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => Question::class

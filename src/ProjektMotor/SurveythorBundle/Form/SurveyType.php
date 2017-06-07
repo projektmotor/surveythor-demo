@@ -28,11 +28,12 @@ class SurveyType extends AbstractType
                 'entry_type' => QuestionType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => true,
+                'by_reference' => false,
                 'entry_options' => array(
                     'label' => false
                 ),
-                'prototype_name' => '__question__'
+                'prototype_name' => '__question__',
+                'attr' => array('class' => 'question-prototype')
             ))
             ->add('submit', SubmitType::class)
         ;
@@ -41,7 +42,7 @@ class SurveyType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function setDefaultOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => Survey::class

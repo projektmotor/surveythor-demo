@@ -2,6 +2,7 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Survey
@@ -35,8 +36,8 @@ class Survey
 
     public function __construct()
     {
-        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->resultRanges = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questions = new ArrayCollection();
+        $this->resultRanges = new ArrayCollection();
     }
 
     /**
@@ -170,7 +171,7 @@ class Survey
             ;
         } else {
             foreach ($this->getQuestions() as $question) {
-                if ($question['text'] == '') {
+                if ($question->getText() == '') {
                     $context->buildViolation('A question should have a text.')
                         ->atPath('questions')
                         ->addViolation()
