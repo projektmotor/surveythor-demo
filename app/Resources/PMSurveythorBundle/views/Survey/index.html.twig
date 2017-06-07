@@ -4,7 +4,10 @@
     {% for survey in surveys %}
         <div>
             {{ survey.title }}&nbsp;
-            <a href="{{ path('survey_edit', {'id' : survey.id}) }}">edit</a>
+            <a href="{{ path('survey_edit', {'id' : survey.id}) }}">edit</a>&nbsp;
+            <a href="{{ path('result_new', {'id' : survey.id }) }}">perform</a>
         </div>
     {% endfor %}
+    <hr />
+    <a href="{{ path('survey_new') }}" class="btn btn-primary">create new survey</a>
 {% endblock %}

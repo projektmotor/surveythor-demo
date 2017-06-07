@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h4>{{ survey.title }}</h4>
+
+    {% for question in survey.questions %}
+        <hr />
+        <div>
+            {{ question.text }}
+        </div>
+
+        <div>
+            {% if question.type == 'text' %}
+                <input type="text" name="question-{{ question.id }}-value" />
+            {% endif %}
+
+            {% if question.type == 'mc' %}
+                {% for answer in question.answers %}
+                    <div>
+                        <input type="radio" name="question-{{ question.id }}-value" />
+                        {{ answer.text }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endfor %}
+    {{ form_widget(form.resultAnswers.vars.prototype|e) }}
+    {{ form(form) }}
+{% endblock %}

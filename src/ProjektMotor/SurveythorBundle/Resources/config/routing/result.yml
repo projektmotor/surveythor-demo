@@ -1,0 +1,3 @@
+result_new:
+    path: /new/{id}
+    defaults: { _controller: result_controller:newAction }

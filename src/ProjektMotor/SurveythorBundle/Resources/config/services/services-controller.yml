@@ -1,6 +1,11 @@
 services:
-    survey_backend_controller:
+    survey_controller:
         class: PM\SurveythorBundle\Controller\SurveyController
         arguments:
             - "@survey_repository"
             - "@survey_factory"
+
+    result_controller:
+        class: PM\SurveythorBundle\Controller\ResultController
+        arguments:
+            - "@survey_repository"

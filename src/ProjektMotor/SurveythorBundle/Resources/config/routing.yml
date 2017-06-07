@@ -1,3 +1,7 @@
-backend:
+survey:
     resource: "@PMSurveythorBundle/Resources/config/routing/survey.yml"
     prefix:     /survey
+
+result:
+    resource: "@PMSurveythorBundle/Resources/config/routing/result.yml"
+    prefix: /result
