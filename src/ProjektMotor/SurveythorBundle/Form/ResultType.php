@@ -3,6 +3,7 @@ namespace PM\SurveythorBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use PM\SurveythorBundle\Entity\Result;
@@ -20,17 +21,20 @@ class ResultType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('resultAnswers', CollectionType::class, array(
-            'entry_type' => ResultAnswerType::class,
-            'label' => false,
-            'allow_add' => true,
-            'by_reference' => true,
-            'entry_options' => array(
-                'label' => false
-            ),
-            'prototype_name' => '__result-answer__',
-            'attr' => array('class' => 'result-answer-prototype')
-        ));
+        $builder
+            ->add('resultAnswers', CollectionType::class, array(
+                'entry_type' => ResultAnswerType::class,
+                'label' => false,
+                'allow_add' => true,
+                'by_reference' => true,
+                'entry_options' => array(
+                    'label' => false
+                ),
+                'prototype_name' => '__result-answer__',
+                'attr' => array('class' => 'result-answer-prototype')
+            ))
+            ->add('submit', SubmitType::class)
+        ;
     }
 
     /**

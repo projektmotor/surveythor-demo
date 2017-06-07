@@ -3,6 +3,7 @@ namespace PM\SurveythorBundle\Entity;
 
 use PM\SurveythorBundle\Entity\Result;
 use PM\SurveythorBundle\Entity\Answer;
+use PM\SurveythorBundle\Entity\Qestion;
 
 /**
  * ResultAnswer
@@ -28,6 +29,11 @@ class ResultAnswer
      * @var Answer
      */
     private $answer;
+
+    /**
+     * @var Question
+     */
+    private $question;
 
     /**
      * Get id
@@ -101,5 +107,25 @@ class ResultAnswer
     public function setAnswer(Answer $answer)
     {
         $this->answer = $answer;
+    }
+
+    /**
+     * Get question.
+     *
+     * @return question.
+     */
+    public function getQuestion()
+    {
+        return $this->question;
+    }
+
+    /**
+     * Set question.
+     *
+     * @param question the value to set.
+     */
+    public function setQuestion(Question $question)
+    {
+        $this->question = $question;
     }
 }

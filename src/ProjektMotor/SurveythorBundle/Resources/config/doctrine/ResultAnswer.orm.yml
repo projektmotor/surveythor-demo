@@ -17,6 +17,9 @@ PM\SurveythorBundle\Entity\ResultAnswer:
             targetEntity: PM\SurveythorBundle\Entity\Result
             inversedBy: resultAnswers
 
+        question:
+            targetEntity: PM\SurveythorBundle\Entity\Question
+
         answer:
             targetEntity: PM\SurveythorBundle\Entity\Answer
 

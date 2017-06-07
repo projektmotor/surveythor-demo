@@ -3,6 +3,8 @@ namespace PM\SurveythorBundle\Controller;
 
 use QafooLabs\MVC\FormRequest;
 use PM\SurveythorBundle\Entity\Survey;
+use PM\SurveythorBundle\Entity\Result;
+use PM\SurveythorBundle\Entity\ResultAnswer;
 use PM\SurveythorBundle\Repository\SurveyRepository;
 use PM\SurveythorBundle\Form\ResultType;
 
@@ -31,16 +33,21 @@ class ResultController
 
     public function newAction(FormRequest $formRequest, Survey $survey)
     {
-        if (!$formRequest->handle(ResultType::class)) {
+        $result = new Result();
+        foreach ($survey->getQuestions() as $question) {
+            $resultAnswer = new ResultAnswer();
+            $resultAnswer->setQuestion($question);
+            $result->addResultAnswer($resultAnswer);
+        }
+
+        if (!$formRequest->handle(ResultType::class, $result)) {
             return array(
                 'survey' => $survey,
                 'form' => $formRequest->createFormView()
             );
         }
 
-        return array(
-            'survey' => $survey,
-            'form' => $formRequest->createFormView()
-        );
+        dump($formRequest->getValidData());
+        die();
     }
 }
