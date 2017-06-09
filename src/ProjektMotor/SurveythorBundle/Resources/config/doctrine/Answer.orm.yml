@@ -29,5 +29,8 @@ PM\SurveythorBundle\Entity\Answer:
             inversedBy: parentAnswers
             cascade:
                 - persist
+            joinTable:
+                name: childanswer_parentquestion
+
 
     lifecycleCallbacks: {  }
