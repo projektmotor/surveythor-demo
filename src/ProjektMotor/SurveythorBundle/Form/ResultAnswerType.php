@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use PM\SurveythorBundle\Entity\ResultAnswer;
@@ -37,7 +38,10 @@ class ResultAnswerType extends AbstractType
                             'class' => Answer::class,
                             'choice_label' => 'text',
                             'choices' => $question->getAnswers(),
-                            'expanded' => true
+                            'expanded' => true,
+                            'attr' => array(
+                                'class' => 'multiple-choice-answers'
+                            )
                         ));
                         break;
                     default:
@@ -45,7 +49,22 @@ class ResultAnswerType extends AbstractType
                         break;
                 }
             }
+
+            if (!is_null($resultAnswer->getChildAnswers())) {
+                foreach ($resultAnswer->getChildAnswers() as $childAnswer) {
+                    $form->add('childAnswers', ResultAnswerCollectionType::class, array(
+                        'entry_type' => ResultAnswerType::class,
+                        'label' => false,
+                        'by_reference' => false,
+                        'entry_options' => array(
+                            'label' => false
+                        ),
+                        'attr' => array('class' => 'result-childanswer-prototype'),
+                    ));
+                }
+            }
         });
+
     }
 
     /**

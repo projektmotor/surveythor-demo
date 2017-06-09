@@ -3,13 +3,22 @@
 {% block body %}
     <h4>{{ survey.title }}</h4>
 
-    {{ form_start(form) }}
-    {% for resultAnswer in form.resultAnswers %}
-        <div>
-            {% set question = resultAnswer.vars.value.question %}
-            {{ question.text }}
-            {{ form_row(resultAnswer) }}
-        </div>
-    {% endfor %}
-    {{ form_end(form) }}
+    <div id="result">
+        {{ form_start(form) }}
+        {#
+        {% for resultAnswer in form.resultAnswers %}
+            <div>
+                {% set question = resultAnswer.vars.value.question %}
+                {{ question.text }}
+                {{ form_row(resultAnswer) }}
+            </div>
+        {% endfor %}
+        #}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/js/result.bundle.js') }}"></script>
 {% endblock %}

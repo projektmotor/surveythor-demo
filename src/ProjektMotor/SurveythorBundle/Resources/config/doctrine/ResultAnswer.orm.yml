@@ -23,4 +23,13 @@ PM\SurveythorBundle\Entity\ResultAnswer:
         answer:
             targetEntity: PM\SurveythorBundle\Entity\Answer
 
+        parentAnswer:
+            targetEntity: PM\SurveythorBundle\Entity\ResultAnswer
+
+    oneToMany:
+        childAnswers:
+            targetEntity: PM\SurveythorBundle\Entity\ResultAnswer
+            mappedBy: childAnswers
+
+
     lifecycleCallbacks: {  }

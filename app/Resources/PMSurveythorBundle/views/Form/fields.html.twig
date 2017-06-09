@@ -73,3 +73,16 @@
         {{- form_rest(form) -}}
     </div>
 {% endblock %}
+
+{% block result_answer_collection_widget %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form.parent is empty -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+        {% for child in form.children %}
+            {{ child.vars.value.question.text }}
+            {{- form_row(child) -}}
+        {% endfor %}
+        {{- form_rest(form) -}}
+    </div>
+{% endblock %}

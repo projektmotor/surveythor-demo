@@ -22,16 +22,14 @@ class ResultType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('resultAnswers', CollectionType::class, array(
+            ->add('resultAnswers', ResultAnswerCollectionType::class, array(
                 'entry_type' => ResultAnswerType::class,
                 'label' => false,
-                'allow_add' => true,
                 'by_reference' => true,
                 'entry_options' => array(
                     'label' => false
                 ),
-                'prototype_name' => '__result-answer__',
-                'attr' => array('class' => 'result-answer-prototype')
+                'attr' => array('class' => 'result-answer-prototype'),
             ))
             ->add('submit', SubmitType::class)
         ;

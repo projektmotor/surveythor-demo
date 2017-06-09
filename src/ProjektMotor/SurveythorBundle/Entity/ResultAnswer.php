@@ -1,6 +1,7 @@
 <?php
 namespace PM\SurveythorBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use PM\SurveythorBundle\Entity\Result;
 use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\Qestion;
@@ -34,6 +35,22 @@ class ResultAnswer
      * @var Question
      */
     private $question;
+
+    /**
+     * @var ResultAnswer
+     */
+    private $childAnswers;
+
+    /**
+     * @var ResultAnswer
+     */
+    private $parentAnswer;
+
+
+    public function __construct()
+    {
+        $this->childAnswers = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -127,5 +144,48 @@ class ResultAnswer
     public function setQuestion(Question $question)
     {
         $this->question = $question;
+    }
+
+    /**
+     * Get childAnswers.
+     *
+     * @return childAnswers.
+     */
+    public function getChildAnswers()
+    {
+        return $this->childAnswers;
+    }
+
+    public function addChildAnswer(ResultAnswer $childAnswer)
+    {
+        if (!$this->childAnswers->contains($childAnswer)) {
+            $this->childAnswers->add($childAnswer);
+            $this->setParentAnswer($this);
+        }
+    }
+
+    public function removeChildAnswer(ResultAnswer $childAnswer)
+    {
+        $this->childAnswers->remove($childAnswer);
+    }
+
+    /**
+     * Get parentAnswer.
+     *
+     * @return parentAnswer.
+     */
+    public function getParentAnswer()
+    {
+        return $this->parentAnswer;
+    }
+
+    /**
+     * Set parentAnswer.
+     *
+     * @param parentAnswer the value to set.
+     */
+    public function setParentAnswer(ResultAnswer $parentAnswer)
+    {
+        $this->parentAnswer = $parentAnswer;
     }
 }

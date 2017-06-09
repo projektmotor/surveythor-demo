@@ -5,6 +5,7 @@ var assets_dir = __dirname + '/app/Resources/PMSurveythorBundle/assets';
 module.exports = {
     entry   : {
         survey: assets_dir + '/js/pages/survey.js',
+        result: assets_dir + '/js/pages/result.js'
     },
     plugins: [
         new webpack.ProvidePlugin({
