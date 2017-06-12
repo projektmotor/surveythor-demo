@@ -33,7 +33,7 @@ class AnswerMultipleChoiceType extends AbstractType
                 'entry_type' => QuestionType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => true,
+                'by_reference' => false,
                 'entry_options' => array(
                     'label' => false
                 ),
