@@ -23,9 +23,6 @@ projektmotor.Survey = function (surveyParams) {
 
     question = {//{{{
         init: function () {
-            $('#default-panel').css('display', 'none');
-            //$('a.add-child-question').css('display', 'none');
-
             question.bindAdd();
             question.bindAddAnswer();
             question.bindAddChildQuestion();
@@ -40,17 +37,17 @@ projektmotor.Survey = function (surveyParams) {
             newLink.click(function (e) {
                 e.preventDefault();
                 helpers.addFormFromPrototype(questionCollectionHolder);
-                $('.question.panel').css('display', 'block');
             });
         },
         bindAddChildQuestion: function () {
             $('body').delegate('.add-child-question', 'click', function(e) {
                 e.preventDefault();
-                var collectionHolder = $(this).parents('.question-answer-prototype');
-                var index = $('#' + collectionHolder.attr('id') + ' .add-child-question').index(this);
-                var collectionHolderId = $(this).parents('.question-answer-prototype').attr('id') + '_' + index + '_childQuestions';
+                var parentCollectionHolder = $(this).parents('.question-answer-prototype');
+                var index = $('#' + parentCollectionHolder.attr('id') + ' .add-child-question').index(this);
+                var collectionHolderId = parentCollectionHolder.attr('id') + '_' + index + '_childQuestions';
+                var collectionHolder = $('#' + collectionHolderId);
 
-                collectionHolder = $('#' + collectionHolderId);
+                collectionHolder.closest('.panel-collapse').addClass('in');
                 helpers.addFormFromPrototype(collectionHolder, '__question__');
             });
         },
@@ -102,13 +99,14 @@ projektmotor.Survey = function (surveyParams) {
             var prototype = collectionHolder.data('prototype');
             var index = collectionHolder.data('index');
             var re = new RegExp(prototypeName, 'g');
-            var id = helpers.makeId();
             var newFormDiv = $($('#default-panel').html());
 
             if (typeof index == 'undefined') {
                 index = collectionHolder.children('.panel').length;
                 collectionHolder.prop('data-index', index);
             }
+
+            var id = collectionHolder.attr('id') + '_' + index + '_panel';
             var newForm = prototype.replace(re, index);
 
             $(newFormDiv).attr('id', 'panel-' + id);
@@ -123,15 +121,6 @@ projektmotor.Survey = function (surveyParams) {
             $(newFormDiv).find('.panel-body').append(newForm);
             collectionHolder.append(newFormDiv);
             collectionHolder.data('index', index + 1);
-        },
-        makeId: function () {
-            var text = "";
-            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-            for( var i=0; i < 5; i++ )
-                text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-            return text;
         }
     };//}}}
 
