@@ -23,10 +23,11 @@ PM\SurveythorBundle\Entity\Answer:
             targetEntity: PM\SurveythorBundle\Entity\Question
             inversedBy: answers
 
-    manyToMany:
+
+    oneToMany:
         childQuestions:
             targetEntity: PM\SurveythorBundle\Entity\Question
-            inversedBy: parentAnswers
+            mappedBy: parentAnswer
             cascade:
                 - persist
             joinTable:

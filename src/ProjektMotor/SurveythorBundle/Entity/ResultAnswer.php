@@ -2,8 +2,8 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\Result;
 use PM\SurveythorBundle\Entity\Answer;
+use PM\SurveythorBundle\Entity\Result;
 use PM\SurveythorBundle\Entity\Qestion;
 
 /**
@@ -27,6 +27,13 @@ class ResultAnswer
     private $result;
 
     /**
+     * @var ArrayCollection
+     */
+    private $answers;
+
+    /**
+     * answer
+     *
      * @var Answer
      */
     private $answer;
@@ -50,6 +57,7 @@ class ResultAnswer
     public function __construct()
     {
         $this->childAnswers = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
 
     /**
@@ -107,23 +115,25 @@ class ResultAnswer
     }
 
     /**
-     * Get answer.
+     * Get answers.
      *
-     * @return answer.
+     * @return answers.
      */
-    public function getAnswer()
+    public function getAnswers()
     {
-        return $this->answer;
+        return $this->answers;
     }
 
-    /**
-     * Set answer.
-     *
-     * @param Answer $answer.
-     */
-    public function setAnswer(Answer $answer)
+    public function addAnswer(Answer $answer)
     {
-        $this->answer = $answer;
+        if (!$this->answers->contains($answer)) {
+            $this->answers->add($answer);
+        }
+    }
+
+    public function removeAnswer(Answer $answer)
+    {
+        $this->answers->remove($answer);
     }
 
     /**
@@ -160,7 +170,7 @@ class ResultAnswer
     {
         if (!$this->childAnswers->contains($childAnswer)) {
             $this->childAnswers->add($childAnswer);
-            $this->setParentAnswer($this);
+            $childAnswer->setParentAnswer($this);
         }
     }
 
@@ -187,5 +197,25 @@ class ResultAnswer
     public function setParentAnswer(ResultAnswer $parentAnswer)
     {
         $this->parentAnswer = $parentAnswer;
+    }
+
+    /**
+     * Get answer.
+     *
+     * @return answer.
+     */
+    public function getAnswer()
+    {
+        return $this->answer;
+    }
+
+    /**
+     * Set answer.
+     *
+     * @param answer the value to set.
+     */
+    public function setAnswer($answer)
+    {
+        $this->answer = $answer;
     }
 }

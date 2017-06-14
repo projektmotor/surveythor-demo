@@ -44,6 +44,11 @@ class ResultController
                 if (array_key_exists('answer', $resultAnswer)) {
                     $answerIds[] = $resultAnswer['answer'];
                 }
+                if (array_key_exists('answers', $resultAnswer)) {
+                    foreach ($resultAnswer['answers'] as $answerId) {
+                        $answerIds[] = $answerId;
+                    }
+                }
 
                 if (array_key_exists('childAnswers', $resultAnswer)) {
                     foreach ($resultAnswer['childAnswers'] as $childAnswer) {
@@ -77,7 +82,7 @@ class ResultController
             $this->addResultAnswer($result, $resultAnswer);
         }
 
-        if ($question->getType() == 'mc') {
+        if ($question->getType() == 'mc' || $question->getType() == 'sc') {
             foreach ($question->getAnswers() as $answer) {
                 if (in_array($answer->getId(), $this->getAnswerIdsFromRequest($request->request->get('result')['resultAnswers']))
                     && !is_null($answer->getChildQuestions())

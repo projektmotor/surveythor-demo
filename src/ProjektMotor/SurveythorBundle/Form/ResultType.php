@@ -29,7 +29,7 @@ class ResultType extends AbstractType
                 'entry_options' => array(
                     'label' => false
                 ),
-                'attr' => array('class' => 'result-answer-prototype'),
+                'attr' => array('id' => 'result-answers'),
             ))
             ->add('submit', SubmitType::class)
         ;

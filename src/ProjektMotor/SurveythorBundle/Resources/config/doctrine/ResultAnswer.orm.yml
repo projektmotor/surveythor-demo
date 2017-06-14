@@ -26,10 +26,11 @@ PM\SurveythorBundle\Entity\ResultAnswer:
         parentAnswer:
             targetEntity: PM\SurveythorBundle\Entity\ResultAnswer
 
-    oneToMany:
         childAnswers:
             targetEntity: PM\SurveythorBundle\Entity\ResultAnswer
-            mappedBy: childAnswers
 
+    manyToMany:
+        answers:
+            targetEntity: PM\SurveythorBundle\Entity\Answer
 
     lifecycleCallbacks: {  }

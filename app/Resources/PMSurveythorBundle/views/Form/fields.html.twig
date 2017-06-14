@@ -88,9 +88,14 @@
             {{ form_errors(form) }}
         {%- endif -%}
         {% for child in form.children %}
-            {{ child.vars.value.question.text }}
-            {{- form_row(child) -}}
+            {% set parent = '' %}
+            {% if not child.vars.value.question.parentAnswer is null %}
+                {% set parent = child.vars.value.question.parentAnswer.id %}
+            {% endif %}
+            <div class="result_answers-question_answer" data-parent-id="{{ parent }}">
+                <b>{{ child.vars.value.question.text }}</b>
+                {{- form_row(child) -}}
+            </div>
         {% endfor %}
-        {{- form_rest(form) -}}
     </div>
 {% endblock %}

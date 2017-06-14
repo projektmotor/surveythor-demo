@@ -43,7 +43,8 @@ projektmotor.Survey = function (surveyParams) {
             $('body').delegate('.add-child-question', 'click', function(e) {
                 e.preventDefault();
                 var parentCollectionHolder = $(this).parents('.question-answer-prototype');
-                var index = $('#' + parentCollectionHolder.attr('id') + ' .add-child-question').index(this);
+                var panel = $(this).parents('.panel').first();
+                var index = parentCollectionHolder.children('.panel').index(panel);
                 var collectionHolderId = parentCollectionHolder.attr('id') + '_' + index + '_childQuestions';
                 var collectionHolder = $('#' + collectionHolderId);
 

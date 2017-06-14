@@ -3,6 +3,7 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PM\SurveythorBundle\Entity\Answer;
 
 /**
  * Question
@@ -30,9 +31,9 @@ class Question
     private $survey;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Answer
      */
-    private $parentAnswers;
+    private $parentAnswer;
 
     /**
      * @var string
@@ -156,28 +157,6 @@ class Question
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\Answer $answer
-     * @return Question
-     */
-    public function addParentAnswer(\PM\SurveythorBundle\Entity\Answer $answer)
-    {
-        if (!$this->parentAnswers->contains($answer)) {
-            $this->parentAnswers->add($answer);
-            $answer->addChildQuestion($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param \PM\SurveythorBundle\Entity\Answer $answer
-     */
-    public function removeParentAnswer(\PM\SurveythorBundle\Entity\Answer $answer)
-    {
-        $this->parentAnswers->removeElement($answer);
-    }
-
-    /**
      * Get type.
      *
      * @return type.
@@ -195,5 +174,25 @@ class Question
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * Get parentAnswer.
+     *
+     * @return parentAnswer.
+     */
+    public function getParentAnswer()
+    {
+        return $this->parentAnswer;
+    }
+
+    /**
+     * Set parentAnswer.
+     *
+     * @param parentAnswer the value to set.
+     */
+    public function setParentAnswer($parentAnswer)
+    {
+        $this->parentAnswer = $parentAnswer;
     }
 }

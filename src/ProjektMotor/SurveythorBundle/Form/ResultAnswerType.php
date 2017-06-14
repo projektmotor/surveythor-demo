@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use PM\SurveythorBundle\Entity\ResultAnswer;
@@ -32,7 +33,7 @@ class ResultAnswerType extends AbstractType
                 $question = $resultAnswer->getQuestion();
 
                 switch ($question->getType()) {
-                    case 'mc':
+                    case 'sc':
                         $form->add('answer', EntityType::class, array(
                             'label' => false,
                             'class' => Answer::class,
@@ -40,12 +41,45 @@ class ResultAnswerType extends AbstractType
                             'choices' => $question->getAnswers(),
                             'expanded' => true,
                             'attr' => array(
-                                'class' => 'multiple-choice-answers'
-                            )
+                                'class' => 'choice-answer'
+                            ),
+                            'choice_attr' => function ($val, $key, $index) {
+                                $parentAnswer = !is_null($val->getQuestion()->getParentAnswer())
+                                    ? $val->getQuestion()->getParentAnswer()->getId()
+                                    : null;
+
+                                return array(
+                                    'data-answer-id' => $val->getId()
+                                );
+                            }
+                        ));
+                        break;
+                    case 'mc':
+                        $form->add('answers', EntityType::class, array(
+                            'label' => false,
+                            'class' => Answer::class,
+                            'choice_label' => 'text',
+                            'choices' => $question->getAnswers(),
+                            'expanded' => true,
+                            'multiple' => true,
+                            'attr' => array(
+                                'class' => 'choice-answer'
+                            ),
+                            'choice_attr' => function ($val, $key, $index) {
+                                $parentAnswer = !is_null($val->getQuestion()->getParentAnswer())
+                                    ? $val->getQuestion()->getParentAnswer()->getId()
+                                    : null;
+
+                                return array(
+                                    'data-answer-id' => $val->getId()
+                                );
+                            }
                         ));
                         break;
                     default:
-                        $form->add('value', null, ['label' => false]);
+                        $form->add('value', TextType::class, array(
+                            'label' => false
+                        ));
                         break;
                 }
             }
@@ -57,9 +91,13 @@ class ResultAnswerType extends AbstractType
                         'label' => false,
                         'by_reference' => false,
                         'entry_options' => array(
-                            'label' => false
+                            'label' => false,
+                            'attr' => array(
+                            )
                         ),
-                        'attr' => array('class' => 'result-childanswer-prototype'),
+                        'attr' => array(
+                            'class' => 'question-childanswer'
+                        ),
                     ));
                 }
             }

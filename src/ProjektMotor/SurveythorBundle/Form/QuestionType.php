@@ -31,6 +31,7 @@ class QuestionType extends AbstractType
             ->add('type', ChoiceType::class, array(
                 'choices' => array(
                     'text question' => 'text',
+                    'single choice question' => 'sc',
                     'multiple choice question' => 'mc'
                 ),
                 'attr' => array(
@@ -47,7 +48,7 @@ class QuestionType extends AbstractType
                         'attr' => array('class' => 'title-field')
                 ));
 
-                if ($type == 'mc') {
+                if ($type == 'mc' || $type == 'sc') {
                     $form->add('answers', AnswerCollectionType::class, array(
                         'entry_type' => AnswerMultipleChoiceType::class,
                         'allow_add' => true,
