@@ -2,3 +2,4 @@ imports:
     - { resource: services/services-controller.yml }
     - { resource: services/services-repository.yml }
     - { resource: services/services-factory.yml }
+    - { resource: services/services-event.yml }

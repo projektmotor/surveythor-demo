@@ -4,3 +4,8 @@ services:
         factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
         arguments:
             - PM\SurveythorBundle\Entity\Survey
+    result_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
+        arguments:
+            - PM\SurveythorBundle\Entity\Result

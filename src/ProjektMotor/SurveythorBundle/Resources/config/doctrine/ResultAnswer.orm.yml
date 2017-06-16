@@ -11,6 +11,7 @@ PM\SurveythorBundle\Entity\ResultAnswer:
     fields:
         value:
             type: text
+            nullable: true
 
     manyToOne:
         result:
@@ -26,8 +27,12 @@ PM\SurveythorBundle\Entity\ResultAnswer:
         parentAnswer:
             targetEntity: PM\SurveythorBundle\Entity\ResultAnswer
 
+    oneToMany:
         childAnswers:
             targetEntity: PM\SurveythorBundle\Entity\ResultAnswer
+            mappedBy: childAnswers
+            cascade:
+                - persist
 
     manyToMany:
         answers:

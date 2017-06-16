@@ -3,6 +3,7 @@ namespace PM\SurveythorBundle\Controller;
 
 use QafooLabs\MVC\FormRequest;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatcher;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\Result;
 use PM\SurveythorBundle\Entity\ResultAnswer;
@@ -11,6 +12,7 @@ use PM\SurveythorBundle\Entity\Question;
 use PM\SurveythorBundle\Repository\SurveyRepository;
 use PM\SurveythorBundle\Form\ResultType;
 use PM\SurveythorBundle\Form\ResultAnswerType;
+use PM\SurveythorBundle\Event\ResultEvent;
 
 /**
  * ResultController
@@ -23,6 +25,7 @@ class ResultController
      */
     private $surveyRepository;
 
+    private $dispatcher;
 
     /**
      * __construct
@@ -30,9 +33,11 @@ class ResultController
      * @param SurveyRepository $surveyRepository
      */
     public function __construct(
-        SurveyRepository $surveyRepository
+        SurveyRepository $surveyRepository,
+        EventDispatcher $dispatcher
     ) {
         $this->surveyRepository = $surveyRepository;
+        $this->dispatcher = $dispatcher;
     }
 
     private function getAnswerIdsFromRequest($resultAnswers, $answerIds = null)
@@ -116,7 +121,7 @@ class ResultController
             );
         }
 
-        dump($formRequest->getValidData());
-        die();
+        $event = new ResultEvent($result);
+        $this->dispatcher->dispatch(ResultEvent::NAME, $event);
     }
 }

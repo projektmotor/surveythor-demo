@@ -31,7 +31,7 @@
         "symfony/monolog-bundle": "^3.0.2",
         "symfony/polyfill-apcu": "^1.0",
         "symfony/swiftmailer-bundle": "^2.3.10",
-        "symfony/symfony": "3.2.*",
+        "symfony/symfony": "3.3.*",
         "twig/twig": "^1.0||^2.0",
         "qafoolabs/no-framework-bundle": "^2.4",
         "koala-framework/composer-extra-assets": "^2.0"

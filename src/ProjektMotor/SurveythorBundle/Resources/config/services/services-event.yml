@@ -1,0 +1,7 @@
+services:
+    result_ready_listener:
+        class: PM\SurveythorBundle\Event\Listener\ResultReadyListener
+        tags:
+            - { name: kernel.event_listener, event: result.ready, method: onResultReady }
+        arguments:
+            - "@result_repository"
