@@ -2,7 +2,8 @@
 namespace PM\SurveythorBundle\Event;
 
 use PM\SurveythorBundle\Entity\Result;
-use Symfony\Component\EventDispatcher\Event;
+#use Symfony\Component\EventDispatcher\Event;
+use \Symfony\Component\HttpKernel\Event\GetResponseEvent as Event;
 
 /**
  * ResultEvent

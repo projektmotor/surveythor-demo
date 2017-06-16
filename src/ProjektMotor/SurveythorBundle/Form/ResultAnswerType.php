@@ -89,7 +89,7 @@ class ResultAnswerType extends AbstractType
                     $form->add('childAnswers', ResultAnswerCollectionType::class, array(
                         'entry_type' => ResultAnswerType::class,
                         'label' => false,
-                        'by_reference' => false,
+                        'by_reference' => true,
                         'entry_options' => array(
                             'label' => false,
                             'attr' => array(

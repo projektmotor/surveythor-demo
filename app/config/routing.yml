@@ -3,5 +3,5 @@ pm_surveythor:
     prefix:   /
 
 app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+    resource: '@AppBundle/Resources/config/routing.yml'
+    prefix:   /

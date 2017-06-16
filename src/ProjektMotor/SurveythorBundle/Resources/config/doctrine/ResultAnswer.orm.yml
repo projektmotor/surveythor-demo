@@ -26,11 +26,12 @@ PM\SurveythorBundle\Entity\ResultAnswer:
 
         parentAnswer:
             targetEntity: PM\SurveythorBundle\Entity\ResultAnswer
+            inversedBy: childAnswers
 
     oneToMany:
         childAnswers:
             targetEntity: PM\SurveythorBundle\Entity\ResultAnswer
-            mappedBy: childAnswers
+            mappedBy: parentAnswer
             cascade:
                 - persist
 

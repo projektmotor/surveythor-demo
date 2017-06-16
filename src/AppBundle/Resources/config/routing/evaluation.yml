@@ -1,0 +1,3 @@
+result_evaluation:
+    path: /{id}
+    defaults: { _controller: evaluation_controller:evaluateResultAction }

@@ -1,0 +1,3 @@
+evaluation:
+    resource: "@AppBundle/Resources/config/routing/evaluation.yml"
+    prefix: /evaluation

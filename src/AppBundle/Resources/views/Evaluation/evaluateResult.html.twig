@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+
+{% macro recursiveResultAnswer(resultAnswer, isChild = false) %}
+    {% if resultAnswer.value is not null %}
+        <p>
+            <b>{{ resultAnswer.question.text }}</b>
+            {{ resultAnswer.value }}
+        </p>
+    {% endif %}
+
+    {% if resultAnswer.answer is not null %}
+        <p>
+            <b>{{ resultAnswer.answer.question.text }}</b>
+            {{ resultAnswer.answer.text }}
+        </p>
+        {% if resultAnswer.childAnswers is not null %}
+            {% for childAnswer in resultAnswer.childAnswers %}
+                {{ _self.recursiveResultAnswer(childAnswer, true) }}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+
+    {% if resultAnswer.answers is not null %}
+        {% for answer in resultAnswer.answers %}
+            <p>
+                <b>{{ answer.question.text }}</b>
+                {{ answer.text }}
+            </p>
+
+            {% if answer.childQuestions is not null and resultAnswer.childAnswers is not null %}
+                {% for childQuestion in answer.childQuestions %}
+                    {% for childAnswer in resultAnswer.childAnswers %}
+                        {% if childAnswer.question.id == childQuestion.id %}
+                            {{ _self.recursiveResultAnswer(childAnswer) }}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+
+
+            {% if resultAnswer.childAnswers is not null %}
+                {% for childAnswer in resultAnswer.childAnswers %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if isChild == false %}
+        <hr />
+    {% endif %}
+{% endmacro %}
+
+
+{% block body %}
+    {% for resultAnswer in result.resultAnswers %}
+        {{ _self.recursiveResultAnswer(resultAnswer) }}
+    {% endfor %}
+{% endblock %}

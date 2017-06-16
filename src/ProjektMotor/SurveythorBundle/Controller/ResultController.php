@@ -123,5 +123,7 @@ class ResultController
 
         $event = new ResultEvent($result);
         $this->dispatcher->dispatch(ResultEvent::NAME, $event);
+
+        return $event->getResponse();
     }
 }
