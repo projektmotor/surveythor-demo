@@ -1,0 +1,10 @@
+PM\SurveythorBundle\Entity\ResultAnswerText:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\ResultAnswerTextRepository
+
+    fields:
+        value:
+            type: text
+
+    lifecycleCallbacks: {  }

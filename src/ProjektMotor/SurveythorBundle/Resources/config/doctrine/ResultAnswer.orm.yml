@@ -2,6 +2,15 @@ PM\SurveythorBundle\Entity\ResultAnswer:
     type: entity
     table: null
     repositoryClass: PM\SurveythorBundle\Repository\ResultAnswerRepository
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discr
+        type: string
+    discriminatorMap:
+        mc: ResultAnswerMultipleChoice
+        text: ResultAnswerText
+        sc: ResultAnswerSingleChoice
+
     id:
         id:
             type: integer
@@ -9,8 +18,8 @@ PM\SurveythorBundle\Entity\ResultAnswer:
             generator:
                 strategy: AUTO
     fields:
-        value:
-            type: text
+        position:
+            type: integer
             nullable: true
 
     manyToOne:
@@ -20,9 +29,6 @@ PM\SurveythorBundle\Entity\ResultAnswer:
 
         question:
             targetEntity: PM\SurveythorBundle\Entity\Question
-
-        answer:
-            targetEntity: PM\SurveythorBundle\Entity\Answer
 
         parentAnswer:
             targetEntity: PM\SurveythorBundle\Entity\ResultAnswer
@@ -35,8 +41,4 @@ PM\SurveythorBundle\Entity\ResultAnswer:
             cascade:
                 - persist
 
-    manyToMany:
-        answers:
-            targetEntity: PM\SurveythorBundle\Entity\Answer
-
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

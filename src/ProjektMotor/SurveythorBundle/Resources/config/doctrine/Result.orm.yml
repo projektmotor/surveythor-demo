@@ -16,6 +16,7 @@ PM\SurveythorBundle\Entity\Result:
         resultAnswers:
             targetEntity: PM\SurveythorBundle\Entity\ResultAnswer
             mappedBy: result
+            orderBy: { 'position': 'ASC'}
             cascade:
                 - persist
 

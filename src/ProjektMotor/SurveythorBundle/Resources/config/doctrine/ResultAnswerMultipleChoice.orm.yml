@@ -1,0 +1,10 @@
+PM\SurveythorBundle\Entity\ResultAnswerMultipleChoice:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\ResultAnswerMultipleChoiceRepository
+
+    manyToMany:
+        answers:
+            targetEntity: PM\SurveythorBundle\Entity\Answer
+
+    lifecycleCallbacks: {  }

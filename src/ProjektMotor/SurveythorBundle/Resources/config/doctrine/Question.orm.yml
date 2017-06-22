@@ -31,4 +31,4 @@ PM\SurveythorBundle\Entity\Question:
             targetEntity: PM\SurveythorBundle\Entity\Answer
             inversedBy: childQuestions
 
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

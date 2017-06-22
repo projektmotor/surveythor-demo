@@ -2,14 +2,13 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\Result;
 use PM\SurveythorBundle\Entity\Qestion;
 
 /**
  * ResultAnswer
  */
-class ResultAnswer
+abstract class ResultAnswer
 {
     /**
      * @var int
@@ -17,26 +16,9 @@ class ResultAnswer
     private $id;
 
     /**
-     * @var string
-     */
-    private $value;
-
-    /**
      * @var Result
      */
     private $result;
-
-    /**
-     * @var ArrayCollection
-     */
-    private $answers;
-
-    /**
-     * answer
-     *
-     * @var Answer
-     */
-    private $answer;
 
     /**
      * @var Question
@@ -53,11 +35,15 @@ class ResultAnswer
      */
     private $parentAnswer;
 
+    /**
+     * @var integer
+     */
+    private $position;
+
 
     public function __construct()
     {
         $this->childAnswers = new ArrayCollection();
-        $this->answers = new ArrayCollection();
     }
 
     /**
@@ -68,30 +54,6 @@ class ResultAnswer
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set value
-     *
-     * @param string $value
-     *
-     * @return ResultAnswer
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get value
-     *
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
     }
 
     /**
@@ -112,28 +74,6 @@ class ResultAnswer
     public function setResult(Result $result)
     {
         $this->result = $result;
-    }
-
-    /**
-     * Get answers.
-     *
-     * @return answers.
-     */
-    public function getAnswers()
-    {
-        return $this->answers;
-    }
-
-    public function addAnswer(Answer $answer)
-    {
-        if (!$this->answers->contains($answer)) {
-            $this->answers->add($answer);
-        }
-    }
-
-    public function removeAnswer(Answer $answer)
-    {
-        $this->answers->remove($answer);
     }
 
     /**
@@ -200,22 +140,22 @@ class ResultAnswer
     }
 
     /**
-     * Get answer.
+     * Get position.
      *
-     * @return answer.
+     * @return position.
      */
-    public function getAnswer()
+    public function getPosition()
     {
-        return $this->answer;
+        return $this->position;
     }
 
     /**
-     * Set answer.
+     * Set position.
      *
-     * @param answer the value to set.
+     * @param position the value to set.
      */
-    public function setAnswer($answer)
+    public function setPosition($position)
     {
-        $this->answer = $answer;
+        $this->position = $position;
     }
 }

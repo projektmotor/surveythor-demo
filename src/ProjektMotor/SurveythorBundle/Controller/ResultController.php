@@ -6,7 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatcher;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\Result;
-use PM\SurveythorBundle\Entity\ResultAnswer;
+use PM\SurveythorBundle\Entity\ResultAnswerText;
+use PM\SurveythorBundle\Entity\ResultAnswerMultipleChoice;
+use PM\SurveythorBundle\Entity\ResultAnswerSingleChoice;
 use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\Question;
 use PM\SurveythorBundle\Repository\SurveyRepository;
@@ -73,6 +75,22 @@ class ResultController
             }
         }
         $result->addResultAnswer($newResultAnswer);
+        $newResultAnswer->setPosition($result->getResultAnswers()->count());
+    }
+
+    private function resultAnswerFactoryMethod($question)
+    {
+        switch ($question->getType()) {
+            case 'mc':
+                return new ResultAnswerMultipleChoice();
+            break;
+            case 'sc':
+                return new ResultAnswerSingleChoice();
+            break;
+            case 'text':
+                return new ResultAnswerText();
+            break;
+        }
     }
 
     private function setResultAnswers(
@@ -82,18 +100,19 @@ class ResultController
         $resultAnswer = null
     ) {
         if (null === $resultAnswer) {
-            $resultAnswer = new ResultAnswer();
+            $resultAnswer = $this->resultAnswerFactoryMethod($question);
             $resultAnswer->setQuestion($question);
             $this->addResultAnswer($result, $resultAnswer);
         }
 
         if ($question->getType() == 'mc' || $question->getType() == 'sc') {
             foreach ($question->getAnswers() as $answer) {
-                if (in_array($answer->getId(), $this->getAnswerIdsFromRequest($request->request->get('result')['resultAnswers']))
-                    && !is_null($answer->getChildQuestions())
-                ) {
+                if (in_array(
+                    $answer->getId(),
+                    $this->getAnswerIdsFromRequest($request->request->get('result')['resultAnswers'])
+                ) && !is_null($answer->getChildQuestions())) {
                     foreach ($answer->getChildQuestions() as $question) {
-                        $childAnswer = new ResultAnswer();
+                        $childAnswer = $this->resultAnswerFactoryMethod($question);
                         $childAnswer->setQuestion($question);
                         $resultAnswer->addChildAnswer($childAnswer);
 

@@ -1,14 +1,14 @@
 {% extends '::base.html.twig' %}
 
 {% macro recursiveResultAnswer(resultAnswer, isChild = false) %}
-    {% if resultAnswer.value is not null %}
+    {% if resultAnswer.value is defined %}
         <p>
             <b>{{ resultAnswer.question.text }}</b>
             {{ resultAnswer.value }}
         </p>
     {% endif %}
 
-    {% if resultAnswer.answer is not null %}
+    {% if resultAnswer.answer is defined %}
         <p>
             <b>{{ resultAnswer.answer.question.text }}</b>
             {{ resultAnswer.answer.text }}
@@ -20,7 +20,7 @@
         {% endif %}
     {% endif %}
 
-    {% if resultAnswer.answers is not null %}
+    {% if resultAnswer.answers is defined %}
         {% for answer in resultAnswer.answers %}
             <p>
                 <b>{{ answer.question.text }}</b>
@@ -36,7 +36,6 @@
                     {% endfor %}
                 {% endfor %}
             {% endif %}
-
 
             {% if resultAnswer.childAnswers is not null %}
                 {% for childAnswer in resultAnswer.childAnswers %}
