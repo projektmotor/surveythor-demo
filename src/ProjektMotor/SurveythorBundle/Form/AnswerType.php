@@ -9,15 +9,15 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use PM\SurveythorBundle\Entity\ResultAnswer;
 use PM\SurveythorBundle\Entity\Answer;
+use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\Question;
 
 /**
- * ResultAnswerType
+ * AnswerType
  * @author Rombo Kraft <kraft@projektmotor.de>
  */
-class ResultAnswerType extends AbstractType
+class AnswerType extends AbstractType
 {
     const FORM_NAME = 'pm_surveythor_result_answer';
 
@@ -27,25 +27,25 @@ class ResultAnswerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $resultAnswer = $event->getData();
+            $answer = $event->getData();
             $form = $event->getForm();
-            if ($resultAnswer) {
-                $question = $resultAnswer->getQuestion();
+            if ($answer) {
+                $question = $answer->getQuestion();
 
                 switch ($question->getType()) {
                     case 'sc':
-                        $form->add('answer', EntityType::class, array(
+                        $form->add('choice', EntityType::class, array(
                             'label' => false,
-                            'class' => Answer::class,
+                            'class' => Choice::class,
                             'choice_label' => 'text',
-                            'choices' => $question->getAnswers(),
+                            'choices' => $question->getChoices(),
                             'expanded' => true,
                             'attr' => array(
                                 'class' => 'choice-answer'
                             ),
                             'choice_attr' => function ($val, $key, $index) {
-                                $parentAnswer = !is_null($val->getQuestion()->getParentAnswer())
-                                    ? $val->getQuestion()->getParentAnswer()->getId()
+                                $parentChoice = !is_null($val->getQuestion()->getParentChoice())
+                                    ? $val->getQuestion()->getParentChoice()->getId()
                                     : null;
 
                                 return array(
@@ -55,19 +55,19 @@ class ResultAnswerType extends AbstractType
                         ));
                         break;
                     case 'mc':
-                        $form->add('answers', EntityType::class, array(
+                        $form->add('choices', EntityType::class, array(
                             'label' => false,
-                            'class' => Answer::class,
+                            'class' => Choice::class,
                             'choice_label' => 'text',
-                            'choices' => $question->getAnswers(),
+                            'choices' => $question->getChoices(),
                             'expanded' => true,
                             'multiple' => true,
                             'attr' => array(
                                 'class' => 'choice-answer'
                             ),
                             'choice_attr' => function ($val, $key, $index) {
-                                $parentAnswer = !is_null($val->getQuestion()->getParentAnswer())
-                                    ? $val->getQuestion()->getParentAnswer()->getId()
+                                $parentChoice = !is_null($val->getQuestion()->getParentChoice())
+                                    ? $val->getQuestion()->getParentChoice()->getId()
                                     : null;
 
                                 return array(
@@ -84,10 +84,10 @@ class ResultAnswerType extends AbstractType
                 }
             }
 
-            if (!is_null($resultAnswer->getChildAnswers())) {
-                foreach ($resultAnswer->getChildAnswers() as $childAnswer) {
-                    $form->add('childAnswers', ResultAnswerCollectionType::class, array(
-                        'entry_type' => ResultAnswerType::class,
+            if (!is_null($answer->getChildAnswers())) {
+                foreach ($answer->getChildAnswers() as $childAnswer) {
+                    $form->add('childAnswers', AnswerCollectionType::class, array(
+                        'entry_type' => AnswerType::class,
                         'label' => false,
                         'by_reference' => true,
                         'entry_options' => array(
@@ -111,7 +111,7 @@ class ResultAnswerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => ResultAnswer::class
+            'data_class' => Answer::class
         ));
     }
 

@@ -1,11 +1,14 @@
 <?php
-
 namespace PM\SurveythorBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use PM\SurveythorBundle\Entity\Result;
+use PM\SurveythorBundle\Entity\Qestion;
 
 /**
  * Answer
  */
-class Answer
+abstract class Answer
 {
     /**
      * @var int
@@ -13,35 +16,36 @@ class Answer
     private $id;
 
     /**
-     * @var string
+     * @var Result
      */
-    private $text;
+    private $result;
 
     /**
-     * @var int
-     */
-    private $value;
-
-    /**
-     * @var string
-     */
-    private $event;
-
-    /**
-     * @var \PM\SurveythorBundle\Entity\Question
+     * @var Question
      */
     private $question;
 
     /**
-     * @var \PM\SurveythorBundle\Entity\Question
+     * @var Answer
      */
-    private $childQuestions;
+    private $childAnswers;
+
+    /**
+     * @var Answer
+     */
+    private $parentAnswer;
+
+    /**
+     * @var integer
+     */
+    private $position;
 
 
     public function __construct()
     {
-        $this->childQuestions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->childAnswers = new ArrayCollection();
     }
+
     /**
      * Get id
      *
@@ -53,75 +57,23 @@ class Answer
     }
 
     /**
-     * Set text
+     * Get result.
      *
-     * @param string $text
-     *
-     * @return Answer
+     * @return result.
      */
-    public function setText($text)
+    public function getResult()
     {
-        $this->text = $text;
-
-        return $this;
+        return $this->result;
     }
 
     /**
-     * Get text
+     * Set result.
      *
-     * @return string
+     * @param result the value to set.
      */
-    public function getText()
+    public function setResult(Result $result)
     {
-        return $this->text;
-    }
-
-    /**
-     * Set value
-     *
-     * @param integer $value
-     *
-     * @return Answer
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get value
-     *
-     * @return int
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * Set event
-     *
-     * @param string $event
-     *
-     * @return Answer
-     */
-    public function setEvent($event)
-    {
-        $this->event = $event;
-
-        return $this;
-    }
-
-    /**
-     * Get event
-     *
-     * @return string
-     */
-    public function getEvent()
-    {
-        return $this->event;
+        $this->result = $result;
     }
 
     /**
@@ -139,50 +91,71 @@ class Answer
      *
      * @param question the value to set.
      */
-    public function setQuestion($question)
+    public function setQuestion(Question $question)
     {
         $this->question = $question;
     }
 
     /**
-     * Get childQuestions.
+     * Get childAnswers.
      *
-     * @return childQuestions.
+     * @return childAnswers.
      */
-    public function getChildQuestions()
+    public function getChildAnswers()
     {
-        return $this->childQuestions;
+        return $this->childAnswers;
     }
 
-    /**
-     * Set childQuestions.
-     *
-     * @param childQuestions the value to set.
-     */
-    public function setChildQuestions($childQuestions)
+    public function addChildAnswer(Answer $childAnswer)
     {
-        $this->childQuestions = $childQuestions;
-    }
-
-    /**
-     * @param \PM\SurveythorBundle\Entity\Question $question
-     * @return Answer
-     */
-    public function addChildQuestion(\PM\SurveythorBundle\Entity\Question $question)
-    {
-        if (!$this->childQuestions->contains($question)) {
-            $this->childQuestions->add($question);
-            $question->setParentAnswer($this);
+        if (!$this->childAnswers->contains($childAnswer)) {
+            $this->childAnswers->add($childAnswer);
+            $childAnswer->setParentAnswer($this);
         }
+    }
 
-        return $this;
+    public function removeChildAnswer(Answer $childAnswer)
+    {
+        $this->childAnswers->remove($childAnswer);
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\Question $question
+     * Get parentAnswer.
+     *
+     * @return parentAnswer.
      */
-    public function removeChildQuestion(\PM\SurveythorBundle\Entity\Question $question)
+    public function getParentAnswer()
     {
-        $this->childQuestions->removeElement($question);
+        return $this->parentAnswer;
+    }
+
+    /**
+     * Set parentAnswer.
+     *
+     * @param parentAnswer the value to set.
+     */
+    public function setParentAnswer(Answer $parentAnswer)
+    {
+        $this->parentAnswer = $parentAnswer;
+    }
+
+    /**
+     * Get position.
+     *
+     * @return position.
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set position.
+     *
+     * @param position the value to set.
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
     }
 }

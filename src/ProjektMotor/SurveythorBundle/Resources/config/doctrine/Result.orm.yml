@@ -13,8 +13,8 @@ PM\SurveythorBundle\Entity\Result:
             type: datetimetz
 
     oneToMany:
-        resultAnswers:
-            targetEntity: PM\SurveythorBundle\Entity\ResultAnswer
+        answers:
+            targetEntity: PM\SurveythorBundle\Entity\Answer
             mappedBy: result
             orderBy: { 'position': 'ASC'}
             cascade:

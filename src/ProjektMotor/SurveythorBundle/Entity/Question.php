@@ -3,7 +3,7 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\Answer;
+use PM\SurveythorBundle\Entity\Choice;
 
 /**
  * Question
@@ -23,7 +23,7 @@ class Question
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $answers;
+    private $choices;
 
     /**
      * @var \PM\SurveythorBundle\Entity\Survey
@@ -31,9 +31,9 @@ class Question
     private $survey;
 
     /**
-     * @var Answer
+     * @var Choice
      */
-    private $parentAnswer;
+    private $parentChoice;
 
     /**
      * @var string
@@ -43,8 +43,7 @@ class Question
 
     public function __construct()
     {
-        $this->answers = new ArrayCollection();
-        $this->parentAnswers = new ArrayCollection();
+        $this->choices = new ArrayCollection();
     }
 
 
@@ -83,35 +82,35 @@ class Question
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\Answer $answer
+     * @param \PM\SurveythorBundle\Entity\Choice $choice
      * @return Question
      */
-    public function addAnswer(\PM\SurveythorBundle\Entity\Answer $answer)
+    public function addChoice(\PM\SurveythorBundle\Entity\Choice $choice)
     {
-        if (!$this->answers->contains($answer)) {
-            $this->answers->add($answer);
-            $answer->setQuestion($this);
+        if (!$this->choices->contains($choice)) {
+            $this->choices->add($choice);
+            $choice->setQuestion($this);
         }
 
         return $this;
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\Answer $answer
+     * @param \PM\SurveythorBundle\Entity\Choice $choice
      */
-    public function removeAnswer(\PM\SurveythorBundle\Entity\Answer $answer)
+    public function removeChoice(\PM\SurveythorBundle\Entity\Choice $choice)
     {
-        $this->answers->removeElement($answer);
+        $this->choices->removeElement($choice);
     }
 
     /**
-     * Get answers.
+     * Get choices.
      *
-     * @return answers.
+     * @return choices.
      */
-    public function getAnswers()
+    public function getChoices()
     {
-        return $this->answers;
+        return $this->choices;
     }
 
     /**
@@ -137,23 +136,23 @@ class Question
     }
 
     /**
-     * Get parentAnswers.
+     * Get parentChoice.
      *
-     * @return parentAnswers.
+     * @return parentChoice.
      */
-    public function getParentAnswers()
+    public function getParentChoice()
     {
-        return $this->parentAnswers;
+        return $this->parentChoice;
     }
 
     /**
-     * Set parentAnswers.
+     * Set parentChoice.
      *
-     * @param parentAnswers the value to set.
+     * @param parentChoice the value to set.
      */
-    public function setParentAnswers($parentAnswers)
+    public function setParentChoice($parentChoice)
     {
-        $this->parentAnswers = $parentAnswers;
+        $this->parentChoice = $parentChoice;
     }
 
     /**
@@ -174,25 +173,5 @@ class Question
     public function setType($type)
     {
         $this->type = $type;
-    }
-
-    /**
-     * Get parentAnswer.
-     *
-     * @return parentAnswer.
-     */
-    public function getParentAnswer()
-    {
-        return $this->parentAnswer;
-    }
-
-    /**
-     * Set parentAnswer.
-     *
-     * @param parentAnswer the value to set.
-     */
-    public function setParentAnswer($parentAnswer)
-    {
-        $this->parentAnswer = $parentAnswer;
     }
 }

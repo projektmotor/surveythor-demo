@@ -16,8 +16,8 @@ PM\SurveythorBundle\Entity\Question:
             length: 255
 
     oneToMany:
-        answers:
-            targetEntity: PM\SurveythorBundle\Entity\Answer
+        choices:
+            targetEntity: PM\SurveythorBundle\Entity\Choice
             mappedBy: question
             cascade:
                 - persist
@@ -27,8 +27,8 @@ PM\SurveythorBundle\Entity\Question:
             targetEntity: PM\SurveythorBundle\Entity\Survey
             inversedBy: questions
 
-        parentAnswer:
-            targetEntity: PM\SurveythorBundle\Entity\Answer
+        parentChoice:
+            targetEntity: PM\SurveythorBundle\Entity\Choice
             inversedBy: childQuestions
 
     lifecycleCallbacks: {}

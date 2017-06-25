@@ -38,7 +38,7 @@
 {% endblock %}
 
 
-{% block answer_collection_widget %}
+{% block choice_collection_widget %}
     {% if prototype is defined %}
         {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
     {% endif %}
@@ -82,15 +82,15 @@
     </div>
 {% endblock %}
 
-{% block result_answer_collection_widget %}
+{% block answer_collection_widget %}
     <div {{ block('widget_container_attributes') }}>
         {%- if form.parent is empty -%}
             {{ form_errors(form) }}
         {%- endif -%}
         {% for child in form.children %}
             {% set parent = '' %}
-            {% if not child.vars.value.question.parentAnswer is null %}
-                {% set parent = child.vars.value.question.parentAnswer.id %}
+            {% if not child.vars.value.question.parentChoice is null %}
+                {% set parent = child.vars.value.question.parentChoice.id %}
             {% endif %}
             <div class="result_answers-question_answer" data-parent-id="{{ parent }}">
                 <b>{{ child.vars.value.question.text }}</b>

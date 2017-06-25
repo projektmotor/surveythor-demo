@@ -1,44 +1,44 @@
 {% extends '::base.html.twig' %}
 
-{% macro recursiveResultAnswer(resultAnswer, isChild = false) %}
-    {% if resultAnswer.value is defined %}
+{% macro recursiveAnswer(answer, isChild = false) %}
+    {% if answer.value is defined %}
         <p>
-            <b>{{ resultAnswer.question.text }}</b>
-            {{ resultAnswer.value }}
+            <b>{{ answer.question.text }}</b>
+            {{ answer.value }}
         </p>
     {% endif %}
 
-    {% if resultAnswer.answer is defined %}
+    {% if answer.choice is defined %}
         <p>
-            <b>{{ resultAnswer.answer.question.text }}</b>
-            {{ resultAnswer.answer.text }}
+            <b>{{ answer.choice.question.text }}</b>
+            {{ answer.choice.text }}
         </p>
-        {% if resultAnswer.childAnswers is not null %}
-            {% for childAnswer in resultAnswer.childAnswers %}
-                {{ _self.recursiveResultAnswer(childAnswer, true) }}
+        {% if answer.childAnswers is not null %}
+            {% for childAnswer in answer.childAnswers %}
+                {{ _self.recursiveAnswer(childAnswer, true) }}
             {% endfor %}
         {% endif %}
     {% endif %}
 
-    {% if resultAnswer.answers is defined %}
-        {% for answer in resultAnswer.answers %}
+    {% if answer.choices is defined %}
+        {% for choice in answer.choices %}
             <p>
-                <b>{{ answer.question.text }}</b>
-                {{ answer.text }}
+                <b>{{ choice.question.text }}</b>
+                {{ choice.text }}
             </p>
 
-            {% if answer.childQuestions is not null and resultAnswer.childAnswers is not null %}
-                {% for childQuestion in answer.childQuestions %}
-                    {% for childAnswer in resultAnswer.childAnswers %}
+            {% if choice.childQuestions is not null and answer.childAnswers is not null %}
+                {% for childQuestion in choice.childQuestions %}
+                    {% for childAnswer in answer.childAnswers %}
                         {% if childAnswer.question.id == childQuestion.id %}
-                            {{ _self.recursiveResultAnswer(childAnswer) }}
+                            {{ _self.recursiveAnswer(childAnswer) }}
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
             {% endif %}
 
-            {% if resultAnswer.childAnswers is not null %}
-                {% for childAnswer in resultAnswer.childAnswers %}
+            {% if answer.childAnswers is not null %}
+                {% for childAnswer in answer.childAnswers %}
                 {% endfor %}
             {% endif %}
         {% endfor %}
@@ -50,7 +50,7 @@
 
 
 {% block body %}
-    {% for resultAnswer in result.resultAnswers %}
-        {{ _self.recursiveResultAnswer(resultAnswer) }}
+    {% for answer in result.answers %}
+        {{ _self.recursiveAnswer(answer) }}
     {% endfor %}
 {% endblock %}

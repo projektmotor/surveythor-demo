@@ -86,7 +86,7 @@ projektmotor.Survey = function (surveyParams) {
                 var collectionHolder = $(this).closest('.question-answer-prototype');
                 var link = collectionHolder.find('a.add-answer');
 
-                helpers.addFormFromPrototype(collectionHolder, '__answer__');
+                helpers.addFormFromPrototype(collectionHolder, '__choice__');
                 $(collectionHolder).find('.add-child-question').css('display', 'inline-block');
                 link.detach();
                 collectionHolder.append(link);

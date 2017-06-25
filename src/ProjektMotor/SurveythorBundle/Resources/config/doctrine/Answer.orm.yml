@@ -2,6 +2,15 @@ PM\SurveythorBundle\Entity\Answer:
     type: entity
     table: null
     repositoryClass: PM\SurveythorBundle\Repository\AnswerRepository
+    inheritanceType: JOINED
+    discriminatorColumn:
+        name: discr
+        type: string
+    discriminatorMap:
+        mc: MultipleChoiceAnswer
+        text: TextAnswer
+        sc: SingleChoiceAnswer
+
     id:
         id:
             type: integer
@@ -9,29 +18,27 @@ PM\SurveythorBundle\Entity\Answer:
             generator:
                 strategy: AUTO
     fields:
-        text:
-            type: text
-        value:
+        position:
             type: integer
-        event:
-            type: string
-            length: 255
             nullable: true
 
     manyToOne:
-        question:
-            targetEntity: PM\SurveythorBundle\Entity\Question
+        result:
+            targetEntity: PM\SurveythorBundle\Entity\Result
             inversedBy: answers
 
+        question:
+            targetEntity: PM\SurveythorBundle\Entity\Question
+
+        parentAnswer:
+            targetEntity: PM\SurveythorBundle\Entity\Answer
+            inversedBy: childAnswers
 
     oneToMany:
-        childQuestions:
-            targetEntity: PM\SurveythorBundle\Entity\Question
+        childAnswers:
+            targetEntity: PM\SurveythorBundle\Entity\Answer
             mappedBy: parentAnswer
             cascade:
                 - persist
-            joinTable:
-                name: childanswer_parentquestion
 
-
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

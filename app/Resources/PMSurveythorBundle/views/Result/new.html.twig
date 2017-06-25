@@ -6,11 +6,11 @@
     <div id="result">
         {{ form_start(form) }}
         {#
-        {% for resultAnswer in form.resultAnswers %}
+        {% for answer in form.answers %}
             <div>
-                {% set question = resultAnswer.vars.value.question %}
+                {% set question = answer.vars.value.question %}
                 {{ question.text }}
-                {{ form_row(resultAnswer) }}
+                {{ form_row(answer) }}
             </div>
         {% endfor %}
         #}

@@ -3,9 +3,9 @@
 namespace PM\SurveythorBundle\Entity;
 
 /**
- * ResultAnswerText
+ * TextAnswer
  */
-class ResultAnswerText extends ResultAnswer
+class TextAnswer extends Answer
 {
     /**
      * @var string
@@ -17,7 +17,7 @@ class ResultAnswerText extends ResultAnswer
      *
      * @param string $value
      *
-     * @return ResultAnswerText
+     * @return TextAnswer
      */
     public function setValue($value)
     {

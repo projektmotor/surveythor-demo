@@ -20,14 +20,14 @@ class Result
     private $created;
 
     /**
-     * @var \PM\SurveythorBundle\Entity\ResultAnswer
+     * @var \PM\SurveythorBundle\Entity\Answer
      */
-    private $resultAnswers;
+    private $answers;
 
 
     public function __construct()
     {
-        $this->resultAnswers = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
 
     /**
@@ -69,26 +69,26 @@ class Result
         $this->setCreated(new \DateTime());
     }
 
-    public function removeResultAnswer(\PM\SurveythorBundle\Entity\ResultAnswer $resultAnswer)
+    public function removeAnswer(\PM\SurveythorBundle\Entity\Answer $answer)
     {
-        $this->resultAnswers->removeElement($resultAnswer);
+        $this->answers->removeElement($answer);
     }
 
-    public function addResultAnswer(\PM\SurveythorBundle\Entity\ResultAnswer $resultAnswer)
+    public function addAnswer(\PM\SurveythorBundle\Entity\Answer $answer)
     {
-        if (!$this->resultAnswers->contains($resultAnswer)) {
-            $this->resultAnswers->add($resultAnswer);
-            $resultAnswer->setResult($this);
+        if (!$this->answers->contains($answer)) {
+            $this->answers->add($answer);
+            $answer->setResult($this);
         }
     }
 
     /**
-     * Get resultAnswers.
+     * Get answers.
      *
-     * @return resultAnswers.
+     * @return answers.
      */
-    public function getResultAnswers()
+    public function getAnswers()
     {
-        return $this->resultAnswers;
+        return $this->answers;
     }
 }

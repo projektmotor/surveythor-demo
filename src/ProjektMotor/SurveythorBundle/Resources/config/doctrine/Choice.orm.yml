@@ -1,0 +1,33 @@
+PM\SurveythorBundle\Entity\Choice:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\ChoiceRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        text:
+            type: text
+        value:
+            type: integer
+
+    manyToOne:
+        question:
+            targetEntity: PM\SurveythorBundle\Entity\Question
+            inversedBy: choices
+
+
+    oneToMany:
+        childQuestions:
+            targetEntity: PM\SurveythorBundle\Entity\Question
+            mappedBy: parentChoice
+            cascade:
+                - persist
+            joinTable:
+                name: choice_parentquestion
+
+
+    lifecycleCallbacks: {  }

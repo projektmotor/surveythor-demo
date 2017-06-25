@@ -6,14 +6,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatcher;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\Result;
-use PM\SurveythorBundle\Entity\ResultAnswerText;
-use PM\SurveythorBundle\Entity\ResultAnswerMultipleChoice;
-use PM\SurveythorBundle\Entity\ResultAnswerSingleChoice;
-use PM\SurveythorBundle\Entity\Answer;
+use PM\SurveythorBundle\Entity\TextAnswer;
+use PM\SurveythorBundle\Entity\MultipleChoiceAnswer;
+use PM\SurveythorBundle\Entity\SingleChoiceAnswer;
+use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\Question;
 use PM\SurveythorBundle\Repository\SurveyRepository;
 use PM\SurveythorBundle\Form\ResultType;
-use PM\SurveythorBundle\Form\ResultAnswerType;
+use PM\SurveythorBundle\Form\AnswerType;
 use PM\SurveythorBundle\Event\ResultEvent;
 
 /**
@@ -42,81 +42,81 @@ class ResultController
         $this->dispatcher = $dispatcher;
     }
 
-    private function getAnswerIdsFromRequest($resultAnswers, $answerIds = null)
+    private function getChoiceIdsFromRequest($answers, $choiceIds = null)
     {
-        $answerIds = is_null($answerIds) ? array() : $answerIds;
+        $choiceIds = is_null($choiceIds) ? array() : $choiceIds;
 
-        if (!is_null($resultAnswers)) {
-            foreach ($resultAnswers as $resultAnswer) {
-                if (array_key_exists('answer', $resultAnswer)) {
-                    $answerIds[] = $resultAnswer['answer'];
+        if (!is_null($answers)) {
+            foreach ($answers as $answer) {
+                if (array_key_exists('choice', $answer)) {
+                    $choiceIds[] = $answer['choice'];
                 }
-                if (array_key_exists('answers', $resultAnswer)) {
-                    foreach ($resultAnswer['answers'] as $answerId) {
-                        $answerIds[] = $answerId;
+                if (array_key_exists('choices', $answer)) {
+                    foreach ($answer['choices'] as $id) {
+                        $choiceIds[] = $id;
                     }
                 }
 
-                if (array_key_exists('childAnswers', $resultAnswer)) {
-                    foreach ($resultAnswer['childAnswers'] as $childAnswer) {
-                        $answerIds = $this->getAnswerIdsFromRequest([0 => $childAnswer], $answerIds);
+                if (array_key_exists('childAnswers', $answer)) {
+                    foreach ($answer['childAnswers'] as $childAnswer) {
+                        $choiceIds = $this->getChoiceIdsFromRequest([0 => $childAnswer], $choiceIds);
                     }
                 }
             }
         }
-        return $answerIds;
+        return $choiceIds;
     }
 
-    private function addResultAnswer($result, $newResultAnswer)
+    private function addAnswer($result, $newAnswer)
     {
-        foreach ($result->getResultAnswers() as $resultAnswer) {
-            if ($resultAnswer->getQuestion()->getId() == $newResultAnswer->getQuestion()->getId()) {
+        foreach ($result->getAnswers() as $answer) {
+            if ($answer->getQuestion()->getId() == $newAnswer->getQuestion()->getId()) {
                 return;
             }
         }
-        $result->addResultAnswer($newResultAnswer);
-        $newResultAnswer->setPosition($result->getResultAnswers()->count());
+        $result->addAnswer($newAnswer);
+        $newAnswer->setPosition($result->getAnswers()->count());
     }
 
-    private function resultAnswerFactoryMethod($question)
+    private function answerFactoryMethod($question)
     {
         switch ($question->getType()) {
             case 'mc':
-                return new ResultAnswerMultipleChoice();
+                return new MultipleChoiceAnswer();
             break;
             case 'sc':
-                return new ResultAnswerSingleChoice();
+                return new SingleChoiceAnswer();
             break;
             case 'text':
-                return new ResultAnswerText();
+                return new TextAnswer();
             break;
         }
     }
 
-    private function setResultAnswers(
+    private function setAnswers(
         Result $result,
         Question $question,
         Request $request,
-        $resultAnswer = null
+        $answer = null
     ) {
-        if (null === $resultAnswer) {
-            $resultAnswer = $this->resultAnswerFactoryMethod($question);
-            $resultAnswer->setQuestion($question);
-            $this->addResultAnswer($result, $resultAnswer);
+        if (null === $answer) {
+            $answer = $this->answerFactoryMethod($question);
+            $answer->setQuestion($question);
+            $this->addAnswer($result, $answer);
         }
 
         if ($question->getType() == 'mc' || $question->getType() == 'sc') {
-            foreach ($question->getAnswers() as $answer) {
+            foreach ($question->getChoices() as $choice) {
                 if (in_array(
-                    $answer->getId(),
-                    $this->getAnswerIdsFromRequest($request->request->get('result')['resultAnswers'])
-                ) && !is_null($answer->getChildQuestions())) {
-                    foreach ($answer->getChildQuestions() as $question) {
-                        $childAnswer = $this->resultAnswerFactoryMethod($question);
+                    $choice->getId(),
+                    $this->getChoiceIdsFromRequest($request->request->get('result')['answers'])
+                ) && !is_null($choice->getChildQuestions())) {
+                    foreach ($choice->getChildQuestions() as $question) {
+                        $childAnswer = $this->answerFactoryMethod($question);
                         $childAnswer->setQuestion($question);
-                        $resultAnswer->addChildAnswer($childAnswer);
+                        $answer->addChildAnswer($childAnswer);
 
-                        $this->setResultAnswers($result, $question, $request, $childAnswer);
+                        $this->setAnswers($result, $question, $request, $childAnswer);
                     }
                 }
             }
@@ -128,7 +128,7 @@ class ResultController
         $result = new Result();
 
         foreach ($survey->getQuestions() as $question) {
-            $this->setResultAnswers($result, $question, $request);
+            $this->setAnswers($result, $question, $request);
         }
 
         if (!$formRequest->handle(ResultType::class, $result)

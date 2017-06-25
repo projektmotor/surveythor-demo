@@ -49,15 +49,15 @@ class QuestionType extends AbstractType
                 ));
 
                 if ($type == 'mc' || $type == 'sc') {
-                    $form->add('answers', AnswerCollectionType::class, array(
-                        'entry_type' => AnswerMultipleChoiceType::class,
+                    $form->add('choices', ChoiceCollectionType::class, array(
+                        'entry_type' => MultipleChoiceAnswerType::class,
                         'allow_add' => true,
                         'allow_delete' => true,
                         'by_reference' => false,
                         'entry_options' => array(
                             'label' => false
                         ),
-                        'prototype_name' => '__answer__',
+                        'prototype_name' => '__choice__',
                         'attr' => array('class' => 'question-answer-prototype')
                     ));
                 }

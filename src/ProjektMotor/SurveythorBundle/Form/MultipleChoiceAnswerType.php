@@ -4,15 +4,15 @@ namespace PM\SurveythorBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use PM\SurveythorBundle\Entity\Answer;
+use PM\SurveythorBundle\Entity\Choice;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
- * AnswerMultipleChoiceType
+ * MultipleChoiceAnswerType
  * @author Rombo Kraft <kraft@projektmotor.de>
  */
-class AnswerMultipleChoiceType extends AbstractType
+class MultipleChoiceAnswerType extends AbstractType
 {
     const FORM_NAME = 'pm_surveythor_answer';
 
@@ -49,7 +49,7 @@ class AnswerMultipleChoiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Answer::class
+            'data_class' => Choice::class
         ));
     }
 
