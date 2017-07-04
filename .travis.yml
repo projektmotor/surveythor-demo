@@ -12,4 +12,4 @@ before_script:
   - php bin/console doctrine:schema:update --env=test --force
 
 script:
-  - phpunit --coverage-text
+  - vendor/bin/phpunit --coverage-text
