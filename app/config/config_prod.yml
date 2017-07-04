@@ -1,7 +1,9 @@
 imports:
     - { resource: config.yml }
 
-#doctrine:
+doctrine:
+    dbal:
+        url: "%env(JAWSDB_URL)%"
 #    orm:
 #        metadata_cache_driver: apc
 #        result_cache_driver: apc
@@ -14,8 +16,8 @@ monolog:
             action_level: error
             handler: nested
         nested:
-            type: stream
-            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            type:  stream
+            path:  "php://stderr"
             level: debug
         console:
             type: console

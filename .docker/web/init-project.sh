@@ -47,7 +47,7 @@ if [ ! -d vendor ]; then
 
     php bin/console doctrine:database:drop --force
     php bin/console doctrine:database:create -n
-    php bin/console doctrine:schema:update -n
+    php bin/console doctrine:schema:update --force
 fi
 
 ##############################################################

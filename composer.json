@@ -41,6 +41,12 @@
         "symfony/phpunit-bridge": "^3.0"
     },
     "scripts": {
+        "compile": [
+            "rm web/app_dev.php",
+            "bin/console doctrine:database:drop --force",
+            "bin/console doctrine:database:create -n",
+            "bin/console doctrine:schema:update --force"
+        ],
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
