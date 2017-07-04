@@ -20,7 +20,7 @@ class Result
     private $created;
 
     /**
-     * @var \PM\SurveythorBundle\Entity\Answer
+     * @var Answer[]|ArrayCollection
      */
     private $answers;
 
@@ -69,12 +69,18 @@ class Result
         $this->setCreated(new \DateTime());
     }
 
-    public function removeAnswer(\PM\SurveythorBundle\Entity\Answer $answer)
+    /**
+     * @param Answer $answer
+     */
+    public function removeAnswer(Answer $answer)
     {
         $this->answers->removeElement($answer);
     }
 
-    public function addAnswer(\PM\SurveythorBundle\Entity\Answer $answer)
+    /**
+     * @param Answer $answer
+     */
+    public function addAnswer(Answer $answer)
     {
         if (!$this->answers->contains($answer)) {
             $this->answers->add($answer);
@@ -83,9 +89,7 @@ class Result
     }
 
     /**
-     * Get answers.
-     *
-     * @return answers.
+     * @return Answer[]|ArrayCollection
      */
     public function getAnswers()
     {

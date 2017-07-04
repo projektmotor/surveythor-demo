@@ -1,15 +1,13 @@
 <?php
 namespace PM\SurveythorBundle\Controller;
 
-use QafooLabs\MVC\FormRequest;
-use QafooLabs\MVC\RedirectRoute;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use PM\SurveythorBundle\Repository\SurveyRepository;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Factory\SurveyFactory;
 use PM\SurveythorBundle\Form\SurveyType;
-use PM\SurveythorBundle\Form\QuestionType;
+use PM\SurveythorBundle\Repository\SurveyRepository;
+use QafooLabs\MVC\FormRequest;
+use QafooLabs\MVC\RedirectRoute;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * SurveyController
@@ -28,8 +26,6 @@ class SurveyController
     private $surveyFactory;
 
     /**
-     * __construct
-     *
      * @param SurveyRepository $surveyRepository
      * @param SurveyFactory $surveyFactory
      */
@@ -57,6 +53,8 @@ class SurveyController
      * @param FormRequest $formRequest
      * @param Request $request
      * @param Survey $survey
+     *
+     * @return array|RedirectRoute
      */
     public function formAction(FormRequest $formRequest, Request $request, Survey $survey = null)
     {

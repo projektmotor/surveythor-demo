@@ -1,20 +1,21 @@
 <?php
 namespace PM\SurveythorBundle\Controller;
 
+use PM\SurveythorBundle\Entity\Answer;
+use PM\SurveythorBundle\Entity\Choice;
+use PM\SurveythorBundle\Entity\MultipleChoiceAnswer;
+use PM\SurveythorBundle\Entity\Question;
+use PM\SurveythorBundle\Entity\Result;
+use PM\SurveythorBundle\Entity\SingleChoiceAnswer;
+use PM\SurveythorBundle\Entity\Survey;
+use PM\SurveythorBundle\Entity\TextAnswer;
+use PM\SurveythorBundle\Event\ResultEvent;
+use PM\SurveythorBundle\Form\ResultType;
+use PM\SurveythorBundle\Repository\SurveyRepository;
 use QafooLabs\MVC\FormRequest;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatcher;
-use PM\SurveythorBundle\Entity\Survey;
-use PM\SurveythorBundle\Entity\Result;
-use PM\SurveythorBundle\Entity\TextAnswer;
-use PM\SurveythorBundle\Entity\MultipleChoiceAnswer;
-use PM\SurveythorBundle\Entity\SingleChoiceAnswer;
-use PM\SurveythorBundle\Entity\Choice;
-use PM\SurveythorBundle\Entity\Question;
-use PM\SurveythorBundle\Repository\SurveyRepository;
-use PM\SurveythorBundle\Form\ResultType;
-use PM\SurveythorBundle\Form\AnswerType;
-use PM\SurveythorBundle\Event\ResultEvent;
 
 /**
  * ResultController
@@ -33,6 +34,7 @@ class ResultController
      * __construct
      *
      * @param SurveyRepository $surveyRepository
+     * @param EventDispatcher $dispatcher
      */
     public function __construct(
         SurveyRepository $surveyRepository,
@@ -42,6 +44,12 @@ class ResultController
         $this->dispatcher = $dispatcher;
     }
 
+    /**
+     * @param Answer[]|null $answers
+     * @param int[]|null $choiceIds
+     *
+     * @return int[]|null
+     */
     private function getChoiceIdsFromRequest($answers, $choiceIds = null)
     {
         $choiceIds = is_null($choiceIds) ? array() : $choiceIds;
@@ -67,7 +75,11 @@ class ResultController
         return $choiceIds;
     }
 
-    private function addAnswer($result, $newAnswer)
+    /**
+     * @param Result $result
+     * @param Answer $newAnswer
+     */
+    private function addAnswer(Result $result, Answer $newAnswer)
     {
         foreach ($result->getAnswers() as $answer) {
             if ($answer->getQuestion()->getId() == $newAnswer->getQuestion()->getId()) {
@@ -78,7 +90,12 @@ class ResultController
         $newAnswer->setPosition($result->getAnswers()->count());
     }
 
-    private function answerFactoryMethod($question)
+    /**
+     * @param Question $question
+     *
+     * @return MultipleChoiceAnswer|SingleChoiceAnswer|TextAnswer
+     */
+    private function answerFactoryMethod(Question $question)
     {
         switch ($question->getType()) {
             case 'mc':
@@ -93,6 +110,12 @@ class ResultController
         }
     }
 
+    /**
+     * @param Result $result
+     * @param Question $question
+     * @param Request $request
+     * @param null $answer
+     */
     private function setAnswers(
         Result $result,
         Question $question,
@@ -123,6 +146,13 @@ class ResultController
         }
     }
 
+    /**
+     * @param FormRequest $formRequest
+     * @param Request $request
+     * @param Survey $survey
+     *
+     * @return array|Response
+     */
     public function newAction(FormRequest $formRequest, Request $request, Survey $survey)
     {
         $result = new Result();

@@ -2,8 +2,6 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\Result;
-use PM\SurveythorBundle\Entity\Qestion;
 
 /**
  * Answer
@@ -26,12 +24,12 @@ abstract class Answer
     private $question;
 
     /**
-     * @var Answer
+     * @var Answer[]|ArrayCollection
      */
     private $childAnswers;
 
     /**
-     * @var Answer
+     * @var Answer|ArrayCollection
      */
     private $parentAnswer;
 
@@ -59,7 +57,7 @@ abstract class Answer
     /**
      * Get result.
      *
-     * @return result.
+     * @return Result
      */
     public function getResult()
     {
@@ -69,7 +67,7 @@ abstract class Answer
     /**
      * Set result.
      *
-     * @param result the value to set.
+     * @param Result $result
      */
     public function setResult(Result $result)
     {
@@ -79,7 +77,7 @@ abstract class Answer
     /**
      * Get question.
      *
-     * @return question.
+     * @return Question
      */
     public function getQuestion()
     {
@@ -89,7 +87,7 @@ abstract class Answer
     /**
      * Set question.
      *
-     * @param question the value to set.
+     * @param Question $question
      */
     public function setQuestion(Question $question)
     {
@@ -99,13 +97,16 @@ abstract class Answer
     /**
      * Get childAnswers.
      *
-     * @return childAnswers.
+     * @return Answer[]|ArrayCollection childAnswers.
      */
     public function getChildAnswers()
     {
         return $this->childAnswers;
     }
 
+    /**
+     * @param Answer $childAnswer
+     */
     public function addChildAnswer(Answer $childAnswer)
     {
         if (!$this->childAnswers->contains($childAnswer)) {
@@ -114,6 +115,9 @@ abstract class Answer
         }
     }
 
+    /**
+     * @param Answer $childAnswer
+     */
     public function removeChildAnswer(Answer $childAnswer)
     {
         $this->childAnswers->remove($childAnswer);
@@ -122,7 +126,7 @@ abstract class Answer
     /**
      * Get parentAnswer.
      *
-     * @return parentAnswer.
+     * @return Answer parentAnswer.
      */
     public function getParentAnswer()
     {
@@ -132,7 +136,7 @@ abstract class Answer
     /**
      * Set parentAnswer.
      *
-     * @param parentAnswer the value to set.
+     * @param Answer $parentAnswer the value to set.
      */
     public function setParentAnswer(Answer $parentAnswer)
     {
@@ -142,7 +146,7 @@ abstract class Answer
     /**
      * Get position.
      *
-     * @return position.
+     * @return int
      */
     public function getPosition()
     {
@@ -152,7 +156,7 @@ abstract class Answer
     /**
      * Set position.
      *
-     * @param position the value to set.
+     * @param int $position the value to set.
      */
     public function setPosition($position)
     {

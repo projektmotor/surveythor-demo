@@ -1,11 +1,11 @@
 <?php
+
 namespace AppBundle\Event\Listener;
 
-use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use QafooLabs\MVC\RedirectRoute;
+use PM\SurveythorBundle\Event\ResultEvent;
 use PM\SurveythorBundle\Repository\ResultRepository;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * ResultReadyListener
@@ -17,6 +17,12 @@ class ResultReadyListener
 
     private $router;
 
+    /**
+     * ResultReadyListener constructor.
+     *
+     * @param ResultRepository $resultRepository
+     * @param Router $router
+     */
     public function __construct(
         ResultRepository $resultRepository,
         Router $router
@@ -25,7 +31,10 @@ class ResultReadyListener
         $this->router = $router;
     }
 
-    public function onResultReady(Event $event)
+    /**
+     * @param ResultEvent $event
+     */
+    public function onResultReady(ResultEvent $event)
     {
         $this->resultRepository->save($event->getResult());
 

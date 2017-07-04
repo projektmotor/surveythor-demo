@@ -33,7 +33,7 @@ class ResultRange
     private $event;
 
     /**
-     * @var \PM\SurveythorBundle\Entity\Survey
+     * @var Survey
      */
     private $survey;
 
@@ -99,7 +99,7 @@ class ResultRange
     /**
      * Set stop
      *
-     * @param integer $stop
+     * @param int $stop
      *
      * @return ResultRange
      */
@@ -147,7 +147,7 @@ class ResultRange
     /**
      * Get survey.
      *
-     * @return survey.
+     * @return Survey
      */
     public function getSurvey()
     {
@@ -157,7 +157,7 @@ class ResultRange
     /**
      * Set survey.
      *
-     * @param survey the value to set.
+     * @param Survey $survey
      */
     public function setSurvey($survey)
     {

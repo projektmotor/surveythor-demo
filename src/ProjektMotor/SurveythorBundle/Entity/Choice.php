@@ -2,6 +2,8 @@
 
 namespace PM\SurveythorBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Choice
  */
@@ -28,20 +30,20 @@ class Choice
     private $event;
 
     /**
-     * @var \PM\SurveythorBundle\Entity\Question
+     * @var Question
      */
     private $question;
 
     /**
-     * @var \PM\SurveythorBundle\Entity\Question
+     * @var Question[]|ArrayCollection
      */
     private $childQuestions;
 
-
     public function __construct()
     {
-        $this->childQuestions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->childQuestions = new ArrayCollection();
     }
+
     /**
      * Get id
      *
@@ -57,7 +59,7 @@ class Choice
      *
      * @param string $text
      *
-     * @return Answer
+     * @return Choice
      */
     public function setText($text)
     {
@@ -79,9 +81,9 @@ class Choice
     /**
      * Set value
      *
-     * @param integer $value
+     * @param int $value
      *
-     * @return Answer
+     * @return Choice
      */
     public function setValue($value)
     {
@@ -93,7 +95,7 @@ class Choice
     /**
      * Get value
      *
-     * @return int
+     * @return integer
      */
     public function getValue()
     {
@@ -105,7 +107,7 @@ class Choice
      *
      * @param string $event
      *
-     * @return Answer
+     * @return Choice
      */
     public function setEvent($event)
     {
@@ -127,7 +129,7 @@ class Choice
     /**
      * Get question.
      *
-     * @return question.
+     * @return Question
      */
     public function getQuestion()
     {
@@ -137,9 +139,9 @@ class Choice
     /**
      * Set question.
      *
-     * @param question the value to set.
+     * @param Question $question the value to set.
      */
-    public function setQuestion($question)
+    public function setQuestion(Question $question)
     {
         $this->question = $question;
     }
@@ -147,7 +149,7 @@ class Choice
     /**
      * Get childQuestions.
      *
-     * @return childQuestions.
+     * @return Question[]|ArrayCollection childQuestions.
      */
     public function getChildQuestions()
     {
@@ -157,7 +159,7 @@ class Choice
     /**
      * Set childQuestions.
      *
-     * @param childQuestions the value to set.
+     * @param Question[]|ArrayCollection $childQuestions
      */
     public function setChildQuestions($childQuestions)
     {
@@ -165,10 +167,11 @@ class Choice
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\Question $question
-     * @return Answer
+     * @param Question $question
+     *
+     * @return Choice
      */
-    public function addChildQuestion(\PM\SurveythorBundle\Entity\Question $question)
+    public function addChildQuestion(Question $question)
     {
         if (!$this->childQuestions->contains($question)) {
             $this->childQuestions->add($question);
@@ -179,9 +182,9 @@ class Choice
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\Question $question
+     * @param Question $question
      */
-    public function removeChildQuestion(\PM\SurveythorBundle\Entity\Question $question)
+    public function removeChildQuestion(Question $question)
     {
         $this->childQuestions->removeElement($question);
     }

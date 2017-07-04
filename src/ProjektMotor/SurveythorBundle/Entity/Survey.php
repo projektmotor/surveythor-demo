@@ -1,8 +1,9 @@
 <?php
+
 namespace PM\SurveythorBundle\Entity;
 
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Survey
@@ -25,12 +26,12 @@ class Survey
     private $description;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Question[]|ArrayCollection
      */
     private $questions;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var ResultRange[]|ArrayCollection
      */
     private $resultRanges;
 
@@ -99,10 +100,11 @@ class Survey
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\Question $question
+     * @param Question $question
+     *
      * @return Survey
      */
-    public function addQuestion(\PM\SurveythorBundle\Entity\Question $question)
+    public function addQuestion(Question $question)
     {
         if (!$this->questions->contains($question)) {
             $this->questions->add($question);
@@ -113,17 +115,15 @@ class Survey
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\Question $question
+     * @param Question $question
      */
-    public function removeQuestion(\PM\SurveythorBundle\Entity\Question $question)
+    public function removeQuestion(Question $question)
     {
         $this->questions->removeElement($question);
     }
 
     /**
-     * Get questions.
-     *
-     * @return questions.
+     * @return Question[]|ArrayCollection
      */
     public function getQuestions()
     {
@@ -133,7 +133,7 @@ class Survey
     /**
      * Get resultRanges.
      *
-     * @return resultRanges.
+     * @return ResultRange[]|ArrayCollection
      */
     public function getResultRanges()
     {
@@ -141,10 +141,11 @@ class Survey
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\ResultRange $range
+     * @param ResultRange $range
+     *
      * @return Survey
      */
-    public function addResultRange(\PM\SurveythorBundle\Entity\ResultRange $range)
+    public function addResultRange(ResultRange $range)
     {
         if (!$this->resultRanges->contains($range)) {
             $this->resultRanges->add($range);
@@ -155,27 +156,29 @@ class Survey
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\ResultRange $range
+     * @param ResultRange $range
      */
-    public function removeResultRange(\PM\SurveythorBundle\Entity\ResultRange $range)
+    public function removeResultRange(ResultRange $range)
     {
         $this->resultRanges->removeElement($range);
     }
 
+    /**
+     * @param ExecutionContextInterface $context
+     * @param $payload
+     */
     public function validate(ExecutionContextInterface $context, $payload)
     {
         if ($this->getQuestions()->count() < 1) {
             $context->buildViolation('A Survey should have at least one Question')
                 ->atPath('questions')
-                ->addViolation()
-            ;
+                ->addViolation();
         } else {
             foreach ($this->getQuestions() as $question) {
                 if ($question->getText() == '') {
                     $context->buildViolation('A question should have a text.')
                         ->atPath('questions')
-                        ->addViolation()
-                        ;
+                        ->addViolation();
                 }
             }
         }

@@ -1,9 +1,9 @@
 <?php
+
 namespace PM\SurveythorBundle\Event;
 
 use PM\SurveythorBundle\Entity\Result;
-#use Symfony\Component\EventDispatcher\Event;
-use \Symfony\Component\HttpKernel\Event\GetResponseEvent as Event;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent as Event;
 
 /**
  * ResultEvent
@@ -15,15 +15,16 @@ class ResultEvent extends Event
 
     protected $result;
 
+    /**
+     * @param Result $result
+     */
     public function __construct(Result $result)
     {
         $this->result = $result;
     }
 
     /**
-     * Get result.
-     *
-     * @return result.
+     * @return Result
      */
     public function getResult()
     {

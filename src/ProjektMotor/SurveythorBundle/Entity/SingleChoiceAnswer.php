@@ -1,8 +1,6 @@
 <?php
 namespace PM\SurveythorBundle\Entity;
 
-use PM\SurveythorBundle\Entity\Choice;
-
 /**
  * SingleChoiceAnswer
  */
@@ -19,9 +17,7 @@ class SingleChoiceAnswer extends Answer
     }
 
     /**
-     * Get choice.
-     *
-     * @return choice.
+     * @return Choice
      */
     public function getChoice()
     {
@@ -29,9 +25,7 @@ class SingleChoiceAnswer extends Answer
     }
 
     /**
-     * Set choice.
-     *
-     * @param choice the value to set.
+     * @param Choice $choice
      */
     public function setChoice(Choice $choice)
     {

@@ -2,7 +2,6 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\Choice;
 
 /**
  * MultipleChoiceAnswer
@@ -10,7 +9,7 @@ use PM\SurveythorBundle\Entity\Choice;
 class MultipleChoiceAnswer extends Answer
 {
     /**
-     * @var ArrayCollection
+     * @var Choice[]|ArrayCollection
      */
     private $choices;
 
@@ -23,13 +22,16 @@ class MultipleChoiceAnswer extends Answer
     /**
      * Get choices.
      *
-     * @return choices.
+     * @return Choice[]|ArrayCollection
      */
     public function getChoices()
     {
         return $this->choices;
     }
 
+    /**
+     * @param Choice $choice
+     */
     public function addChoice(Choice $choice)
     {
         if (!$this->choices->contains($choice)) {
@@ -37,6 +39,9 @@ class MultipleChoiceAnswer extends Answer
         }
     }
 
+    /**
+     * @param Choice $choice
+     */
     public function removeChoice(Choice $choice)
     {
         $this->choices->remove($choice);

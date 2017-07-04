@@ -3,7 +3,6 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\Choice;
 
 /**
  * Question
@@ -21,12 +20,12 @@ class Question
     private $text;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Choice[]|ArrayCollection
      */
     private $choices;
 
     /**
-     * @var \PM\SurveythorBundle\Entity\Survey
+     * @var Survey
      */
     private $survey;
 
@@ -82,10 +81,11 @@ class Question
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\Choice $choice
+     * @param Choice $choice
+     *
      * @return Question
      */
-    public function addChoice(\PM\SurveythorBundle\Entity\Choice $choice)
+    public function addChoice(Choice $choice)
     {
         if (!$this->choices->contains($choice)) {
             $this->choices->add($choice);
@@ -96,9 +96,9 @@ class Question
     }
 
     /**
-     * @param \PM\SurveythorBundle\Entity\Choice $choice
+     * @param Choice $choice
      */
-    public function removeChoice(\PM\SurveythorBundle\Entity\Choice $choice)
+    public function removeChoice(Choice $choice)
     {
         $this->choices->removeElement($choice);
     }
@@ -106,7 +106,7 @@ class Question
     /**
      * Get choices.
      *
-     * @return choices.
+     * @return Choice[]|ArrayCollection
      */
     public function getChoices()
     {
@@ -116,7 +116,7 @@ class Question
     /**
      * Get survey.
      *
-     * @return survey.
+     * @return Survey
      */
     public function getSurvey()
     {
@@ -126,7 +126,9 @@ class Question
     /**
      * Set survey.
      *
-     * @param survey the value to set.
+     * @param Survey $survey
+     *
+     * @return Question
      */
     public function setSurvey($survey)
     {
@@ -138,7 +140,7 @@ class Question
     /**
      * Get parentChoice.
      *
-     * @return parentChoice.
+     * @return Choice parentChoice
      */
     public function getParentChoice()
     {
@@ -148,9 +150,9 @@ class Question
     /**
      * Set parentChoice.
      *
-     * @param parentChoice the value to set.
+     * @param Choice $parentChoice the value to set.
      */
-    public function setParentChoice($parentChoice)
+    public function setParentChoice(Choice $parentChoice)
     {
         $this->parentChoice = $parentChoice;
     }
@@ -158,7 +160,7 @@ class Question
     /**
      * Get type.
      *
-     * @return type.
+     * @return string
      */
     public function getType()
     {
@@ -168,7 +170,7 @@ class Question
     /**
      * Set type.
      *
-     * @param type the value to set.
+     * @param string $type
      */
     public function setType($type)
     {

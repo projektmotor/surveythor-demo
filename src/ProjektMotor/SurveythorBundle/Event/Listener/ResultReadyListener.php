@@ -1,7 +1,7 @@
 <?php
 namespace PM\SurveythorBundle\Event\Listener;
 
-use Symfony\Component\EventDispatcher\Event;
+use PM\SurveythorBundle\Event\ResultEvent;
 use PM\SurveythorBundle\Repository\ResultRepository;
 
 /**
@@ -17,7 +17,7 @@ class ResultReadyListener
         $this->resultRepository = $resultRepository;
     }
 
-    public function onResultReady(Event $event)
+    public function onResultReady(ResultEvent $event)
     {
         $this->resultRepository->save($event->getResult());
         dump($event->getResult());
