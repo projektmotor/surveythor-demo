@@ -21,7 +21,7 @@
         ]
     },
     "require": {
-        "php": ">=5.6.30",
+        "php": ">=5.6.11",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/orm": "^2.5",
