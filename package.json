@@ -9,7 +9,7 @@
     "repository": {
         "type": "git"
     },
-    "devDependencies": {
+    "dependencies": {
         "@symfony/webpack-encore": "git://github.com/robertfausk/webpack-encore.git#master",
         "bootstrap-sass": "^3.3.7",
         "jquery": "^3.2.1",
