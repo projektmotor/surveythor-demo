@@ -42,6 +42,7 @@
     },
     "scripts": {
         "compile": [
+            "./node_modules/.bin/encore production",
             "rm web/app_dev.php",
             "bin/console doctrine:database:drop --force",
             "bin/console doctrine:database:create -n",
