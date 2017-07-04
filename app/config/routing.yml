@@ -1,3 +1,11 @@
+homepage:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: survey_index
+        permanent: false
+        ignoreAttributes: true
+
 pm_surveythor:
     resource: "@PMSurveythorBundle/Resources/config/routing.yml"
     prefix:   /

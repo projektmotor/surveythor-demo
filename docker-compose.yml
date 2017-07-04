@@ -1,0 +1,41 @@
+version: "3"
+services:
+
+  web:
+    build:
+      context: .docker/web
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "80:80"
+    networks:
+      - surveythor-demo
+    command: /init-project.sh
+    environment:
+      PHP_XDEBUG_ENABLED: 0
+      PHP_XDEBUG_REMOTE_HOST: 172.17.0.1
+      PHP_IDE_CONFIG: serverName=surveythor-demo-docker-container
+    tty: true
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - surveythor-demo
+    environment:
+       MYSQL_ROOT_PASSWORD: 12345678
+       MYSQL_DATABASE: surveythor_demo
+       MYSQL_USER: surveythor_demo
+       MYSQL_PASSWORD: surveythor_demo
+
+volumes:
+  mysql_data:
+
+networks:
+  surveythor-demo:
+    driver: bridge
