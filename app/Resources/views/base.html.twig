@@ -2,24 +2,19 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Surveythor - Demo{% endblock %}</title>
         {% block stylesheets %}
-            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            <link rel="stylesheet" href="{{ asset('build/global.css') }}">
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         <div class="container-fluid">
-            <h3 style="color: #959595;">SurveyThor</h3>
+            <h3 style="color: #959595;">Surveythor</h3>
             <hr />
             {% block body %}{% endblock %}
         </div>
         {% block javascripts %}
-            {% if app.environment == "dev" %}
-                <script src="{{ asset('webpack-dev-server.js') }}"></script>
-            {% endif %}
-            <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         {% endblock %}
     </body>
 </html>

@@ -8,6 +8,7 @@ services:
       - .:/var/www/html
     ports:
       - "80:80"
+      - "8080:8080"
     networks:
       - surveythor-demo
     command: /init-project.sh
