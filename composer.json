@@ -51,7 +51,7 @@
             "bin/console doctrine:database:drop --force",
             "bin/console doctrine:database:create -n",
             "bin/console doctrine:schema:update --force",
-            "hautelook_alice:doctrine:fixtures:load -n --env=dev"
+            "bin/console hautelook_alice:doctrine:fixtures:load -n --env=dev"
         ],
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
