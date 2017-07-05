@@ -1,7 +1,7 @@
 surveythor
 ==========
 
-[![Tests][1]][2]
+[![Tests][1]][2] [![Heroku][3]][4]
 
 A Symfony bundle to demonstrate usage and features of the pm surveythor, a tool to create and perform online surveys.
 
@@ -25,3 +25,5 @@ This software is published under the [MIT License](LICENSE.md)
 
 [1]: https://travis-ci.org/projektmotor/surveythor-demo.svg?branch=master
 [2]: https://travis-ci.org/projektmotor/surveythor-demo
+[3]: http://heroku-badge.herokuapp.com/?app=surveythor-demo-app&style=flat
+[4]: http://surveythor-demo-app.herokuapp.com
