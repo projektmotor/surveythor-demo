@@ -188,4 +188,12 @@ class Choice
     {
         $this->childQuestions->removeElement($question);
     }
+
+    /**
+     * @return bool
+     */
+    public function hasChildQuestions()
+    {
+        return (! $this->getChildQuestions()->isEmpty());
+    }
 }

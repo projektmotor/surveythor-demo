@@ -1,8 +1,8 @@
 <?php
 namespace PM\SurveythorBundle\Controller;
 
+use function Couchbase\defaultDecoder;
 use PM\SurveythorBundle\Entity\Answer;
-use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\MultipleChoiceAnswer;
 use PM\SurveythorBundle\Entity\Question;
 use PM\SurveythorBundle\Entity\Result;
@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatcher;
 
 /**
- * ResultController
- * @author Rombo Kraft <kraft@projektmotor.de>
+ * Class ResultController
+ * @package PM\SurveythorBundle\Controller
  */
 class ResultController
 {
@@ -28,6 +28,9 @@ class ResultController
      */
     private $surveyRepository;
 
+    /**
+     * @var EventDispatcher
+     */
     private $dispatcher;
 
     /**
@@ -45,10 +48,10 @@ class ResultController
     }
 
     /**
-     * @param Answer[]|null $answers
-     * @param int[]|null $choiceIds
+     * @param  array $answers
+     * @param array|null $choiceIds
      *
-     * @return int[]|null
+     * @return array
      */
     private function getChoiceIdsFromRequest($answers, $choiceIds = null)
     {
@@ -92,22 +95,28 @@ class ResultController
 
     /**
      * @param Question $question
-     *
      * @return MultipleChoiceAnswer|SingleChoiceAnswer|TextAnswer
+     * @throws \Exception
      */
     private function answerFactoryMethod(Question $question)
     {
         switch ($question->getType()) {
             case 'mc':
-                return new MultipleChoiceAnswer();
-            break;
+                $answer = new MultipleChoiceAnswer();
+                break;
             case 'sc':
-                return new SingleChoiceAnswer();
-            break;
+                $answer = new SingleChoiceAnswer();
+                break;
             case 'text':
-                return new TextAnswer();
+                $answer = new TextAnswer();
+                break;
+            default:
+                throw new \Exception('a question has to have a type');
             break;
         }
+
+        $answer->setQuestion($question);
+        return $answer;
     }
 
     /**
@@ -124,19 +133,15 @@ class ResultController
     ) {
         if (null === $answer) {
             $answer = $this->answerFactoryMethod($question);
-            $answer->setQuestion($question);
             $this->addAnswer($result, $answer);
         }
 
         if ($question->getType() == 'mc' || $question->getType() == 'sc') {
             foreach ($question->getChoices() as $choice) {
-                if (in_array(
-                    $choice->getId(),
-                    $this->getChoiceIdsFromRequest($request->request->get('result')['answers'])
-                ) && !is_null($choice->getChildQuestions())) {
+                $choiceIds = $this->getChoiceIdsFromRequest($request->request->get('result')['answers']);
+                if (in_array($choice->getId(), $choiceIds) && $choice->hasChildQuestions()) {
                     foreach ($choice->getChildQuestions() as $question) {
                         $childAnswer = $this->answerFactoryMethod($question);
-                        $childAnswer->setQuestion($question);
                         $answer->addChildAnswer($childAnswer);
 
                         $this->setAnswers($result, $question, $request, $childAnswer);
