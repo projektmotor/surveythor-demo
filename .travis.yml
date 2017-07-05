@@ -21,3 +21,5 @@ deploy:
   app: surveythor-demo-app
   on:
     repo: projektmotor/surveythor-demo
+    branch: master # default is master
+    php: 5.6
