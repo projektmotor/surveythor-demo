@@ -44,3 +44,5 @@
 .vimrc
 .ctags
 node_modules/
+.idea/
+web/build
