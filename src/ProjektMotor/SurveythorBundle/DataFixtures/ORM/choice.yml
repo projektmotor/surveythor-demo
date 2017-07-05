@@ -1,0 +1,65 @@
+PM\SurveythorBundle\Entity\Choice:
+    choice_sc_1:
+        text: 'rot'
+        value: '1'
+        question: '@question_sc'
+    choice_sc_2:
+        text: 'grün'
+        value: '1'
+        question: '@question_sc'
+    choice_sc_3:
+        text: 'gelb'
+        value: '1'
+        question: '@question_sc'
+    choice_sc_4:
+        text: 'blau'
+        value: '1'
+        question: '@question_sc'
+    choice_sc_5:
+        text: 'schwarz'
+        value: '1'
+        question: '@question_sc'
+    choice_sc_6:
+        text: 'weiß'
+        value: '1'
+        question: '@question_sc'
+    choice_mc_1:
+        text: 'Rock'
+        value: '1'
+        question: '@question_mc'
+    choice_mc_2:
+        text: 'Pop'
+        value: '1'
+        question: '@question_mc'
+    choice_mc_3:
+        text: 'Grunge'
+        value: '1'
+        question: '@question_mc'
+    choice_mc_4:
+        text: 'Punk'
+        value: '1'
+        question: '@question_mc'
+    choice_mc_5:
+        text: 'Klassic'
+        value: '1'
+        question: '@question_mc'
+    choice_mc_6:
+        text: 'Volksmusik'
+        value: '1'
+        question: '@question_mc'
+    choice_mc_7:
+        text: 'House'
+        value: '1'
+        question: '@question_mc'
+    choice_mc_8:
+        text: 'Folk'
+        value: '1'
+        question: '@question_mc'
+    choice_mc_9:
+        text: 'Chill'
+        value: '1'
+        question: '@question_mc'
+    choice_mc_10:
+        text: 'Disco'
+        value: '1'
+        question: '@question_mc'

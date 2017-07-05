@@ -1,0 +1,13 @@
+PM\SurveythorBundle\Entity\Question:
+    question_text:
+        text: 'Beschreibe dein Lieblingsbuch!'
+        type: 'text'
+        survey: '@survey_1'
+    question_sc:
+        text: 'Welche Farbe magst du am liebsten?'
+        type: 'sc'
+        survey: '@survey_1'
+    question_mc:
+        text: 'Wähle deine Lieblingsmusikrichtung(en) aus!'
+        type: 'mc'
+        survey: '@survey_1'

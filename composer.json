@@ -23,9 +23,11 @@
     "require": {
         "php": ">=5.6.11",
         "bugsnag/bugsnag-symfony": "^1.1",
+        "doctrine/data-fixtures": "^1.2",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/orm": "^2.5",
+        "hautelook/alice-bundle": "^1.4",
         "incenteev/composer-parameter-handler": "^2.0",
         "qafoolabs/no-framework-bundle": "^2.4",
         "sensio/distribution-bundle": "^5.0",
@@ -43,11 +45,13 @@
     },
     "scripts": {
         "compile": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "node_modules/.bin/encore production",
             "rm web/app_dev.php",
             "bin/console doctrine:database:drop --force",
             "bin/console doctrine:database:create -n",
-            "bin/console doctrine:schema:update --force"
+            "bin/console doctrine:schema:update --force",
+            "hautelook_alice:doctrine:fixtures:load -n"
         ],
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",

@@ -1,0 +1,3 @@
+PM\SurveythorBundle\Entity\Survey:
+    survey_1:
+        title: 'Demo-Befragung'
