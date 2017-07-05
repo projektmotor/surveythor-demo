@@ -6,6 +6,8 @@
 /*global CKEDITOR: false */
 "use strict";
 
+require('bootstrap-sass');
+
 var projektmotor = projektmotor || {};
 
 projektmotor.Survey = function (surveyParams) {
