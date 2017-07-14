@@ -1,8 +1,8 @@
 <?php
 namespace PM\SurveythorBundle\Controller;
 
-use function Couchbase\defaultDecoder;
 use PM\SurveythorBundle\Entity\Answer;
+use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\MultipleChoiceAnswer;
 use PM\SurveythorBundle\Entity\Question;
 use PM\SurveythorBundle\Entity\Result;
@@ -137,8 +137,10 @@ class ResultController
         }
 
         if ($question->isChoiceQuestion()) {
+            $choiceIds = $this->getChoiceIdsFromRequest($request->request->get('result')['answers']);
+
+            /** @var Choice $choice */
             foreach ($question->getChoices() as $choice) {
-                $choiceIds = $this->getChoiceIdsFromRequest($request->request->get('result')['answers']);
                 if (in_array($choice->getId(), $choiceIds) && $choice->hasChildQuestions()) {
                     foreach ($choice->getChildQuestions() as $question) {
                         $childAnswer = $this->answerFactoryMethod($question);
@@ -171,7 +173,7 @@ class ResultController
         ) {
             return array(
                 'survey' => $survey,
-                'form' => $formRequest->createFormView()
+                'form' => $formRequest->createFormView(),
             );
         }
 
