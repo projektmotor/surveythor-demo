@@ -176,4 +176,14 @@ class Question
     {
         $this->type = $type;
     }
+
+    /**
+     * Evaluates to true if question is multiple or single choice.
+     *
+     * @return bool
+     */
+    public function isChoiceQuestion()
+    {
+        return $this->getType() === 'mc' || $this->getType() === 'sc';
+    }
 }

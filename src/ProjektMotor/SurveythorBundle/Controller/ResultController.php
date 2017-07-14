@@ -136,7 +136,7 @@ class ResultController
             $this->addAnswer($result, $answer);
         }
 
-        if ($question->getType() == 'mc' || $question->getType() == 'sc') {
+        if ($question->isChoiceQuestion()) {
             foreach ($question->getChoices() as $choice) {
                 $choiceIds = $this->getChoiceIdsFromRequest($request->request->get('result')['answers']);
                 if (in_array($choice->getId(), $choiceIds) && $choice->hasChildQuestions()) {
