@@ -45,6 +45,34 @@ abstract class Answer
     }
 
     /**
+     * @param Question $question
+     *
+     * @return MultipleChoiceAnswer|SingleChoiceAnswer|TextAnswer
+     * @throws \Exception
+     */
+    public static function createByQuestionType(Question $question)
+    {
+        switch ($question->getType()) {
+            case 'mc':
+                $answer = new MultipleChoiceAnswer();
+                break;
+            case 'sc':
+                $answer = new SingleChoiceAnswer();
+                break;
+            case 'text':
+                $answer = new TextAnswer();
+                break;
+            default:
+                throw new \Exception('a question has to have a type');
+                break;
+        }
+
+        $answer->setQuestion($question);
+
+        return $answer;
+    }
+
+    /**
      * Get id
      *
      * @return int

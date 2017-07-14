@@ -3,12 +3,9 @@ namespace PM\SurveythorBundle\Controller;
 
 use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\Choice;
-use PM\SurveythorBundle\Entity\MultipleChoiceAnswer;
 use PM\SurveythorBundle\Entity\Question;
 use PM\SurveythorBundle\Entity\Result;
-use PM\SurveythorBundle\Entity\SingleChoiceAnswer;
 use PM\SurveythorBundle\Entity\Survey;
-use PM\SurveythorBundle\Entity\TextAnswer;
 use PM\SurveythorBundle\Event\ResultEvent;
 use PM\SurveythorBundle\Form\ResultType;
 use PM\SurveythorBundle\Repository\SurveyRepository;
@@ -94,32 +91,6 @@ class ResultController
     }
 
     /**
-     * @param Question $question
-     * @return MultipleChoiceAnswer|SingleChoiceAnswer|TextAnswer
-     * @throws \Exception
-     */
-    private function answerFactoryMethod(Question $question)
-    {
-        switch ($question->getType()) {
-            case 'mc':
-                $answer = new MultipleChoiceAnswer();
-                break;
-            case 'sc':
-                $answer = new SingleChoiceAnswer();
-                break;
-            case 'text':
-                $answer = new TextAnswer();
-                break;
-            default:
-                throw new \Exception('a question has to have a type');
-            break;
-        }
-
-        $answer->setQuestion($question);
-        return $answer;
-    }
-
-    /**
      * @param Result $result
      * @param Question $question
      * @param Request $request
@@ -132,7 +103,7 @@ class ResultController
         $answer = null
     ) {
         if (null === $answer) {
-            $answer = $this->answerFactoryMethod($question);
+            $answer = Answer::createByQuestionType($question);
             $this->addAnswer($result, $answer);
         }
 
@@ -143,7 +114,7 @@ class ResultController
             foreach ($question->getChoices() as $choice) {
                 if (in_array($choice->getId(), $choiceIds) && $choice->hasChildQuestions()) {
                     foreach ($choice->getChildQuestions() as $question) {
-                        $childAnswer = $this->answerFactoryMethod($question);
+                        $childAnswer = Answer::createByQuestionType($question);
                         $answer->addChildAnswer($childAnswer);
 
                         $this->setAnswers($result, $question, $request, $childAnswer);
