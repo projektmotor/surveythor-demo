@@ -2,7 +2,6 @@
 namespace PM\SurveythorBundle\Controller;
 
 use PM\SurveythorBundle\Entity\Survey;
-use PM\SurveythorBundle\Factory\SurveyFactory;
 use PM\SurveythorBundle\Form\SurveyType;
 use PM\SurveythorBundle\Repository\SurveyRepository;
 use QafooLabs\MVC\FormRequest;
@@ -21,20 +20,12 @@ class SurveyController
     private $surveyRepository;
 
     /**
-     * @var surveyFactory
-     */
-    private $surveyFactory;
-
-    /**
      * @param SurveyRepository $surveyRepository
-     * @param SurveyFactory $surveyFactory
      */
     public function __construct(
-        SurveyRepository $surveyRepository,
-        SurveyFactory $surveyFactory
+        SurveyRepository $surveyRepository
     ) {
         $this->surveyRepository = $surveyRepository;
-        $this->surveyFactory = $surveyFactory;
     }
 
     /**

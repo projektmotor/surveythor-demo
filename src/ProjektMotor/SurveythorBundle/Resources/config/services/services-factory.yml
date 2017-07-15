@@ -1,3 +1,0 @@
-services:
-    survey_factory:
-        class: PM\SurveythorBundle\Factory\SurveyFactory
