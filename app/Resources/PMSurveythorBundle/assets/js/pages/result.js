@@ -1,18 +1,8 @@
-/*global $:false, jQuery:false */
-/*jslint node: true */
-/*jshint esversion: 6 */
-/*jshint sub:true*/
-/*jshint browser: true */
-/*global CKEDITOR: false */
-"use strict";
-
 var projektmotor = projektmotor || {};
 
-projektmotor.Result = function (resultParams) {
-    var
-        params = {},
-        result
-    ;
+projektmotor.Result = function () {
+    "use strict";
+    var result;
 
     result = {
         init: function () {
