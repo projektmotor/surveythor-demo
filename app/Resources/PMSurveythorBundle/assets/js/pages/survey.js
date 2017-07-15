@@ -1,16 +1,10 @@
-/*global $:false, jQuery:false */
-/*jslint node: true */
-/*jshint esversion: 6 */
-/*jshint sub:true*/
-/*jshint browser: true */
-/*global CKEDITOR: false */
-"use strict";
-
 require('bootstrap-sass');
 
 var projektmotor = projektmotor || {};
 
 projektmotor.Survey = function (surveyParams) {
+    "use strict";
+
     var
         params = {},
         question,
