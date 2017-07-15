@@ -77,21 +77,6 @@ class ResultController
 
     /**
      * @param Result $result
-     * @param Answer $newAnswer
-     */
-    private function addAnswer(Result $result, Answer $newAnswer)
-    {
-        foreach ($result->getAnswers() as $answer) {
-            if ($answer->getQuestion()->getId() == $newAnswer->getQuestion()->getId()) {
-                return;
-            }
-        }
-        $result->addAnswer($newAnswer);
-        $newAnswer->setPosition($result->getAnswers()->count());
-    }
-
-    /**
-     * @param Result $result
      * @param Question $question
      * @param Request $request
      * @param null $answer
@@ -104,7 +89,7 @@ class ResultController
     ) {
         if (null === $answer) {
             $answer = Answer::createByQuestionType($question);
-            $this->addAnswer($result, $answer);
+            $result->addAnswer($answer);
         }
 
         if ($question->isChoiceQuestion()) {
