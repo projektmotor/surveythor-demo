@@ -12,7 +12,8 @@ use PM\SurveythorBundle\Repository\SurveyRepository;
 use QafooLabs\MVC\FormRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class ResultController
@@ -21,27 +22,19 @@ use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as EventDispatch
 class ResultController
 {
     /**
-     * @var SurveyRepository
+     * @var ResultReadySubscriber
      */
-    private $surveyRepository;
-
-    /**
-     * @var EventDispatcher
-     */
-    private $dispatcher;
+    private $resultReadySubscriber;
 
     /**
      * __construct
      *
      * @param SurveyRepository $surveyRepository
-     * @param EventDispatcher $dispatcher
      */
     public function __construct(
-        SurveyRepository $surveyRepository,
-        EventDispatcher $dispatcher
+        EventSubscriberInterface $resultReadySubscriber
     ) {
-        $this->surveyRepository = $surveyRepository;
-        $this->dispatcher = $dispatcher;
+        $this->resultReadySubscriber = $resultReadySubscriber;
     }
 
     /**
@@ -133,8 +126,11 @@ class ResultController
             );
         }
 
+        $dispatcher = new EventDispatcher();
         $event = new ResultEvent($result);
-        $this->dispatcher->dispatch(ResultEvent::NAME, $event);
+
+        $dispatcher->addSubscriber($this->resultReadySubscriber);
+        $dispatcher->dispatch(ResultEvent::NAME, $event);
 
         return $event->getResponse();
     }
