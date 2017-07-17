@@ -13,6 +13,9 @@ Features:
   - single choice
   - free text questions
 + questions / answers can have child / parent relations
++ event controlled result handling, which means:
+    - the result is processed by an EventSubscriber
+    - you can override it by using a compilerpass (see the example in the AppBundle)
 
 Still not features:
 + groupable questions
