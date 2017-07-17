@@ -1,14 +1,15 @@
 <?php
-namespace PM\SurveythorBundle\Event\Listener;
+namespace PM\SurveythorBundle\Event;
 
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use PM\SurveythorBundle\Event\ResultEvent;
 use PM\SurveythorBundle\Repository\ResultRepository;
 
 /**
- * ResultReadyListener
+ * ResultReadySubscriber
  * @author Rombo Kraft <kraft@projektmotor.de>
  */
-class ResultReadyListener
+class ResultReadySubscriber implements EventSubscriberInterface
 {
     private $resultRepository;
 
@@ -17,10 +18,15 @@ class ResultReadyListener
         $this->resultRepository = $resultRepository;
     }
 
+    public static function getSubscribedEvents()
+    {
+        return array('result.ready' => 'onResultReady');
+    }
+
     public function onResultReady(ResultEvent $event)
     {
         $this->resultRepository->save($event->getResult());
         dump($event->getResult());
-        die();
+        die('moo');
     }
 }

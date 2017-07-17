@@ -1,20 +1,19 @@
 <?php
+namespace AppBundle\Event;
 
-namespace AppBundle\Event\Listener;
-
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use PM\SurveythorBundle\Event\ResultEvent;
 use PM\SurveythorBundle\Repository\ResultRepository;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * ResultReadyListener
+ * ResultReadySubscriber
  * @author Rombo Kraft <kraft@projektmotor.de>
  */
-class ResultReadyListener
+class ResultReadySubscriber implements EventSubscriberInterface
 {
     private $resultRepository;
-
     private $router;
 
     /**
@@ -29,6 +28,11 @@ class ResultReadyListener
     ) {
         $this->resultRepository = $resultRepository;
         $this->router = $router;
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return array('result.ready' => 'onResultReady');
     }
 
     /**

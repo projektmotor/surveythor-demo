@@ -7,5 +7,4 @@ services:
     result_controller:
         class: PM\SurveythorBundle\Controller\ResultController
         arguments:
-            - "@survey_repository"
-            - "@event_dispatcher"
+            - "@result_ready_subscriber"
