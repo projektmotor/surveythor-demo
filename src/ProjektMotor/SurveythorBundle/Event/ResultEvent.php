@@ -3,8 +3,8 @@
 namespace PM\SurveythorBundle\Event;
 
 use PM\SurveythorBundle\Entity\Result;
-//use Symfony\Component\HttpKernel\Event\GetResponseEvent as Event;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * ResultEvent
@@ -14,7 +14,14 @@ class ResultEvent extends Event
 {
     const NAME = 'result.ready';
 
-    protected $result;
+    /**
+     * @var Result
+     */
+    private $result;
+
+    /**
+     * @var Response
+     */
     private $response;
 
     /**
@@ -32,21 +39,17 @@ class ResultEvent extends Event
     {
         return $this->result;
     }
-    
+
     /**
-     * Get response.
-     *
-     * @return response.
+     * @return Response
      */
     public function getResponse()
     {
         return $this->response;
     }
-    
+
     /**
-     * Set response.
-     *
-     * @param response the value to set.
+     * @param Response $response
      */
     public function setResponse($response)
     {
