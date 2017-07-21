@@ -9,6 +9,8 @@ services:
     ports:
       - "80:80"
       - "8080:8080"
+      - "443:443"
+      - "4445:4445"
     networks:
       - surveythor-demo
     command: /init-project.sh
@@ -19,6 +21,7 @@ services:
     tty: true
     depends_on:
       - mysql
+      - sauce_connect
 
   mysql:
     image: mysql:5.7
@@ -33,6 +36,13 @@ services:
        MYSQL_DATABASE: surveythor_demo
        MYSQL_USER: surveythor_demo
        MYSQL_PASSWORD: surveythor_demo
+
+  sauce_connect:
+    build:
+      context: .docker/sauce_connect
+    networks:
+      - surveythor-demo
+#    command: /init-project.sh TODO 100
 
 volumes:
   mysql_data:
