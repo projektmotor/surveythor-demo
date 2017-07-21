@@ -12,3 +12,12 @@ parameters:
     mailer_password: null
     locale: de
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    mink_base_url: http://surveythor-demo-app.herokuapp.com/
+    mink_host: 127.0.0.1
+    mink_port: 4444
+    mink_type: default
+
+    mink_api_username: '%env(SAUCE_USERNAME)%%'
+    mink_api_key: '%env(SAUCE_ACCESS_KEY)%'
+    mink_tunnel_id: '%env(TRAVIS_JOB_NUMBER)%'

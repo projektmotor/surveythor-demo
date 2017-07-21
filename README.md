@@ -21,6 +21,30 @@ Still not features:
 + groupable questions
 + other elements then questions like html elements, text, dividers, etc.
 
+How to run EndToEnd-Tests
+==========================
+
+Start local selenium instance:
+```
+./vendor/bin/selenium-server-standalone
+```
+
+Use Sauce Labs locally
+----------------------
+
+Install:
+https://wiki.saucelabs.com/display/DOCS/Basic+Sauce+Connect+Proxy+Setup
+
+After download and extraction start sauce labs from outside of docker (currently there is no docker container support):
+```BASH
+$ sc-4.4.8-linux/bin/sc -u username -k api_key -i my-tun2 --se-port 4446
+```
+
+Start tests:
+```BASH
+$ docker-compose exec web vendor/bin/phpunit
+```
+
 License
 -------
 

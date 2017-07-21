@@ -8,6 +8,9 @@ COPY . /var/www/html
 # replace shell with bash so we can source files
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
+# add JAVA repo
+RUN echo 'deb http://ftp.de.debian.org/debian jessie-backports main' >> /etc/apt/sources.list
+
 RUN apt-get update && apt-get install -y \
         wget \
         libicu-dev \
@@ -24,6 +27,11 @@ RUN apt-get update && apt-get install -y \
         mysql-client && \
         docker-php-ext-configure gd --with-jpeg-dir=/usr/include/  &&  \
         docker-php-ext-install gd
+
+# install JAVA
+RUN apt-get install -y -t \
+        jessie-backports \
+        openjdk-8-jre
 
 # nvm environment variables
 ENV NVM_DIR /usr/local/nvm
