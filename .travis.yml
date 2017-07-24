@@ -42,3 +42,6 @@ deploy:
 
 addons:
   sauce_connect: true
+
+services:
+  - mysql
