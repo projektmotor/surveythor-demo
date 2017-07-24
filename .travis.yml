@@ -41,7 +41,10 @@ deploy:
     php: 5.6
 
 addons:
-  sauce_connect: true
+  sauce_connect:
+    username: robertfausk
+  jwt:
+    secure: EYYqEaXspIqsv03c+crFZmqOsjUaFaJip2Rhm2ResZGoXbcGNeGpE/Jw5f6r4UzsBMWVkN4Mi/GgQWZ+KnpZQDJ/BqJQviY5gAxJ0d7pT3EsycX1NjQRSudaa9O6EmsZKJjrBP9wj+HKES9u5lO/CN3qMowW5ijS8sh82okoYEa/9FwMC5HGQKgqCwjX+mWyVPwrL/kkbV5H+7fLVrKjECJSk+Uf8q6znEgkGpK/jQ08WW6sdwCjYX8lguSVZ1X18NPirchcYiaEwdEBeMCs7jq6GxNCnpDtOogPqTub9ZK5TpPKmSQmtLolpneDPKOjzY6uzUiREXMB2aMV1n0qxpOi+57c8bzwulZJVJol1lyICL/7YUT+riy1mOH5En8TuSba3ixHdJYJ7TfdcVUdg6Cm6zDeHqf8VAkISFHNxLyZOCpNMIa4FNr9FCtGgICnVMRZyzcZNDgyDsEJgwsRPWm4DNq7nOtSIpIodpESUhGja53sFsgg7r7GqGtRYqldVCTSCq5sQN0yI/cjUbpcddPzbt4TLR/13/AgwPGL1ELy50YyZteVLRlB5xw24hLFw3/xt2ArGTS/KN2ecZ7REt3jVjKhxLAs4Qkez1GX7ms2u4MUvK2hWNbCQinbR4CA9yczZLp4AtW56gpPJQUviu7M1cCwySFNMZo+CGopDlg=
 
 services:
   - mysql
