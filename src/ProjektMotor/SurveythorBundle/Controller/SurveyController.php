@@ -54,6 +54,7 @@ class SurveyController
             || $request->isXmlHttpRequest()
         ) {
             return array(
+                'survey' => $survey,
                 'form' => $formRequest->createFormView()
             );
         }

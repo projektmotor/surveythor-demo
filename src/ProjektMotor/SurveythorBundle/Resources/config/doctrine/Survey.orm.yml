@@ -26,5 +26,7 @@ PM\SurveythorBundle\Entity\Survey:
         resultRanges:
             targetEntity: PM\SurveythorBundle\Entity\ResultRange
             mappedBy: survey
+            cascade:
+                - persist
 
     lifecycleCallbacks: {  }

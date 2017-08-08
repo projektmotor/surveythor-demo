@@ -1,3 +1,7 @@
 PM\SurveythorBundle\Entity\Survey:
     survey_1:
         title: 'Demo-Befragung'
+        description: 'Ziel der Umfrage ist es die unterschiedlichen Fragetypen darzustellen, sowie die Präferenzen des Nutzers hinsichtlich Lieblingsbuch, Lieblingsfarbe und Lieblingsmusikrichtungen zu erfassen'
+    survey2:
+        title: 'gutbürgerliche Küche'
+        description: 'Diese Umfrage erhebt keine verwertbaren Daten. Demonstriert werden sollen die Beziehungen zwischen Elternantwort und Kindfrage'

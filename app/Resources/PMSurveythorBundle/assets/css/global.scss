@@ -9,3 +9,6 @@ $fa-font-path: "~font-awesome/fonts";
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 
 // @import '~bootstrap-sass/assets/stylesheets/bootstrap/alerts';
+* {
+    border-radius: 0 !important;
+}
