@@ -1,44 +1,94 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+
 <div id="survey">
     {{ form_start(form) }}
     {{ form_errors(form) }}
 
-    {{ form_row(form.title) }}
-        <div class="form-row">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                {{ form_widget(form.questions) }}
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title" id="survey-title-heading">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#survey-title" aria-expanded="false" aria-controls="collapseThree">Name & Beschreibung bearbeiten</a>
+            </h4>
         </div>
-    <a href="#" class="btn btn-primary" id="add-question">Add a new question</a>
 
-    {{ form_end(form) }}
-
-    <div id="default-panel" style="display: none;">
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingThree">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"></a>
-                        </h4>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="pull-right question-toolbox">
-                            <a href="#" class="add-child-question">add a child question</a>
-                            <a href="#" class="remove-panel">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
-                <div class="panel-body"></div>
+        <div id="survey-title" class="panel-collapse collapse" role="tabpanel" aria-labelledby="survey-title-heading">
+            <div class="panel-body">
+                {{ form_row(form.title) }}
+                {{ form_row(form.description) }}
             </div>
         </div>
     </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title" id="questions-heading">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#survey-questions" aria-expanded="false" aria-controls="collapseThree">Fragen bearbeiten</a>
+            </h4>
+        </div>
+
+        <div id="survey-questions" class="panel-collapse collapse" role="tabpanel" aria-labelledby="questions-heading">
+            <div class="panel-body">
+                    <div class="form-row">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            {{ form_widget(form.questions) }}
+                        </div>
+                    </div>
+                <a href="#" class="btn btn-primary" id="add-question">Frage hinzufügen</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title" id="resultranges-heading">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#survey-resultranges" aria-expanded="false" aria-controls="collapseThree">Ergebnisse bearbeiten</a>
+            </h4>
+        </div>
+
+        <div id="survey-resultranges" class="panel-collapse collapse" role="tabpanel" aria-labelledby="resultranges-heading">
+            <div class="panel-body">
+                    maximal erreichbare Punktzahl: {{ survey.maxPoints }}
+                    <div class="form-row">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            {{ form_widget(form.resultRanges) }}
+                        </div>
+                    </div>
+                <a href="#" class="btn btn-primary" id="add-resultrange">Ergebnis hinzufügen</a>
+            </div>
+        </div>
+    </div>
+
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
+
+<div id="default-panel" style="display: none;">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"></a>
+                    </h4>
+                </div>
+                <div class="col-md-6">
+                    <div class="pull-right question-toolbox">
+                        <a href="#" class="add-child-question">add a child question</a>
+                        <a href="#" class="remove-panel">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+            <div class="panel-body"></div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 

@@ -186,4 +186,9 @@ class Question
     {
         return $this->getType() === 'mc' || $this->getType() === 'sc';
     }
+
+    public function hasChoices()
+    {
+        return $this->choices->count() > 0;
+    }
 }

@@ -3,11 +3,19 @@
 {% block body %}
     {% for survey in surveys %}
         <div>
-            {{ survey.title }}&nbsp;
-            <a href="{{ path('survey_edit', {'id' : survey.id}) }}">edit</a>&nbsp;
-            <a href="{{ path('result_new', {'id' : survey.id }) }}">perform</a>
+            <h4>{{ survey.title }}</h4>
+            <p class="well">
+            {{ survey.description }}<br />
+                Link zur Umfrage: {{ absolute_url('result_new', {'id' : survey.id }) }}
+            </p>
+            <p>
+            </p>
+            <a href="{{ path('survey_edit', {'id' : survey.id}) }}" class="btn btn-default">Umfrage bearbeiten</a>
+            <a href="{{ path('result_new', {'id' : survey.id }) }}" class="btn btn-default">Umfrage durchführen</a>
+            <a href="" class="btn btn-default">Auswertungen ansehen</a>
+            <a href="" class="btn btn-danger pull-right">Umfrage löschen</a>
         </div>
-    {% endfor %}
     <hr />
-    <a href="{{ path('survey_new') }}" class="btn btn-primary">create new survey</a>
+    {% endfor %}
+    <a href="{{ path('survey_new') }}" class="btn btn-primary">neue Umfrage erstellen</a>
 {% endblock %}

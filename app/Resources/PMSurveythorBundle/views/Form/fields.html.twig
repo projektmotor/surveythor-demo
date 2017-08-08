@@ -99,3 +99,44 @@
         {% endfor %}
     </div>
 {% endblock %}
+
+{% block resultrange_collection_widget %}
+    {% if prototype is defined %}
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+    {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form.parent is empty -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+        {% for child in form %}
+            <div class="panel panel-default question">
+                <div class="panel-heading" role="tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-resultrange-{{ child.vars.id }}" aria-expanded="true" aria-controls="collapse-resultrange-{{ child.vars.id }}">
+                                    {{ child.vars.value.start }} - {{ child.vars.value.stop }}
+                                </a>
+                            </h4>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pull-right question-toolbox">
+                                <a href="#" class="remove-panel">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapse-resultrange-{{ child.vars.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-resultrange-{{ child.vars.id }}">
+                    <div class="panel-body">
+                        {{- form_row(child) -}}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {{- form_rest(form) -}}
+    </div>
+{% endblock %}
+
+

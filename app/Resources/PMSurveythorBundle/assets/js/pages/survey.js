@@ -8,6 +8,7 @@ projektmotor.Survey = function (surveyParams) {
     var
         params = {},
         question,
+        resultRange,
         helpers
     ;
 
@@ -15,6 +16,8 @@ projektmotor.Survey = function (surveyParams) {
         surveyForm: 'form[name=survey]',
         questionCollectionHolder: '#survey_questions',
         addQuestionLink: 'a#add-question',
+        addResultRangeLink: 'a#add-resultrange',
+        resultRangeCollectionHolder: '#survey_resultRanges'
     }, surveyParams);//}}}
 
     question = {//{{{
@@ -91,6 +94,22 @@ projektmotor.Survey = function (surveyParams) {
 
     };//}}}
 
+    resultRange = {
+        init: function () {
+            resultRange.bindAdd();
+        },
+        bindAdd: function () {
+            var newLink = $(params.addResultRangeLink);
+            var collectionHolder = $(params.resultRangeCollectionHolder);
+
+            newLink.click(function (e) {
+                e.preventDefault();
+                helpers.addFormFromPrototype(collectionHolder, '__resultRange__');
+            });
+        },
+
+    };
+
     helpers = {//{{{
         addFormFromPrototype: function (collectionHolder, prototypeName = '__question__') {
             var prototype = collectionHolder.data('prototype');
@@ -123,6 +142,7 @@ projektmotor.Survey = function (surveyParams) {
 
     (function () {
         question.init();
+        resultRange.init();
     }());
 };
 
