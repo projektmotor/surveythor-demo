@@ -5,7 +5,7 @@ use PM\SurveythorBundle\Entity\Result;
 
 /**
  * EvaluationController
- * @author Rombo Kraft <kraft@rastalavista.com>
+ * @author Rombo Kraft <kraft@projektmotor.de>
  */
 class EvaluationController
 {
