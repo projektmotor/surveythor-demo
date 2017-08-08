@@ -23,17 +23,10 @@
                     <a class="navbar-brand pm-navbar-brand" href="">
                         <img src="http://projektmotor.de/favicon.ico" />
                     </a>
-                    <ul class="nav navbar-nav">
-                        <li class="first">
-                            <a href="">Dashboard</a>
-                        </li>
-                        <li class="active">
-                            <a href="">Umfragen</a>
-                        </li>
-                        <li class="last">
-                            <a href="">Nutzer</a>
-                        </li>
-                    </ul>
+
+                    {% set menu = knp_menu_get('main', [], {'currentRoute': app.request.attributes.get('_route')}) %}
+                    {{ knp_menu_render(menu) }}
+
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
