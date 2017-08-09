@@ -1,3 +1,6 @@
 evaluation:
     resource: "@AppBundle/Resources/config/routing/evaluation.yml"
     prefix: /evaluation
+user:
+    resource: "@AppBundle/Resources/config/routing/user.yml"
+    prefix: /users

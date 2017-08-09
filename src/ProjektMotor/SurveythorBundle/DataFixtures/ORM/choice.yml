@@ -67,7 +67,7 @@ PM\SurveythorBundle\Entity\Choice:
     # second survey
     choice_mc_11:
         text: 'Brot'
-        value: '1'
+        value: '10'
         question: '@question_mc_1'
         childQuestions: [ '@question_sc_1', '@question_sc_2', '@question_sc_3' ]
     choice_mc_12:
@@ -82,7 +82,7 @@ PM\SurveythorBundle\Entity\Choice:
         childQuestions: [ '@question_sc_7', '@question_sc_8', '@question_sc_9' ]
     choice_sc_7:
         text: 'Gut'
-        value: '3'
+        value: '33'
         question: '@question_sc_1'
     choice_sc_8:
         text: 'eher mäßig'
