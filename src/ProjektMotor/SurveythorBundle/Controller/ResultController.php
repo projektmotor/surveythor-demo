@@ -43,9 +43,10 @@ class ResultController
      *
      * @return array
      */
-    private function getChoiceIdsFromRequest($answers, $choiceIds = null)
+    private function getChoiceIdsFromRequest($result, $choiceIds = null)
     {
         $choiceIds = is_null($choiceIds) ? array() : $choiceIds;
+        $answers = array_key_exists('answers', $result) ? $result['answers'] : null;
 
         if (!is_null($answers)) {
             foreach ($answers as $answer) {
@@ -86,7 +87,7 @@ class ResultController
         }
 
         if ($question->isChoiceQuestion()) {
-            $choiceIds = $this->getChoiceIdsFromRequest($request->request->get('result')['answers']);
+            $choiceIds = $this->getChoiceIdsFromRequest($request->request->get('result'));
 
             /** @var Choice $choice */
             foreach ($question->getChoices() as $choice) {
