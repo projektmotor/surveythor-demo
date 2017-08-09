@@ -9,7 +9,7 @@
                 </td>
                 <td class="col-md-8">
                     {{ survey.description }}<br />
-                    Link zur Umfrage: {{ absolute_url('result_new', {'id' : survey.id }) }}
+                    Link zur Umfrage: {{ absolute_url(path('result_new', {'id' : survey.id })) }}
                 </td>
                 <td class="col-md-2">
                     <div class="btn-group btn-group-xs">
