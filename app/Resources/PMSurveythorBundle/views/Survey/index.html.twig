@@ -2,20 +2,32 @@
 
 {% block body %}
     {% for survey in surveys %}
-        <div>
-            <h4>{{ survey.title }}</h4>
-            <p class="well">
-            {{ survey.description }}<br />
-                Link zur Umfrage: {{ absolute_url('result_new', {'id' : survey.id }) }}
-            </p>
-            <p>
-            </p>
-            <a href="{{ path('survey_edit', {'id' : survey.id}) }}" class="btn btn-default">Umfrage bearbeiten</a>
-            <a href="{{ path('result_new', {'id' : survey.id }) }}" class="btn btn-default">Umfrage durchführen</a>
-            <a href="" class="btn btn-default">Auswertungen ansehen</a>
-            <a href="" class="btn btn-danger pull-right">Umfrage löschen</a>
-        </div>
-    <hr />
+        <table class="table">
+            <tr>
+                <td class="col-md-2">
+                    <h4>{{ survey.title }}</h4>
+                </td>
+                <td class="col-md-8">
+                    {{ survey.description }}<br />
+                    Link zur Umfrage: {{ absolute_url('result_new', {'id' : survey.id }) }}
+                </td>
+                <td class="col-md-2">
+                    <div class="btn-group btn-group-xs">
+                        <a href="{{ path('survey_edit', {'id' : survey.id}) }}" class="btn btn-default" title="Umfrage bearbeiten"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                    </div>
+                    <div class="btn-group btn-group-xs">
+                        <a href="{{ path('result_new', {'id' : survey.id }) }}" class="btn btn-default" title="Umfrage durchführen"><span class="glyphicon glyphicon-record" aria-hidden="true"></span></a>
+                    </div>
+                    <div class="btn-group btn-group-xs">
+                        <a href="" class="btn btn-default" title="Auswertungen ansehen"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span></a>
+                    </div>
+                    <div class="btn-group btn-group-xs">
+                        <a href="" class="btn btn-danger" title="Umfrage löschen"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    </div>
+                </td>
+            </tr>
+        </table>
     {% endfor %}
+    <hr />
     <a href="{{ path('survey_new') }}" class="btn btn-primary">neue Umfrage erstellen</a>
 {% endblock %}
