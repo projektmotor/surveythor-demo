@@ -1,0 +1,13 @@
+PM\SurveythorBundle\Entity\ResultRange:
+    resultrange:
+        meaning: 'Nutzer zeigt mittleren Geschmack.'
+        start: '0'
+        stop: '2'
+        event: 'not sure for the moment'
+        survey: '@survey_2'
+    resultrange_1:
+        meaning: 'Nutzer zeigt ausgeprägten Geschmack.'
+        start: '2'
+        stop: '10'
+        event: 'not sure for the moment'
+        survey: '@survey_2'

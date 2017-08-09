@@ -11,3 +11,16 @@ PM\SurveythorBundle\Entity\Question:
         text: 'Wähle deine Lieblingsmusikrichtung(en) aus!'
         type: 'mc'
         survey: '@survey_1'
+    question_mc_1:
+        text: 'Welche Beilagen erachten Sie für essentiell?'
+        type: 'mc'
+        survey: '@survey_2'
+    question_sc_1:
+        text: 'Beurteilen Sie das Preisleistungverhälniss von Brot'
+        type: 'sc'
+    question_sc_2:
+        text: 'Beurteilen Sie die Haltbarkeit von Brot'
+        type: 'sc'
+    question_sc_3:
+        text: 'Beurteilen Sie den Geschmack von Brot'
+        type: 'sc'

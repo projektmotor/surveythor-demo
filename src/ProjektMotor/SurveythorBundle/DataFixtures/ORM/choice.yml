@@ -63,3 +63,59 @@ PM\SurveythorBundle\Entity\Choice:
         text: 'Disco'
         value: '1'
         question: '@question_mc'
+
+    # second survey
+    choice_mc_11:
+        text: 'Brot'
+        value: '1'
+        question: '@question_mc_1'
+        childQuestions: [ '@question_sc_1', '@question_sc_2', '@question_sc_3' ]
+    choice_mc_12:
+        text: 'Sauerkraut'
+        value: '1'
+        question: '@question_mc_1'
+    choice_mc_13:
+        text: 'Kroketten'
+        value: '1'
+        question: '@question_mc_1'
+    choice_mc_14:
+        text: 'Spirelli'
+        value: '10'
+        question: '@question_mc_1'
+    choice_sc_7:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_1'
+    choice_sc_8:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_1'
+    choice_sc_9:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_1'
+    choice_sc_10:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_2'
+    choice_sc_11:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_2'
+    choice_sc_12:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_2'
+    choice_sc_13:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_3'
+    choice_sc_14:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_3'
+    choice_sc_15:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_3'
+
