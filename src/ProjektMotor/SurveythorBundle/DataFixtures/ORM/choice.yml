@@ -74,14 +74,12 @@ PM\SurveythorBundle\Entity\Choice:
         text: 'Sauerkraut'
         value: '1'
         question: '@question_mc_1'
+        childQuestions: [ '@question_sc_4', '@question_sc_5', '@question_sc_6' ]
     choice_mc_13:
         text: 'Kroketten'
         value: '1'
         question: '@question_mc_1'
-    choice_mc_14:
-        text: 'Spirelli'
-        value: '10'
-        question: '@question_mc_1'
+        childQuestions: [ '@question_sc_7', '@question_sc_8', '@question_sc_9' ]
     choice_sc_7:
         text: 'Gut'
         value: '3'
@@ -118,4 +116,75 @@ PM\SurveythorBundle\Entity\Choice:
         text: 'ganz schlecht'
         value: '0'
         question: '@question_sc_3'
-
+    choice_sc_16:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_4'
+    choice_sc_17:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_4'
+    choice_sc_18:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_4'
+    choice_sc_19:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_5'
+    choice_sc_20:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_5'
+    choice_sc_21:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_5'
+    choice_sc_22:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_6'
+    choice_sc_23:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_6'
+    choice_sc_24:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_6'
+    choice_sc_25:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_7'
+    choice_sc_26:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_7'
+    choice_sc_27:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_7'
+    choice_sc_28:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_8'
+    choice_sc_29:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_8'
+    choice_sc_30:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_8'
+    choice_sc_31:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_9'
+    choice_sc_32:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_9'
+    choice_sc_33:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_9'
