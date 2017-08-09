@@ -6,6 +6,7 @@
             <b>{{ answer.question.text }}</b>
             {{ answer.value }}
         </p>
+        <hr />
     {% endif %}
 
     {% if answer.choice is defined %}
@@ -31,20 +32,13 @@
                 {% for childQuestion in choice.childQuestions %}
                     {% for childAnswer in answer.childAnswers %}
                         {% if childAnswer.question.id == childQuestion.id %}
-                            {{ _self.recursiveAnswer(childAnswer) }}
+                            {{ _self.recursiveAnswer(childAnswer, true) }}
                         {% endif %}
                     {% endfor %}
                 {% endfor %}
             {% endif %}
-
-            {% if answer.childAnswers is not null %}
-                {% for childAnswer in answer.childAnswers %}
-                {% endfor %}
-            {% endif %}
+            <hr />
         {% endfor %}
-    {% endif %}
-    {% if isChild == false %}
-        <hr />
     {% endif %}
 {% endmacro %}
 

@@ -19,7 +19,7 @@
                         <a href="{{ path('result_new', {'id' : survey.id }) }}" class="" title="Umfrage durchführen">
                             <span class="glyphicon glyphicon-record" aria-hidden="true"></span> Umfrage durchführen
                         </a><br />
-                        <a href="" class="" title="Auswertungen ansehen">
+                        <a href="{{ path('survey_evaluations', {'id' : survey.id}) }}" class="" title="Auswertungen ansehen">
                             <span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Auswertungen ansehen
                         </a>
 

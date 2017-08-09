@@ -32,6 +32,7 @@ class MenuBuilder
         );
 
         $menu->addChild('Umfragen', ['route' => 'survey_index']);
+        $menu->addChild('Nutzer', ['route' => 'user_index']);
 
         return $menu;
     }

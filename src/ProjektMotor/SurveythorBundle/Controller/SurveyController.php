@@ -7,6 +7,7 @@ use PM\SurveythorBundle\Repository\SurveyRepository;
 use QafooLabs\MVC\FormRequest;
 use QafooLabs\MVC\RedirectRoute;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Controller\UserController;
 
 /**
  * SurveyController
@@ -63,5 +64,13 @@ class SurveyController
         $this->surveyRepository->save($survey);
 
         return new RedirectRoute('survey_index');
+    }
+
+    public function evaluationsAction(Survey $survey)
+    {
+        return array(
+            'survey' => $survey,
+            'users' => UserController::$users
+        );
     }
 }

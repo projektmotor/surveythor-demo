@@ -9,3 +9,7 @@ survey_new:
 survey_edit:
     path: /edit/{id}
     defaults: { _controller: survey_controller:formAction }
+
+survey_evaluations:
+    path: /eval/{id}
+    defaults: { _controller: survey_controller:evaluationsAction }
