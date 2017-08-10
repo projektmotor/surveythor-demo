@@ -188,13 +188,7 @@ class Survey
     {
         $points = 0;
         foreach ($this->questions as $question) {
-            if ($question->hasChoices()) {
-                $maxValue = 0;
-                foreach ($question->getChoices() as $choice) {
-                    $maxValue = $maxValue < $choice->getValue() ? $choice->getValue() : $maxValue;
-                }
-                $points = $points + $maxValue;
-            }
+            $points = $points + $question->getMaxPoints();
         }
 
         return $points;
