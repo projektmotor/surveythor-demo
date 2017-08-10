@@ -86,7 +86,7 @@ class ResultController
             $result->addAnswer($answer);
         }
 
-        if ($question->isChoiceQuestion()) {
+        if ($question->isChoiceQuestion() && !is_null($request->request->get('result'))) {
             $choiceIds = $this->getChoiceIdsFromRequest($request->request->get('result'));
 
             /** @var Choice $choice */
