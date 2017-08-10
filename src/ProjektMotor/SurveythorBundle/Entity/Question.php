@@ -191,4 +191,16 @@ class Question
     {
         return $this->choices->count() > 0;
     }
+
+    public function getMaxPoints()
+    {
+        $points = 0;
+        if ($this->hasChoices()) {
+            foreach ($this->getChoices() as $choice) {
+                $points = $points + $choice->getMaxPoints();
+            }
+        }
+
+        return $points;
+    }
 }

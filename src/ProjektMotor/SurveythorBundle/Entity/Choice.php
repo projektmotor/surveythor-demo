@@ -196,4 +196,18 @@ class Choice
     {
         return (! $this->getChildQuestions()->isEmpty());
     }
+
+    public function getMaxPoints(self $choice = null, $points = 0)
+    {
+        $choice = is_null($choice) ? $this : $choice;
+        $points = $points + $choice->getValue();
+
+        if ($choice->hasChildQuestions()) {
+            foreach ($choice->getChildQuestions() as $question) {
+                $points = $points + $question->getMaxPoints();
+            }
+        }
+
+        return $points;
+    }
 }
