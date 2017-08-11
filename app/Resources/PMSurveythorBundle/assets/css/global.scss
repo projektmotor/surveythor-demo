@@ -19,3 +19,11 @@ $fa-font-path: "~font-awesome/fonts";
 .navbar-default li.current {
     background: #d7d7d7;
 }
+.form-row-horizontal {
+
+    margin-top: 12px;
+
+    div.pull-left {
+        margin-right: 12px;
+    }
+}
