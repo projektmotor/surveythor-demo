@@ -93,6 +93,7 @@
                 {% set parent = child.vars.value.question.parentChoice.id %}
             {% endif %}
             <div class="result_answers-question_answer" data-parent-id="{{ parent }}">
+                <b>{{ child.vars.data.question.text }}</b>
                 {{- form_row(child) -}}
             </div>
         {% endfor %}
@@ -139,7 +140,6 @@
 {% endblock %}
 
 {%- block choices_horizontal_widget -%}
-    <b>{{ form.parent.vars.value.question.text }}</b>
     {% set attr = attr|merge({ 'class' : 'clearfix' }) %}
     {% set type = form.parent.vars.data.question.type %}
     <div {{ block('widget_container_attributes') }}>
