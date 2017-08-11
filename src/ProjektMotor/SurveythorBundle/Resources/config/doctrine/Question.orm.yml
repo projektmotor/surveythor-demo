@@ -31,4 +31,8 @@ PM\SurveythorBundle\Entity\Question:
             targetEntity: PM\SurveythorBundle\Entity\Choice
             inversedBy: childQuestions
 
+        template:
+            targetEntity: PM\SurveythorBundle\Entity\QuestionTemplate
+            inversedBy: questions
+
     lifecycleCallbacks: {}

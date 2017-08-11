@@ -39,6 +39,10 @@ class Question
      */
     private $type;
 
+    /**
+     * @var QuestionTemplate
+     */
+    private $template;
 
     public function __construct()
     {
@@ -202,5 +206,25 @@ class Question
         }
 
         return $points;
+    }
+
+    /**
+     * Get template.
+     *
+     * @return template.
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * Set template.
+     *
+     * @param template the value to set.
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
     }
 }

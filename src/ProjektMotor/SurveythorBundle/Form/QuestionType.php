@@ -4,8 +4,6 @@ namespace PM\SurveythorBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-//use PM\SurveythorBundle\Entity\Dto\Question;
-use PM\SurveythorBundle\Entity\Question;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -13,6 +11,9 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use PM\SurveythorBundle\Entity\Question;
+use PM\SurveythorBundle\Entity\QuestionTemplate;
 
 /**
  * QuestionType
@@ -49,6 +50,12 @@ class QuestionType extends AbstractType
                 ));
 
                 if ($type == 'mc' || $type == 'sc') {
+                    $form->add('template', EntityType::class, array(
+                        'class' => QuestionTemplate::class,
+                        'required' => false,
+                        'choice_label' => 'name'
+                    ));
+
                     $form->add('choices', ChoiceCollectionType::class, array(
                         'entry_type' => MultipleChoiceAnswerType::class,
                         'allow_add' => true,

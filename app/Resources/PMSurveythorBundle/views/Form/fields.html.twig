@@ -93,7 +93,6 @@
                 {% set parent = child.vars.value.question.parentChoice.id %}
             {% endif %}
             <div class="result_answers-question_answer" data-parent-id="{{ parent }}">
-                <b>{{ child.vars.value.question.text }}</b>
                 {{- form_row(child) -}}
             </div>
         {% endfor %}
@@ -139,4 +138,15 @@
     </div>
 {% endblock %}
 
-
+{%- block choices_horizontal_widget -%}
+    <b>{{ form.parent.vars.value.question.text }}</b>
+    {% set attr = attr|merge({ 'class' : 'clearfix' }) %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <div class="pull-left">
+                {{- form_widget(child) -}}
+                {{- form_label(child) -}}
+            </div>
+        {% endfor -%}
+    </div>
+{%- endblock -%}

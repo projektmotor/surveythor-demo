@@ -18,27 +18,36 @@ PM\SurveythorBundle\Entity\Question:
     question_sc_1:
         text: 'Beurteilen Sie das Preisleistungverhälniss von Brot'
         type: 'sc'
+        template: '@horizontal_choices'
     question_sc_2:
         text: 'Beurteilen Sie die Haltbarkeit von Brot'
         type: 'sc'
+        template: '@horizontal_choices'
     question_sc_3:
         text: 'Beurteilen Sie den Geschmack von Brot'
         type: 'sc'
+        template: '@horizontal_choices'
     question_sc_4:
         text: 'Beurteilen Sie das Preisleistungverhälniss von Sauerkraut'
         type: 'sc'
+        template: '@horizontal_choices'
     question_sc_5:
         text: 'Beurteilen Sie die Haltbarkeit von Sauerkraut'
         type: 'sc'
+        template: '@horizontal_choices'
     question_sc_6:
         text: 'Beurteilen Sie den Geschmack von Sauerkraut'
         type: 'sc'
+        template: '@horizontal_choices'
     question_sc_7:
         text: 'Beurteilen Sie das Preisleistungverhälniss von Kroketten'
         type: 'sc'
+        template: '@horizontal_choices'
     question_sc_8:
         text: 'Beurteilen Sie die Haltbarkeit von Kroketten'
         type: 'sc'
+        template: '@horizontal_choices'
     question_sc_9:
         text: 'Beurteilen Sie den Geschmack von Kroketten'
         type: 'sc'
+        template: '@horizontal_choices'

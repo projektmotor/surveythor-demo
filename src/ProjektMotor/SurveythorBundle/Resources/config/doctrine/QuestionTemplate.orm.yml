@@ -1,0 +1,29 @@
+PM\SurveythorBundle\Entity\QuestionTemplate:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\QuestionTemplateRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        formType:
+            type: string
+            length: 255
+            nullable: true
+        result:
+            type: string
+            length: 255
+            nullable: true
+
+    oneToMany:
+        questions:
+            mappedBy: template
+            targetEntity: PM\SurveythorBundle\Entity\Question
+
+    lifecycleCallbacks: {  }

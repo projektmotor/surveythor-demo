@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\Question;
+use PM\SurveythorBundle\Form\Result\ChoicesHorizontalType;
 
 /**
  * AnswerType
@@ -32,9 +33,17 @@ class AnswerType extends AbstractType
             if ($answer) {
                 $question = $answer->getQuestion();
 
+                $type = EntityType::class;
+                if (!is_null($question->getTemplate())) {
+                    $type = !is_null($question->getTemplate()->getFormType())
+                        ? $question->getTemplate()->getFormType()
+                        : $type
+                    ;
+                }
+
                 switch ($question->getType()) {
                     case 'sc':
-                        $form->add('choice', EntityType::class, array(
+                        $form->add('choice', $type, array(
                             'label' => false,
                             'class' => Choice::class,
                             'choice_label' => 'text',
@@ -55,7 +64,7 @@ class AnswerType extends AbstractType
                         ));
                         break;
                     case 'mc':
-                        $form->add('choices', EntityType::class, array(
+                        $form->add('choices', $type, array(
                             'label' => false,
                             'class' => Choice::class,
                             'choice_label' => 'text',
