@@ -40,6 +40,11 @@ class Question
     private $type;
 
     /**
+     * @var integer
+     */
+    private $sortOrder;
+
+    /**
      * @var QuestionTemplate
      */
     private $template;
@@ -219,12 +224,41 @@ class Question
     }
 
     /**
-     * Set template.
-     *
-     * @param template the value to set.
+     * @param QuestionTemplate $template
      */
     public function setTemplate($template)
     {
         $this->template = $template;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getSortOrder()
+    {
+        return $this->sortOrder;
+    }
+
+    /**
+     * @param integer $sortOrder
+     */
+    public function setSortOrder($sortOrder)
+    {
+        $this->sortOrder = $sortOrder;
+    }
+
+    public function setInitialSortOrder()
+    {
+        if (null !== $this->survey) {
+            $this->setSortOrder($this->survey->getQuestions()->count());
+            return $this;
+        }
+
+        if (null !== $this->parentChoice) {
+            $this->setSortOrder($this->parentChoice->getChildQuestions()->count());
+            return $this;
+        }
+
+        throw new \Exception('a question has to have a survey or a parent choice');
     }
 }
