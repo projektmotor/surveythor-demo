@@ -93,7 +93,7 @@
                 {% set parent = child.vars.value.question.parentChoice.id %}
             {% endif %}
             <div class="result_answers-question_answer" data-parent-id="{{ parent }}">
-                <b>{{ child.vars.data.question.text }}</b>
+                <b>{{ child.vars.data.question.text|nl2br }}</b>
                 {{- form_row(child) -}}
             </div>
         {% endfor %}

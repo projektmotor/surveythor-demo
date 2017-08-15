@@ -5,7 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -45,7 +45,7 @@ class QuestionType extends AbstractType
 
         $formModifier = function (FormInterface $form, $type = null) {
             if (null !== $type) {
-                $form->add('text', TextType::class, array(
+                $form->add('text', TextareaType::class, array(
                         'attr' => array('class' => 'title-field')
                 ));
 
