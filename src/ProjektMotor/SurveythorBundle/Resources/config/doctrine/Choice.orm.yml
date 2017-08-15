@@ -28,6 +28,7 @@ PM\SurveythorBundle\Entity\Choice:
                 - persist
             joinTable:
                 name: choice_parentquestion
+            orderBy: { 'sortOrder' : 'ASC'}
 
 
     lifecycleCallbacks: {  }
