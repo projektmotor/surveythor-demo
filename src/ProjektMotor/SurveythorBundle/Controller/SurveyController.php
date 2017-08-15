@@ -1,12 +1,13 @@
 <?php
 namespace PM\SurveythorBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Form\SurveyType;
 use PM\SurveythorBundle\Repository\SurveyRepository;
 use QafooLabs\MVC\FormRequest;
 use QafooLabs\MVC\RedirectRoute;
-use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Controller\UserController;
 
 /**
@@ -50,7 +51,13 @@ class SurveyController
      */
     public function formAction(FormRequest $formRequest, Request $request, Survey $survey = null)
     {
-        $survey = null === $survey ? new Survey() : $survey;
+        $survey = null === $survey ? new Survey() : $this->surveyRepository->findOneById($survey);
+
+        $originalQuestions = new ArrayCollection();
+        foreach ($survey->getQuestions() as $question) {
+            $originalQuestions->add($question);
+        }
+
         if (!$formRequest->handle(SurveyType::class, $survey)
             || $request->isXmlHttpRequest()
         ) {
@@ -61,6 +68,13 @@ class SurveyController
         }
 
         $survey = $formRequest->getValidData();
+
+        foreach ($originalQuestions as $question) {
+            if (false === $survey->getQuestions()->contains($question)) {
+                $question->setSurvey(null);
+            }
+        }
+
         $this->surveyRepository->save($survey);
 
         return new RedirectRoute('survey_index');
