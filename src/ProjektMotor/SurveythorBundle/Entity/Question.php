@@ -259,6 +259,11 @@ class Question
             return $this;
         }
 
+        // dis is needed for fixture loading, should never happen
+        if (null !== $this->sortOrder) {
+            return $this;
+        }
+
         throw new \Exception('a question has to have a survey or a parent choice');
     }
 }
