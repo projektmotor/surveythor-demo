@@ -23,6 +23,7 @@ PM\SurveythorBundle\Entity\Question:
             mappedBy: question
             cascade:
                 - persist
+            orderBy: { 'sortOrder' : 'ASC'}
 
     manyToOne:
         survey:
