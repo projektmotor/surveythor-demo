@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<div id="survey">
+<div id="survey" data-saveurl="{{ path('survey_save', {'id' : survey.id}) }}">
     {{ form_start(form) }}
     {{ form_errors(form) }}
 

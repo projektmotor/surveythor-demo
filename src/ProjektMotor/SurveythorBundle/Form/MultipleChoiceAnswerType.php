@@ -38,7 +38,7 @@ class MultipleChoiceAnswerType extends AbstractType
                     'label' => false
                 ),
                 'prototype_name' => '__question__',
-                'attr' => array('class' => 'child-question-prototype')
+                'attr' => array('class' => 'child-question-prototype sortable')
             ))
         ;
     }

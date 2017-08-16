@@ -1,4 +1,7 @@
 require('bootstrap-sass');
+require('jquery-ui');
+require('jquery-ui/ui/widgets/sortable/');
+
 
 var projektmotor = projektmotor || {};
 
@@ -7,6 +10,7 @@ projektmotor.Survey = function (surveyParams) {
 
     var
         params = {},
+        panel,
         question,
         resultRange,
         helpers
@@ -20,13 +24,47 @@ projektmotor.Survey = function (surveyParams) {
         resultRangeCollectionHolder: '#survey_resultRanges'
     }, surveyParams);//}}}
 
+    panel = {
+        init: function () {
+            panel.bindRemove();
+            panel.initSortable();
+        },
+        bindRemove: function () {
+            $('body').delegate('a.remove-panel', 'click', function (e) {
+                e.preventDefault();
+                $(this).closest('.panel').remove();
+            });
+        },
+        initSortable: function() {
+            $('.sortable').sortable({
+                update: function(event) {
+                    for (var i = 0; i < event.target.children.length; i++ ) {
+                        var child = event.target.children[i];
+                        $(child).find('input.sortorder').val(i);
+                    }
+
+                    var form = $(this).closest('form');
+                    var url = $('div#survey').data('saveurl');
+
+                    $.ajax({
+                        data: form.serialize(),
+                        url: url,
+                        method: 'post',
+                        success: function (response) {
+                            console.log(response);
+                        }
+                    });
+                }
+            });
+        }
+    };
+
     question = {//{{{
         init: function () {
             question.bindAdd();
-            question.bindAddAnswer();
+            question.addChoice();
             question.bindAddChildQuestion();
             question.bindTitleFields();
-            question.bindRemovePanel();
             question.bindTypeSelect();
         },
         bindAdd: function () {
@@ -57,12 +95,7 @@ projektmotor.Survey = function (surveyParams) {
                 panelTitle.text($(this).val());
             });
         },
-        bindRemovePanel: function () {
-            $('body').delegate('a.remove-panel', 'click', function (e) {
-                e.preventDefault();
-                $(this).closest('.panel').remove();
-            });
-        },
+
         bindTypeSelect: function () {
             $('body').delegate('.question-type-select', 'change', function () {
                 var form = $(this).closest('form');
@@ -79,7 +112,7 @@ projektmotor.Survey = function (surveyParams) {
                 });
             });
         },
-        bindAddAnswer: function () {
+        addChoice: function () {
             $('body').delegate('a.add-answer', 'click',  function(e) {
                 e.preventDefault();
                 var collectionHolder = $(this).closest('.question-answer-prototype');
@@ -117,7 +150,7 @@ projektmotor.Survey = function (surveyParams) {
             var re = new RegExp(prototypeName, 'g');
             var newFormDiv = $($('#default-panel').html());
 
-            if (typeof index == 'undefined') {
+            if (typeof index === 'undefined') {
                 index = collectionHolder.children('.panel').length;
                 collectionHolder.prop('data-index', index);
             }
@@ -141,6 +174,7 @@ projektmotor.Survey = function (surveyParams) {
     };//}}}
 
     (function () {
+        panel.init();
         question.init();
         resultRange.init();
     }());
