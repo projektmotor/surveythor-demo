@@ -37,6 +37,11 @@ projektmotor.Survey = function (surveyParams) {
         },
         initSortable: function() {
             $('.sortable').sortable({
+                axis: 'y',
+                cancel: 'a.add-answer',
+                cursor: 'move',
+                handle: 'a.move-panel',
+                items: 'div.panel',
                 update: function(event) {
                     for (var i = 0; i < event.target.children.length; i++ ) {
                         var child = event.target.children[i];
@@ -163,8 +168,8 @@ projektmotor.Survey = function (surveyParams) {
             $(newFormDiv).find('a.collapsed').attr('aria-controls', id);
             $(newFormDiv).find('div.panel-collapse').attr('id', id);
 
-            if (-1 === prototypeName.indexOf('answer')) {
-                $(newFormDiv).find('.add-child-question').remove();
+            if (-1 !== prototypeName.indexOf('__choice__')) {
+                $(newFormDiv).find('.choice-toolbox').css('display', 'inline-block');
             }
 
             $(newFormDiv).find('.panel-body').append(newForm);

@@ -90,6 +90,8 @@ class SurveyController
      */
     public function saveAction(FormRequest $formRequest, Request $request, Survey $survey)
     {
+        $survey = null === $survey ? new Survey() : $survey;
+
         if (!$request->isXmlHttpRequest()) {
             return false;
         }
