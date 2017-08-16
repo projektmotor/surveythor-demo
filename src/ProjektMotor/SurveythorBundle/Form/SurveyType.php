@@ -39,7 +39,8 @@ class SurveyType extends AbstractType
                 'entry_options' => array(
                     'label' => false
                 ),
-                'prototype_name' => '__question__'
+                'prototype_name' => '__question__',
+                'attr' => array('class' => 'sortable')
             ))
             ->add('resultRanges', ResultRangeCollectionType::class, array(
                 'entry_type' => ResultRangeType::class,

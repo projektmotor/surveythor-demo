@@ -41,6 +41,9 @@ class QuestionType extends AbstractType
                 'placeholder' => ''
             ))
             ->add('text', HiddenType::class)
+            ->add('sortOrder', HiddenType::class, array(
+                'attr' => array('class' => 'sortorder')
+            ))
         ;
 
         $formModifier = function (FormInterface $form, $type = null) {

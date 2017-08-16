@@ -2,6 +2,7 @@
 namespace PM\SurveythorBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\Common\Collections\ArrayCollection;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Form\SurveyType;
@@ -51,7 +52,7 @@ class SurveyController
      */
     public function formAction(FormRequest $formRequest, Request $request, Survey $survey = null)
     {
-        $survey = null === $survey ? new Survey() : $this->surveyRepository->findOneById($survey);
+        $survey = null === $survey ? new Survey() : $survey;
 
         $originalQuestions = new ArrayCollection();
         foreach ($survey->getQuestions() as $question) {
@@ -78,6 +79,33 @@ class SurveyController
         $this->surveyRepository->save($survey);
 
         return new RedirectRoute('survey_index');
+    }
+
+    /**
+     * @param FormRequest $formRequest
+     * @param Request $request
+     * @param Survey $survey
+     *
+     * @return array|RedirectRoute
+     */
+    public function saveAction(FormRequest $formRequest, Request $request, Survey $survey)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            return false;
+        }
+
+        if (!$formRequest->handle(SurveyType::class, $survey)) {
+            return new JsonResponse(array(
+                'status' => 'NOT VALID'
+            ));
+        }
+
+        $survey = $formRequest->getValidData();
+        $this->surveyRepository->save($survey);
+
+        return new JsonResponse(array(
+            'status' => 'OK'
+        ));
     }
 
     public function evaluationsAction(Survey $survey)
