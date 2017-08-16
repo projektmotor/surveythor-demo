@@ -38,5 +38,9 @@ PM\SurveythorBundle\Entity\Question:
             targetEntity: PM\SurveythorBundle\Entity\QuestionTemplate
             inversedBy: questions
 
+        childrenTemplate:
+            targetEntity: PM\SurveythorBundle\Entity\QuestionTemplate
+            inversedBy: questions
+
     lifecycleCallbacks:
         prePersist: [ setInitialSortOrder ]

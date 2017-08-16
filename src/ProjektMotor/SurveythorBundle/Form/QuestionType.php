@@ -58,6 +58,12 @@ class QuestionType extends AbstractType
                         'required' => false,
                         'choice_label' => 'name',
                     ));
+                    $form->add('childrenTemplate', EntityType::class, array(
+                        'class' => QuestionTemplate::class,
+                        'required' => false,
+                        'choice_label' => 'name',
+                    ));
+
 
                     $form->add('choices', ChoiceCollectionType::class, array(
                         'entry_type' => MultipleChoiceAnswerType::class,

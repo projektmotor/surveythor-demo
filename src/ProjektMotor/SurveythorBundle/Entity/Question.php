@@ -49,6 +49,11 @@ class Question
      */
     private $template;
 
+    /**
+     * @var QuestionTemplate
+     */
+    private $childrenTemplate;
+
     public function __construct()
     {
         $this->choices = new ArrayCollection();
@@ -265,5 +270,23 @@ class Question
         }
 
         throw new \Exception('a question has to have a survey or a parent choice');
+    }
+
+    /**
+     * Get childrenTemplate.
+     *
+     * @return childrenTemplate.
+     */
+    public function getChildrenTemplate()
+    {
+        return $this->childrenTemplate;
+    }
+
+    /**
+     * @param QuestionTemplate $childrenTemplate
+     */
+    public function setChildrenTemplate($childrenTemplate)
+    {
+        $this->childrenTemplate = $childrenTemplate;
     }
 }

@@ -24,10 +24,10 @@ projektmotor.Result = function () {
                             var target = parentInput.parents('div').first();
                             var type = parentInput.attr('type');
 
-                            if (type === 'checkbox') {
-                                $(this).detach();
-                                target.append($(this));
-                            }
+                            //if (type === 'checkbox') {
+                            //    $(this).detach();
+                            //    target.append($(this));
+                            //}
                         });
                     }
                 });

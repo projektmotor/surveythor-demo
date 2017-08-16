@@ -64,3 +64,55 @@ PM\SurveythorBundle\Entity\Question:
         type: 'sc'
         template: '@horizontal_choices'
         sortOrder: 3
+
+    frage_1:
+        text: 'Welche Produkte haben Sie bereits im Einsatz?'
+        type: 'mc'
+        sortOrder: 3
+        survey: '@fragenkatalog'
+        childrenTemplate: '@choices_children_below'
+    zufrieden_performance_1:
+        text: 'Performance'
+        type: 'sc'
+        sortOrder: 1
+        template: '@horizontal_choices'
+    zufrieden_usability_1:
+        text: 'Benutzerfreundlichkeit'
+        type: 'sc'
+        sortOrder: 2
+        template: '@horizontal_choices'
+    zufrieden_features_1:
+        text: 'Features'
+        type: 'sc'
+        sortOrder: 3
+        template: '@horizontal_choices'
+    zufrieden_performance_2:
+        text: 'Performance'
+        type: 'sc'
+        sortOrder: 1
+        template: '@horizontal_choices'
+    zufrieden_usability_2:
+        text: 'Benutzerfreundlichkeit'
+        type: 'sc'
+        sortOrder: 2
+        template: '@horizontal_choices'
+    zufrieden_features_2:
+        text: 'Features'
+        type: 'sc'
+        sortOrder: 3
+        template: '@horizontal_choices'
+    zufrieden_performance_3:
+        text: 'Performance'
+        type: 'sc'
+        sortOrder: 1
+        template: '@horizontal_choices'
+    zufrieden_usability_3:
+        text: 'Benutzerfreundlichkeit'
+        type: 'sc'
+        sortOrder: 2
+        template: '@horizontal_choices'
+    zufrieden_features_3:
+        text: 'Features'
+        type: 'sc'
+        sortOrder: 3
+        template: '@horizontal_choices'

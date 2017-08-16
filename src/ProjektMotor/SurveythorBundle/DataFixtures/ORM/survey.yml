@@ -1,4 +1,6 @@
 PM\SurveythorBundle\Entity\Survey:
+    fragenkatalog:
+        title: 'Fragenkatalog'
     survey_1:
         title: 'Demo-Befragung'
         description: 'Ziel der Umfrage ist es die unterschiedlichen Fragetypen darzustellen, sowie die Präferenzen des Nutzers hinsichtlich Lieblingsbuch, Lieblingsfarbe und Lieblingsmusikrichtungen zu erfassen'
