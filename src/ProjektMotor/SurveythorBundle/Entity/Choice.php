@@ -39,6 +39,11 @@ class Choice
      */
     private $childQuestions;
 
+    /**
+     * @var integer
+     */
+    private $sortOrder;
+
     public function __construct()
     {
         $this->childQuestions = new ArrayCollection();
@@ -209,5 +214,26 @@ class Choice
         }
 
         return $points;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getSortOrder()
+    {
+        return $this->sortOrder;
+    }
+
+    /**
+     * @param integer $sortOrder
+     */
+    public function setSortOrder($sortOrder)
+    {
+        $this->sortOrder = $sortOrder;
+    }
+
+    public function setInitialSortOrder()
+    {
+        $this->setSortOrder($this->question->getChoices()->count());
     }
 }

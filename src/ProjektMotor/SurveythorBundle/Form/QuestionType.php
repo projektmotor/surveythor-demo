@@ -56,7 +56,7 @@ class QuestionType extends AbstractType
                     $form->add('template', EntityType::class, array(
                         'class' => QuestionTemplate::class,
                         'required' => false,
-                        'choice_label' => 'name'
+                        'choice_label' => 'name',
                     ));
 
                     $form->add('choices', ChoiceCollectionType::class, array(
@@ -68,7 +68,7 @@ class QuestionType extends AbstractType
                             'label' => false
                         ),
                         'prototype_name' => '__choice__',
-                        'attr' => array('class' => 'question-answer-prototype')
+                        'attr' => array('class' => 'question-answer-prototype sortable')
                     ));
                 }
             }
