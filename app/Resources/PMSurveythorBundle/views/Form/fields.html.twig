@@ -152,18 +152,64 @@
 {%- block choices_horizontal_widget -%}
     {% set attr = attr|merge({ 'class' : 'clearfix' }) %}
     {% set type = form.parent.vars.data.question.type %}
-    <div {{ block('widget_container_attributes') }}>
-        {%- for child in form %}
-            <div class="pull-left">
-                <div class="text-center" style="border: 1px solid #e7e7e7; margin-right: 8px; padding: 4px;">
-                    <div>{{ child.vars.label }}</div>
-                    {% if type == "sc" %}
-                        <input type="radio" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
-                    {% else %}
-                        <input type="checkbox" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
-                    {% endif %}
+        <div {{ block('widget_container_attributes') }}>
+            {%- for child in form %}
+                <div class="pull-left">
+                    <div class="text-center" style="border: 1px solid #e7e7e7; margin-right: 8px; padding: 4px;">
+                        <div>{{ child.vars.label }}</div>
+                        {% if type == "sc" %}
+                            <input type="radio" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
+                        {% else %}
+                            <input type="checkbox" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        {% endfor -%}
-    </div>
+            {% endfor -%}
+        </div>
 {%- endblock -%}
+
+{% block choices_children_below_widget %}
+    {% set attr = attr|merge({ 'class' : 'clearfix' }) %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form.parent is empty -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+
+        <p>
+            <b>Sind sie mit der Software zufrieden</b>
+        </p>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-2">
+                Performance
+            </div>
+            <div class="col-md-2">
+                Benutzerfreundlichkeit
+            </div>
+            <div class="col-md-2">
+                Features
+            </div>
+        </div>
+
+        {%set parentChoiceId = false %}
+        {% for child in form.children %}
+            {%if child.vars.data.question is defined %}
+                {% if parentChoiceId != child.vars.data.question.parentChoice.id %}
+                    {% set parentChoiceId = child.vars.data.question.parentChoice.id %}
+                    {% if loop.index0 > 0 %}
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-md-3">
+                            <b>{{ child.vars.data.question.parentChoice.text }}</b>
+                        </div>
+                {% endif %}
+
+                    <div class="col-md-2">
+                        {{- form_widget(child) -}}
+                    </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
