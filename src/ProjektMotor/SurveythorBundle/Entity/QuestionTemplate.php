@@ -30,16 +30,6 @@ class QuestionTemplate
     private $result;
 
     /**
-     * @var Question[]|Arraycollection
-     */
-    private $questions;
-
-    public function __construct()
-    {
-        $this->questions = new ArrayCollection();
-    }
-
-    /**
      * Get id
      *
      * @return int
@@ -95,39 +85,6 @@ class QuestionTemplate
     public function getResult()
     {
         return $this->result;
-    }
-
-    /**
-     * @param Question $question
-     *
-     * @return QuestionTemplate
-     */
-    public function addQuestion(Question $question)
-    {
-        if (!$this->questions->contains($question)) {
-            $this->questions->add($question);
-            $question->setQuestion($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Question $question
-     */
-    public function removeQuestion(Question $question)
-    {
-        $this->questions->removeElement($question);
-    }
-
-    /**
-     * Get questions.
-     *
-     * @return Question[]|ArrayCollection
-     */
-    public function getQuestions()
-    {
-        return $this->questions;
     }
 
     /**
