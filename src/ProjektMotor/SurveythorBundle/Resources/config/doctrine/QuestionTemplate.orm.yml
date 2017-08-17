@@ -21,9 +21,4 @@ PM\SurveythorBundle\Entity\QuestionTemplate:
             length: 255
             nullable: true
 
-    oneToMany:
-        questions:
-            mappedBy: template
-            targetEntity: PM\SurveythorBundle\Entity\Question
-
     lifecycleCallbacks: {  }
