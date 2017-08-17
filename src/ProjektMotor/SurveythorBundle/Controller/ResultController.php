@@ -38,7 +38,7 @@ class ResultController
     }
 
     /**
-     * @param  array $answers
+     * @param array $answers
      * @param array|null $choiceIds
      *
      * @return array
@@ -60,9 +60,7 @@ class ResultController
                 }
 
                 if (array_key_exists('childAnswers', $answer)) {
-                    foreach ($answer['childAnswers'] as $childAnswer) {
-                        $choiceIds = $this->getChoiceIdsFromRequest([0 => $childAnswer], $choiceIds);
-                    }
+                    $choiceIds = $this->getChoiceIdsFromRequest(array('answers' => $answer['childAnswers']), $choiceIds);
                 }
             }
         }
@@ -112,6 +110,7 @@ class ResultController
      */
     public function newAction(FormRequest $formRequest, Request $request, Survey $survey)
     {
+        //dump($request->request->all());die();
         $result = new Result();
 
         foreach ($survey->getQuestions() as $question) {
