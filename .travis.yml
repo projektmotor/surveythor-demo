@@ -11,8 +11,8 @@ before_script:
   - php bin/console doctrine:schema:create --env=test
   - php bin/console doctrine:schema:update --env=test --force
 
-script:
-  - vendor/bin/phpunit --coverage-text
+#script:
+#  - vendor/bin/phpunit --coverage-text
 
 deploy:
   provider: heroku
