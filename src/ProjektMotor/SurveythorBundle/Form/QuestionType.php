@@ -66,7 +66,7 @@ class QuestionType extends AbstractType
 
 
                     $form->add('choices', ChoiceCollectionType::class, array(
-                        'entry_type' => MultipleChoiceAnswerType::class,
+                        'entry_type' => QuestionChoiceType::class,
                         'allow_add' => true,
                         'allow_delete' => true,
                         'by_reference' => false,
