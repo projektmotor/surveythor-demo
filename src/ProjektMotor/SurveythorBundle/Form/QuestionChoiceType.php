@@ -10,10 +10,10 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use PM\SurveythorBundle\Entity\Choice;
 
 /**
- * MultipleChoiceAnswerType
+ * QuestionChoiceType
  * @author Rombo Kraft <kraft@projektmotor.de>
  */
-class MultipleChoiceAnswerType extends AbstractType
+class QuestionChoiceType extends AbstractType
 {
     const FORM_NAME = 'pm_surveythor_answer';
 
