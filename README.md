@@ -89,7 +89,7 @@ and restart containers (`docker-compose down && docker-compose up -d`)
     ```
 * Start webpack encore
     ```bash
-    $ docker-compose exec web vendor/bin/webpack-dev-server
+    $ docker-compose exec web node_modules/.bin/encore dev-server
     ```
 * Show containers and their status
     ```bash
