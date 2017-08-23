@@ -86,7 +86,7 @@ class SurveyController
      * @param Request $request
      * @param Survey $survey
      *
-     * @return array|RedirectRoute
+     * @return boolean|JsonResponse
      */
     public function saveAction(FormRequest $formRequest, Request $request, Survey $survey)
     {
