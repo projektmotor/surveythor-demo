@@ -63,3 +63,320 @@ PM\SurveythorBundle\Entity\Choice:
         text: 'Disco'
         value: '1'
         question: '@question_mc'
+
+    # second survey
+    choice_mc_11:
+        text: 'Brot'
+        value: '10'
+        question: '@question_mc_1'
+        childQuestions: [ '@question_sc_1', '@question_sc_2', '@question_sc_3' ]
+    choice_mc_12:
+        text: 'Sauerkraut'
+        value: '1'
+        question: '@question_mc_1'
+        childQuestions: [ '@question_sc_4', '@question_sc_5', '@question_sc_6' ]
+    choice_mc_13:
+        text: 'Kroketten'
+        value: '1'
+        question: '@question_mc_1'
+        childQuestions: [ '@question_sc_7', '@question_sc_8', '@question_sc_9' ]
+    choice_sc_7:
+        text: 'Gut'
+        value: '33'
+        question: '@question_sc_1'
+    choice_sc_8:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_1'
+    choice_sc_9:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_1'
+    choice_sc_10:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_2'
+    choice_sc_11:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_2'
+    choice_sc_12:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_2'
+    choice_sc_13:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_3'
+    choice_sc_14:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_3'
+    choice_sc_15:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_3'
+    choice_sc_16:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_4'
+    choice_sc_17:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_4'
+    choice_sc_18:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_4'
+    choice_sc_19:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_5'
+    choice_sc_20:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_5'
+    choice_sc_21:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_5'
+    choice_sc_22:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_6'
+    choice_sc_23:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_6'
+    choice_sc_24:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_6'
+    choice_sc_25:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_7'
+    choice_sc_26:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_7'
+    choice_sc_27:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_7'
+    choice_sc_28:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_8'
+    choice_sc_29:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_8'
+    choice_sc_30:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_8'
+    choice_sc_31:
+        text: 'Gut'
+        value: '3'
+        question: '@question_sc_9'
+    choice_sc_32:
+        text: 'eher mäßig'
+        value: '2'
+        question: '@question_sc_9'
+    choice_sc_33:
+        text: 'ganz schlecht'
+        value: '0'
+        question: '@question_sc_9'
+
+    choice_frage_1_1:
+        text: 'Citrix Access Gateway oder Secure Gateway'
+        value: '0'
+        question: '@frage_1'
+        childQuestions: [ '@zufrieden_performance_1', '@zufrieden_usability_1', '@zufrieden_features_1' ]
+    choice_frage_1_2:
+        text: 'Citrix NetScaler'
+        value: '0'
+        question: '@frage_1'
+        childQuestions: [ '@zufrieden_performance_2', '@zufrieden_usability_2', '@zufrieden_features_2' ]
+    choice_frage_1_3:
+        text: 'Citrix NetScaler SD-WAN'
+        value: '0'
+        question: '@frage_1'
+        childQuestions: [ '@zufrieden_performance_3', '@zufrieden_usability_3', '@zufrieden_features_3' ]
+    choice_frage_1_4:
+        text: 'Citrix XenApp'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_5:
+        text: 'Citrix XenClient'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_6:
+        text: 'Citrix XenDesktop'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_7:
+        text: 'Citrix XenServer'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_8:
+        text: 'Citrix XenMobile'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_9:
+        text: 'Citrix Application Streaming'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_10:
+        text: 'Citrix Provisoning Server'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_11:
+        text: 'Microsoft App-V'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_12:
+        text: 'Microsoft Azure'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_13:
+        text: 'Microsoft Hyper-V'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_14:
+        text: 'Microsoft SQL'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_15:
+        text: 'Microsoft System Center/ Altiris oder anderes'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_6:
+        text: 'Microsoft Skype for Business'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_17:
+        text: 'Vmware vSphere'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_18:
+        text: 'Vmware Horizon'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_19:
+        text: 'Microsoft RDS'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_20:
+        text: 'Amazon Webservices'
+        value: '0'
+        question: '@frage_1'
+    choice_zufrieden_performance_1:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_1'
+    choice_zufrieden_performance_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_1'
+    choice_zufrieden_performance_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_1'
+    choice_zufrieden_usabilty_1:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_1'
+    choice_zufrieden_usabilty_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_1'
+    choice_zufrieden_usabilty_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_1'
+    choice_zufrieden_features_1:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_1'
+    choice_zufrieden_features_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_1'
+    choice_zufrieden_features_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_1'
+    choice_zufrieden_performance_1_2:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_2'
+    choice_zufrieden_performance_2_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_2'
+    choice_zufrieden_performance_3_2:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_2'
+    choice_zufrieden_usabilty_1_2:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_2'
+    choice_zufrieden_usabilty_2_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_2'
+    choice_zufrieden_usabilty_3_2:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_2'
+    choice_zufrieden_features_1_2:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_2'
+    choice_zufrieden_features_2_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_2'
+    choice_zufrieden_features_3_2:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_2'
+    choice_zufrieden_performance_1_3:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_3'
+    choice_zufrieden_performance_2_3:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_3'
+    choice_zufrieden_performance_3_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_3'
+    choice_zufrieden_usabilty_1_3:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_3'
+    choice_zufrieden_usabilty_2_3:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_3'
+    choice_zufrieden_usabilty_3_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_3'
+    choice_zufrieden_features_1_3:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_3'
+    choice_zufrieden_features_2_3:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_3'
+    choice_zufrieden_features_3_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_3'

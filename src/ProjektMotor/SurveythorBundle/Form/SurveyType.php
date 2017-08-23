@@ -4,10 +4,13 @@ namespace PM\SurveythorBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-//use PM\SurveythorBundle\Entity\Dto\Survey;
-use PM\SurveythorBundle\Entity\Survey;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use PM\SurveythorBundle\Entity\Survey;
+use PM\SurveythorBundle\Form\ResultRangeType;
+use PM\SurveythorBundle\Form\ResultRangeCollectionType;
 
 /**
  * SurveyType
@@ -24,6 +27,10 @@ class SurveyType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, array())
+            ->add('description', TextareaType::class, array(
+                'label' => 'Beschreibung',
+                'required' => false
+            ))
             ->add('questions', QuestionCollectionType::class, array(
                 'entry_type' => QuestionType::class,
                 'allow_add' => true,
@@ -33,9 +40,20 @@ class SurveyType extends AbstractType
                     'label' => false
                 ),
                 'prototype_name' => '__question__',
-                'attr' => array('class' => 'question-prototype')
+                'attr' => array('class' => 'sortable')
             ))
-            ->add('submit', SubmitType::class)
+            ->add('resultRanges', ResultRangeCollectionType::class, array(
+                'entry_type' => ResultRangeType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'entry_options' => array(
+                    'label' => false
+                ),
+                'prototype_name' => '__resultRange__',
+                'label' => false
+            ))
+            ->add('submit', SubmitType::class, [ 'label' => 'Speichern' ])
         ;
     }
 

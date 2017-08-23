@@ -22,9 +22,13 @@ PM\SurveythorBundle\Entity\Survey:
             mappedBy: survey
             cascade:
                 - persist
+            orderBy: { 'sortOrder' : 'ASC'}
 
         resultRanges:
             targetEntity: PM\SurveythorBundle\Entity\ResultRange
             mappedBy: survey
+            cascade:
+                - persist
 
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}
+

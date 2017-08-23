@@ -1,0 +1,33 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h4>{{ user.name }}</h4>
+    <b>Adresse</b><br />
+    {{ user.address}}<br />
+    {{ user.city}}<br />
+    {{ user.zip}}<br />
+    {{ user.email}}<br /><br />
+
+    <b>teilgenommen an folgenden Umfragen</b>
+    <table class="table">
+        <tr>
+            <th>Umfrage</th>
+            <th>Datum</th>
+            <th>Punktzahl</th>
+            <th>Auswerung</th>
+        </tr>
+        <tr>
+            <td>Demo Umfrage</td>
+            <td>23.12.2016</td>
+            <td>{{ random(90) }}</td>
+            <td><a>link</a></td>
+        </tr>
+        <tr>
+            <td>gutbürgerliche Küche</td>
+            <td>24.12.2016</td>
+            <td>{{ random(90) }}</td>
+            <td><a>link</a></td>
+        </tr>
+
+    </table>
+{% endblock %}

@@ -1,12 +1,13 @@
 <?php
 namespace PM\SurveythorBundle\Form;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use PM\SurveythorBundle\Entity\Choice;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use PM\SurveythorBundle\Entity\Choice;
 
 /**
  * MultipleChoiceAnswerType
@@ -38,7 +39,10 @@ class MultipleChoiceAnswerType extends AbstractType
                     'label' => false
                 ),
                 'prototype_name' => '__question__',
-                'attr' => array('class' => 'child-question-prototype')
+                'attr' => array('class' => 'child-question-prototype sortable')
+            ))
+            ->add('sortOrder', HiddenType::class, array(
+                'attr' => array('class' => 'sortorder')
             ))
         ;
     }

@@ -9,9 +9,39 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        {% block navbar %}
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navbar-brand pm-navbar-brand" href="">
+                            <img src="{{ asset('favicon.ico') }}" />
+                        </a>
+
+                        <ul class="nav navbar-nav">
+                            <li><a>Dashboard</a></li>
+                        </ul>
+
+                        {% set menu = knp_menu_get('main', [], {'currentRoute': app.request.attributes.get('_route')}) %}
+                        {{ knp_menu_render(menu) }}
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <p class="navbar-text navbar-right">Angemeldet als <a href="#" class="navbar-link">Rombok Raft</a>&nbsp;&nbsp;</p>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+        {% endblock %}
+
         <div class="container-fluid">
-            <h3 style="color: #959595;">Surveythor</h3>
-            <hr />
             {% block body %}{% endblock %}
         </div>
         {% block javascripts %}

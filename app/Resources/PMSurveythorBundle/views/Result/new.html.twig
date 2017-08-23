@@ -1,10 +1,12 @@
 {% extends '::base.html.twig' %}
 
+{% block navbar %}{% endblock %}
 {% block body %}
     <h4>{{ survey.title }}</h4>
 
     <div id="result">
         {{ form_start(form) }}
+        {{ form_row(form.answers) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}

@@ -39,6 +39,20 @@ class Question
      */
     private $type;
 
+    /**
+     * @var integer
+     */
+    private $sortOrder;
+
+    /**
+     * @var QuestionTemplate
+     */
+    private $template;
+
+    /**
+     * @var QuestionTemplate
+     */
+    private $childrenTemplate;
 
     public function __construct()
     {
@@ -185,5 +199,94 @@ class Question
     public function isChoiceQuestion()
     {
         return $this->getType() === 'mc' || $this->getType() === 'sc';
+    }
+
+    public function hasChoices()
+    {
+        return $this->choices->count() > 0;
+    }
+
+    public function getMaxPoints()
+    {
+        $points = 0;
+        if ($this->hasChoices()) {
+            foreach ($this->getChoices() as $choice) {
+                $points = $points + $choice->getMaxPoints();
+            }
+        }
+
+        return $points;
+    }
+
+    /**
+     * Get template.
+     *
+     * @return template.
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+
+    /**
+     * @param QuestionTemplate $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getSortOrder()
+    {
+        return $this->sortOrder;
+    }
+
+    /**
+     * @param integer $sortOrder
+     */
+    public function setSortOrder($sortOrder)
+    {
+        $this->sortOrder = $sortOrder;
+    }
+
+    public function setInitialSortOrder()
+    {
+        if (null !== $this->survey) {
+            $this->setSortOrder($this->survey->getQuestions()->count());
+            return $this;
+        }
+
+        if (null !== $this->parentChoice) {
+            $this->setSortOrder($this->parentChoice->getChildQuestions()->count());
+            return $this;
+        }
+
+        // dis is needed for fixture loading, should never happen
+        if (null !== $this->sortOrder) {
+            return $this;
+        }
+
+        throw new \Exception('a question has to have a survey or a parent choice');
+    }
+
+    /**
+     * Get childrenTemplate.
+     *
+     * @return childrenTemplate.
+     */
+    public function getChildrenTemplate()
+    {
+        return $this->childrenTemplate;
+    }
+
+    /**
+     * @param QuestionTemplate $childrenTemplate
+     */
+    public function setChildrenTemplate($childrenTemplate)
+    {
+        $this->childrenTemplate = $childrenTemplate;
     }
 }
