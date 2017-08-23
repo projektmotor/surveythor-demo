@@ -28,9 +28,13 @@ class BaseBrowserTestCase extends BrowserTestCase
 			'browserName' => 'chrome',
 			'baseUrl' => $parameters['parameters']['mink_base_url'],
 			'type' => $parameters['parameters']['mink_type'],
-			'api_username' => $parameters['parameters']['mink_api_username'],
-			'api_key' => $parameters['parameters']['mink_api_key'],
 		];
+
+		if ($browserConfiguration['type'] !== 'default') {
+			$browserConfiguration['api_username'] = $parameters['parameters']['mink_api_username'];
+			$browserConfiguration['api_key'] = $parameters['parameters']['mink_api_key'];
+		}
+
         $browser = $this->createBrowserConfiguration($browserConfiguration);
 
         $this->setBrowser($browser);

@@ -18,8 +18,8 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
 
-    mink_base_url: http://surveythor-demo.localhost/app_test.php/
-    mink_host: 127.0.0.1
+    mink_base_url: http://surveythor-demo/app_test.php/
+    mink_host: hub
     mink_port: 4444
     mink_type: default
 
