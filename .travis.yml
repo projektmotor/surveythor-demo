@@ -10,6 +10,7 @@ php:
 before_script:
   - sudo apt-get update
   - sudo apt-get install apache2 libapache2-mod-fastcgi
+  - sudo chmod -R 0777 var/logs var/cache
   # just show the current directory tree
   - ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
   # enable php-fpm
@@ -54,5 +55,6 @@ services:
 
 after_failure:
   - cat /etc/apache2/sites-available/default
+  - ls var/logs
   - cat var/logs/apache-access.log
   - cat var/logs/apache-error.log
