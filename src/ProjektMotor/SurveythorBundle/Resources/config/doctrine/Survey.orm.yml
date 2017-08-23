@@ -2,6 +2,7 @@ PM\SurveythorBundle\Entity\Survey:
     type: entity
     table: null
     repositoryClass: PM\SurveythorBundle\Repository\SurveyRepository
+
     id:
         id:
             type: integer

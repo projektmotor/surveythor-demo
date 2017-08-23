@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="collapse-question-{{ child.vars.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-question-{{ child.vars.id }}">
+                <div id="collapse-question-{{ child.vars.id }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapse-question-{{ child.vars.id }}">
                     <div class="panel-body">
                         {{- form_row(child) -}}
                     </div>
@@ -42,6 +42,20 @@
     </div>
 {% endblock %}
 
+{% block condition_collection_widget %}
+    {% if prototype is defined %}
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+    {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form.parent is empty -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+        {% for child in form %}
+            {{ form_row(child) }}
+        {% endfor %}
+        <a href="#" class="condition-add">add a condition</a>
+    </div>
+{% endblock %}
 
 {% block choice_collection_widget %}
     {% if prototype is defined %}

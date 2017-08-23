@@ -40,13 +40,14 @@ class QuestionType extends AbstractType
                 ),
                 'placeholder' => ''
             ))
+
             ->add('text', HiddenType::class)
             ->add('sortOrder', HiddenType::class, array(
                 'attr' => array('class' => 'sortorder')
             ))
         ;
 
-        $formModifier = function (FormInterface $form, $type = null) {
+        $typeModifier = function (FormInterface $form, $type = null) {
             if (null !== $type) {
                 $form->add('text', TextareaType::class, array(
                         'attr' => array('class' => 'title-field')
@@ -82,20 +83,41 @@ class QuestionType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($formModifier) {
+            function (FormEvent $event) {
+                $data = $event->getData();
+                if (!is_null($data)) {
+                    $form = $event->getForm();
+                    $form->add('conditions', ConditionCollectionType::class, array(
+                        'entry_type' => CondtionType::class,
+                        'allow_add' => true,
+                        'allow_delete' => true,
+                        'by_reference' => false,
+                        'entry_options' => array(
+                            'survey' => $data->getSurvey(),
+                            'label' => false
+                        ),
+                        'prototype_name' => '__condition__'
+                    ));
+                }
+            }
+        );
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($typeModifier) {
                 $data = $event->getData();
 
                 if (!is_null($data)) {
-                    $formModifier($event->getForm(), $data->getType());
+                    $typeModifier($event->getForm(), $data->getType());
                 }
             }
         );
 
         $builder->get('type')->addEventListener(
             FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier) {
+            function (FormEvent $event) use ($typeModifier) {
                 $type = $event->getForm()->getData();
-                $formModifier($event->getForm()->getParent(), $type);
+                $typeModifier($event->getForm()->getParent(), $type);
             }
         );
     }

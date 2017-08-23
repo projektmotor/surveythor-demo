@@ -1,0 +1,23 @@
+PM\SurveythorBundle\Entity\Condition:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\ConditionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    manyToOne:
+        item:
+            targetEntity: PM\SurveythorBundle\Entity\SurveyItem
+            inversedBy: conditions
+        question:
+            targetEntity: PM\SurveythorBundle\Entity\Question
+
+    manyToMany:
+        choices:
+            targetEntity: PM\SurveythorBundle\Entity\Choice
+
+    lifecycleCallbacks: {  }
