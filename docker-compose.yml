@@ -19,9 +19,11 @@ services:
       PHP_XDEBUG_REMOTE_HOST: 172.17.0.1
       PHP_IDE_CONFIG: serverName=surveythor-demo-docker-container
     tty: true
+    container_name: surveythor-demo
     depends_on:
       - mysql
-      - sauce_connect
+      - node-chrome
+      - node-firefox
 
   mysql:
     image: mysql:5.7
@@ -37,12 +39,36 @@ services:
        MYSQL_USER: surveythor_demo
        MYSQL_PASSWORD: surveythor_demo
 
-  sauce_connect:
-    build:
-      context: .docker/sauce_connect
+  hub:
+    image: selenium/hub
+    ports:
+      - "4444:4444"
     networks:
       - surveythor-demo
-#    command: /init-project.sh TODO 100
+
+  node-firefox:
+    image: selenium/node-firefox-debug
+    networks:
+      - surveythor-demo
+    ports:
+      - "5900:5900"
+    depends_on:
+      - hub
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=hub
+      - HUB_PORT_4444_TCP_PORT=4444
+
+  node-chrome:
+    image: selenium/node-chrome-debug
+    networks:
+      - surveythor-demo
+    ports:
+      - "5901:5900"
+    depends_on:
+      - hub
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=hub
+      - HUB_PORT_4444_TCP_PORT=4444
 
 volumes:
   mysql_data:
