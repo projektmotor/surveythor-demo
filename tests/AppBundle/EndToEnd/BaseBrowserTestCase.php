@@ -35,6 +35,10 @@ class BaseBrowserTestCase extends BrowserTestCase
 			$browserConfiguration['api_key'] = $parameters['parameters']['mink_api_key'];
 		}
 
+		if ($browserConfiguration['type'] === 'saucelabs') {
+			$this->markTestSkipped('sauce labs not yet configured');
+		}
+
         $browser = $this->createBrowserConfiguration($browserConfiguration);
 
         $this->setBrowser($browser);
