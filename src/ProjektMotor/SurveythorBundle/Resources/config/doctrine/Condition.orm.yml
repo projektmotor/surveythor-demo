@@ -1,6 +1,6 @@
 PM\SurveythorBundle\Entity\Condition:
     type: entity
-    table: null
+    table: item_condition
     repositoryClass: PM\SurveythorBundle\Repository\ConditionRepository
     id:
         id:

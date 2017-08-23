@@ -54,9 +54,9 @@ class SurveyController
     {
         $survey = null === $survey ? new Survey() : $survey;
 
-        $originalQuestions = new ArrayCollection();
-        foreach ($survey->getQuestions() as $question) {
-            $originalQuestions->add($question);
+        $originalItems = new ArrayCollection();
+        foreach ($survey->getSurveyItems() as $item) {
+            $originalItems->add($item);
         }
 
         if (!$formRequest->handle(SurveyType::class, $survey)
@@ -70,9 +70,15 @@ class SurveyController
 
         $survey = $formRequest->getValidData();
 
-        foreach ($originalQuestions as $question) {
-            if (false === $survey->getQuestions()->contains($question)) {
-                $question->setSurvey(null);
+        foreach ($originalItems as $item) {
+            if (false === $survey->getSurveyItems()->contains($item)) {
+                $item->setSurvey(null);
+            } else {
+                if ($item->getConditions() !== null) {
+                    foreach ($item->getConditions() as $condition) {
+                        $condition->setItem($item);
+                    }
+                }
             }
         }
 

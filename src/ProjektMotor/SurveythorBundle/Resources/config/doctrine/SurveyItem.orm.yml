@@ -36,6 +36,6 @@ PM\SurveythorBundle\Entity\SurveyItem:
     manyToOne:
         survey:
             targetEntity: PM\SurveythorBundle\Entity\Survey
-            inversedBy: questions
+            inversedBy: surveyItems
 
     lifecycleCallbacks: {  }

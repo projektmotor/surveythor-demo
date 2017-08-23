@@ -18,7 +18,7 @@ PM\SurveythorBundle\Entity\Survey:
             nullable: true
 
     oneToMany:
-        questions:
+        surveyItems:
             targetEntity: PM\SurveythorBundle\Entity\Question
             mappedBy: survey
             cascade:

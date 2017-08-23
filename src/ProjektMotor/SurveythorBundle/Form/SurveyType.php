@@ -31,7 +31,7 @@ class SurveyType extends AbstractType
                 'label' => 'Beschreibung',
                 'required' => false
             ))
-            ->add('questions', QuestionCollectionType::class, array(
+            ->add('surveyItems', QuestionCollectionType::class, array(
                 'entry_type' => QuestionType::class,
                 'allow_add' => true,
                 'allow_delete' => true,

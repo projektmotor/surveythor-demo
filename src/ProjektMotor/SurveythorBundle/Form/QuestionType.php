@@ -84,16 +84,16 @@ class QuestionType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
-                $data = $event->getData();
-                if (!is_null($data)) {
+                $question = $event->getData();
+                if (!is_null($question)) {
                     $form = $event->getForm();
                     $form->add('conditions', ConditionCollectionType::class, array(
                         'entry_type' => CondtionType::class,
                         'allow_add' => true,
                         'allow_delete' => true,
-                        'by_reference' => false,
+                        //'by_reference' => false,
                         'entry_options' => array(
-                            'survey' => $data->getSurvey(),
+                            'question' => $question,
                             'label' => false
                         ),
                         'prototype_name' => '__condition__'

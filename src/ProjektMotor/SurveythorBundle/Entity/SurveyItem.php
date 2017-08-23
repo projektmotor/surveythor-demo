@@ -111,7 +111,7 @@ abstract class SurveyItem
     public function setInitialSortOrder()
     {
         if (null !== $this->survey) {
-            $this->setSortOrder($this->survey->getQuestions()->count());
+            $this->setSortOrder($this->survey->getSurveyItems()->count());
             return $this;
         }
 

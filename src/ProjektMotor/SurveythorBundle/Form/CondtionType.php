@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 use PM\SurveythorBundle\Entity\Condition;
 use PM\SurveythorBundle\Entity\Question;
 use PM\SurveythorBundle\Entity\Choice;
@@ -26,7 +27,7 @@ class CondtionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $survey = $options['survey'];
+        $survey = $options['question']->getSurvey();
 
         $builder->add('question', EntityType::class, array(
             'class' => Question::class,
@@ -71,7 +72,6 @@ class CondtionType extends AbstractType
         );
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -79,7 +79,7 @@ class CondtionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'PM\SurveythorBundle\Entity\Condition',
-            'survey' => null
+            'question' => null
         ));
     }
 
