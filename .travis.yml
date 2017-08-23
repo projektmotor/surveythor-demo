@@ -1,3 +1,6 @@
+dist: trusty
+sudo: required
+
 language: php
 
 php:
@@ -5,14 +8,27 @@ php:
   - 7.0
 
 before_script:
+  - sudo apt-get update
+  - sudo apt-get install apache2 libapache2-mod-fastcgi
+  # enable php-fpm
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - ls -l ~/.phpenv/versions/
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  # configure apache virtual hosts
+  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo service apache2 restart
+  # install project
   - cp app/config/parameters.yml.travis app/config/parameters.yml
   - composer install -vv
   - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:create --env=test
   - php bin/console doctrine:schema:update --env=test --force
 
-#script:
-#  - vendor/bin/phpunit --coverage-text
+script:
+  - vendor/bin/phpunit -v --coverage-text
 
 deploy:
   provider: heroku
@@ -23,3 +39,12 @@ deploy:
     repo: projektmotor/surveythor-demo
     branch: master # default is master
     php: 5.6
+
+addons:
+  sauce_connect:
+    username: robertfausk
+  jwt:
+    secure: EYYqEaXspIqsv03c+crFZmqOsjUaFaJip2Rhm2ResZGoXbcGNeGpE/Jw5f6r4UzsBMWVkN4Mi/GgQWZ+KnpZQDJ/BqJQviY5gAxJ0d7pT3EsycX1NjQRSudaa9O6EmsZKJjrBP9wj+HKES9u5lO/CN3qMowW5ijS8sh82okoYEa/9FwMC5HGQKgqCwjX+mWyVPwrL/kkbV5H+7fLVrKjECJSk+Uf8q6znEgkGpK/jQ08WW6sdwCjYX8lguSVZ1X18NPirchcYiaEwdEBeMCs7jq6GxNCnpDtOogPqTub9ZK5TpPKmSQmtLolpneDPKOjzY6uzUiREXMB2aMV1n0qxpOi+57c8bzwulZJVJol1lyICL/7YUT+riy1mOH5En8TuSba3ixHdJYJ7TfdcVUdg6Cm6zDeHqf8VAkISFHNxLyZOCpNMIa4FNr9FCtGgICnVMRZyzcZNDgyDsEJgwsRPWm4DNq7nOtSIpIodpESUhGja53sFsgg7r7GqGtRYqldVCTSCq5sQN0yI/cjUbpcddPzbt4TLR/13/AgwPGL1ELy50YyZteVLRlB5xw24hLFw3/xt2ArGTS/KN2ecZ7REt3jVjKhxLAs4Qkez1GX7ms2u4MUvK2hWNbCQinbR4CA9yczZLp4AtW56gpPJQUviu7M1cCwySFNMZo+CGopDlg=
+
+services:
+  - mysql

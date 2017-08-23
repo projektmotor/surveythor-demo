@@ -4,7 +4,7 @@ parameters:
     database_host: 127.0.0.1
     database_port: null
     database_name: surveythor_demo
-    database_user: travis
+    database_user: root
     database_password: ~
     mailer_transport: smtp
     mailer_host: 127.0.0.1
@@ -12,3 +12,12 @@ parameters:
     mailer_password: null
     locale: de
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    mink_base_url: http://127.0.0.1/app_test.php/
+    mink_host: 127.0.0.1
+    mink_port: 4444
+    mink_type: saucelabs
+
+    mink_api_username: "%env(SAUCE_USERNAME)%"
+    mink_api_key: "%env(SAUCE_ACCESS_KEY)%"
+    mink_tunnel_id: "%env(TRAVIS_JOB_NUMBER)%"

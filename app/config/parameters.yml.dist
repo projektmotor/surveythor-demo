@@ -17,3 +17,12 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    mink_base_url: http://surveythor-demo/app_test.php/
+    mink_host: hub
+    mink_port: 4444
+    mink_type: default
+
+    mink_api_username: username
+    mink_api_key: apiKey
+    mink_tunnel_id: my-tun2
