@@ -23,6 +23,6 @@ parameters:
     mink_port: 4444
     mink_type: default
 
-    mink_api_username: username
-    mink_api_key: apiKey
-    mink_tunnel_id: my-tun2
+    mink_api_username_env_name: 'SAUCE_USERNAME'
+    mink_api_key_env_name: 'SAUCE_ACCESS_KEY'
+    mink_tunnel_id_env_name: 'TRAVIS_JOB_NUMBER'
