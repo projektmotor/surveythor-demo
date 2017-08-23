@@ -1,5 +1,6 @@
 <VirtualHost *:80>
 
+  ServerName surveythor-demo
   DocumentRoot %TRAVIS_BUILD_DIR%/web
 
   <Directory "%TRAVIS_BUILD_DIR%/web">
@@ -16,5 +17,9 @@
     Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi
     FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
   </IfModule>
+
+  ErrorLog "%TRAVIS_BUILD_DIR%/var/logs/apache-error.log"
+  LogLevel warn
+  CustomLog "%TRAVIS_BUILD_DIR%/var/logs/apache-access.log" combined
 
 </VirtualHost>

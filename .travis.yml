@@ -49,3 +49,7 @@ addons:
 
 services:
   - mysql
+
+after_failure:
+  - cat var/logs/apache-access.log
+  - cat var/logs/apache-error.log
