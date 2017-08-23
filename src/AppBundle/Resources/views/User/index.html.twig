@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>Name</th>
+            <th>E-Mail</th>
+            <th>Ort</th>
+            <th>Anzahl Umfragen</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td><a href="{{ path('user_detail', {'id' : user.id})}}">{{ user.id }}<a/></td>
+                <td><a href="{{ path('user_detail', {'id' : user.id})}}">{{ user.name }}<a/></td>
+                <td><a href="{{ path('user_detail', {'id' : user.id})}}">{{ user.email }}<a/></td>
+                <td>{{ user.city }}</td>
+                <td>{{ random([1,2,3,4]) }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

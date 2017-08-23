@@ -183,4 +183,14 @@ class Survey
             }
         }
     }
+
+    public function getMaxPoints()
+    {
+        $points = 0;
+        foreach ($this->questions as $question) {
+            $points = $points + $question->getMaxPoints();
+        }
+
+        return $points;
+    }
 }

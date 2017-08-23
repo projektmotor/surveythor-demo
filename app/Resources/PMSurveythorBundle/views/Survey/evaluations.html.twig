@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h4>{{ survey.title }}</h4>
+    <p class="well">
+        {{ survey.description }}
+    </p>
+    <p>
+        Die Umfrage wurde 36 mal durchgeführt
+    </p>
+
+    <table class="table">
+        <tr>
+            <th class="col-md-1">#</th>
+            <th>Name</th>
+            <th>E-Mail</th>
+            <th>Datum</th>
+            <th>Punkte</th>
+            <th>pdf</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ random(+'now'|date('U'))|date('Y-m-d') }}</td>
+                <td>{{ random(10) }}</td>
+                <td><a>link</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

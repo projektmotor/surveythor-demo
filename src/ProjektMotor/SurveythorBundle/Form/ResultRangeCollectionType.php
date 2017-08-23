@@ -5,10 +5,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
- * ChoiceCollectionType
+ * ResultRangeCollectionType
  * @author Rombo Kraft <kraft@projektmotor.de>
  */
-class ChoiceCollectionType extends AbstractType
+class ResultRangeCollectionType extends AbstractType
 {
     public function getParent()
     {
@@ -17,6 +17,6 @@ class ChoiceCollectionType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'choice_collection';
+        return 'resultrange_collection';
     }
 }

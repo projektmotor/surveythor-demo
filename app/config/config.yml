@@ -58,6 +58,8 @@ twig:
     form_themes:
         - 'bootstrap_3_layout.html.twig'
         - PMSurveythorBundle:Form:fields.html.twig
+    paths:
+        '%kernel.project_dir%/app/Resources/PMSurveythorBundle/views/': PMSurveythorBundle
 
 # Doctrine Configuration
 doctrine:
