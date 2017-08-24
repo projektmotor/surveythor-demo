@@ -27,6 +27,7 @@ before_script:
   - sudo ls /etc/apache2/sites-enabled/
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-enabled/000-default
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-enabled/000-default
+  - sudo cp -f /etc/apache2/sites-enabled/000-default /etc/apache2/sites-enabled/000-default.conf
 #  - sudo a2ensite default.conf
   - sudo /etc/init.d/apache2 restart
   # install project
@@ -65,10 +66,12 @@ after_failure:
   - sudo ls /etc/apache2/sites-enabled
 #  - sudo cat /etc/apache2/sites-enabled/default.conf
   - sudo cat /etc/apache2/sites-enabled/000-default
+  - sudo cat /etc/apache2/sites-enabled/000-default.conf
   - sudo cat /etc/apache2/sites-enabled/default-ssl.conf
   - sudo ls /etc/apache2/sites-available
   - ls var/logs
   - cat var/logs/apache-access.log
   - cat var/logs/apache-error.log
   - cat var/logs/test.log
+  - cat /home/travis/sauce-connect.log
   - ls /home/travis/build/projektmotor/surveythor-demo/web
