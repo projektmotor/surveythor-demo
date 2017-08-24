@@ -34,6 +34,11 @@ class Question extends SurveyItem
      */
     private $childrenTemplate;
 
+    /**
+     * @var string
+     */
+    private $type;
+
 
     public function __construct()
     {
@@ -178,5 +183,25 @@ class Question extends SurveyItem
     public function setChildrenTemplate($childrenTemplate)
     {
         $this->childrenTemplate = $childrenTemplate;
+    }
+
+    /**
+     * Get type.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set type.
+     *
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }

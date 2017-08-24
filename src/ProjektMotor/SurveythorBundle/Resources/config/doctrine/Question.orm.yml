@@ -6,6 +6,10 @@ PM\SurveythorBundle\Entity\Question:
     fields:
         text:
             type: text
+        type:
+            type: string
+            length: 255
+
 
     oneToMany:
         choices:

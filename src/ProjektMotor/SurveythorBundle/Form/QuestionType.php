@@ -93,7 +93,7 @@ class QuestionType extends AbstractType
                         'allow_delete' => true,
                         //'by_reference' => false,
                         'entry_options' => array(
-                            'question' => $question,
+                            'item' => $question,
                             'label' => false
                         ),
                         'prototype_name' => '__condition__'

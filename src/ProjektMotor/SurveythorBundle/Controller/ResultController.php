@@ -113,8 +113,10 @@ class ResultController
         //dump($request->request->all());die();
         $result = new Result();
 
-        foreach ($survey->getQuestions() as $question) {
-            $this->setAnswers($result, $question, $request);
+        foreach ($survey->getSurveyItems() as $item) {
+            if ($item instanceof Question) {
+                $this->setAnswers($result, $item, $request);
+            }
         }
 
         if (!$formRequest->handle(ResultType::class, $result)

@@ -1,6 +1,7 @@
 <?php
-
 namespace PM\SurveythorBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * SurveyItem
@@ -21,11 +22,6 @@ abstract class SurveyItem
      * @var integer
      */
     private $sortOrder;
-
-    /**
-     * @var string
-     */
-    private $type;
 
     /**
      * @var Condition[]|Arraycollection
@@ -73,26 +69,6 @@ abstract class SurveyItem
     }
 
     /**
-     * Get type.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set type.
-     *
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
      * @return integer
      */
     public function getSortOrder()
@@ -115,10 +91,10 @@ abstract class SurveyItem
             return $this;
         }
 
-        if (null !== $this->parentChoice) {
-            $this->setSortOrder($this->parentChoice->getChildQuestions()->count());
-            return $this;
-        }
+        #if (null !== $this->parentChoice) {
+        #    $this->setSortOrder($this->parentChoice->getChildQuestions()->count());
+        #    return $this;
+        #}
 
         // dis is needed for fixture loading, should never happen
         if (null !== $this->sortOrder) {

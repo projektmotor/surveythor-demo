@@ -27,11 +27,11 @@ class CondtionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $survey = $options['question']->getSurvey();
+        $survey = $options['item']->getSurvey();
 
         $builder->add('question', EntityType::class, array(
             'class' => Question::class,
-            'choices' => $survey->getQuestions(),
+            //'choices' => $survey->getQuestions(),
             'choice_label' => 'text',
             'attr' => array('class' => 'condition-question')
         ));
@@ -56,6 +56,7 @@ class CondtionType extends AbstractType
             function (FormEvent $event) use ($questionModifier) {
                 $data = $event->getData();
 
+
                 if (!is_null($data)) {
                     $question = $data->getQuestion();
                     $questionModifier($event->getForm(), $question);
@@ -79,7 +80,7 @@ class CondtionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'PM\SurveythorBundle\Entity\Condition',
-            'question' => null
+            'item' => null
         ));
     }
 

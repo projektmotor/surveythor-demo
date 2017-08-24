@@ -21,10 +21,6 @@ PM\SurveythorBundle\Entity\SurveyItem:
     fields:
         sortOrder:
             type: integer
-        type:
-            type: string
-            length: 255
-
 
     oneToMany:
         conditions:
