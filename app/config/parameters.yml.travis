@@ -13,7 +13,7 @@ parameters:
     locale: de
     secret: ThisTokenIsNotSoSecretChangeIt
 
-    mink_base_url: http://surveythor-demo.local/app_test.php/
+    mink_base_url: http://localhost:4445/app_test.php/
     mink_host: 127.0.0.1
     mink_port: 4444
     mink_type: saucelabs
