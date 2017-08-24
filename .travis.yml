@@ -58,3 +58,4 @@ after_failure:
   - ls var/logs
   - cat var/logs/apache-access.log
   - cat var/logs/apache-error.log
+  - cat var/logs/test.log
