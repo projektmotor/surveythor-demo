@@ -22,6 +22,7 @@ class GeneralTest extends BaseBrowserTestCase
         $session = $this->getSession();
 
         // Go to a page.
+		$session->visit('http://localhost/');
         $session->visit($this->getBrowser()->getBaseUrl() . 'survey/');
 
         // Validate text presence on a page.
