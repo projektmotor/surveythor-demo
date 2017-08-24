@@ -24,8 +24,9 @@ before_script:
 #  - sudo cp build/travis-ci-servername /etc/apache2/conf-available/servername.conf
 #  - sudo a2enconf servername
   # configure apache virtual hosts
+  - sudo ls /etc/apache2/sites-enabled/
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-enabled/000-default
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-enabled/000-default
 #  - sudo a2ensite default.conf
   - sudo /etc/init.d/apache2 restart
   # install project
@@ -64,6 +65,7 @@ after_failure:
   - sudo ls /etc/apache2/sites-enabled
 #  - sudo cat /etc/apache2/sites-enabled/default.conf
   - sudo cat /etc/apache2/sites-enabled/000-default
+  - sudo cat /etc/apache2/sites-enabled/default-ssl.conf
   - sudo ls /etc/apache2/sites-available
   - ls var/logs
   - cat var/logs/apache-access.log
