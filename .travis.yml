@@ -60,6 +60,7 @@ services:
 after_failure:
   - cat /etc/apache2/sites-available/default.conf
   - sudo cat /var/log/apache2/error.log
+  - sudo cat /var/log/apache2/access.log
   - sudo ls /etc/apache2/sites-enabled
   - sudo cat /etc/apache2/sites-enabled/default.conf
   - sudo cat /etc/apache2/sites-enabled/000-default
