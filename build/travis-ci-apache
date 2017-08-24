@@ -1,6 +1,6 @@
 <VirtualHost *:80>
 
-  ServerName surveythor-demo.local
+#  ServerName surveythor-demo.local
   DocumentRoot %TRAVIS_BUILD_DIR%/web
 
   <Directory "%TRAVIS_BUILD_DIR%/web">

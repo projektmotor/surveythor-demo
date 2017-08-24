@@ -15,7 +15,7 @@ parameters:
 
     mink_base_url: http://localhost/app_test.php/
     mink_host: localhost
-    mink_port: 4445
+    mink_port: 4444
     mink_type: saucelabs
 
     mink_api_username_env_name: 'SAUCE_USERNAME'
