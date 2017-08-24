@@ -24,8 +24,8 @@ before_script:
   - sudo cp build/travis-ci-servername /etc/apache2/conf-available/servername.conf
   - sudo a2enconf servername
   # configure apache virtual hosts
-  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default
   - sudo /etc/init.d/apache2 restart
   # install project
   - cp app/config/parameters.yml.travis app/config/parameters.yml
