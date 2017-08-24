@@ -3,6 +3,11 @@
 #  ServerName surveythor-demo
   DocumentRoot %TRAVIS_BUILD_DIR%/web
 
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride All
+  </Directory>
+
   <Directory "%TRAVIS_BUILD_DIR%/web">
     Options FollowSymLinks MultiViews ExecCGI
     AllowOverride All
