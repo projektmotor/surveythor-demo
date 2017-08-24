@@ -1,6 +1,6 @@
 <VirtualHost *:80>
 
-#  ServerName surveythor-demo
+  ServerName surveythor-demo
   DocumentRoot %TRAVIS_BUILD_DIR%/web
 
   <Directory />
@@ -11,7 +11,7 @@
   <Directory "%TRAVIS_BUILD_DIR%/web">
     Options FollowSymLinks MultiViews ExecCGI
     AllowOverride All
-    Order allow,deny
+    Order deny,allow
     Allow from all
   </Directory>
 

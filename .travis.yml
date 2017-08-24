@@ -11,6 +11,7 @@ before_script:
   - sudo apt-get update
   - sudo apt-get install apache2 libapache2-mod-fastcgi
   - sudo chmod -R 0777 var/logs var/cache
+  - echo "127.0.0.1       surveythor-demo" | sudo tee -a /etc/hosts
   # just show the current directory tree
   - ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
   # enable php-fpm
@@ -21,8 +22,8 @@ before_script:
   - ls -l ~/.phpenv/versions/
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # Set ServerName Globally
-#  - sudo cp build/travis-ci-servername /etc/apache2/conf-available/servername.conf
-#  - sudo a2enconf servername
+  - sudo cp build/travis-ci-servername /etc/apache2/conf-available/servername.conf
+  - sudo a2enconf servername
   # configure apache virtual hosts
   - sudo ls /etc/apache2/sites-enabled/
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default.conf
