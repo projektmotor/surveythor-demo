@@ -24,8 +24,9 @@ before_script:
   - sudo cp build/travis-ci-servername /etc/apache2/conf-available/servername.conf
   - sudo a2enconf servername
   # configure apache virtual hosts
-  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default
+  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default.conf
+  - sudo a2ensite default.conf
   - sudo /etc/init.d/apache2 restart
   # install project
   - cp app/config/parameters.yml.travis app/config/parameters.yml
@@ -57,10 +58,11 @@ services:
   - mysql
 
 after_failure:
-  - cat /etc/apache2/sites-available/default
+  - cat /etc/apache2/sites-available/default.conf
   - sudo cat /var/log/apache2/error.log
   - sudo ls /etc/apache2/sites-enabled
-  - sudo cat /etc/apache2/sites-enabled/000-default.conf
+  - sudo cat /etc/apache2/sites-enabled/default.conf
+  - sudo cat /etc/apache2/sites-enabled/000-default
   - sudo ls /etc/apache2/sites-available
   - ls var/logs
   - cat var/logs/apache-access.log
