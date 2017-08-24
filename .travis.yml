@@ -21,7 +21,7 @@ before_script:
   - ls -l ~/.phpenv/versions/
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # Set ServerName Globally
-  - sudo cp build/servername.tpl /etc/apache2/conf-available/servername.conf
+  - sudo cp build/travis-ci-servername /etc/apache2/conf-available/servername.conf
   - sudo a2enconf servername
   # configure apache virtual hosts
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
