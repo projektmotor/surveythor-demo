@@ -28,7 +28,7 @@ before_script:
   - sudo ls /etc/apache2/sites-enabled/
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default
-  - sudo cp -f /etc/apache2/sites-enabled/000-default /etc/apache2/sites-enabled/000-default.conf
+  - sudo cp -f /etc/apache2/sites-available/000-default /etc/apache2/sites-available/000-default.conf
   - sudo a2ensite 000-default
   - sudo /etc/init.d/apache2 restart
   # install project
