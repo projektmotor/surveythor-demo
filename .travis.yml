@@ -55,6 +55,7 @@ services:
 
 after_failure:
   - cat /etc/apache2/sites-available/default
+  - cat /var/log/apache2/error.log
   - ls var/logs
   - cat var/logs/apache-access.log
   - cat var/logs/apache-error.log
