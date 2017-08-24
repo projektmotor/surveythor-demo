@@ -20,6 +20,9 @@ before_script:
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - ls -l ~/.phpenv/versions/
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  # Set ServerName Globally
+  - sudo cp travisCI/servername.tpl /etc/apache2/conf-available/servername.conf
+  - sudo a2enconf servername
   # configure apache virtual hosts
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
@@ -57,6 +60,8 @@ after_failure:
   - cat /etc/apache2/sites-available/default
   - sudo cat /var/log/apache2/error.log
   - sudo ls /etc/apache2/sites-enabled
+  - sudo cat /etc/apache2/sites-enabled/000-default.conf
+  - sudo ls /etc/apache2/sites-available
   - ls var/logs
   - cat var/logs/apache-access.log
   - cat var/logs/apache-error.log
