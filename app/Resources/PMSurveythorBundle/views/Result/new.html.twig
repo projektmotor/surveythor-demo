@@ -2,12 +2,17 @@
 
 {% block navbar %}{% endblock %}
 {% block body %}
-    <h4>{{ survey.title }}</h4>
+
+    <h4>{{ app.session.get('survey').title }}</h4>
 
     <div id="result">
-        {{ form_start(form) }}
-        {{ form_row(form.answers) }}
-        {{ form_end(form) }}
+        <button
+            class="btn btn-default"
+            id="survey-next"
+            data-next-url="{{ path('result_next', { 'id' : app.session.get('survey').id, 'item' : item.id }) }}"
+        >
+            weiter
+        </button>
     </div>
 {% endblock %}
 

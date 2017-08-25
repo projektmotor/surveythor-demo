@@ -204,4 +204,14 @@ class Survey
             }
         }
     }
+
+    public function getNextItem($item)
+    {
+        while ($current = $this->surveyItems->current()) {
+            if ($current->getId() == $item->getId()) {
+                return $this->surveyItems->next();
+            }
+            $this->surveyItems->next();
+        }
+    }
 }

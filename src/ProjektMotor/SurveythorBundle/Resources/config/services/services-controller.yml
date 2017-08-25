@@ -8,3 +8,4 @@ services:
         class: PM\SurveythorBundle\Controller\ResultController
         arguments:
             - "@result_ready_subscriber"
+            - "@form.factory"
