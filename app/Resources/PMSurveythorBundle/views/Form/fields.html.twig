@@ -13,7 +13,12 @@
                         <div class="col-md-6">
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-question-{{ child.vars.id }}" aria-expanded="true" aria-controls="collapse-question-{{ child.vars.id }}">
-                                {{ child.vars.value.text }}
+                                {% if child.vars.value.text is defined %}
+                                    {{ child.vars.value.text }}
+                                {% endif %}
+                                {% if child.vars.value.header is defined %}
+                                    {{ child.vars.value.header }}
+                                {% endif %}
                                 </a>
                             </h4>
                         </div>

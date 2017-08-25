@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Form\ResultRangeType;
 use PM\SurveythorBundle\Form\ResultRangeCollectionType;
@@ -32,14 +33,14 @@ class SurveyType extends AbstractType
                 'required' => false
             ))
             ->add('surveyItems', QuestionCollectionType::class, array(
-                'entry_type' => QuestionType::class,
+                'entry_type' => SurveyItemType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'entry_options' => array(
                     'label' => false
                 ),
-                'prototype_name' => '__question__',
+                'prototype_name' => '__surveyitem__',
                 'attr' => array('class' => 'sortable')
             ))
             ->add('resultRanges', ResultRangeCollectionType::class, array(
@@ -56,7 +57,6 @@ class SurveyType extends AbstractType
             ->add('submit', SubmitType::class, [ 'label' => 'Speichern' ])
         ;
     }
-
     /**
      * {@inheritDoc}
      */

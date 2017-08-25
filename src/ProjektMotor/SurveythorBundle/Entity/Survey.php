@@ -176,10 +176,12 @@ class Survey
                 ->addViolation();
         } else {
             foreach ($this->getSurveyItems() as $surveyItem) {
-                if ($surveyItem->getText() == '') {
-                    $context->buildViolation('A surveyItem should have a text.')
-                        ->atPath('surveyItems')
-                        ->addViolation();
+                if (get_class($surveyItem) == Question::class) {
+                    if ($surveyItem->getText() == '') {
+                        $context->buildViolation('A surveyItem should have a text.')
+                            ->atPath('surveyItems')
+                            ->addViolation();
+                    }
                 }
             }
         }
