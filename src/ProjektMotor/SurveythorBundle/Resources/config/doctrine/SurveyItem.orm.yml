@@ -10,6 +10,7 @@ PM\SurveythorBundle\Entity\SurveyItem:
     discriminatorMap:
         question: Question
         text: TextItem
+        questiongroup: QuestionGroup
 
     id:
         id:

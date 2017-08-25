@@ -12,7 +12,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\Question;
-use PM\SurveythorBundle\Form\Result\ChoicesHorizontalType;
 
 /**
  * AnswerType

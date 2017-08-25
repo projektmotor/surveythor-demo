@@ -19,6 +19,13 @@ PM\SurveythorBundle\Entity\Result:
             orderBy: { 'position': 'ASC'}
             cascade:
                 - persist
+        answerGroups:
+            targetEntity: PM\SurveythorBundle\Entity\AnswerGroup
+            mappedBy: result
+            orderBy: { 'position': 'ASC'}
+            cascade:
+                - persist
+
 
     lifecycleCallbacks:
         prePersist: [ setCreatedValue ]

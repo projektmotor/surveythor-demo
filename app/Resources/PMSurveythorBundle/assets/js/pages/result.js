@@ -15,7 +15,7 @@ projektmotor.Result = function () {
             });
         },
         getNext: function () {
-            var form = $('form[name=answer]');
+            var form = $('#result').find('form').first();
             var url = $('#survey-next').data('next-url');
 
             $.ajax({

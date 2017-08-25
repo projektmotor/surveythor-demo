@@ -19,7 +19,7 @@ PM\SurveythorBundle\Entity\Survey:
 
     oneToMany:
         surveyItems:
-            targetEntity: PM\SurveythorBundle\Entity\Question
+            targetEntity: PM\SurveythorBundle\Entity\SurveyItem
             mappedBy: survey
             cascade:
                 - persist

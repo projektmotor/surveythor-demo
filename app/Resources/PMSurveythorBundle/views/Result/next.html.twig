@@ -1,5 +1,20 @@
-<b>{{ form.vars.value.question.text }}</b>
+{% if header is defined %}
+    {{ header }}
+{% endif %}
+
+{% if formgroup is defined %}
+    {{ form_start(formgroup) }}
+    {{ form_errors(formgroup) }}
+    {% for answer in formgroup.children.answers %}
+        <b>{{ answer.vars.value.question.text }}</b>
+        {{ form_errors(answer) }}
+        {{ form_row(answer) }}
+    {% endfor %}
+    {{ form_end(formgroup) }}
+{% endif %}
+
 {% if form is defined %}
+    <b>{{ form.vars.value.question.text }}</b>
     {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form(form) }}
@@ -11,6 +26,7 @@
         {{ text }}
     </p>
 {% endif %}
+
 
 <button
     class="btn btn-default"

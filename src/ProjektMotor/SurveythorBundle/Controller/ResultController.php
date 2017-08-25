@@ -2,6 +2,7 @@
 namespace PM\SurveythorBundle\Controller;
 
 use PM\SurveythorBundle\Entity\Answer;
+use PM\SurveythorBundle\Entity\AnswerGroup;
 use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\Question;
 use PM\SurveythorBundle\Entity\Result;
@@ -10,9 +11,11 @@ use PM\SurveythorBundle\Entity\SurveyItem;
 use PM\SurveythorBundle\Entity\TextItem;
 use PM\SurveythorBundle\Entity\SingleChoiceAnswer;
 use PM\SurveythorBundle\Entity\MultipleChoiceAnswer;
+use PM\SurveythorBundle\Entity\QuestionGroup;
 use PM\SurveythorBundle\Event\ResultEvent;
 use PM\SurveythorBundle\Form\ResultType;
 use PM\SurveythorBundle\Form\AnswerType;
+use PM\SurveythorBundle\Form\AnswerGroupType;
 use PM\SurveythorBundle\Repository\SurveyRepository;
 use QafooLabs\MVC\FormRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,12 +76,25 @@ class ResultController
     {
         $session = new Session();
 
-        $answer = Answer::createByQuestionType($item);
-        if (!$formRequest->handle(AnswerType::class, $answer)) {
-            return $this->renderItem($item, $survey, $formRequest);
+        if (get_class($item) == Question::class) {
+            $answer = Answer::createByQuestionType($item);
+            if (!$formRequest->handle(AnswerType::class, $answer)) {
+                return $this->renderItem($item, $survey, $formRequest);
+            }
+            $session->get('result')->addAnswer($formRequest->getValidData());
         }
+        if (get_class($item) == QuestionGroup::class) {
+            $answerGroup = new AnswerGroup();
+            foreach ($item->getQuestions() as $question) {
+                $answer = Answer::createByQuestionType($question);
+                $answerGroup->addAnswer($answer);
+            }
 
-        $session->get('result')->addAnswer($formRequest->getValidData());
+            if (!$formRequest->handle(AnswerGroupType::class, $answerGroup)) {
+                return $this->renderItem($item, $survey, $formRequest);
+            }
+            $session->get('result')->addAnswerGroup($formRequest->getValidData());
+        }
 
         if ($nextItem = $this->getNextItem($item, $survey)) {
             return $this->renderItem($nextItem, $survey);
@@ -134,27 +150,48 @@ class ResultController
 
     private function renderItem(SurveyItem $item, Survey $survey, FormRequest $formRequest = null)
     {
-        $session = new Session();
-        $result = $session->get('result');
+        switch (get_class($item)) {
+            case Question::class:
+                $answer = Answer::createByQuestionType($item);
+                if (null === $formRequest) {
+                    $form = $this->formFactory->create(AnswerType::class, $answer)->createView();
+                } else {
+                    $form = $formRequest->createFormView();
+                }
 
-        $text = false;
-        $form = false;
-        if ($item instanceof TextItem) {
-            $text = $item->getText();
-        } else {
-            $answer = Answer::createByQuestionType($item);
-            if (null === $formRequest) {
-                $form = $this->formFactory->create(AnswerType::class, $answer)->createView();
-            } else {
-                $form = $formRequest->createFormView();
-            }
+                return array(
+                    'item' => $item,
+                    'form' => $form
+                );
+            break;
+            case QuestionGroup::class:
+                $answerGroup = new AnswerGroup();
+                foreach ($item->getQuestions() as $question) {
+                    $answer = Answer::createByQuestionType($question);
+                    $answerGroup->addAnswer($answer);
+                }
+
+                if (null === $formRequest) {
+                    $form = $this->formFactory->create(AnswerGroupType::class, $answerGroup)->createView();
+                } else {
+                    $form = $formRequest->createFormView();
+                }
+
+                return array(
+                    'item' => $item,
+                    'formgroup' => $form,
+                    'header' => $item->getHeader()
+                );
+            break;
+            case TextItem::class:
+                $text = $item->getText();
+
+                return array(
+                    'item' => $item,
+                    'text' => $text
+                );
+            break;
         }
-
-        return array(
-            'item' => $item,
-            'form' => $form,
-            'text' => $text
-        );
     }
 
 //        //dump($request->request->all());die();
