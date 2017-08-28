@@ -13,5 +13,13 @@ PM\SurveythorBundle\Entity\AnswerGroup:
         result:
             targetEntity: PM\SurveythorBundle\Entity\Result
             inversedBy: answerGroups
+        parentGroup:
+            targetEntity: PM\SurveythorBundle\Entity\AnswerGroup
+            inversedBy: childGroups
+
+    oneToMany:
+        childGroups:
+            targetEntity: PM\SurveythorBundle\Entity\AnswerGroup
+            mappedBy: parentGroup
 
     lifecycleCallbacks: {  }

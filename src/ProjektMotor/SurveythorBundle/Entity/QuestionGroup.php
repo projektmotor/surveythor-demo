@@ -19,9 +19,20 @@ class QuestionGroup extends SurveyItem
      */
     private $questions;
 
+    /**
+     * @var QuestionGroup
+     */
+    private $parentGroup;
+
+    /**
+     * @var QuestionGroup[]
+     */
+    private $childGroups;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
+        $this->childGroups = new ArrayCollection();
     }
 
     /**
@@ -78,5 +89,51 @@ class QuestionGroup extends SurveyItem
     public function getQuestions()
     {
         return $this->questions;
+    }
+
+    /**
+     * @return QuestionGroup.
+     */
+    public function getParentGroup()
+    {
+        return $this->parentGroup;
+    }
+
+    /**
+     * @param QuestionGroup
+     */
+    public function setParentGroup(QuestionGroup $parentGroup)
+    {
+        $this->parentGroup = $parentGroup;
+    }
+
+    /**
+     * @param QuestionGroup $childGroup
+     *
+     * @return QuestionGroup
+     */
+    public function addChildGroup(QuestionGroup $questionGroup)
+    {
+        if (!$this->childGroups->contains($questionGroup)) {
+            $this->childGroups->add($questionGroup);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param QuestionGroup $questionGroup
+     */
+    public function removeChildGroup(QuestionGroup $questionGroup)
+    {
+        $this->childGroups->removeElement($questionGroup);
+    }
+
+    /**
+     * @return QuestionGroup[]|ArrayCollection
+     */
+    public function getChildGroups()
+    {
+        return $this->childGroups;
     }
 }

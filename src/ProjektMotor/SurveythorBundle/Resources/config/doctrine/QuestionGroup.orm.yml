@@ -20,4 +20,14 @@ PM\SurveythorBundle\Entity\QuestionGroup:
                     referencedColumnName: id
                     unique: true
 
+    manyToOne:
+        parentGroup:
+            targetEntity: PM\SurveythorBundle\Entity\QuestionGroup
+            inversedBy: childGroups
+
+    oneToMany:
+        childGroups:
+            targetEntity: PM\SurveythorBundle\Entity\QuestionGroup
+            mappedBy: parentGroup
+
     lifecycleCallbacks: {  }

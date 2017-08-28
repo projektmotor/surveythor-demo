@@ -10,13 +10,15 @@ projektmotor.Result = function () {
             result.getNext();
         },
         delegateNext: function () {
-            $('body').delegate('#survey-next', 'click', function () {
+            $('body').delegate('#survey-next', 'click', function (e) {
+                e.preventDefault();
                 result.getNext();
             });
         },
         getNext: function () {
             var form = $('#result').find('form').first();
             var url = $('#survey-next').data('next-url');
+            console.log(url);
 
             $.ajax({
                 url: url,

@@ -85,9 +85,24 @@ class ResultController
         }
         if (get_class($item) == QuestionGroup::class) {
             $answerGroup = new AnswerGroup();
+
             foreach ($item->getQuestions() as $question) {
                 $answer = Answer::createByQuestionType($question);
                 $answerGroup->addAnswer($answer);
+            }
+
+            if ($item->getChildGroups()->count() > 0) {
+                foreach ($item->getChildGroups() as $group) {
+                    if ($this->isItemVisible($group)) {
+                        $childGroup = new AnswerGroup();
+                        foreach ($group->getQuestions() as $question) {
+                            $answer = Answer::createByQuestionType($question);
+                            $childGroup->addAnswer($answer);
+                            $childGroup->setHeader($group->getHeader());
+                        }
+                        $answerGroup->addChildGroup($childGroup);
+                    }
+                }
             }
 
             if (!$formRequest->handle(AnswerGroupType::class, $answerGroup)) {
@@ -115,37 +130,43 @@ class ResultController
         return false;
     }
 
-    private function isItemVisible(SurveyItem $item)
+    private function isItemVisible(SurveyItem $item, $condition = null, $visible = null)
     {
         $session = new Session();
         $result = $session->get('result');
 
+        $visible = true;
         if (0 != sizeof($item->getConditions())) {
             $resultChoices = array();
             foreach ($result->getAnswers() as $answer) {
                 if ($answer instanceof SingleChoiceAnswer) {
-                    $resultChoices[] = $answer->getChoice();
+                    $resultChoices[] = $answer->getChoice()->getId();
                 }
                 if ($answer instanceof MultipleChoiceAnswer) {
-                    foreach ($answer->getChoices as $choice) {
-                        $resultChoices[] = $choice;
+                    foreach ($answer->getChoices() as $choice) {
+                        $resultChoices[] = $choice->getId();
                     }
                 }
             }
 
             foreach ($item->getConditions() as $condition) {
-                $choices = $condition->getChoices();
-                foreach ($choices as $choice) {
-                    foreach ($resultChoices as $resultChoice) {
-                        if ($choice->getId() == $resultChoice->getId()) {
-                            return true;
+                foreach ($condition->getChoices() as $choice) {
+                    if (false === $condition->getIsNegative()) {
+                        $visible = !in_array($choice->getId(), $resultChoices) ? false : true;
+                        if (true === $visible) {
+                            continue 2;
                         }
+
+                    } else {
+                        $visible = in_array($choice->getId(), $resultChoices) ? false : $visible;
                     }
                 }
+                if (false === $visible) {
+                    return false;
+                }
             }
-            return false;
         }
-        return true;
+        return $visible;
     }
 
     private function renderItem(SurveyItem $item, Survey $survey, FormRequest $formRequest = null)
@@ -169,6 +190,19 @@ class ResultController
                 foreach ($item->getQuestions() as $question) {
                     $answer = Answer::createByQuestionType($question);
                     $answerGroup->addAnswer($answer);
+                }
+                if ($item->getChildGroups()->count() > 0) {
+                    foreach ($item->getChildGroups() as $group) {
+                        if ($this->isItemVisible($group)) {
+                            $childGroup = new AnswerGroup();
+                            foreach ($group->getQuestions() as $question) {
+                                $answer = Answer::createByQuestionType($question);
+                                $childGroup->addAnswer($answer);
+                                $childGroup->setHeader($group->getHeader());
+                            }
+                            $answerGroup->addChildGroup($childGroup);
+                        }
+                    }
                 }
 
                 if (null === $formRequest) {

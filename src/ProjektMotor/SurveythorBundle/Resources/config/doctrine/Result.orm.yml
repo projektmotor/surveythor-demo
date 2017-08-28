@@ -16,13 +16,11 @@ PM\SurveythorBundle\Entity\Result:
         answers:
             targetEntity: PM\SurveythorBundle\Entity\Answer
             mappedBy: result
-            orderBy: { 'position': 'ASC'}
             cascade:
                 - persist
         answerGroups:
             targetEntity: PM\SurveythorBundle\Entity\AnswerGroup
             mappedBy: result
-            orderBy: { 'position': 'ASC'}
             cascade:
                 - persist
 

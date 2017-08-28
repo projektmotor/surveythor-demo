@@ -17,10 +17,6 @@ PM\SurveythorBundle\Entity\Answer:
             id: true
             generator:
                 strategy: AUTO
-    fields:
-        position:
-            type: integer
-            nullable: true
 
     manyToOne:
         result:
@@ -29,16 +25,5 @@ PM\SurveythorBundle\Entity\Answer:
 
         question:
             targetEntity: PM\SurveythorBundle\Entity\Question
-
-        parentAnswer:
-            targetEntity: PM\SurveythorBundle\Entity\Answer
-            inversedBy: childAnswers
-
-    oneToMany:
-        childAnswers:
-            targetEntity: PM\SurveythorBundle\Entity\Answer
-            mappedBy: parentAnswer
-            cascade:
-                - persist
 
     lifecycleCallbacks: {}

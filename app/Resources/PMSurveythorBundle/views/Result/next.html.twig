@@ -1,20 +1,33 @@
 {% if header is defined %}
-    {{ header }}
+    <h4>{{ header }}</h4>
 {% endif %}
 
 {% if formgroup is defined %}
     {{ form_start(formgroup) }}
     {{ form_errors(formgroup) }}
     {% for answer in formgroup.children.answers %}
-        <b>{{ answer.vars.value.question.text }}</b>
+        <u>{{ answer.vars.value.question.text }}</u>
         {{ form_errors(answer) }}
         {{ form_row(answer) }}
     {% endfor %}
-    {{ form_end(formgroup) }}
+
+    {% for childgroup in formgroup.children.childGroups %}
+        <b>{{ childgroup.vars.value.header }}</b>
+        <div class="row">
+            {% for answer in childgroup.children.answers %}
+                <div class="col-md-2">
+                    <u>{{ answer.vars.value.question.text }}</u>
+                    {{ form_errors(answer) }}
+                    {{ form_row(answer) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    {{ form_rest(formgroup) }}
 {% endif %}
 
 {% if form is defined %}
-    <b>{{ form.vars.value.question.text }}</b>
+    <u>{{ form.vars.value.question.text }}</u>
     {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form(form) }}

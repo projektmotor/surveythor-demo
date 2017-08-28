@@ -32,6 +32,11 @@ class Condition
      */
     private $item;
 
+    /**
+     * @var boolean
+     */
+    private $isNegative;
+
 
     public function __construct()
     {
@@ -110,5 +115,15 @@ class Condition
     public function setItem(SurveyItem $item)
     {
         $this->item = $item;
+    }
+
+    public function getIsNegative()
+    {
+        return $this->isNegative;
+    }
+
+    public function setIsNegative($isNegative)
+    {
+        $this->isNegative = $isNegative;
     }
 }

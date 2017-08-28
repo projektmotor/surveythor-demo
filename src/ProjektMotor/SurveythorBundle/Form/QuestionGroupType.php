@@ -4,15 +4,16 @@ namespace PM\SurveythorBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use PM\SurveythorBundle\Entity\QuestionGroup;
 
 /**
- * AnswerGroupType
+ * QuestionGroupType
  * @author Rombo Kraft <kraft@projektmotor.de>
  */
-class AnswerGroupType extends AbstractType
+class QuestionGroupType extends AbstractType
 {
-    const FORM_NAME = 'pm_surveythor_result_answergroup';
+    const FORM_NAME = 'pm_surveythor_questiongroup';
 
     /**
      * {@inheritDoc}
@@ -20,23 +21,18 @@ class AnswerGroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('answers', CollectionType::class, array(
-                'entry_type' => AnswerType::class,
-                'label' => false,
+            ->add('header', TextareaType::class)
+            ->add('questions', QuestionCollectionType::class, array(
+                'entry_type' => QuestionType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
                 'by_reference' => false,
                 'entry_options' => array(
                     'label' => false
-                )
-            ))
-            ->add('childGroups', CollectionType::class, array(
-                'entry_type' => AnswerGroupType::class,
-                'label' => false,
-                'by_reference' => false,
-                'entry_options' => array(
-                    'label' => false
-                )
-            ))
-        ;
+                ),
+                'prototype_name' => '__question__',
+                'attr' => array('class' => 'sortable')
+            ));
     }
 
     /**
@@ -45,7 +41,7 @@ class AnswerGroupType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PM\SurveythorBundle\Entity\AnswerGroup'
+            'data_class' => QuestionGroup::class
         ));
     }
 

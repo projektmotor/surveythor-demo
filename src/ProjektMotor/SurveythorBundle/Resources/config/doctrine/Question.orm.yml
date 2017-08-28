@@ -30,5 +30,5 @@ PM\SurveythorBundle\Entity\Question:
         childrenTemplate:
             targetEntity: PM\SurveythorBundle\Entity\QuestionTemplate
 
-    lifecycleCallbacks:
-        prePersist: [ setInitialSortOrder ]
+    lifecycleCallbacks: {}
+        #prePersist: [ setInitialSortOrder ]

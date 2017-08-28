@@ -93,7 +93,6 @@ class Result
         if (!$this->answers->contains($answer)) {
             $this->answers->add($answer);
             $answer->setResult($this);
-            $answer->setPosition($this->getAnswers()->count());
         }
     }
 

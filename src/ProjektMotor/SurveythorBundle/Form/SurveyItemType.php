@@ -65,8 +65,6 @@ class SurveyItemType extends AbstractType
                             $form->add('header', TextareaType::class);
                             $form->add('questions', QuestionCollectionType::class, array(
                                 'entry_type' => QuestionType::class,
-                                'allow_add' => true,
-                                'allow_delete' => true,
                                 'by_reference' => false,
                                 'entry_options' => array(
                                     'label' => false
@@ -74,9 +72,16 @@ class SurveyItemType extends AbstractType
                                 'prototype_name' => '__question__',
                                 'attr' => array('class' => 'sortable')
                             ));
-
+                            $form->add('childGroups', QuestionCollectionType::class, array(
+                                'entry_type' => QuestionGroupType::class,
+                                'by_reference' => false,
+                                'entry_options' => array(
+                                    'label' => false
+                                ),
+                                'prototype_name' => '__questiongroup__',
+                                'attr' => array('class' => 'sortable')
+                            ));
                             break;
-
                     }
                 }
             }

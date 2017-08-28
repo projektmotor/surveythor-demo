@@ -9,6 +9,10 @@ PM\SurveythorBundle\Entity\Condition:
             generator:
                 strategy: AUTO
 
+    fields:
+        isNegative:
+            type: boolean
+
     manyToOne:
         item:
             targetEntity: PM\SurveythorBundle\Entity\SurveyItem
