@@ -16,24 +16,24 @@ class BaseBrowserTestCase extends BrowserTestCase
 
     public function setUp()
     {
-		$parameters = Yaml::parse(file_get_contents('app/config/parameters.yml'));
+        $parameters = Yaml::parse(file_get_contents('app/config/parameters.yml'));
 
-		$tunnelId = getenv($parameters['parameters']['mink_tunnel_id_env_name']);
-		putenv('PHPUNIT_MINK_TUNNEL_ID='.$tunnelId);
+        $tunnelId = getenv($parameters['parameters']['mink_tunnel_id_env_name']);
+        putenv('PHPUNIT_MINK_TUNNEL_ID='.$tunnelId);
 
-		$browserConfiguration = [
-			'driver' => 'selenium2',
-			'host' => $parameters['parameters']['mink_host'],
-			'port' => $parameters['parameters']['mink_port'],
-			'browserName' => 'chrome',
-			'baseUrl' => $parameters['parameters']['mink_base_url'],
-			'type' => $parameters['parameters']['mink_type'],
-		];
+        $browserConfiguration = [
+            'driver' => 'selenium2',
+            'host' => $parameters['parameters']['mink_host'],
+            'port' => $parameters['parameters']['mink_port'],
+            'browserName' => 'chrome',
+            'baseUrl' => $parameters['parameters']['mink_base_url'],
+            'type' => $parameters['parameters']['mink_type'],
+        ];
 
-		if ($browserConfiguration['type'] !== 'default') {
-			$browserConfiguration['api_username'] = getenv($parameters['parameters']['mink_api_username_env_name']);
-			$browserConfiguration['api_key'] = getenv($parameters['parameters']['mink_api_key_env_name']);
-		}
+        if ($browserConfiguration['type'] !== 'default') {
+            $browserConfiguration['api_username'] = getenv($parameters['parameters']['mink_api_username_env_name']);
+            $browserConfiguration['api_key'] = getenv($parameters['parameters']['mink_api_key_env_name']);
+        }
 
         $browser = $this->createBrowserConfiguration($browserConfiguration);
 
