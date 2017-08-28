@@ -4,3 +4,4 @@ result_new:
 result_next:
     path: /next/{id}/{item}
     defaults: { _controller: result_controller:nextAction }
+    methods: [ POST ]
