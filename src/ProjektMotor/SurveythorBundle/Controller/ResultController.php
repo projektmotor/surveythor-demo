@@ -66,6 +66,7 @@ class ResultController
         $item = $survey->getSurveyItems()->first();
 
         $session->set('result', $result);
+        $session->set('survey', $survey);
 
         return array('item' => $item, $survey);
     }
