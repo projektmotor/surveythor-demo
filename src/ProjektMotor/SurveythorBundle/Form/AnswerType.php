@@ -12,7 +12,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\Question;
-use PM\SurveythorBundle\Form\Result\ChoicesHorizontalType;
 
 /**
  * AnswerType
@@ -90,29 +89,6 @@ class AnswerType extends AbstractType
                             'label' => false
                         ));
                         break;
-                }
-
-                $type = AnswerCollectionType::class;
-                $type = $question->getChildrenTemplate() !== null
-                    ? $question->getChildrenTemplate()->getFormType()
-                    : $type
-                ;
-                if (!is_null($answer->getChildAnswers())) {
-                    foreach ($answer->getChildAnswers() as $childAnswer) {
-                        $form->add('childAnswers', $type, array(
-                            'entry_type' => AnswerType::class,
-                            'label' => false,
-                            'by_reference' => true,
-                            'entry_options' => array(
-                                'label' => false,
-                                'attr' => array(
-                                )
-                            ),
-                            'attr' => array(
-                                'class' => 'question-childanswer'
-                            ),
-                        ));
-                    }
                 }
             }
         });

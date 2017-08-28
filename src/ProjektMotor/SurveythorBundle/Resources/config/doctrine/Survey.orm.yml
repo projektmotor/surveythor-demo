@@ -2,6 +2,7 @@ PM\SurveythorBundle\Entity\Survey:
     type: entity
     table: null
     repositoryClass: PM\SurveythorBundle\Repository\SurveyRepository
+
     id:
         id:
             type: integer
@@ -17,8 +18,8 @@ PM\SurveythorBundle\Entity\Survey:
             nullable: true
 
     oneToMany:
-        questions:
-            targetEntity: PM\SurveythorBundle\Entity\Question
+        surveyItems:
+            targetEntity: PM\SurveythorBundle\Entity\SurveyItem
             mappedBy: survey
             cascade:
                 - persist

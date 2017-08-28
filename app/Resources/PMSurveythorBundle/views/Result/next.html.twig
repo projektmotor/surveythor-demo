@@ -1,0 +1,50 @@
+{% if header is defined %}
+    <h4>{{ header }}</h4>
+{% endif %}
+
+{% if formgroup is defined %}
+    {{ form_start(formgroup) }}
+    {{ form_errors(formgroup) }}
+    {% for answer in formgroup.children.answers %}
+        <u>{{ answer.vars.value.question.text }}</u>
+        {{ form_errors(answer) }}
+        {{ form_row(answer) }}
+    {% endfor %}
+
+    {% for childgroup in formgroup.children.childGroups %}
+        <b>{{ childgroup.vars.value.header }}</b>
+        <div class="row">
+            {% for answer in childgroup.children.answers %}
+                <div class="col-md-2">
+                    <u>{{ answer.vars.value.question.text }}</u>
+                    {{ form_errors(answer) }}
+                    {{ form_row(answer) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    {{ form_rest(formgroup) }}
+{% endif %}
+
+{% if form is defined %}
+    <u>{{ form.vars.value.question.text }}</u>
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form(form) }}
+    {{ form_end(form) }}
+{% endif %}
+
+{% if text is defined %}
+    <p>
+        {{ text }}
+    </p>
+{% endif %}
+
+
+<button
+    class="btn btn-default"
+    id="survey-next"
+    data-next-url="{{ path('result_next', { 'id' : app.session.get('survey').id, 'item' : item.id }) }}"
+>
+    weiter
+</button>

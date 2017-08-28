@@ -4,6 +4,7 @@ namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use PM\SurveythorBundle\Entity\Question;
 
 /**
  * Survey
@@ -26,9 +27,9 @@ class Survey
     private $description;
 
     /**
-     * @var Question[]|ArrayCollection
+     * @var SurveyItem[]|ArrayCollection
      */
-    private $questions;
+    private $surveyItems;
 
     /**
      * @var ResultRange[]|ArrayCollection
@@ -37,7 +38,7 @@ class Survey
 
     public function __construct()
     {
-        $this->questions = new ArrayCollection();
+        $this->surveyItems = new ArrayCollection();
         $this->resultRanges = new ArrayCollection();
     }
 
@@ -100,34 +101,34 @@ class Survey
     }
 
     /**
-     * @param Question $question
+     * @param SurveyItem $surveyItem
      *
      * @return Survey
      */
-    public function addQuestion(Question $question)
+    public function addSurveyItem(SurveyItem $surveyItem)
     {
-        if (!$this->questions->contains($question)) {
-            $this->questions->add($question);
-            $question->setSurvey($this);
+        if (!$this->surveyItems->contains($surveyItem)) {
+            $this->surveyItems->add($surveyItem);
+            $surveyItem->setSurvey($this);
         }
 
         return $this;
     }
 
     /**
-     * @param Question $question
+     * @param SurveyItem $surveyItem
      */
-    public function removeQuestion(Question $question)
+    public function removeSurveyItem(SurveyItem $surveyItem)
     {
-        $this->questions->removeElement($question);
+        $this->surveyItems->removeElement($surveyItem);
     }
 
     /**
-     * @return Question[]|ArrayCollection
+     * @return SurveyItem[]|ArrayCollection
      */
-    public function getQuestions()
+    public function getSurveyItems()
     {
-        return $this->questions;
+        return $this->surveyItems;
     }
 
     /**
@@ -169,16 +170,18 @@ class Survey
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
-        if ($this->getQuestions()->count() < 1) {
-            $context->buildViolation('A Survey should have at least one Question')
-                ->atPath('questions')
+        if ($this->getSurveyItems()->count() < 1) {
+            $context->buildViolation('A Survey should have at least one SurveyItem')
+                ->atPath('surveyItems')
                 ->addViolation();
         } else {
-            foreach ($this->getQuestions() as $question) {
-                if ($question->getText() == '') {
-                    $context->buildViolation('A question should have a text.')
-                        ->atPath('questions')
-                        ->addViolation();
+            foreach ($this->getSurveyItems() as $surveyItem) {
+                if (get_class($surveyItem) == Question::class) {
+                    if ($surveyItem->getText() == '') {
+                        $context->buildViolation('A surveyItem should have a text.')
+                            ->atPath('surveyItems')
+                            ->addViolation();
+                    }
                 }
             }
         }
@@ -187,10 +190,30 @@ class Survey
     public function getMaxPoints()
     {
         $points = 0;
-        foreach ($this->questions as $question) {
-            $points = $points + $question->getMaxPoints();
+        foreach ($this->surveyItems as $surveyItem) {
+            $points = $points + $surveyItem->getMaxPoints();
         }
 
         return $points;
+    }
+
+    public function getQuestions()
+    {
+        $questions = new ArrayCollection();
+        foreach ($this->surveyItems as $item) {
+            if ($item instanceof Question) {
+                $questions->add($item);
+            }
+        }
+    }
+
+    public function getNextItem($item)
+    {
+        while ($current = $this->surveyItems->current()) {
+            if ($current->getId() == $item->getId()) {
+                return $this->surveyItems->next();
+            }
+            $this->surveyItems->next();
+        }
     }
 }

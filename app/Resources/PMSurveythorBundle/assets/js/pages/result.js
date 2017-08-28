@@ -6,31 +6,27 @@ projektmotor.Result = function () {
 
     result = {
         init: function () {
-            result.delegateRadios();
+            result.delegateNext();
+            result.getNext();
         },
-        delegateRadios: function () {
-            $('body').delegate('.choice-answer input', 'change', function() {
-                var form = $(this).closest('form');
-                $.ajax({
-                    url: form.attr('action'),
-                    method: 'post',
-                    data: form.serialize(),
-                    success: function(response) {
-                        $('#result').html($(response).find('#result').html());
+        delegateNext: function () {
+            $('body').delegate('#survey-next', 'click', function (e) {
+                e.preventDefault();
+                result.getNext();
+            });
+        },
+        getNext: function () {
+            var form = $('#result').find('form').first();
+            var url = $('#survey-next').data('next-url');
+            console.log(url);
 
-                        $('.question-childanswer .result_answers-question_answer').each(function () {
-                            var parentId = $(this).data('parent-id');
-                            var parentInput = $('input[data-answer-id='+parentId+']');
-                            var target = parentInput.parents('div').first();
-                            var type = parentInput.attr('type');
-
-                            //if (type === 'checkbox') {
-                            //    $(this).detach();
-                            //    target.append($(this));
-                            //}
-                        });
-                    }
-                });
+            $.ajax({
+                url: url,
+                method: 'post',
+                data: form.serialize(),
+                success: function (response) {
+                    $('#result').html(response);
+                }
             });
         }
     };

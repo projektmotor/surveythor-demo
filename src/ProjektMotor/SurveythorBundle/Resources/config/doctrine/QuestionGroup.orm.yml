@@ -1,0 +1,33 @@
+PM\SurveythorBundle\Entity\QuestionGroup:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\QuestionGroupRepository
+
+    fields:
+        header:
+            type: text
+
+    manyToMany:
+        questions:
+            targetEntity: PM\SurveythorBundle\Entity\Question
+            joinTable:
+                name: question_questiongroup
+            joinColumns:
+                question_id:
+                    referencedColumnName: id
+            inverseJoinColumns:
+                questiongroup_id:
+                    referencedColumnName: id
+                    unique: true
+
+    manyToOne:
+        parentGroup:
+            targetEntity: PM\SurveythorBundle\Entity\QuestionGroup
+            inversedBy: childGroups
+
+    oneToMany:
+        childGroups:
+            targetEntity: PM\SurveythorBundle\Entity\QuestionGroup
+            mappedBy: parentGroup
+
+    lifecycleCallbacks: {  }

@@ -13,6 +13,7 @@ projektmotor.Survey = function (surveyParams) {
         panel,
         question,
         resultRange,
+        condition,
         helpers
     ;
 
@@ -145,7 +146,54 @@ projektmotor.Survey = function (surveyParams) {
                 helpers.addFormFromPrototype(collectionHolder, '__resultRange__');
             });
         },
+    };
 
+    condition = {
+        init: function () {
+            condition.bindAdd();
+            condition.bindQuestionSelect();
+        },
+        bindAdd: function () {
+            $('body').delegate('.condition-add', 'click', function(e) {
+                e.preventDefault();
+                var collectionHolder = $(this).parent('div');
+                //helpers.addFormFromPrototype(collectionHolder, '__condition__');
+                condition.addForm(collectionHolder);
+            });
+        },
+        bindQuestionSelect: function () {
+            $('body').delegate('.condition-question', 'change', function () {
+                var form = $(this).closest('form');
+                var url = form.attr('action');
+                var containerId = $(this).attr('id').substring(0, $(this).attr('id').length - 11);
+
+                $.ajax({
+                    data: form.serialize(),
+                    url: url,
+                    method: 'post',
+                    success: function (response) {
+                        $('#' + containerId).html($(response).find('#' + containerId).html());
+                    }
+                });
+            });
+        },
+        addForm: function (collectionHolder) {
+            var index = collectionHolder.data('index');
+
+            if (typeof index === 'undefined') {
+                //index = collectionHolder.children('.panel').length;
+                index = 0;
+                collectionHolder.prop('data-index', index);
+            }
+
+            var re = new RegExp('__condition__', 'g');
+            var prototype = collectionHolder.data('prototype');
+            var newForm = prototype.replace(re, index);
+
+            collectionHolder.append(newForm);
+            collectionHolder.data('index', index + 1);
+
+        }
     };
 
     helpers = {//{{{
@@ -182,6 +230,7 @@ projektmotor.Survey = function (surveyParams) {
         panel.init();
         question.init();
         resultRange.init();
+        condition.init();
     }());
 };
 

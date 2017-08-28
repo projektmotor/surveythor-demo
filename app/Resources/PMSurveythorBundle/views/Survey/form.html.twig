@@ -30,11 +30,11 @@
                     </h4>
                 </div>
 
-                <div id="survey-questions" class="panel-collapse collapse" role="tabpanel" aria-labelledby="questions-heading">
+                <div id="survey-questions" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="questions-heading">
                     <div class="panel-body">
                             <div class="form-row">
                                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                    {{ form_widget(form.questions) }}
+                                    {{ form_widget(form.surveyItems) }}
                                 </div>
                             </div>
                         <a href="#" class="btn btn-primary" id="add-question">Frage hinzufügen</a>
@@ -51,7 +51,7 @@
 
                 <div id="survey-resultranges" class="panel-collapse collapse" role="tabpanel" aria-labelledby="resultranges-heading">
                     <div class="panel-body">
-                            maximal erreichbare Punktzahl: {{ survey.maxPoints }}
+                            maximal erreichbare Punktzahl: 100
                             <div class="form-row">
                                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                     {{ form_widget(form.resultRanges) }}
@@ -76,7 +76,7 @@
                 </h4>
             </div>
 
-            <div id="info-panel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="resultranges-heading">
+            <div id="info-panel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="resultranges-heading">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-5">

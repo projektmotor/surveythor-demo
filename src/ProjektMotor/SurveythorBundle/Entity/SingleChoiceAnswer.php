@@ -11,11 +11,6 @@ class SingleChoiceAnswer extends Answer
      */
     private $choice;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * @return Choice
      */

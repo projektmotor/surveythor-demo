@@ -1,0 +1,38 @@
+PM\SurveythorBundle\Entity\SurveyItem:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\SurveyItemRepository
+    #inheritanceType: JOINED
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discr
+        type: string
+    discriminatorMap:
+        question: Question
+        text: TextItem
+        questiongroup: QuestionGroup
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        sortOrder:
+            type: integer
+
+    oneToMany:
+        conditions:
+            targetEntity: PM\SurveythorBundle\Entity\Condition
+            mappedBy: item
+            cascade:
+                - persist
+
+    manyToOne:
+        survey:
+            targetEntity: PM\SurveythorBundle\Entity\Survey
+            inversedBy: surveyItems
+
+    lifecycleCallbacks: {  }

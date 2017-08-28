@@ -2,20 +2,14 @@ PM\SurveythorBundle\Entity\Question:
     type: entity
     table: null
     repositoryClass: PM\SurveythorBundle\Repository\QuestionRepository
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
+
     fields:
         text:
             type: text
         type:
             type: string
             length: 255
-        sortOrder:
-            type: integer
+
 
     oneToMany:
         choices:
@@ -26,10 +20,6 @@ PM\SurveythorBundle\Entity\Question:
             orderBy: { 'sortOrder' : 'ASC'}
 
     manyToOne:
-        survey:
-            targetEntity: PM\SurveythorBundle\Entity\Survey
-            inversedBy: questions
-
         parentChoice:
             targetEntity: PM\SurveythorBundle\Entity\Choice
             inversedBy: childQuestions
@@ -40,5 +30,5 @@ PM\SurveythorBundle\Entity\Question:
         childrenTemplate:
             targetEntity: PM\SurveythorBundle\Entity\QuestionTemplate
 
-    lifecycleCallbacks:
-        prePersist: [ setInitialSortOrder ]
+    lifecycleCallbacks: {}
+        #prePersist: [ setInitialSortOrder ]

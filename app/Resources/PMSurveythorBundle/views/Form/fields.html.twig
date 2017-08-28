@@ -13,7 +13,12 @@
                         <div class="col-md-6">
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-question-{{ child.vars.id }}" aria-expanded="true" aria-controls="collapse-question-{{ child.vars.id }}">
-                                {{ child.vars.value.text }}
+                                {% if child.vars.value.text is defined %}
+                                    {{ child.vars.value.text }}
+                                {% endif %}
+                                {% if child.vars.value.header is defined %}
+                                    {{ child.vars.value.header }}
+                                {% endif %}
                                 </a>
                             </h4>
                         </div>
@@ -42,6 +47,20 @@
     </div>
 {% endblock %}
 
+{% block condition_collection_widget %}
+    {% if prototype is defined %}
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+    {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form.parent is empty -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+        {% for child in form %}
+            {{ form_row(child) }}
+        {% endfor %}
+        <a href="#" class="condition-add">add a condition</a>
+    </div>
+{% endblock %}
 
 {% block choice_collection_widget %}
     {% if prototype is defined %}

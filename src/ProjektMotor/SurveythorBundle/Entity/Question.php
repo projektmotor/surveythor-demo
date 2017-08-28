@@ -7,13 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Question
  */
-class Question
+class Question extends SurveyItem
 {
-    /**
-     * @var int
-     */
-    private $id;
-
     /**
      * @var string
      */
@@ -25,24 +20,9 @@ class Question
     private $choices;
 
     /**
-     * @var Survey
-     */
-    private $survey;
-
-    /**
      * @var Choice
      */
     private $parentChoice;
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var integer
-     */
-    private $sortOrder;
 
     /**
      * @var QuestionTemplate
@@ -54,20 +34,15 @@ class Question
      */
     private $childrenTemplate;
 
+    /**
+     * @var string
+     */
+    private $type;
+
+
     public function __construct()
     {
         $this->choices = new ArrayCollection();
-    }
-
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -128,30 +103,6 @@ class Question
     }
 
     /**
-     * Get survey.
-     *
-     * @return Survey
-     */
-    public function getSurvey()
-    {
-        return $this->survey;
-    }
-
-    /**
-     * Set survey.
-     *
-     * @param Survey $survey
-     *
-     * @return Question
-     */
-    public function setSurvey($survey)
-    {
-        $this->survey = $survey;
-
-        return $this;
-    }
-
-    /**
      * Get parentChoice.
      *
      * @return Choice parentChoice
@@ -169,26 +120,6 @@ class Question
     public function setParentChoice(Choice $parentChoice)
     {
         $this->parentChoice = $parentChoice;
-    }
-
-    /**
-     * Get type.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set type.
-     *
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
     }
 
     /**
@@ -237,42 +168,6 @@ class Question
     }
 
     /**
-     * @return integer
-     */
-    public function getSortOrder()
-    {
-        return $this->sortOrder;
-    }
-
-    /**
-     * @param integer $sortOrder
-     */
-    public function setSortOrder($sortOrder)
-    {
-        $this->sortOrder = $sortOrder;
-    }
-
-    public function setInitialSortOrder()
-    {
-        if (null !== $this->survey) {
-            $this->setSortOrder($this->survey->getQuestions()->count());
-            return $this;
-        }
-
-        if (null !== $this->parentChoice) {
-            $this->setSortOrder($this->parentChoice->getChildQuestions()->count());
-            return $this;
-        }
-
-        // dis is needed for fixture loading, should never happen
-        if (null !== $this->sortOrder) {
-            return $this;
-        }
-
-        throw new \Exception('a question has to have a survey or a parent choice');
-    }
-
-    /**
      * Get childrenTemplate.
      *
      * @return childrenTemplate.
@@ -288,5 +183,25 @@ class Question
     public function setChildrenTemplate($childrenTemplate)
     {
         $this->childrenTemplate = $childrenTemplate;
+    }
+
+    /**
+     * Get type.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set type.
+     *
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }
