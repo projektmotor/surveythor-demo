@@ -1,0 +1,28 @@
+PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\SingleChoiceAnswerRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    oneToOne:
+        resultItem:
+            targetEntity: PM\SurveythorBundle\Entity\ResultItem
+            inversedBy: singleChoiceAnswer
+            cascade:
+                - merge
+                - detach
+
+    manyToOne:
+        choice:
+            targetEntity: PM\SurveythorBundle\Entity\Choice
+
+        question:
+            targetEntity: PM\SurveythorBundle\Entity\SurveyItems\Question
+
+    lifecycleCallbacks: {  }

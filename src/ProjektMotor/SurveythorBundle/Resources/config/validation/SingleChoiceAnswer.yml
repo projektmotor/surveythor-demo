@@ -1,4 +1,4 @@
-PM\SurveythorBundle\Entity\SingleChoiceAnswer:
+PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer:
     properties:
         choice:
             - NotBlank: ~

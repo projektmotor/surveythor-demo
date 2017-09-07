@@ -7,7 +7,6 @@ projektmotor.Result = function () {
     result = {
         init: function () {
             result.delegateNext();
-            result.getNext();
         },
         delegateNext: function () {
             $('body').delegate('#survey-next', 'click', function (e) {
@@ -18,14 +17,18 @@ projektmotor.Result = function () {
         getNext: function () {
             var form = $('#result').find('form').first();
             var url = $('#survey-next').data('next-url');
-            console.log(url);
 
             $.ajax({
                 url: url,
                 method: 'post',
                 data: form.serialize(),
                 success: function (response) {
-                    $('#result').html(response);
+                    try {
+                        var data = JSON.parse(response);
+                        window.location = data.url;
+                    } catch (e) {
+                        $('#result').html(response);
+                    }
                 }
             });
         }

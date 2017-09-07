@@ -4,7 +4,6 @@ namespace PM\SurveythorBundle\Event;
 
 use PM\SurveythorBundle\Entity\Result;
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * ResultEvent
@@ -20,9 +19,9 @@ class ResultEvent extends Event
     private $result;
 
     /**
-     * @var Response
+     * @var string
      */
-    private $response;
+    private $url;
 
     /**
      * @param Result $result
@@ -41,18 +40,18 @@ class ResultEvent extends Event
     }
 
     /**
-     * @return Response
+     * @return url
      */
-    public function getResponse()
+    public function getUrl()
     {
-        return $this->response;
+        return $this->url;
     }
 
     /**
-     * @param Response $response
+     * @param url $url
      */
-    public function setResponse($response)
+    public function setUrl($url)
     {
-        $this->response = $response;
+        $this->url = $url;
     }
 }

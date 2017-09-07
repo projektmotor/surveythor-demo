@@ -3,8 +3,9 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PM\SurveythorBundle\Entity\ResultItem;
 use PM\SurveythorBundle\Entity\Answer;
-use PM\SurveythorBundle\Entity\AnswerGroup;
+use PM\SurveythorBundle\Entity\Survey;
 
 /**
  * Result
@@ -22,20 +23,19 @@ class Result
     private $created;
 
     /**
-     * @var Answer[]|ArrayCollection
+     * @var ResultItem[]
      */
-    private $answers;
+    private $resultItems;
 
     /**
-     * @var AnswerGroup[]|ArrayCollection
+     * ævar Survey
      */
-    private $answerGroups;
+    private $survey;
 
 
     public function __construct()
     {
-        $this->answers = new ArrayCollection();
-        $this->answerGroups = new ArrayCollection();
+        $this->resultItems = new ArrayCollection();
     }
 
     /**
@@ -78,56 +78,58 @@ class Result
     }
 
     /**
-     * @param Answer $answer
+     * @param ResultItem $resultItem
      */
-    public function removeAnswer(Answer $answer)
+    public function removeResultItem(ResultItem $resultItem)
     {
-        $this->answers->removeElement($answer);
+        $this->resultItems->removeElement($resultItem);
     }
 
     /**
-     * @param Answer $answer
+     * @param ResultItem $resultItem
      */
-    public function addAnswer(Answer $answer)
+    public function addResultItem(ResultItem $resultItem)
     {
-        if (!$this->answers->contains($answer)) {
-            $this->answers->add($answer);
-            $answer->setResult($this);
+        if (!$this->resultItems->contains($resultItem)) {
+            $this->resultItems->add($resultItem);
+            $resultItem->setSortOrder($this->resultItems->count());
+            $resultItem->setResult($this);
         }
     }
 
     /**
-     * @return Answer[]|ArrayCollection
+     * @return ResultItem[]|ArrayCollection
      */
+    public function getResultItems()
+    {
+        return $this->resultItems;
+    }
+
     public function getAnswers()
     {
-        return $this->answers;
-    }
-
-    /**
-     * @param AnswerGroup $answerGroup
-     */
-    public function removeAnswerGroup(AnswerGroup $answerGroup)
-    {
-        $this->answerGroups->removeElement($answerGroup);
-    }
-
-    /**
-     * @param AnswerGroup $answerGroup
-     */
-    public function addAnswerGroup(AnswerGroup $answerGroup)
-    {
-        if (!$this->answerGroups->contains($answerGroup)) {
-            $this->answerGroups->add($answerGroup);
-            $answerGroup->setResult($this);
+        $answers = new ArrayCollection();
+        foreach ($this->resultItems as $resultItem) {
+            if ($resultItem instanceof Answer) {
+                $answers->add($resultItem);
+            }
+            if ($resultItem instanceof AnswerGroup) {
+                foreach ($resultItem->getAnswers() as $answer) {
+                    $answers->add($answer);
+                }
+                $answers->add($resultItem);
+            }
         }
+
+        return $answers;
     }
 
-    /**
-     * @return AnswerGroup[]|ArrayCollection
-     */
-    public function getAnswerGroups()
+    public function getSurvey()
     {
-        return $this->answerGroups;
+        return $this->survey;
+    }
+
+    public function setSurvey(Survey $survey)
+    {
+        $this->survey = $survey;
     }
 }

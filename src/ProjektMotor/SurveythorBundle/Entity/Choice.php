@@ -3,7 +3,7 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\Question;
+use PM\SurveythorBundle\Entity\SurveyItems\Question;
 
 /**
  * Choice
@@ -36,19 +36,10 @@ class Choice
     private $question;
 
     /**
-     * @var Question[]|ArrayCollection
-     */
-    private $childQuestions;
-
-    /**
      * @var integer
      */
     private $sortOrder;
 
-    public function __construct()
-    {
-        $this->childQuestions = new ArrayCollection();
-    }
 
     /**
      * Get id
@@ -150,71 +141,6 @@ class Choice
     public function setQuestion(Question $question)
     {
         $this->question = $question;
-    }
-
-    /**
-     * Get childQuestions.
-     *
-     * @return Question[]|ArrayCollection childQuestions.
-     */
-    public function getChildQuestions()
-    {
-        return $this->childQuestions;
-    }
-
-    /**
-     * Set childQuestions.
-     *
-     * @param Question[]|ArrayCollection $childQuestions
-     */
-    public function setChildQuestions($childQuestions)
-    {
-        $this->childQuestions = $childQuestions;
-    }
-
-    /**
-     * @param Question $question
-     *
-     * @return Choice
-     */
-    public function addChildQuestion(Question $question)
-    {
-        if (!$this->childQuestions->contains($question)) {
-            $this->childQuestions->add($question);
-            $question->setParentChoice($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Question $question
-     */
-    public function removeChildQuestion(Question $question)
-    {
-        $this->childQuestions->removeElement($question);
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasChildQuestions()
-    {
-        return (! $this->getChildQuestions()->isEmpty());
-    }
-
-    public function getMaxPoints(self $choice = null, $points = 0)
-    {
-        $choice = is_null($choice) ? $this : $choice;
-        $points = $points + $choice->getValue();
-
-        if ($choice->hasChildQuestions()) {
-            foreach ($choice->getChildQuestions() as $question) {
-                $points = $points + $question->getMaxPoints();
-            }
-        }
-
-        return $points;
     }
 
     /**

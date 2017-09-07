@@ -1,0 +1,4 @@
+PM\SurveythorBundle\Entity\ResultItem:
+    properties:
+        singleChoiceAnswer:
+            - Valid: ~

@@ -1,0 +1,25 @@
+PM\SurveythorBundle\Entity\ResultItems\TextAnswer:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\TextAnswerRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    oneToOne:
+        resultItem:
+            targetEntity: PM\SurveythorBundle\Entity\ResultItem
+            inversedBy: textAnswer
+
+    manyToOne:
+        question:
+            targetEntity: PM\SurveythorBundle\Entity\SurveyItems\Question
+    fields:
+        value:
+            type: text
+
+    lifecycleCallbacks: {  }

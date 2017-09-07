@@ -9,3 +9,4 @@ services:
         arguments:
             - "@result_ready_subscriber"
             - "@form.factory"
+            - "@result_repository"

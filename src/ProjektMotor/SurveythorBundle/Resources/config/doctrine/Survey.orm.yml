@@ -24,9 +24,13 @@ PM\SurveythorBundle\Entity\Survey:
             cascade:
                 - persist
             orderBy: { 'sortOrder' : 'ASC'}
-
         resultRanges:
             targetEntity: PM\SurveythorBundle\Entity\ResultRange
+            mappedBy: survey
+            cascade:
+                - persist
+        results:
+            targetEntity: PM\SurveythorBundle\Entity\Result
             mappedBy: survey
             cascade:
                 - persist

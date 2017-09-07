@@ -1,50 +1,11 @@
 {% extends '::base.html.twig' %}
+{% import '@AppBundle/macros/evaluateResult.html.twig' as macros %}
 
-{% macro recursiveAnswer(answer, isChild = false) %}
-    {% if answer.value is defined %}
-        <p>
-            <b>{{ answer.question.text }}</b>
-            {{ answer.value }}
-        </p>
-        <hr />
-    {% endif %}
-
-    {% if answer.choice is defined %}
-        <p>
-            <b>{{ answer.choice.question.text }}</b>
-            {{ answer.choice.text }}
-        </p>
-        {% if answer.childAnswers is not null %}
-            {% for childAnswer in answer.childAnswers %}
-                {{ _self.recursiveAnswer(childAnswer, true) }}
-            {% endfor %}
-        {% endif %}
-    {% endif %}
-
-    {% if answer.choices is defined %}
-        {% for choice in answer.choices %}
-            <p>
-                <b>{{ choice.question.text }}</b>
-                {{ choice.text }}
-            </p>
-
-            {% if choice.childQuestions is not null and answer.childAnswers is not null %}
-                {% for childQuestion in choice.childQuestions %}
-                    {% for childAnswer in answer.childAnswers %}
-                        {% if childAnswer.question.id == childQuestion.id %}
-                            {{ _self.recursiveAnswer(childAnswer, true) }}
-                        {% endif %}
-                    {% endfor %}
-                {% endfor %}
-            {% endif %}
-            <hr />
-        {% endfor %}
-    {% endif %}
-{% endmacro %}
-
-
+{% block navbar %}{% endblock %}
 {% block body %}
-    {% for answer in result.answers %}
-        {{ _self.recursiveAnswer(answer) }}
+    <h4>{{ result.survey.title }}</h4>
+    {% for item in result.resultItems %}
+        {{ macros.renderResultItem(item) }}
+        <hr />
     {% endfor %}
 {% endblock %}

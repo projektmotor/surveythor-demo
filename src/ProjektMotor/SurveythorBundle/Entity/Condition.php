@@ -3,7 +3,6 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\Question;
 use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\SurveyItem;
 
@@ -18,11 +17,6 @@ class Condition
     private $id;
 
     /**
-     *  @var Question
-     */
-    private $question;
-
-    /**
      * @var Choice[]
      */
     private $choices;
@@ -30,7 +24,7 @@ class Condition
     /**
      * @var SurveyItem $item
      */
-    private $item;
+    private $surveyItem;
 
     /**
      * @var boolean
@@ -54,25 +48,9 @@ class Condition
     }
 
     /**
-     * @return Question
-     */
-    public function getQuestion()
-    {
-        return $this->question;
-    }
-
-    /**
-     * @param Question $question
-     */
-    public function setQuestion(Question $question)
-    {
-        $this->question = $question;
-    }
-
-    /**
      * @param Choice $choice
      *
-     * @return Question
+     * @return Condition
      */
     public function addChoice(Choice $choice)
     {
@@ -104,17 +82,17 @@ class Condition
     /**
      * @return SurveyItem
      */
-    public function getItem()
+    public function getSurveyItem()
     {
-        return $this->item;
+        return $this->surveyItem;
     }
 
     /**
      * @param SurveyItem
      */
-    public function setItem(SurveyItem $item)
+    public function setSurveyItem(SurveyItem $surveyItem)
     {
-        $this->item = $item;
+        $this->surveyItem = $surveyItem;
     }
 
     public function getIsNegative()

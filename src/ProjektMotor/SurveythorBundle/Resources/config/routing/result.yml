@@ -2,6 +2,6 @@ result_new:
     path: /new/{id}
     defaults: { _controller: result_controller:newAction }
 result_next:
-    path: /next/{id}/{item}
+    path: /next/{id}/{surveyItem}
     defaults: { _controller: result_controller:nextAction }
     methods: [ POST ]

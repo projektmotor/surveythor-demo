@@ -2,10 +2,10 @@
 namespace AppBundle\Event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use PM\SurveythorBundle\Event\ResultEvent;
 use PM\SurveythorBundle\Repository\ResultRepository;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * ResultReadySubscriber
@@ -42,7 +42,11 @@ class ResultReadySubscriber implements EventSubscriberInterface
     {
         $this->resultRepository->save($event->getResult());
 
-        $url = $this->router->generate('result_evaluation', ['id' => $event->getResult()->getId()]);
-        $event->setResponse(new RedirectResponse($url));
+        $url = $this->router->generate(
+            'result_evaluation',
+            ['id' => $event->getResult()->getId()],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+        $event->setUrl($url);
     }
 }

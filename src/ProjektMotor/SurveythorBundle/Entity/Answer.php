@@ -2,6 +2,9 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\TextAnswer;
 
 /**
  * Answer
@@ -9,27 +12,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 abstract class Answer
 {
     /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var Result
-     */
-    private $result;
-
-    /**
-     * @var Question
-     */
-    private $question;
-
-    /**
      * @param Question $question
      *
      * @return MultipleChoiceAnswer|SingleChoiceAnswer|TextAnswer
      * @throws \Exception
      */
-    public static function createByQuestionType(Question $question)
+    public static function createByQuestionType($question)
     {
         switch ($question->getType()) {
             case 'mc':
@@ -46,58 +34,6 @@ abstract class Answer
                 break;
         }
 
-        $answer->setQuestion($question);
-
         return $answer;
-    }
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Get result.
-     *
-     * @return Result
-     */
-    public function getResult()
-    {
-        return $this->result;
-    }
-
-    /**
-     * Set result.
-     *
-     * @param Result $result
-     */
-    public function setResult(Result $result)
-    {
-        $this->result = $result;
-    }
-
-    /**
-     * Get question.
-     *
-     * @return Question
-     */
-    public function getQuestion()
-    {
-        return $this->question;
-    }
-
-    /**
-     * Set question.
-     *
-     * @param Question $question
-     */
-    public function setQuestion(Question $question)
-    {
-        $this->question = $question;
     }
 }

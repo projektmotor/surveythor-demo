@@ -14,11 +14,9 @@ PM\SurveythorBundle\Entity\Condition:
             type: boolean
 
     manyToOne:
-        item:
+        surveyItem:
             targetEntity: PM\SurveythorBundle\Entity\SurveyItem
             inversedBy: conditions
-        question:
-            targetEntity: PM\SurveythorBundle\Entity\Question
 
     manyToMany:
         choices:

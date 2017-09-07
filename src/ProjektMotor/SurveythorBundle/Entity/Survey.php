@@ -4,7 +4,10 @@ namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use PM\SurveythorBundle\Entity\Question;
+use PM\SurveythorBundle\Entity\SurveyItems\Question;
+use PM\SurveythorBundle\Entity\SurveyItems\QuestionGroup;
+use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
+use PM\SurveythorBundle\Entity\Result;
 
 /**
  * Survey
@@ -36,10 +39,21 @@ class Survey
      */
     private $resultRanges;
 
+    /**
+     * @var Result
+     */
+    private $results;
+
+    public function __tostring()
+    {
+        return get_class($this);
+    }
+
     public function __construct()
     {
         $this->surveyItems = new ArrayCollection();
         $this->resultRanges = new ArrayCollection();
+        $this->results = new ArrayCollection();
     }
 
     /**
@@ -98,37 +112,6 @@ class Survey
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * @param SurveyItem $surveyItem
-     *
-     * @return Survey
-     */
-    public function addSurveyItem(SurveyItem $surveyItem)
-    {
-        if (!$this->surveyItems->contains($surveyItem)) {
-            $this->surveyItems->add($surveyItem);
-            $surveyItem->setSurvey($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param SurveyItem $surveyItem
-     */
-    public function removeSurveyItem(SurveyItem $surveyItem)
-    {
-        $this->surveyItems->removeElement($surveyItem);
-    }
-
-    /**
-     * @return SurveyItem[]|ArrayCollection
-     */
-    public function getSurveyItems()
-    {
-        return $this->surveyItems;
     }
 
     /**
@@ -197,16 +180,6 @@ class Survey
         return $points;
     }
 
-    public function getQuestions()
-    {
-        $questions = new ArrayCollection();
-        foreach ($this->surveyItems as $item) {
-            if ($item instanceof Question) {
-                $questions->add($item);
-            }
-        }
-    }
-
     public function getNextItem($item)
     {
         while ($current = $this->surveyItems->current()) {
@@ -215,5 +188,71 @@ class Survey
             }
             $this->surveyItems->next();
         }
+    }
+
+    /**
+     * Get results.
+     *
+     * @return Result[]|ArrayCollection
+     */
+    public function getResults()
+    {
+        return $this->results;
+    }
+
+    /**
+     * @param Result $result
+     *
+     * @return Survey
+     */
+    public function addResult(Result $result)
+    {
+        if (!$this->results->contains($result)) {
+            $this->results->add($result);
+            $result->setSurvey($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Result $result
+     */
+    public function removeResult(Result $result)
+    {
+        $this->results->removeElement($result);
+    }
+
+    /**
+     * Get SurveyItems.
+     *
+     * @return SurveyItem[]|ArrayCollection
+     */
+    public function getSurveyItems()
+    {
+        return $this->surveyItems;
+    }
+
+    /**
+     * @param SurveyItem $surveyItem
+     *
+     * @return Survey
+     */
+    public function addSurveyItem(SurveyItem $surveyItem)
+    {
+        if (!$this->surveyItems->contains($surveyItem)) {
+            $this->surveyItems->add($surveyItem);
+            $surveyItem->setSurvey($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param SurveyItem $surveyItem
+     */
+    public function removeSurveyItem(SurveyItem $surveyItem)
+    {
+        $this->surveyItems->removeElement($surveyItem);
     }
 }

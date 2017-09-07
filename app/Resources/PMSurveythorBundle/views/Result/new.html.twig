@@ -6,10 +6,17 @@
     <h4>{{ app.session.get('survey').title }}</h4>
 
     <div id="result">
+        {% if item.header is defined %}
+            <h4>{{ item.header }}</h4>
+        {% endif %}
+
+        {{ form_start(form) }}
+        {{ form_row(form) }}
+        {{ form_end(form) }}
         <button
             class="btn btn-default"
             id="survey-next"
-            data-next-url="{{ path('result_next', { 'id' : app.session.get('survey').id, 'item' : item.id }) }}"
+            data-next-url="{{ path('result_next', { 'id' : app.session.get('survey').id, 'surveyItem' : item.id }) }}"
         >
             weiter
         </button>
@@ -20,3 +27,4 @@
     {{ parent() }}
     <script type="application/javascript" src="{{ asset('build/result.js') }}"></script>
 {% endblock %}
+

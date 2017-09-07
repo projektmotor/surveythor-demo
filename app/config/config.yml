@@ -60,6 +60,7 @@ twig:
         - PMSurveythorBundle:Form:fields.html.twig
     paths:
         '%kernel.project_dir%/app/Resources/PMSurveythorBundle/views/': PMSurveythorBundle
+        '%kernel.project_dir%/src/AppBundle/Resources/views/': AppBundle
 
 # Doctrine Configuration
 doctrine:

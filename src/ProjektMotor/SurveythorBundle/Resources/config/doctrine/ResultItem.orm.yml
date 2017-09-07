@@ -1,0 +1,69 @@
+PM\SurveythorBundle\Entity\ResultItem:
+    type: entity
+    table: null
+    repositoryClass: PM\SurveythorBundle\Repository\ResultItemRepository
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        sortOrder:
+            type: integer
+            nullable: true
+
+    oneToOne:
+        singleChoiceAnswer:
+            targetEntity: PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer
+            mappedBy: resultItem
+            cascade:
+                - persist
+                - merge
+                - detach
+        multipleChoiceAnswer:
+            targetEntity: PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer
+            mappedBy: resultItem
+            cascade:
+                - persist
+                - merge
+                - detach
+        textAnswer:
+            targetEntity: PM\SurveythorBundle\Entity\ResultItems\TextAnswer
+            mappedBy: resultItem
+            cascade:
+                - persist
+                - merge
+                - detach
+        textItem:
+            targetEntity: PM\SurveythorBundle\Entity\ResultItems\TextItem
+            mappedBy: resultItem
+            cascade:
+                - persist
+                - merge
+                - detach
+
+    oneToMany:
+        childItems:
+            targetEntity: PM\SurveythorBundle\Entity\ResultItem
+            mappedBy: parentItem
+            cascade:
+                - persist
+                - merge
+                - detach
+
+    manyToOne:
+        result:
+            targetEntity: PM\SurveythorBundle\Entity\Result
+            inversedBy: resultItems
+
+        parentItem:
+            targetEntity: PM\SurveythorBundle\Entity\ResultItem
+            inversedBy: childItems
+
+        surveyItem:
+            targetEntity: PM\SurveythorBundle\Entity\SurveyItem
+
+    lifecycleCallbacks: {  }

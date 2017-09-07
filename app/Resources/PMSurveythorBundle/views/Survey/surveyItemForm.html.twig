@@ -1,0 +1,80 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        {{ _self.surveyItem(form) }}
+    </div>
+</div>
+
+{% macro surveyItem(form, isChild = 'false') %}
+    {% import _self as self %}
+
+    {% if isChild == 'true' %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="panel-title clearfix" id="questions-heading">
+                <span class="pull-left">
+                    {{ form.vars.value.title }}
+                </span>
+                <span class="pull-right">
+                    {{ form.vars.value.contentTypeName }}
+                </span>
+            </span>
+        </div>
+
+        <div id="item-{{ form.vars.value.id }}" class="panel-collapse collapse">
+            <div class="panel-body">
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-10">
+            {{ form_row(form.title) }}
+        </div>
+        <div class="col-md-2">
+            {{ form_row(form.displayTitle) }}
+        </div>
+    </div>
+
+    <hr />
+
+    {% if form.question is defined %}
+        {{ form_row(form.question.text) }}
+        {% if form.question.choices is defined %}
+            {{ form_row(form.question.choices) }}
+        {% endif %}
+    {% endif %}
+
+    {% if form.textItem is defined %}
+        {{ form_row(form.textItem) }}
+    {% endif %}
+
+    {% if form.children.childItems is defined %}
+        {% for child in form.children.childItems %}
+            {{ self.surveyItem(child, 'true') }}
+        {% endfor %}
+    {% endif %}
+
+    <hr />
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="panel-title clearfix" id="questions-heading">
+                erweiterte Einstellungen
+            </span>
+        </div>
+
+        <div id="item-{{ form.vars.value.id }}" class="panel-collapse collapse">
+            <div class="panel-body">
+                {{ form_row(form.conditions) }}
+                <hr />
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    </div>
+
+    {% if isChild == 'true' %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+{% endmacro %}

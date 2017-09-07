@@ -13,17 +13,19 @@ PM\SurveythorBundle\Entity\Result:
             type: datetimetz
 
     oneToMany:
-        answers:
-            targetEntity: PM\SurveythorBundle\Entity\Answer
+        resultItems:
+            targetEntity: PM\SurveythorBundle\Entity\ResultItem
             mappedBy: result
             cascade:
                 - persist
-        answerGroups:
-            targetEntity: PM\SurveythorBundle\Entity\AnswerGroup
-            mappedBy: result
-            cascade:
-                - persist
+                - merge
+                - detach
+            orderBy: { 'sortOrder' : 'ASC'}
 
+    manyToOne:
+        survey:
+            targetEntity: PM\SurveythorBundle\Entity\Survey
+            inversedBy: results
 
     lifecycleCallbacks:
         prePersist: [ setCreatedValue ]

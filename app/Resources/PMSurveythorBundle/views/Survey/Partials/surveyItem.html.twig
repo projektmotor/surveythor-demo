@@ -1,0 +1,18 @@
+<div class="panel panel-default parent">
+    <div class="panel-heading" data-itemform-url="{{ path('survey_item_form', {'id' : item.id }) }}">
+        <span class="panel-title clearfix" id="questions-heading">
+            <span class="pull-left">
+                {{ item.title }}
+            </span>
+            <span class="pull-right">
+                {{ item.contentTypeName }}
+            </span>
+        </span>
+    </div>
+
+    <div id="item-{{ item.id }}" class="panel-collapse collapse">
+        <div class="panel-body">
+        </div>
+    </div>
+</div>
+

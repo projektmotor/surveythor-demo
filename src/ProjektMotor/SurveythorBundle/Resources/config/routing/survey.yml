@@ -2,18 +2,14 @@ survey_index:
     path: /
     defaults: { _controller: survey_controller:indexAction }
 
-survey_new:
-    path: /new
-    defaults: { _controller: survey_controller:formAction }
-
 survey_edit:
     path: /edit/{id}
-    defaults: { _controller: survey_controller:formAction }
+    defaults: { _controller: survey_controller:editAction }
 
-survey_save:
-    path: /save/{id}
-    defaults: { _controller: survey_controller:saveAction, id: null }
+survey_item_form:
+    path: /item/{id}
+    defaults: { _controller: survey_controller:surveyItemFormAction }
 
 survey_evaluations:
-    path: /eval/{id}
+    path: /evaluations/{survey}
     defaults: { _controller: survey_controller:evaluationsAction }

@@ -26,7 +26,5 @@ class ResultReadySubscriber implements EventSubscriberInterface
     public function onResultReady(ResultEvent $event)
     {
         $this->resultRepository->save($event->getResult());
-        dump($event->getResult());
-        die('moo');
     }
 }

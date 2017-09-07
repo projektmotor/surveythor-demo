@@ -9,10 +9,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
 use PM\SurveythorBundle\Entity\Condition;
-use PM\SurveythorBundle\Entity\Question;
 use PM\SurveythorBundle\Entity\Choice;
+use PM\SurveythorBundle\Entity\SurveyItems\Question;
 
 /**
  * QuestionCondtionType
@@ -31,13 +30,25 @@ class CondtionType extends AbstractType
 
         $builder->add('question', EntityType::class, array(
             'class' => Question::class,
-            //'choices' => $survey->getQuestions(),
+            //'choices' => $survey->getChoiceQuestions(),
             'choice_label' => 'text',
-            'attr' => array('class' => 'condition-question')
+            'attr' => array('class' => 'condition-question'),
+            'mapped' => false,
+            'label' => 'Frage'
         ));
 
         $questionModifier = function (FormInterface $form, $question) {
             if (!is_null($question)) {
+                $form->remove('question');
+                $form->add('question', EntityType::class, array(
+                    'class' => Question::class,
+                    //'choices' => $survey->getChoices(),
+                    'choice_label' => 'text',
+                    'attr' => array('class' => 'condition-question'),
+                    'data' => $question,
+                    'label' => 'Frage',
+                    'mapped' => false
+                ));
                 if ($question->hasChoices()) {
                     $form->add('choices', EntityType::class, array(
                         'class' => Choice::class,
@@ -45,9 +56,13 @@ class CondtionType extends AbstractType
                         'choice_label' => 'text',
                         'choices' => $question->getChoices(),
                         'expanded' => true,
-                        'multiple' => true
+                        'multiple' => true,
+                        'label' => 'Antworten'
                     ));
                 }
+                $form->add('isNegative', null, array(
+                    'label' => 'Element nur anzeigen, wenn obige Fragen nicht ausgewählt wurden'
+                ));
             }
         };
 
@@ -56,9 +71,8 @@ class CondtionType extends AbstractType
             function (FormEvent $event) use ($questionModifier) {
                 $data = $event->getData();
 
-
                 if (!is_null($data)) {
-                    $question = $data->getQuestion();
+                    $question = $data->getChoices()->first()->getQuestion();
                     $questionModifier($event->getForm(), $question);
                 }
             }

@@ -2,28 +2,29 @@
 namespace PM\SurveythorBundle\Controller;
 
 use PM\SurveythorBundle\Entity\Answer;
-use PM\SurveythorBundle\Entity\AnswerGroup;
 use PM\SurveythorBundle\Entity\Choice;
-use PM\SurveythorBundle\Entity\Question;
 use PM\SurveythorBundle\Entity\Result;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\SurveyItem;
-use PM\SurveythorBundle\Entity\TextItem;
-use PM\SurveythorBundle\Entity\SingleChoiceAnswer;
-use PM\SurveythorBundle\Entity\MultipleChoiceAnswer;
-use PM\SurveythorBundle\Entity\QuestionGroup;
+use PM\SurveythorBundle\Entity\SurveyItems\Question;
+use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
+use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\TextAnswer;
+use PM\SurveythorBundle\Entity\ResultItem;
+use PM\SurveythorBundle\Entity\ResultItems\TextItem as ResultTextItem;
 use PM\SurveythorBundle\Event\ResultEvent;
-use PM\SurveythorBundle\Form\ResultType;
-use PM\SurveythorBundle\Form\AnswerType;
-use PM\SurveythorBundle\Form\AnswerGroupType;
-use PM\SurveythorBundle\Repository\SurveyRepository;
+use PM\SurveythorBundle\Repository\ResultRepository;
+use PM\SurveythorBundle\Form\ResultItemType;
 use QafooLabs\MVC\FormRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\FormFactory;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * Class ResultController
@@ -41,6 +42,9 @@ class ResultController
      */
     private $formFactory;
 
+    private $resultRepository;
+
+
     /**
      * __construct
      *
@@ -48,10 +52,12 @@ class ResultController
      */
     public function __construct(
         EventSubscriberInterface $resultReadySubscriber,
-        FormFactory $formFactory
+        FormFactory $formFactory,
+        ResultRepository $resultRepository
     ) {
         $this->resultReadySubscriber = $resultReadySubscriber;
         $this->formFactory = $formFactory;
+        $this->resultRepository = $resultRepository;
     }
 
     /**
@@ -59,62 +65,61 @@ class ResultController
      *
      * @return array|Response
      */
-    public function newAction(Survey $survey)
+    public function newAction(FormRequest $formRequest, Survey $survey)
     {
         $session = new Session();
         $result = new Result();
-        $item = $survey->getSurveyItems()->first();
+        $surveyItem = $survey->getSurveyItems()->first();
+        $resultItem = $this->prepareResultItem($surveyItem);
 
-        $session->set('result', $result);
         $session->set('survey', $survey);
+        $this->resultRepository->detach($result);
+        $session->set('result', $result);
 
-        return array('item' => $item, $survey);
+
+        $formRequest->handle(ResultItemType::class, $resultItem);
+        return array(
+            'form'  => $formRequest->createFormView(),
+            'item'  => $surveyItem
+        );
     }
 
-    public function nextAction(FormRequest $formRequest, Survey $survey, SurveyItem $item)
+    public function nextAction(FormRequest $formRequest, Survey $survey, SurveyItem $surveyItem)
     {
+        $resultItem = $this->prepareResultItem($surveyItem);
+        if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
+            return array(
+                'item'  => $surveyItem,
+                'form'  => $formRequest->createFormView()
+            );
+        }
+
         $session = new Session();
+        $result = $session->get('result');
+        $resultItem = $formRequest->getValidData();
+        $result->addResultItem($resultItem);
+        $session->set('result', $result);
 
-        if (get_class($item) == Question::class) {
-            $answer = Answer::createByQuestionType($item);
-            if (!$formRequest->handle(AnswerType::class, $answer)) {
-                return $this->renderItem($item, $survey, $formRequest);
-            }
-            $session->get('result')->addAnswer($formRequest->getValidData());
-        }
-        if (get_class($item) == QuestionGroup::class) {
-            $answerGroup = new AnswerGroup();
-
-            foreach ($item->getQuestions() as $question) {
-                $answer = Answer::createByQuestionType($question);
-                $answerGroup->addAnswer($answer);
-            }
-
-            if ($item->getChildGroups()->count() > 0) {
-                foreach ($item->getChildGroups() as $group) {
-                    if ($this->isItemVisible($group)) {
-                        $childGroup = new AnswerGroup();
-                        foreach ($group->getQuestions() as $question) {
-                            $answer = Answer::createByQuestionType($question);
-                            $childGroup->addAnswer($answer);
-                            $childGroup->setHeader($group->getHeader());
-                        }
-                        $answerGroup->addChildGroup($childGroup);
-                    }
-                }
-            }
-
-            if (!$formRequest->handle(AnswerGroupType::class, $answerGroup)) {
-                return $this->renderItem($item, $survey, $formRequest);
-            }
-            $session->get('result')->addAnswerGroup($formRequest->getValidData());
-        }
-
-        if ($nextItem = $this->getNextItem($item, $survey)) {
-            return $this->renderItem($nextItem, $survey);
+        if ($nextSurveyItem = $this->getNextItem($surveyItem, $survey)) {
+            $nextResultItem = $this->prepareResultItem($nextSurveyItem);
+            return array(
+                'item'  => $nextSurveyItem,
+                'form'  => $this->formFactory->create(ResultItemType::class, $nextResultItem)->createView()
+            );
         } else {
-            dump($session->get('result'));
-            die();
+            $result->setSurvey($survey);
+            $result = $this->mergeResult($result);
+            $dispatcher = new EventDispatcher();
+            $event = new ResultEvent($result);
+
+            $dispatcher->addSubscriber($this->resultReadySubscriber);
+            $dispatcher->dispatch(ResultEvent::NAME, $event);
+
+            return new JsonResponse(
+                json_encode(
+                    array('url' => $event->getUrl())
+                )
+            );
         }
     }
 
@@ -137,11 +142,11 @@ class ResultController
         $visible = true;
         if (0 != sizeof($item->getConditions())) {
             $resultChoices = array();
-            foreach ($result->getAnswers() as $answer) {
-                if ($answer instanceof SingleChoiceAnswer) {
+            foreach ($result->getResultItems() as $resultItem) {
+                if ($answer = $resultItem->getSingleChoiceAnswer()) {
                     $resultChoices[] = $answer->getChoice()->getId();
                 }
-                if ($answer instanceof MultipleChoiceAnswer) {
+                if ($answer = $resultItem->getMultipleChoiceAnswer()) {
                     foreach ($answer->getChoices() as $choice) {
                         $resultChoices[] = $choice->getId();
                     }
@@ -168,88 +173,123 @@ class ResultController
         return $visible;
     }
 
-    private function renderItem(SurveyItem $item, Survey $survey, FormRequest $formRequest = null)
+    private function prepareResultItem(SurveyItem $item)
     {
-        switch (get_class($item)) {
-            case Question::class:
-                $answer = Answer::createByQuestionType($item);
-                if (null === $formRequest) {
-                    $form = $this->formFactory->create(AnswerType::class, $answer)->createView();
-                } else {
-                    $form = $formRequest->createFormView();
-                }
-                return array(
-                    'item' => $item,
-                    'form' => $form
-                );
-            break;
-            case QuestionGroup::class:
-                $answerGroup = new AnswerGroup();
-                foreach ($item->getQuestions() as $question) {
-                    $answer = Answer::createByQuestionType($question);
-                    $answerGroup->addAnswer($answer);
-                }
-                if ($item->getChildGroups()->count() > 0) {
-                    foreach ($item->getChildGroups() as $group) {
-                        if ($this->isItemVisible($group)) {
-                            $childGroup = new AnswerGroup();
-                            foreach ($group->getQuestions() as $question) {
-                                $answer = Answer::createByQuestionType($question);
-                                $childGroup->addAnswer($answer);
-                                $childGroup->setHeader($group->getHeader());
-                            }
-                            $answerGroup->addChildGroup($childGroup);
-                        }
-                    }
-                }
+        $session = new Session();
+        $result = $session->get('result');
+        $itemContent = $item ->getContent();
 
-                if (null === $formRequest) {
-                    $form = $this->formFactory->create(AnswerGroupType::class, $answerGroup)->createView();
-                } else {
-                    $form = $formRequest->createFormView();
-                }
-
-                return array(
-                    'item' => $item,
-                    'formgroup' => $form,
-                    'header' => $item->getHeader()
-                );
-            break;
-            case TextItem::class:
-                $text = $item->getText();
-
-                return array(
-                    'item' => $item,
-                    'text' => $text
-                );
-            break;
+        if ($itemContent instanceof Question) {
+            $resultItem = $this->prepareAnswer($item);
         }
+
+        if ($itemContent instanceof TextItem) {
+            $resultItem = new ResultItem();
+
+            $textItem = new ResultTextItem();
+            $textItem->setText($itemContent->getText());
+            $resultItem->setTextItem($textItem);
+        }
+
+        if ($itemContent instanceof PersistentCollection) {
+            $resultItem = new ResultItem();
+            $childItem = $itemContent->current();
+            if ($this->isItemVisible($childItem)) {
+                $resultItem = new ResultItem();
+                $resultItem->addChildItem($this->prepareResultItem($childItem));
+            }
+            while ($childItem = $itemContent->next()) {
+                if ($this->isItemVisible($itemContent->current())) {
+                    $resultItem->addChildItem(
+                        $this->prepareResultItem($childItem)
+                    );
+                }
+            }
+        }
+
+        $resultItem->setSurveyItem($item);
+
+        return $resultItem;
     }
 
-//        //dump($request->request->all());die();
-//        $result = new Result();
-//
-//        foreach ($survey->getSurveyItems() as $item) {
-//            if ($item instanceof Question) {
-//                $this->setAnswers($result, $item, $request);
-//            }
-//        }
-//
-//        if (!$formRequest->handle(ResultType::class, $result)
-//            || $request->isXmlHttpRequest()
-//        ) {
-//            return array(
-//                'survey' => $survey,
-//                'form' => $formRequest->createFormView(),
-//            );
-//        }
-//
-//        $dispatcher = new EventDispatcher();
-//        $event = new ResultEvent($result);
-//
-//        $dispatcher->addSubscriber($this->resultReadySubscriber);
-//        $dispatcher->dispatch(ResultEvent::NAME, $event);
-//
-//        return $event->getResponse();
-//    }
+    private function prepareAnswer(SurveyItem $item)
+    {
+        $resultItem = new ResultItem();
+        $itemContent = $item ->getContent();
+        $answer = Answer::createByQuestionType($itemContent);
+        $answer->setQuestion($itemContent);
+
+        if ($answer instanceof MultipleChoiceAnswer) {
+            $resultItem->setMultipleChoiceAnswer($answer);
+        }
+        if ($answer instanceof SingleChoiceAnswer) {
+            $resultItem->setSingleChoiceAnswer($answer);
+        }
+        if ($answer instanceof TextAnswer) {
+            $resultItem->setTextAnswer($answer);
+        }
+
+        return $resultItem;
+    }
+
+    private function mergeResult($result)
+    {
+        foreach ($result->getResultItems() as $resultItem) {
+            $resultItem = $this->mergeResultItem($resultItem);
+        }
+        return $result;
+    }
+
+    private function mergeResultItem($resultItem, $recursive = false)
+    {
+        $surveyItem = $resultItem->getSurveyItem();
+        $surveyItem = $this->resultRepository->merge($surveyItem);
+        $resultItem->setSurveyItem($surveyItem);
+
+        if ($answer = $resultItem->getSingleChoiceAnswer()) {
+            $question = $answer->getQuestion();
+            $question = $this->resultRepository->merge($question);
+
+            $choice = $answer->getChoice();
+            $choice = $this->resultRepository->merge($choice);
+
+            $answer->setChoice($choice);
+            $answer->setQuestion($question);
+        }
+
+        if ($answer = $resultItem->getMultipleChoiceAnswer()) {
+            $question = $answer->getQuestion();
+            $question = $this->resultRepository->merge($question);
+
+            $choices = $answer->getChoices();
+            $answer->clearChoices();
+
+            foreach ($choices as $choice) {
+                $choice = $this->resultRepository->merge($choice);
+                $answer->addChoice($choice);
+            }
+            $answer->setQuestion($question);
+        }
+
+        if ($answer = $resultItem->getTextAnswer()) {
+            $question = $answer->getQuestion();
+            $question = $this->resultRepository->merge($question);
+            $answer->setQuestion($question);
+        }
+
+        if ($resultItem->hasChildren() && $recursive === false) {
+            $this->mergeChildren($resultItem);
+        }
+
+        return $resultItem;
+    }
+
+    private function mergeChildren($resultItem)
+    {
+        $childItems = $resultItem->getChildItems();
+        foreach ($childItems as $childItem) {
+            $this->mergeChildren($childItem);
+        }
+        $this->mergeResultItem($resultItem, true);
+    }
 }
