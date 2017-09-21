@@ -6,22 +6,12 @@ use PM\SurveythorBundle\Entity\SurveyItem;
 /**
  * TextItem
  */
-class TextItem
+class TextItem extends SurveyItem
 {
-    /**
-     * @var int
-     */
-    private $id;
-
     /**
      * @var string
      */
     private $text;
-
-    /**
-     * @var SurveyItem
-     */
-    private $surveyItem;
 
     /**
      * Get id
@@ -55,21 +45,5 @@ class TextItem
     public function getText()
     {
         return $this->text;
-    }
-
-    /**
-     * @return SurveyItem
-     */
-    public function getSurveyItem()
-    {
-        return $this->surveyItem;
-    }
-
-    /**
-     * @param SurveyItem
-     */
-    public function setSurveyItem(SurveyItem $surveyItem)
-    {
-        $this->surveyItem = $surveyItem;
     }
 }

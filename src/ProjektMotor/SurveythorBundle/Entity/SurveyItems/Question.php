@@ -3,19 +3,14 @@
 namespace PM\SurveythorBundle\Entity\SurveyItems;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\SurveyItem;
 use PM\SurveythorBundle\Entity\Choice;
+use PM\SurveythorBundle\Entity\SurveyItem;
 
 /**
  * Question
  */
-class Question
+class Question extends SurveyItem
 {
-    /**
-     * @var int
-     */
-    private $id;
-
     /**
      * @var string
      */
@@ -29,32 +24,16 @@ class Question
     /**
      * @var QuestionTemplate
      */
-    private $template;
+    private $questionTemplate;
 
     /**
      * @var string
      */
     private $type;
 
-    /**
-     * @var SurveyItem
-     */
-    private $surveyItem;
-
-
     public function __construct()
     {
         $this->choices = new ArrayCollection();
-    }
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -142,21 +121,21 @@ class Question
     }
 
     /**
-     * Get template.
+     * Get questionTemplate.
      *
-     * @return template.
+     * @return QuestionTemplate.
      */
-    public function getTemplate()
+    public function getQuestionTemplate()
     {
-        return $this->template;
+        return $this->questionTemplate;
     }
 
     /**
-     * @param QuestionTemplate $template
+     * @param QuestionTemplate $questionTemplate
      */
-    public function setTemplate($template)
+    public function setQuestionTemplate($questionTemplate)
     {
-        $this->template = $template;
+        $this->questionTemplate = $questionTemplate;
     }
 
     /**
@@ -177,21 +156,5 @@ class Question
     public function setType($type)
     {
         $this->type = $type;
-    }
-
-    /**
-     * @return SurveyItem
-     */
-    public function getSurveyItem()
-    {
-        return $this->surveyItem;
-    }
-
-    /**
-     * @param SurveyItem
-     */
-    public function setSurveyItem(SurveyItem $surveyItem)
-    {
-        $this->surveyItem = $surveyItem;
     }
 }

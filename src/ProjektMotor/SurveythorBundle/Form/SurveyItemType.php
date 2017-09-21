@@ -8,12 +8,14 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Doctrine\ORM\PersistentCollection;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use PM\SurveythorBundle\Entity\SurveyItem;
+use PM\SurveythorBundle\Entity\QuestionTemplate;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
 use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
-use PM\SurveythorBundle\Form\SurveyItems\QuestionType;
-use PM\SurveythorBundle\Form\SurveyItems\TextItemType;
+use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
+use PM\SurveythorBundle\Form\SurveyItems\ChoiceCollectionType;
+use PM\SurveythorBundle\Form\SurveyItems\QuestionChoiceType;
 
 /**
  * SurveyItemType
@@ -35,6 +37,9 @@ class SurveyItemType extends AbstractType
             ->add('displayTitle', null, array(
                 'label' => 'Titel anzeigen'
             ))
+            ->add('description', null, array(
+                'label' => 'Beschreibung'
+            ))
         ;
 
         $builder->addEventListener(
@@ -44,22 +49,40 @@ class SurveyItemType extends AbstractType
 
                 if (!is_null($item)) {
                     $form = $event->getForm();
-                    $itemClass = \Doctrine\Common\Util\ClassUtils::getRealClass(get_class($item->getContent()));
+                    $itemClass = \Doctrine\Common\Util\ClassUtils::getRealClass(get_class($item));
                     switch ($itemClass) {
                         case Question::class:
-                            $form->add('question', QuestionType::class, array(
-                                'label' => false
-                            ));
+                            $type = $item->getType();
+
+                            $form->add('text');
+                            if ($type == 'mc' || $type == 'sc') {
+                                $form->add('choices', ChoiceCollectionType::class, array(
+                                    'entry_type' => QuestionChoiceType::class,
+                                    'allow_add' => true,
+                                    'allow_delete' => true,
+                                    'by_reference' => false,
+                                    'entry_options' => array(
+                                        'label' => false
+                                    ),
+                                    'label' => 'Antworten',
+                                    'prototype_name' => '__choice__',
+                                    'attr' => array('class' => 'question-answer-prototype sortable')
+                                ));
+                                $form->add('template', EntityType::class, array(
+                                    'class' => QuestionTemplate::class,
+                                    'required' => false,
+                                    'choice_label' => 'name',
+                                    'label' => 'Choices Layout'
+                                ));
+                            }
                             break;
 
                         case TextItem::class:
-                            $form->add('textItem', TextItemType::class, array(
-                                'label' => false
-                            ));
+                            $form->add('text');
                             break;
 
-                        case PersistentCollection::class:
-                            $form->add('childItems', CollectionType::class, array(
+                        case ItemGroup::class:
+                            $form->add('surveyItems', CollectionType::class, array(
                                 'entry_type' => SurveyItemType::class
                             ));
                             break;

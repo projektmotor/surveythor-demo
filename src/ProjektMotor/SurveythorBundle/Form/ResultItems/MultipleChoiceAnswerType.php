@@ -33,9 +33,9 @@ class MultipleChoiceAnswerType extends AbstractType
                 $question = $answer->getQuestion();
 
                 $type = EntityType::class;
-                if (!is_null($question->getTemplate())) {
-                    $type = !is_null($question->getTemplate()->getFormType())
-                        ? $question->getTemplate()->getFormType()
+                if (!is_null($question->getQuestionTemplate())) {
+                    $type = !is_null($question->getQuestionTemplate()->getFormType())
+                        ? $question->getQuestionTemplate()->getFormType()
                         : $type
                     ;
                 }

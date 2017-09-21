@@ -8,7 +8,13 @@ use QafooLabs\MVC\FormRequest;
 use QafooLabs\MVC\RedirectRoute;
 use AppBundle\Controller\UserController;
 use PM\SurveythorBundle\Entity\Survey;
+use PM\SurveythorBundle\Entity\SurveyItems\Question;
+use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
+use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Entity\SurveyItem;
+use PM\SurveythorBundle\Form\SurveyItems\QuestionType;
+use PM\SurveythorBundle\Form\SurveyItems\TextItemType;
+use PM\SurveythorBundle\Form\SurveyItems\ItemGroupType;
 use PM\SurveythorBundle\Form\SurveyType;
 use PM\SurveythorBundle\Form\SurveyItemType;
 use PM\SurveythorBundle\Repository\SurveyRepository;
@@ -61,7 +67,20 @@ class SurveyController
 
     public function surveyItemFormAction(FormRequest $formRequest, SurveyItem $item)
     {
-        $formRequest->handle(SurveyItemType::class, $item);
+        switch (true) {
+            case $item instanceof Question:
+                $type = QuestionType::class;
+                break;
+            case $item instanceof TextItem:
+                $type = TextItemType::class;
+                break;
+            case $item instanceof ItemGroup:
+                $type = ItemGroupType::class;
+                break;
+        }
+
+        $type = SurveyItemType::class;
+        $formRequest->handle($type, $item);
 
         return array(
             'form' => $formRequest->createFormView()

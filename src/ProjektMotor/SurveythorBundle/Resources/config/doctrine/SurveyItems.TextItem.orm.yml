@@ -3,20 +3,8 @@ PM\SurveythorBundle\Entity\SurveyItems\TextItem:
     table: null
     repositoryClass: PM\SurveythorBundle\Repository\TextItemRepository
 
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
-
     fields:
         text:
             type: text
-
-    oneToOne:
-        surveyItem:
-            targetEntity: PM\SurveythorBundle\Entity\SurveyItem
-            mappedBy: textItem
 
     lifecycleCallbacks: {  }

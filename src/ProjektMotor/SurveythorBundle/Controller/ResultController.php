@@ -8,6 +8,7 @@ use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\SurveyItem;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
 use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
+use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
 use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
 use PM\SurveythorBundle\Entity\ResultItems\TextAnswer;
@@ -177,29 +178,29 @@ class ResultController
     {
         $session = new Session();
         $result = $session->get('result');
-        $itemContent = $item ->getContent();
 
-        if ($itemContent instanceof Question) {
+        if ($item instanceof Question) {
             $resultItem = $this->prepareAnswer($item);
         }
 
-        if ($itemContent instanceof TextItem) {
+        if ($item instanceof TextItem) {
             $resultItem = new ResultItem();
 
             $textItem = new ResultTextItem();
-            $textItem->setText($itemContent->getText());
+            $textItem->setText($item->getText());
             $resultItem->setTextItem($textItem);
         }
 
-        if ($itemContent instanceof PersistentCollection) {
+        if ($item instanceof ItemGroup) {
             $resultItem = new ResultItem();
-            $childItem = $itemContent->current();
+            $childItems = $item->getSurveyItems();
+            $childItem = $childItems->current();
             if ($this->isItemVisible($childItem)) {
                 $resultItem = new ResultItem();
                 $resultItem->addChildItem($this->prepareResultItem($childItem));
             }
-            while ($childItem = $itemContent->next()) {
-                if ($this->isItemVisible($itemContent->current())) {
+            while ($childItem = $childItems->next()) {
+                if ($this->isItemVisible($childItem)) {
                     $resultItem->addChildItem(
                         $this->prepareResultItem($childItem)
                     );
@@ -215,9 +216,8 @@ class ResultController
     private function prepareAnswer(SurveyItem $item)
     {
         $resultItem = new ResultItem();
-        $itemContent = $item ->getContent();
-        $answer = Answer::createByQuestionType($itemContent);
-        $answer->setQuestion($itemContent);
+        $answer = Answer::createByQuestionType($item);
+        $answer->setQuestion($item);
 
         if ($answer instanceof MultipleChoiceAnswer) {
             $resultItem->setMultipleChoiceAnswer($answer);

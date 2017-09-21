@@ -27,8 +27,42 @@ $fa-font-path: "~font-awesome/fonts";
         margin-right: 12px;
     }
 }
+
+
+.panel-title {
+}
+.panel-heading {
+    background: #fafafa;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
 #survey-elements {
     .panel-heading {
         cursor: pointer;
+    }
+
+    .panel.survey-item {
+        > .panel-heading {
+            background: #d5d5d5;
+        }
+    }
+    .panel.settings {
+        .panel-heading {
+            background: #fafafa;
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+        .panel-title {
+            font-size: 14px;
+        }
+        .panel-body {
+            background: #fafafa;
+        }
+    }
+    .panel.answer {
+        .panel-heading {
+            background: #f1f1f1;
+        }
     }
 }

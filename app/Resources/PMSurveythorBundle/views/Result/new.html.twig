@@ -3,7 +3,8 @@
 {% block navbar %}{% endblock %}
 {% block body %}
 
-    <h4>{{ app.session.get('survey').title }}</h4>
+    <h2>{{ app.session.get('survey').title }}</h2>
+    <hr />
 
     <div id="result">
         {% if item.header is defined %}

@@ -2,6 +2,14 @@ PM\SurveythorBundle\Entity\SurveyItem:
     type: entity
     table: null
     repositoryClass: PM\SurveythorBundle\Repository\SurveyItemRepository
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discr
+        type: string
+    discriminatorMap:
+        question: PM\SurveythorBundle\Entity\SurveyItems\Question
+        textItem: PM\SurveythorBundle\Entity\SurveyItems\TextItem
+        itemGroup: PM\SurveythorBundle\Entity\SurveyItems\ItemGroup
 
     id:
         id:
@@ -15,6 +23,10 @@ PM\SurveythorBundle\Entity\SurveyItem:
             type: integer
         title:
             type: text
+            nullable: true
+        description:
+            type: text
+            nullable: true
         displayTitle:
             type: boolean
 
@@ -22,26 +34,15 @@ PM\SurveythorBundle\Entity\SurveyItem:
         survey:
             targetEntity: PM\SurveythorBundle\Entity\Survey
             inversedBy: surveyItems
-        parentItem:
-            targetEntity: PM\SurveythorBundle\Entity\SurveyItem
-            inversedBy: childItems
         template:
             targetEntity: PM\SurveythorBundle\Entity\ResultItemTemplate
-
-    oneToOne:
-        question:
-            targetEntity: PM\SurveythorBundle\Entity\SurveyItems\Question
-            inversedBy: surveyItem
-        textItem:
-            targetEntity: PM\SurveythorBundle\Entity\SurveyItems\TextItem
-            inversedBy: surveyItem
+        itemGroup:
+            targetEntity: PM\SurveythorBundle\Entity\SurveyItems\ItemGroup
+            inversedBy: surveyItems
 
     oneToMany:
         conditions:
             targetEntity: PM\SurveythorBundle\Entity\Condition
             mappedBy: surveyItem
-        childItems:
-            targetEntity: PM\SurveythorBundle\Entity\SurveyItem
-            mappedBy: parentItem
 
     lifecycleCallbacks: {  }

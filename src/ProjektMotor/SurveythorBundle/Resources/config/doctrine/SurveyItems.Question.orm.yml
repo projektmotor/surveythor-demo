@@ -3,13 +3,6 @@ PM\SurveythorBundle\Entity\SurveyItems\Question:
     table: null
     repositoryClass: PM\SurveythorBundle\Repository\QuestionRepository
 
-    id:
-        id:
-            type: integer
-            id: true
-            generator:
-                strategy: AUTO
-
     fields:
         text:
             type: text
@@ -26,13 +19,7 @@ PM\SurveythorBundle\Entity\SurveyItems\Question:
             orderBy: { 'sortOrder' : 'ASC'}
 
     manyToOne:
-        template:
+        questionTemplate:
             targetEntity: PM\SurveythorBundle\Entity\QuestionTemplate
 
-    oneToOne:
-        surveyItem:
-            targetEntity: PM\SurveythorBundle\Entity\SurveyItem
-            mappedBy: question
-
     lifecycleCallbacks: {}
-        #prePersist: [ setInitialSortOrder ]

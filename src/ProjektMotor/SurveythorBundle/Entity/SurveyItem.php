@@ -6,11 +6,13 @@ use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\Condition;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
 use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
+use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
+use PM\SurveythorBundle\Entity\ResultItemTemplate;
 
 /**
  * SurveyItem
  */
-class SurveyItem
+abstract class SurveyItem
 {
     /**
      * @var int
@@ -33,38 +35,34 @@ class SurveyItem
     protected $conditions;
 
     /**
-     * @var Question[]
+     * @var string
      */
-    protected $question;
-
-    /**
-     * @var SurveyItem[]
-     */
-    protected $childItems;
-
-    /**
-     * @var SurveyItem
-     */
-    protected $parentItem;
-
-    /**
-     * @var TextItem
-     */
-    protected $textItem;
-
     protected $title;
 
+    /**
+     * @var ResultTemplate
+     */
     private $template;
 
     /**
      * @var boolean
      */
-    private $displayTitle = true;
+    private $displayTitle = false;
+
+    /**
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @var ItemGroup
+     */
+    private $itemGroup;
+
 
     public function __construct()
     {
         $this->conditions = new ArrayCollection();
-        $this->childItems = new ArrayCollection();
     }
 
     /**
@@ -163,114 +161,28 @@ class SurveyItem
         return $this->conditions;
     }
 
-    /**
-     * Get questions.
-     *
-     * @return Question|null
-     */
-    public function getQuestion()
-    {
-        return $this->question;
-    }
-
-    public function setQuestion(Question $question)
-    {
-        $this->question = $question;
-    }
-
-    /**
-     * @return TextItem|null
-     */
-    public function getTextItem()
-    {
-        return $this->textItem;
-    }
-
-    /**
-     * @param TextItem $textItem
-     * @return SurveyItem
-     */
-    public function setTextItem(TextItem $textItem)
-    {
-        $this->textItem = $textItem;
-
-        return $this;
-    }
-
-    public function getContent()
-    {
-        if (!is_null($this->question)) {
-            return $this->question;
-        }
-        if ($this->childItems->count() > 0) {
-            return $this->childItems;
-        }
-        if (!is_null($this->textItem)) {
-            return $this->textItem;
-        }
-    }
-
     public function getContentTypeName()
     {
-
-        if (!is_null($this->question)) {
-            if ($this->question->getType() == 'mc') {
+        if ($this instanceof Question) {
+            if ($this->getType() == 'mc') {
                 return 'Mutltiple Choice Frage';
+            } elseif ($this->getType() == 'text') {
+                return 'Freitext Frage';
             } else {
                 return 'Single Choice Frage';
             }
         }
-        if ($this->childItems->count() > 0) {
+        if ($this instanceof ItemGroup) {
             return sprintf(
                 'Gruppe von %s Umfrageelementen',
-                $this->childItems->count()
+                $this->getSurveyItems()->count()
             );
         }
-        if (!is_null($this->textItem)) {
+        if ($this instanceof TextItem) {
             return 'Textelement';
         }
     }
 
-    public function getParentItem()
-    {
-        return $this->parentItem;
-    }
-
-    public function setParentItem(SurveyItem $parentItem)
-    {
-        $this->parentItem = $parentItem;
-    }
-
-    /**
-     * @param SurveyItem $childItem
-     */
-    public function addChildItem(SurveyItem $childItem)
-    {
-        if (!$this->childItems->contains($childItem)) {
-            $this->childItems->add($childItem);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param SurveyItem $childItem
-     */
-    public function removeChildItem(SurveyItem $childItem)
-    {
-        $this->childItems->removeElement($childItem);
-    }
-
-    /**
-     * Get childItems.
-     *
-     * @return SurveyItem[]|ArrayCollection
-     */
-    public function getChildItems()
-    {
-        return $this->childItems;
-    }
-    
     /**
      * Get title.
      *
@@ -290,7 +202,25 @@ class SurveyItem
     {
         $this->title = $title;
     }
-    
+
+    public function getBackendTitle()
+    {
+        if (!is_null($this->title)) {
+            return $this->title;
+        }
+
+        if ($this instanceof Question) {
+            if (strlen($this->getText()) < 90) {
+                return $this->getText();
+            } else {
+                return sprintf(
+                    '%s ...',
+                    substr($this->getText(), 0, 90)
+                );
+            }
+        }
+    }
+
     /**
      * Get template.
      *
@@ -329,5 +259,45 @@ class SurveyItem
     public function setDisplayTitle($displayTitle)
     {
         $this->displayTitle = $displayTitle;
+    }
+    
+    /**
+     * Get description.
+     *
+     * @return description.
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
+    /**
+     * Set description.
+     *
+     * @param description the value to set.
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+    
+    /**
+     * Get itemGroup.
+     *
+     * @return itemGroup.
+     */
+    public function getItemGroup()
+    {
+        return $this->itemGroup;
+    }
+    
+    /**
+     * Set itemGroup.
+     *
+     * @param itemGroup the value to set.
+     */
+    public function setItemGroup($itemGroup)
+    {
+        $this->itemGroup = $itemGroup;
     }
 }
