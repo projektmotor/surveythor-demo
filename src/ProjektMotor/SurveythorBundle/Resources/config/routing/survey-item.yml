@@ -1,0 +1,3 @@
+surveyitem_new:
+    path: /new/{type}
+    defaults: { _controller: survey_item_controller:newAction }

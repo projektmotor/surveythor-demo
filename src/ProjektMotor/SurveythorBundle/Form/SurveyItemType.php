@@ -16,6 +16,7 @@ use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
 use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Form\SurveyItems\ChoiceCollectionType;
 use PM\SurveythorBundle\Form\SurveyItems\QuestionChoiceType;
+use PM\SurveythorBundle\Form\SurveyItems\SurveyItemCollectionType;
 
 /**
  * SurveyItemType
@@ -66,7 +67,7 @@ class SurveyItemType extends AbstractType
                                     ),
                                     'label' => 'Antworten',
                                     'prototype_name' => '__choice__',
-                                    'attr' => array('class' => 'question-answer-prototype sortable')
+                                    'attr' => array('class' => 'question-answer-prototype')
                                 ));
                                 $form->add('template', EntityType::class, array(
                                     'class' => QuestionTemplate::class,
@@ -135,5 +136,10 @@ class SurveyItemType extends AbstractType
     public function getName()
     {
         return self::FORM_NAME;
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'surveyitem';
     }
 }

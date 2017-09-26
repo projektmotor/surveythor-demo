@@ -183,6 +183,26 @@ abstract class SurveyItem
         }
     }
 
+    public function getItemType()
+    {
+        if ($this instanceof Question) {
+            if ($this->getType() == 'mc') {
+                return 'multipleChoiceQuestion';
+            } elseif ($this->getType() == 'text') {
+                return 'textQuestion';
+            } else {
+                return 'singleChoiceQuestion';
+            }
+        }
+        if ($this instanceof ItemGroup) {
+            return 'itemGroup';
+        }
+        if ($this instanceof TextItem) {
+            return 'textItem';
+        }
+    }
+
+
     /**
      * Get title.
      *

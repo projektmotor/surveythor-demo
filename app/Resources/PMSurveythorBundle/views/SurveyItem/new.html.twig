@@ -1,0 +1,19 @@
+<div class="panel panel-default parent survey-item">
+    <div class="panel-heading">
+        <span class="panel-title clearfix" id="questions-heading">
+            <span class="pull-left">
+                {{ form.vars.value.backendTitle }}
+            </span>
+            <span class="pull-right">
+                {{ form.vars.value.contentTypeName }}
+            </span>
+        </span>
+    </div>
+
+    <div class="panel-collapse collapse in loaded {{ form.vars.value.itemType }}">
+        <div class="panel-body">
+            {{ form(form) }}
+        </div>
+    </div>
+</div>
+

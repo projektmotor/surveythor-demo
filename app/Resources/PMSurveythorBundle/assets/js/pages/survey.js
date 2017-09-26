@@ -1,7 +1,9 @@
 require('bootstrap-sass');
 require('jquery-ui');
-
+require('jquery-ui/ui/widgets/draggable/');
+//require('jquery-ui/ui/widgets/droppable/');
 require('jquery-ui/ui/widgets/sortable/');
+require('bootstrap-sass/assets/javascripts/bootstrap/affix.js');
 
 
 var projektmotor = projektmotor || {};
@@ -9,10 +11,19 @@ var projektmotor = projektmotor || {};
 projektmotor.Survey = function () {
     "use strict";
 
-    var panel;
+    var
+        panel
+    ;
 
     panel = {
         init: function () {
+            panel.delegatePanelCollapse();
+            panel.initDraggables();
+            panel.initSortable();
+
+            $('#survey-tools').affix({});
+        },
+        delegatePanelCollapse: function() {
             $('body').delegate('#survey-elements .panel-heading', 'click', function() {
                 var panelbody = $(this).next();
                 var isParent = $(this).parent().hasClass('parent');
@@ -26,6 +37,7 @@ projektmotor.Survey = function () {
                         success: function(response) {
                             $(panelbody).html(response);
                             $(panelbody).addClass('loaded');
+                            panel.initSortable();
                         }
                     });
                 }
@@ -38,6 +50,39 @@ projektmotor.Survey = function () {
                     $(panelbody).css('display', 'block');
                 }
             });
+        },
+        initDraggables: function () {
+            $('#new-items > div').draggable(panel.draggableOptions);
+        },
+        initSortable: function() {
+            $('.sortable').sortable({
+                axis: 'y',
+                cursor: 'move',
+                items: '.survey-item',
+                containment: "parent",
+                stop: function(event, ui) {
+                    $(event.target).parent().unbind('click');
+                    if ($(ui.item).hasClass('new-item')) {
+                        var url = ui.item.attr('data-url');
+                        var that = ui.item;
+                        $.ajax({
+                            url: url,
+                            method: 'GET',
+                            success: function (response) {
+                                $(that).before(response);
+                                $(that).remove('.new-item');
+                                panel.initSortable();
+                            }
+                        });
+                    }
+                }
+            });
+        },
+        draggableOptions: {
+            cursor: 'crosshair',
+            helper: 'clone',
+            connectToSortable: '.sortable',
+            revert: false
         }
     };
 

@@ -65,22 +65,14 @@ class SurveyController
         return [ 'survey' => $survey ];
     }
 
+    public function newAction()
+    {
+        return array();
+    }
+
     public function surveyItemFormAction(FormRequest $formRequest, SurveyItem $item)
     {
-        switch (true) {
-            case $item instanceof Question:
-                $type = QuestionType::class;
-                break;
-            case $item instanceof TextItem:
-                $type = TextItemType::class;
-                break;
-            case $item instanceof ItemGroup:
-                $type = ItemGroupType::class;
-                break;
-        }
-
-        $type = SurveyItemType::class;
-        $formRequest->handle($type, $item);
+        $formRequest->handle(SurveyItemType::class, $item);
 
         return array(
             'form' => $formRequest->createFormView()

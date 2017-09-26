@@ -69,6 +69,7 @@
         {% endfor %}
         {{- form_rest(form) -}}
     </div>
+    <a href="#">Antwort hinzufügen</a>
 {% endblock %}
 
 {% block resultrange_collection_widget %}
@@ -158,3 +159,102 @@
 {% block pm_surveythor_textitem_widget %}
     <p>{{ value.text }}</p>
 {% endblock %}
+
+{% block surveyitem_widget %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{ _self.surveyItem(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% macro surveyItem(form, isChild = 'false') %}
+    {% import _self as self %}
+
+    {% if isChild == 'true' %}
+    <div class="panel panel-default survey-item">
+        <div class="panel-heading">
+            <span class="panel-title clearfix" id="questions-heading">
+                <span class="pull-left">
+                    {{ form.vars.value.backendTitle }}
+                </span>
+                <span class="pull-right">
+                    {{ form.vars.value.contentTypeName }}
+                </span>
+            </span>
+        </div>
+
+        <div id="item-{{ form.vars.value.id }}" class="panel-collapse collapse">
+            <div class="panel-body">
+    {% endif %}
+
+    {% if form.text is defined %}
+        {% if form.text is not null %}
+            {{ form_row(form.text) }}
+        {% endif %}
+    {% endif %}
+
+    {% if form.choices is defined %}
+        {% if form.choices is not null %}
+            {{ form_row(form.choices) }}
+        {% endif %}
+    {% endif %}
+
+    {% if form.textItem is defined %}
+        {{ form_row(form.textItem) }}
+    {% endif %}
+
+    {% if form.children.surveyItems is defined %}
+            <div class="sortable">
+        {% for child in form.children.surveyItems %}
+            {{ self.surveyItem(child, 'true') }}
+        {% endfor %}
+            </div>
+    {% endif %}
+
+    {#% if form.vars.value.itemType == 'itemGroup' %}
+        <div class="droppable new-group-element">
+            ziehen sie neue Elemente in diesen Bereich
+        </div>
+    {% endif %#}
+
+
+    <hr />
+
+    <div class="panel panel-default settings">
+        <div class="panel-heading">
+            <span class="panel-title clearfix" id="questions-heading">
+                erweiterte Einstellungen
+            </span>
+        </div>
+
+        <div id="item-{{ form.vars.value.id }}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        {{ form_row(form.title) }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ form_row(form.displayTitle) }}
+                    </div>
+                </div>
+
+                {{ form_row(form.description) }}
+
+                <hr />
+
+                {{ form_row(form.conditions) }}
+                <a href="#">Bedingung hinzufügen</a>
+
+                <hr />
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    </div>
+
+    {% if isChild == 'true' %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}

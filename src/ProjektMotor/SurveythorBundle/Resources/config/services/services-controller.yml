@@ -10,3 +10,6 @@ services:
             - "@result_ready_subscriber"
             - "@form.factory"
             - "@result_repository"
+
+    survey_item_controller:
+        class: PM\SurveythorBundle\Controller\SurveyItemController
