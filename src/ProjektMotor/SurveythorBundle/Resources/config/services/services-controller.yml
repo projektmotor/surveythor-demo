@@ -13,3 +13,8 @@ services:
 
     survey_item_controller:
         class: PM\SurveythorBundle\Controller\SurveyItemController
+        arguments:
+            - '@surveyitem_repository'
+            - "@form.factory"
+            - "@twig"
+            - "@router"

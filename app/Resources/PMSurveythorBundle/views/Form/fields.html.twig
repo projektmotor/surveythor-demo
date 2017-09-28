@@ -161,18 +161,15 @@
 {% endblock %}
 
 {% block surveyitem_widget %}
-    <div class="panel panel-default">
-        <div class="panel-body">
-            {{ _self.surveyItem(form) }}
-        </div>
+    <div style="padding: 18px;">
+        {{ _self.surveyItem(form) }}
     </div>
 {% endblock %}
 
 {% macro surveyItem(form, isChild = 'false') %}
     {% import _self as self %}
-
     {% if isChild == 'true' %}
-    <div class="panel panel-default survey-item">
+    <div class="panel panel-default survey-item" data-sortorder-url="{{ path('surveyitem_set_sortorder', {'item' : form.vars.value.id}) }}">
         <div class="panel-heading">
             <span class="panel-title clearfix" id="questions-heading">
                 <span class="pull-left">
@@ -205,19 +202,12 @@
     {% endif %}
 
     {% if form.children.surveyItems is defined %}
-            <div class="sortable">
+        <div class="draggable-connect sortable-itemgroup">
         {% for child in form.children.surveyItems %}
             {{ self.surveyItem(child, 'true') }}
         {% endfor %}
-            </div>
+         </div>
     {% endif %}
-
-    {#% if form.vars.value.itemType == 'itemGroup' %}
-        <div class="droppable new-group-element">
-            ziehen sie neue Elemente in diesen Bereich
-        </div>
-    {% endif %#}
-
 
     <hr />
 
@@ -228,7 +218,7 @@
             </span>
         </div>
 
-        <div id="item-{{ form.vars.value.id }}" class="panel-collapse collapse">
+        <div class="panel-collapse collapse">
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-10">
@@ -243,14 +233,22 @@
 
                 <hr />
 
-                {{ form_row(form.conditions) }}
-                <a href="#">Bedingung hinzufügen</a>
+                {% if form.conditions is defined %}
+                    {{ form_row(form.conditions) }}
+                    <a href="#">Bedingung hinzufügen</a>
+                {% endif %}
 
                 <hr />
-                {{ form_rest(form) }}
+                {% if form.template is defined %}
+                    {{ form_row(form.template) }}
+                {% endif %}
             </div>
         </div>
     </div>
+
+    <hr />
+
+    {{ form_rest(form) }}
 
     {% if isChild == 'true' %}
                 </div>

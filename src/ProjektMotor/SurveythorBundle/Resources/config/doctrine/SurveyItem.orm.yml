@@ -21,6 +21,7 @@ PM\SurveythorBundle\Entity\SurveyItem:
     fields:
         sortOrder:
             type: integer
+            nullable: true
         title:
             type: text
             nullable: true
@@ -45,4 +46,4 @@ PM\SurveythorBundle\Entity\SurveyItem:
             targetEntity: PM\SurveythorBundle\Entity\Condition
             mappedBy: surveyItem
 
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

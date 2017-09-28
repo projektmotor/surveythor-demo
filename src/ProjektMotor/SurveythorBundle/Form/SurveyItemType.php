@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use PM\SurveythorBundle\Entity\SurveyItem;
 use PM\SurveythorBundle\Entity\QuestionTemplate;
@@ -41,7 +43,17 @@ class SurveyItemType extends AbstractType
             ->add('description', null, array(
                 'label' => 'Beschreibung'
             ))
+            ->add('sortOrder', HiddenType::class, [ 'label' => false, 'attr' => [ 'class' => 'sortorder'] ])
+            ->add('type', HiddenType::class, [ 'label' => false, 'mapped' => false ])
         ;
+        #$builder->addEventListener(
+        #    FormEvents::POST_SUBMIT,
+        #    function (FormEvent $event) {
+        #        $form = $event->getForm();
+        #        $form->remove('type');
+        #        $form->remove('id');
+        #    }
+        #);
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -53,10 +65,10 @@ class SurveyItemType extends AbstractType
                     $itemClass = \Doctrine\Common\Util\ClassUtils::getRealClass(get_class($item));
                     switch ($itemClass) {
                         case Question::class:
-                            $type = $item->getType();
+                            $questionType = $item->getType();
 
                             $form->add('text');
-                            if ($type == 'mc' || $type == 'sc') {
+                            if ($questionType == 'mc' || $questionType == 'sc') {
                                 $form->add('choices', ChoiceCollectionType::class, array(
                                     'entry_type' => QuestionChoiceType::class,
                                     'allow_add' => true,
@@ -76,15 +88,51 @@ class SurveyItemType extends AbstractType
                                     'label' => 'Choices Layout'
                                 ));
                             }
+                            switch ($questionType) {
+                                case 'sc':
+                                    $type = 'singleChoice';
+                                    break;
+                                case 'mc':
+                                    $type = 'multipleChoice';
+                                    break;
+
+                                case 'text':
+                                    $type = 'textQuestion';
+                                    break;
+                            }
+
+                            $form->remove('type');
+                            $form->add('type', HiddenType::class, array(
+                                'label' => false,
+                                'data' => $type,
+                                'attr' => array('class' => 'surveyitem-type'),
+                                'mapped' => false
+                            ));
                             break;
 
                         case TextItem::class:
                             $form->add('text');
+                            $form->remove('type');
+                            $form->add('type', HiddenType::class, array(
+                                'label' => false,
+                                'data' => 'textItem',
+                                'attr' => array('class' => 'surveyitem-type'),
+                                'mapped' => false
+                            ));
                             break;
 
                         case ItemGroup::class:
                             $form->add('surveyItems', CollectionType::class, array(
-                                'entry_type' => SurveyItemType::class
+                                'entry_type' => SurveyItemType::class,
+                                'allow_add' => true,
+                                'label' => false
+                            ));
+                            $form->remove('type');
+                            $form->add('type', HiddenType::class, array(
+                                'label' => false,
+                                'data' => 'itemGroup',
+                                'attr' => array('class' => 'surveyitem-type'),
+                                'mapped' => false
                             ));
                             break;
 
@@ -93,6 +141,13 @@ class SurveyItemType extends AbstractType
                             die();
                             break;
                     }
+
+                    //if (is_null($item->getItemGroup())) {
+                    //    $form->add('submit', SubmitType::class, array(
+                    //        'label' => 'Speichern',
+                    //        'attr' => array( 'class' => 'surveyitem-submit btn-default')
+                    //    ));
+                    //}
                 }
             }
         );
@@ -126,7 +181,20 @@ class SurveyItemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => SurveyItem::class
+            'data_class' => SurveyItem::class,
+            'empty_data' => function ($form) {
+                switch ($form->getExtraData()['type']) {
+                    case 'qestion':
+                        return new Question();
+                        break;
+                    case 'textitem':
+                        return new TextItem();
+                        break;
+                    case 'itemgroup':
+                        return new ItemGroup();
+                        break;
+                }
+            }
         ));
     }
 

@@ -12,82 +12,182 @@ projektmotor.Survey = function () {
     "use strict";
 
     var
-        panel
+        surveyItem,
+        draggable,
+        sortable,
+        toolbox
     ;
 
-    panel = {
+    surveyItem = {
         init: function () {
-            panel.delegatePanelCollapse();
-            panel.initDraggables();
-            panel.initSortable();
+            $('body').delegate(
+                '#survey-elements input, #survey-elements textarea',
+                'blur',
+                function() {
+                    surveyItem.save(this);
+                }
+            );
 
-            $('#survey-tools').affix({});
-        },
-        delegatePanelCollapse: function() {
             $('body').delegate('#survey-elements .panel-heading', 'click', function() {
-                var panelbody = $(this).next();
-                var isParent = $(this).parent().hasClass('parent');
-                var formLoaded = $(panelbody).hasClass('loaded');
-
-                if (isParent && !formLoaded) {
-                    var url = $(this).attr('data-itemform-url');
-                    $.ajax({
-                        url: url,
-                        method: 'GET',
-                        success: function(response) {
-                            $(panelbody).html(response);
-                            $(panelbody).addClass('loaded');
-                            panel.initSortable();
-                        }
-                    });
-                }
-
-                if ($(panelbody).hasClass('in')) {
-                    $(panelbody).removeClass('in');
-                    $(panelbody).css('display', 'none');
-                } else {
-                    $(panelbody).addClass('in');
-                    $(panelbody).css('display', 'block');
-                }
+                surveyItem.collapse(this);
             });
         },
-        initDraggables: function () {
-            $('#new-items > div').draggable(panel.draggableOptions);
+        save: function (elem) {
+            var form = $(elem).parents('form').first();
+            var url = $(form).attr('action');
+            $.ajax({
+                url: url,
+                method: 'post',
+                data: form.serialize()
+                //success: function (response) {
+                //}
+            });
         },
+        collapse: function (item) {
+            var panelbody = $(item).next();
+            var isParent = $(item).parent().hasClass('parent');
+            var formLoaded = $(panelbody).hasClass('loaded');
+
+            if (isParent && !formLoaded) {
+                var url = $(item).attr('data-itemform-url');
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    success: function(response) {
+                        $(panelbody).html(response);
+                        $(panelbody).addClass('loaded');
+                        sortable.initSortable();
+                    }
+                });
+            }
+
+            if ($(panelbody).hasClass('in')) {
+                $(panelbody).removeClass('in');
+                $(panelbody).css('display', 'none');
+            } else {
+                $(panelbody).addClass('in');
+                $(panelbody).css('display', 'block');
+            }
+        }
+    },
+
+    draggable = {
+        init: function () {
+            $('#new-items > div').draggable(draggable.draggableOptions);
+        },
+        draggableOptions: {
+            cursor: 'crosshair',
+            helper: 'clone',
+            connectToSortable: '.draggable-connect',
+            revert: false
+        }
+
+    },
+
+    toolbox = {
+        init: function() {
+            $('#survey-tools').affix({});
+        }
+    },
+
+    sortable = {
+        init: function () {
+            sortable.initSortable();
+        },
+
         initSortable: function() {
             $('.sortable').sortable({
                 axis: 'y',
                 cursor: 'move',
                 items: '.survey-item',
                 containment: "parent",
+                update: function(event, ui) {
+                    sortable.helpers.updateSortOrders(ui.item, event.target);
+                },
                 stop: function(event, ui) {
                     $(event.target).parent().unbind('click');
                     if ($(ui.item).hasClass('new-item')) {
                         var url = ui.item.attr('data-url');
-                        var that = ui.item;
                         $.ajax({
                             url: url,
                             method: 'GET',
                             success: function (response) {
-                                $(that).before(response);
-                                $(that).remove('.new-item');
-                                panel.initSortable();
+                                response = JSON.parse(response);
+                                $(ui.item).before(response.html);
+
+                                sortable.helpers.collapse(response.open);
+
+                                $(ui.item).remove('.new-item');
+                                sortable.helpers.sort(event.target);
+                                sortable.initSortable();
+                            }
+                        });
+                    }
+                }
+            });
+            $('.sortable-itemgroup').sortable({
+                axis: 'y',
+                cursor: 'move',
+                items: '.survey-item',
+                containment: "parent",
+                update: function(event, ui) {
+                    sortable.helpers.updateSortOrders(ui.item, event.target);
+                },
+                stop: function(event, ui) {
+                    $(event.target).parent().unbind('click');
+                    if ($(ui.item).hasClass('new-item')) {
+                        var draggableConnect = event.target;
+                        var parentGroup = $(draggableConnect).parents('.panel-collapse').first().attr('id').substring(5);
+                        var url = ui.item.attr('data-itemgroup-add-item-url');
+                        var form = $(ui.item).closest('form[name=surveyitem]');
+                        var sortOrder = $(ui.item).index();
+                        $.ajax({
+                            url: url + '?parent=' + parentGroup + '&sortorder=' + sortOrder,
+                            method: 'POST',
+                            data: form.serialize(),
+                            success: function (response) {
+                                response = JSON.parse(response);
+                                $(draggableConnect).parent().before(response.html);
+                                $(draggableConnect).remove();
+                                sortable.helpers.collapse(response.open);
+                                sortable.initSortable();
                             }
                         });
                     }
                 }
             });
         },
-        draggableOptions: {
-            cursor: 'crosshair',
-            helper: 'clone',
-            connectToSortable: '.sortable',
-            revert: false
+
+        helpers : {
+            sort: function (sortableList) {
+                for (var i = 0; i < sortableList.children.length; i++ ) {
+                    var child = sortableList.children[i];
+                    $.ajax({
+                        url: $(child).attr('data-sortorder-url') + '/' + i,
+                        method: 'GET'
+                    });
+                }
+            },
+            collapse: function (items) {
+                for (var i = items.length - 1; i >= 0; i--) {
+                    $('#item-' + items[i]).addClass('in');
+                }
+
+            },
+            updateSortOrders: function (item, sortableList) {
+                if (!$(item).hasClass('new-item')) {
+                    sortable.helpers.sort(sortableList);
+                }
+
+            }
         }
     };
 
     (function () {
-        panel.init();
+        surveyItem.init();
+        sortable.init();
+        draggable.init();
+        toolbox.init();
     }());
 };
 //        panel,

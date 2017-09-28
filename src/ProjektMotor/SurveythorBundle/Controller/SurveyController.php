@@ -67,16 +67,12 @@ class SurveyController
 
     public function newAction()
     {
-        return array();
-    }
+        $survey = new Survey();
+        $survey->setTitle('coming soon');
+        $survey->setDescription('coming soon');
+        $this->surveyRepository->save($survey);
 
-    public function surveyItemFormAction(FormRequest $formRequest, SurveyItem $item)
-    {
-        $formRequest->handle(SurveyItemType::class, $item);
-
-        return array(
-            'form' => $formRequest->createFormView()
-        );
+        return new RedirectRoute('survey_edit', array('id' => $survey->getId()));
     }
 
     public function evaluationsAction(Survey $survey)

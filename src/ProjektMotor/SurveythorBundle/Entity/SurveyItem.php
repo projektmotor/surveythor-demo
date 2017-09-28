@@ -115,21 +115,6 @@ abstract class SurveyItem
         $this->sortOrder = $sortOrder;
     }
 
-    public function setInitialSortOrder()
-    {
-        if (null !== $this->survey) {
-            $this->setSortOrder($this->survey->getSurveyItems()->count());
-            return $this;
-        }
-
-        // dis is needed for fixture loading, should never happen
-        if (null !== $this->sortOrder) {
-            return $this;
-        }
-
-        throw new \Exception('a question has to have a survey or a parent choice');
-    }
-
     /**
      * @param Condition $condition
      */
@@ -319,5 +304,16 @@ abstract class SurveyItem
     public function setItemGroup($itemGroup)
     {
         $this->itemGroup = $itemGroup;
+    }
+
+    public function setInitialSortOrder()
+    {
+        if (is_null($this->sortOrder)) {
+            if (is_null($this->itemGroup)) {
+                $this->sortOrder = $this->survey->getSurveyItems()->count();
+            } else {
+                $this->sortOrder = $this->itemGroup->getSurveyItems()->count();
+            }
+        }
     }
 }

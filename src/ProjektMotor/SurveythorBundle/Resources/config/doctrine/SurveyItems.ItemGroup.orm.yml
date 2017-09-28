@@ -7,5 +7,8 @@ PM\SurveythorBundle\Entity\SurveyItems\ItemGroup:
         surveyItems:
             targetEntity: PM\SurveythorBundle\Entity\SurveyItem
             mappedBy: itemGroup
+            cascade:
+                - persist
+            orderBy: { 'sortOrder' : 'ASC'}
 
     lifecycleCallbacks: {  }

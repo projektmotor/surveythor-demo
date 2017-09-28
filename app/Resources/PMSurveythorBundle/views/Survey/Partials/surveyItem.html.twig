@@ -1,5 +1,5 @@
-<div class="panel panel-default parent survey-item">
-    <div class="panel-heading" data-itemform-url="{{ path('survey_item_form', {'id' : item.id }) }}">
+<div class="panel panel-default parent survey-item" data-sortorder-url="{{ path('surveyitem_set_sortorder', {'item':item.id})}}">
+    <div class="panel-heading" data-itemform-url="{{ path('surveyitem_form', {'item' : item.id }) }}">
         <span class="panel-title clearfix" id="questions-heading">
             <span class="pull-left">
                 {{ item.backendTitle }}

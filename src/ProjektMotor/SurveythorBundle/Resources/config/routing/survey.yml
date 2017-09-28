@@ -4,15 +4,11 @@ survey_index:
 
 survey_new:
     path: /new
-    defaults: { _controller: survey_controller:editAction }
+    defaults: { _controller: survey_controller:newAction }
 
 survey_edit:
     path: /edit/{id}
     defaults: { _controller: survey_controller:editAction }
-
-survey_item_form:
-    path: /item/{id}
-    defaults: { _controller: survey_controller:surveyItemFormAction }
 
 survey_evaluations:
     path: /evaluations/{survey}
