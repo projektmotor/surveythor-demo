@@ -38,11 +38,6 @@ projektmotor.Survey = function () {
                 close: function() { $('#dialog').html(null); },
                 buttons: buttons
             });
-        },
-        helpers: {
-            confirmationCallback: function (value) {
-                return value;
-            }
         }
     },
 
@@ -176,7 +171,6 @@ projektmotor.Survey = function () {
                     sortable.helpers.updateSortOrders(ui.item, event.target);
                 },
                 stop: function(event, ui) {
-                    $(event.target).parent().unbind('click');
                     if ($(ui.item).hasClass('new-item')) {
                         var url = ui.item.attr('data-url');
                         $.ajax({
@@ -205,7 +199,6 @@ projektmotor.Survey = function () {
                     sortable.helpers.updateSortOrders(ui.item, event.target);
                 },
                 stop: function(event, ui) {
-                    $(event.target).parent().unbind('click');
                     if ($(ui.item).hasClass('new-item')) {
                         var draggableConnect = event.target;
                         var parentGroup = $(draggableConnect).parents('.panel-collapse').first().attr('id').substring(5);
@@ -254,7 +247,7 @@ projektmotor.Survey = function () {
 
             }
         }
-    };
+    },
 
     (function () {
         survey.init();
