@@ -58,13 +58,19 @@ class SurveyItemController
     public function updateAction(FormRequest $formRequest, SurveyItem $item)
     {
         if (!$formRequest->handle(SurveyItemType::class, $item)) {
-            return array('form' => $formRequest->createFormView());
+            return array(
+                'form' => $formRequest->createFormView(),
+                'parent' => $item->isParent()
+            );
         }
 
         $surveyItem = $formRequest->getValidData();
         $this->surveyItemRepository->save($surveyItem);
 
-        return array('form' => $formRequest->createFormView());
+        return array(
+            'form' => $formRequest->createFormView(),
+            'parent' => $item->isParent()
+        );
     }
 
     public function newAction(Survey $survey, $type)
@@ -83,7 +89,10 @@ class SurveyItemController
         );
         $html = $this->twig->render(
             '@PMSurveythorBundle/SurveyItem/new.html.twig',
-            array('form'  => $form->createView())
+            array(
+                'form'  => $form->createView(),
+                'parent' => $item->isParent()
+            )
         );
 
         return new JsonResponse(json_encode(array(
@@ -109,15 +118,21 @@ class SurveyItemController
         $parentItem->addSurveyItem($item);
         $item->setSortOrder($sortOrder);
         $this->surveyItemRepository->save($parentItem);
+
         $this->surveyItemRepository->detach($parentItem);
         $parentItem = $this->surveyItemRepository->findOneById($request->query->get('parent'));
+        if ($request->query->get('parent') == $request->query->get('root')) {
+            $rootItem = $parentItem;
+        } else {
+            $rootItem = $this->surveyItemRepository->findOneById($request->query->get('root'));
+        }
 
         $form = $this->formFactory->create(
             SurveyItemType::class,
-            $parentItem,
+            $rootItem,
             array('action' => $this->router->generate(
                 'surveyitem_update',
-                array('item' => $parentItem->getId())
+                array('item' => $rootItem->getId())
             ))
         );
 

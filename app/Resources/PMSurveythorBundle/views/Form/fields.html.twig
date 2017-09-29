@@ -161,7 +161,7 @@
 {% endblock %}
 
 {% block surveyitem_widget %}
-    <div style="padding: 18px;">
+    <div class="surveyitem-form">
         {{ _self.surveyItem(form) }}
     </div>
 {% endblock %}
@@ -182,7 +182,7 @@
         </div>
 
         <div id="item-{{ form.vars.value.id }}" class="panel-collapse collapse">
-            <div class="panel-body">
+            <div class="surveyitem-form">
     {% endif %}
 
     {% if form.text is defined %}

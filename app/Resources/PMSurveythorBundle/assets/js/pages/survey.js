@@ -138,16 +138,18 @@ projektmotor.Survey = function () {
                     if ($(ui.item).hasClass('new-item')) {
                         var draggableConnect = event.target;
                         var parentGroup = $(draggableConnect).parents('.panel-collapse').first().attr('id').substring(5);
+                        var rootContainer = $(draggableConnect).parents('.parent-item').first();
+                        var rootGroup = $(rootContainer).attr('id').substring(5);
                         var url = ui.item.attr('data-itemgroup-add-item-url');
                         var form = $(ui.item).closest('form[name=surveyitem]');
                         var sortOrder = $(ui.item).index();
                         $.ajax({
-                            url: url + '?parent=' + parentGroup + '&sortorder=' + sortOrder,
+                            url: url + '?parent=' + parentGroup + '&sortorder=' + sortOrder + '&root=' + rootGroup,
                             method: 'POST',
                             data: form.serialize(),
                             success: function (response) {
                                 response = JSON.parse(response);
-                                $(draggableConnect).parent().before(response.html);
+                                $(rootContainer).html(response.html);
                                 $(draggableConnect).remove();
                                 sortable.helpers.collapse(response.open);
                                 sortable.initSortable();

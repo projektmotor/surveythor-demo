@@ -10,8 +10,11 @@
         </span>
     </div>
 
-    <div id="item-{{ form.vars.value.id }}" class="panel-collapse collapse loaded {{ form.vars.value.itemType }}">
-        <div class="panel-body">
+    <div
+        id="item-{{ form.vars.value.id }}"
+        class="panel-collapse collapse loaded {{ form.vars.value.itemType }} {% if parent %}parent-item{% endif %}"
+    >
+        <div class="surveyitem-form">
             {{ form(form) }}
         </div>
     </div>

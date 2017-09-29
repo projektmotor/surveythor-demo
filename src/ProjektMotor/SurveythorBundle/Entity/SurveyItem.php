@@ -316,4 +316,9 @@ abstract class SurveyItem
             }
         }
     }
+
+    public function isParent()
+    {
+        return is_null($this->itemGroup);
+    }
 }
