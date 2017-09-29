@@ -162,8 +162,9 @@ class SurveyItemController
          return array('form' => $form->createView());
     }
 
-    public function setSortOrderAction(SurveyItem $item, $sortOrder)
+    public function setSortOrderAction(Request $request, SurveyItem $item)
     {
+        $sortOrder = $request->query->get('sortorder');
         $item->setSortOrder($sortOrder);
         $this->surveyItemRepository->save($item);
 

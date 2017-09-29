@@ -175,7 +175,7 @@ projektmotor.Survey = function () {
                 for (var i = 0; i < sortableList.children.length; i++ ) {
                     var child = sortableList.children[i];
                     $.ajax({
-                        url: $(child).attr('data-sortorder-url') + '/' + i,
+                        url: $(child).attr('data-sortorder-url') + '?sortorder=' + i,
                         method: 'GET'
                     });
                 }

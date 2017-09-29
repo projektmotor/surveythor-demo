@@ -11,5 +11,5 @@ surveyitem_form:
     path: /form/{item}
     defaults: { _controller: survey_item_controller:formAction }
 surveyitem_set_sortorder:
-    path: /sortorder/{item}/{sortOrder}
-    defaults: { _controller: survey_item_controller:setSortOrderAction, sortOrder:null }
+    path: /sortorder/{item}
+    defaults: { _controller: survey_item_controller:setSortOrderAction}
