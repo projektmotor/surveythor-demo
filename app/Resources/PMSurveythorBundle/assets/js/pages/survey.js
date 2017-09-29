@@ -12,11 +12,21 @@ projektmotor.Survey = function () {
     "use strict";
 
     var
+        survey,
         surveyItem,
         draggable,
         sortable,
         toolbox
     ;
+
+    survey = {
+        init: function () {
+            $(document).on({
+                ajaxStart: function() { $('body').addClass("loading"); },
+                ajaxStop: function() { $('body').removeClass("loading"); }
+            });
+        }
+    },
 
     surveyItem = {
         init: function () {
@@ -186,6 +196,7 @@ projektmotor.Survey = function () {
     };
 
     (function () {
+        survey.init();
         surveyItem.init();
         sortable.init();
         draggable.init();
