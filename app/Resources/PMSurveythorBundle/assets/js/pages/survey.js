@@ -104,9 +104,13 @@ projektmotor.Survey = function () {
             if ($(panelbody).hasClass('in')) {
                 $(panelbody).removeClass('in');
                 $(panelbody).css('display', 'none');
+                $(item).find('.panel-indicator-bottom').css('display', 'block');
+                $(item).find('.panel-indicator-top').css('display', 'none');
             } else {
                 $(panelbody).addClass('in');
                 $(panelbody).css('display', 'block');
+                $(item).find('.panel-indicator-bottom').css('display', 'none');
+                $(item).find('.panel-indicator-top').css('display', 'block');
             }
         },
         removeDialog: function (link) {
