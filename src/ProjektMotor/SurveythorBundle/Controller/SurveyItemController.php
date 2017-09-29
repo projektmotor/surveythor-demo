@@ -13,6 +13,7 @@ use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Entity\SurveyItem;
 use PM\SurveythorBundle\Form\SurveyItemType;
 use PM\SurveythorBundle\Repository\SurveyItemRepository;
+use PM\SurveythorBundle\Repository\ConditionRepository;
 use PM\SurveythorBundle\Entity\Factory\SurveyItemFactory;
 use Twig_Environment;
 
@@ -26,6 +27,11 @@ class SurveyItemController
      * @var SurveyItemRepository
      */
     private $surveyItemRespository;
+
+    /**
+     * @var ConditionRepository
+     */
+    private $conditionRepository;
 
     /**
      * @var FormFactory
@@ -45,11 +51,13 @@ class SurveyItemController
 
     public function __construct(
         SurveyItemRepository $surveyItemRespository,
+        ConditionRepository $conditionRepository,
         FormFactory $formFactory,
         Twig_Environment $twig,
         Router $router
     ) {
         $this->surveyItemRepository = $surveyItemRespository;
+        $this->conditionRepository = $conditionRepository;
         $this->formFactory = $formFactory;
         $this->twig = $twig;
         $this->router = $router;
@@ -169,5 +177,29 @@ class SurveyItemController
         $this->surveyItemRepository->save($item);
 
         return new JsonResponse(json_encode(['status' => 'OK']));
+    }
+
+    public function removeAction(SurveyItem $item)
+    {
+        $conditions = $this->conditionRepository->getConditionsByQuestion($item);
+
+        if (empty(($conditions))) {
+            $id = $item->getId();
+            $this->surveyItemRepository->remove($item);
+            return new JsonResponse(json_encode(array(
+                'status' => 'OK',
+                'item' => $id
+            )));
+        } else {
+            $items = [];
+            foreach ($conditions as $condition) {
+                $items[] = $condition->getSurveyItem()->getId();
+            }
+            return new JsonResponse(json_encode(array(
+                'status' => 'FAIL',
+                'reason' => 'Diese Frage kann nicht gelöscht werden, sie wird von mind. einer Bedingung verwendet.',
+                'items' => $items
+            )));
+        }
     }
 }

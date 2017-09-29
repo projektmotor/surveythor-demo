@@ -9,6 +9,7 @@ PM\SurveythorBundle\Entity\SurveyItems\ItemGroup:
             mappedBy: itemGroup
             cascade:
                 - persist
+                - remove
             orderBy: { 'sortOrder' : 'ASC'}
 
     lifecycleCallbacks: {  }

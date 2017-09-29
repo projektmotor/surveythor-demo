@@ -15,6 +15,7 @@ services:
         class: PM\SurveythorBundle\Controller\SurveyItemController
         arguments:
             - '@surveyitem_repository'
+            - '@condition_repository'
             - "@form.factory"
             - "@twig"
             - "@router"

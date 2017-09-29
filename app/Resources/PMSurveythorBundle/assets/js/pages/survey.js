@@ -1,9 +1,10 @@
 require('bootstrap-sass');
 require('jquery-ui');
 require('jquery-ui/ui/widgets/draggable/');
-//require('jquery-ui/ui/widgets/droppable/');
 require('jquery-ui/ui/widgets/sortable/');
+require('jquery-ui/ui/widgets/dialog/');
 require('bootstrap-sass/assets/javascripts/bootstrap/affix.js');
+require('jquery-ui/themes/base/dialog.css');
 
 
 var projektmotor = projektmotor || {};
@@ -16,8 +17,34 @@ projektmotor.Survey = function () {
         surveyItem,
         draggable,
         sortable,
-        toolbox
+        toolbox,
+        dialog
     ;
+
+    dialog = {
+        open: function (message, buttons = null) {
+            $('#dialog').html(message);
+            if (!buttons) {
+                buttons = { 'Gut': function () {
+                    $(this).dialog('close');
+                }};
+            }
+            $("#dialog").dialog({
+                resizable: false,
+                modal: true,
+                title: "SurveyThor",
+                height: 'auto',
+                width: 400,
+                close: function() { $('#dialog').html(null); },
+                buttons: buttons
+            });
+        },
+        helpers: {
+            confirmationCallback: function (value) {
+                return value;
+            }
+        }
+    },
 
     survey = {
         init: function () {
@@ -30,6 +57,7 @@ projektmotor.Survey = function () {
 
     surveyItem = {
         init: function () {
+            // save inputs at blur
             $('body').delegate(
                 '#survey-elements input, #survey-elements textarea',
                 'blur',
@@ -38,8 +66,15 @@ projektmotor.Survey = function () {
                 }
             );
 
-            $('body').delegate('#survey-elements .panel-heading', 'click', function() {
+            // open/close panels
+            $('body').delegate('a.item-title, a.item-prefs', 'click', function(e) {
+                e.preventDefault();
                 surveyItem.collapse(this);
+            });
+
+            $('body').delegate('a.item-delete', 'click', function(e) {
+                e.preventDefault();
+                surveyItem.removeDialog(this);
             });
         },
         save: function (elem) {
@@ -54,12 +89,12 @@ projektmotor.Survey = function () {
             });
         },
         collapse: function (item) {
-            var panelbody = $(item).next();
-            var isParent = $(item).parent().hasClass('parent');
+            var panelbody = $(item).parents('.panel-heading').first().next();
+            var isParent = $(panelbody).hasClass('parent-item');
             var formLoaded = $(panelbody).hasClass('loaded');
 
             if (isParent && !formLoaded) {
-                var url = $(item).attr('data-itemform-url');
+                var url = $(item).attr('href');
                 $.ajax({
                     url: url,
                     method: 'GET',
@@ -78,6 +113,32 @@ projektmotor.Survey = function () {
                 $(panelbody).addClass('in');
                 $(panelbody).css('display', 'block');
             }
+        },
+        removeDialog: function (link) {
+            var buttons = {
+                "Ja": function () {
+                    $(this).dialog('close');
+                    surveyItem.remove(link);
+                },
+                "Nein": function () {
+                    $(this).dialog('close');
+                }
+            };
+            dialog.open('Wollen Sie dieses Element wirklich löschen?', buttons);
+        },
+        remove: function (link) {
+            $.ajax({
+                url: $(link).attr('href'),
+                method: 'get',
+                success: function (response) {
+                    response = JSON.parse(response);
+                    if (response.status === 'OK') {
+                        $('#item-' + response.item).parent('.survey-item').remove();
+                    } else if(response.status === 'FAIL') {
+                        dialog.open(response.reason);
+                    }
+                }
+            });
         }
     },
 

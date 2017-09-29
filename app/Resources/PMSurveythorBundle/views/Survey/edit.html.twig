@@ -116,3 +116,7 @@
     {{ parent() }}
     <script type="application/javascript" src="{{ asset('build/survey.js') }}"></script>
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+{% endblock %}

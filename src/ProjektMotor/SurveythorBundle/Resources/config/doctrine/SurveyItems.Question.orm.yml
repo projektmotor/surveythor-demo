@@ -16,6 +16,7 @@ PM\SurveythorBundle\Entity\SurveyItems\Question:
             mappedBy: question
             cascade:
                 - persist
+                - remove
             orderBy: { 'sortOrder' : 'ASC'}
 
     manyToOne:

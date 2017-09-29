@@ -45,5 +45,8 @@ PM\SurveythorBundle\Entity\SurveyItem:
         conditions:
             targetEntity: PM\SurveythorBundle\Entity\Condition
             mappedBy: surveyItem
+            cascade:
+                - persist
+                - remove
 
     lifecycleCallbacks: {}

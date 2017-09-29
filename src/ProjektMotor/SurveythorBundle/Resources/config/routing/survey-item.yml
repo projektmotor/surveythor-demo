@@ -13,3 +13,7 @@ surveyitem_form:
 surveyitem_set_sortorder:
     path: /sortorder/{item}
     defaults: { _controller: survey_item_controller:setSortOrderAction}
+surveyitem_remove:
+    path: /remove/{item}
+    defaults: { _controller: survey_item_controller:removeAction }
+
