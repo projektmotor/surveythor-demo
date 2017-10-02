@@ -58,7 +58,19 @@
         {% for child in form %}
             <div class="panel panel-default answer">
                 <div class="panel-heading" role="tab">
-                    {{ child.vars.value.text }}
+                    <span class="panel-title clearfix">
+                        <a class="choice-title clearfix">
+                            <span class="pull-left panel-indicator">
+                                <span class="panel-indicator-bottom">
+                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
+                                </span>
+                                <span class="panel-indicator-top">
+                                    <span class="glyphicon glyphicon-triangle-top"></span>
+                                </span>
+                            </span>
+                            &nbsp;{{ child.vars.value.text }}
+                        </a>
+                    </span>
                 </div>
                 <div id="collapse-answer-{{ child.vars.id }}" class="panel-collapse collapse">
                     <div class="panel-body">

@@ -214,7 +214,7 @@ abstract class SurveyItem
             return $this->title;
         }
 
-        if ($this instanceof Question) {
+        if ($this instanceof Question || $this instanceof TextItem) {
             if (strlen($this->getText()) < 90) {
                 return $this->getText();
             } else {

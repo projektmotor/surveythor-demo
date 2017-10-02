@@ -18,28 +18,10 @@ projektmotor.Survey = function () {
         draggable,
         sortable,
         toolbox,
-        dialog
+        dialog,
+        choice,
+        helpers
     ;
-
-    dialog = {
-        open: function (message, buttons = null) {
-            $('#dialog').html(message);
-            if (!buttons) {
-                buttons = { 'Gut': function () {
-                    $(this).dialog('close');
-                }};
-            }
-            $("#dialog").dialog({
-                resizable: false,
-                modal: true,
-                title: "SurveyThor",
-                height: 'auto',
-                width: 400,
-                close: function() { $('#dialog').html(null); },
-                buttons: buttons
-            });
-        }
-    },
 
     survey = {
         init: function () {
@@ -94,40 +76,29 @@ projektmotor.Survey = function () {
                         response = JSON.parse(response);
 
                         $(itemContainer).html($(response.html).html());
-                        sortable.helpers.collapse(response.open);
+                        sortable.helpers.openPanels(response.open);
                     }
                 });
             }
         },
-        collapse: function (item) {
-            var panelbody = $(item).parents('.panel-heading').first().next();
-            var isParent = $(panelbody).hasClass('parent-item');
-            var formLoaded = $(panelbody).hasClass('loaded');
+        collapse: function (a) {
+            var panel = $(a).parents('.panel-heading').siblings('.panel-collapse');
+            var isParent = $(panel).hasClass('parent-item');
+            var formLoaded = $(panel).hasClass('loaded');
 
             if (isParent && !formLoaded) {
-                var url = $(item).attr('href');
+                var url = $(a).attr('href');
                 $.ajax({
                     url: url,
                     method: 'GET',
                     success: function(response) {
-                        $(panelbody).html(response);
-                        $(panelbody).addClass('loaded');
+                        $(panel).html(response);
+                        $(panel).addClass('loaded');
                         sortable.initSortable();
                     }
                 });
             }
-
-            if ($(panelbody).hasClass('in')) {
-                $(panelbody).removeClass('in');
-                $(panelbody).css('display', 'none');
-                $(item).find('.panel-indicator-bottom').css('display', 'block');
-                $(item).find('.panel-indicator-top').css('display', 'none');
-            } else {
-                $(panelbody).addClass('in');
-                $(panelbody).css('display', 'block');
-                $(item).find('.panel-indicator-bottom').css('display', 'none');
-                $(item).find('.panel-indicator-top').css('display', 'block');
-            }
+            helpers.collapse(panel);
         },
         removeDialog: function (link) {
             var buttons = {
@@ -200,7 +171,7 @@ projektmotor.Survey = function () {
                                 response = JSON.parse(response);
                                 $(ui.item).before(response.html);
 
-                                sortable.helpers.collapse(response.open);
+                                sortable.helpers.openPanels(response.open);
 
                                 $(ui.item).remove('.new-item');
                                 sortable.helpers.sort(event.target);
@@ -234,8 +205,9 @@ projektmotor.Survey = function () {
                             success: function (response) {
                                 response = JSON.parse(response);
                                 $(rootContainer).html(response.html);
+                                $(rootContainer).removeClass('in');
                                 $(draggableConnect).remove();
-                                sortable.helpers.collapse(response.open);
+                                sortable.helpers.openPanels(response.open);
                                 sortable.initSortable();
                             }
                         });
@@ -254,9 +226,12 @@ projektmotor.Survey = function () {
                     });
                 }
             },
-            collapse: function (items) {
+            openPanels: function (items) {
                 for (var i = items.length - 1; i >= 0; i--) {
-                    $('#item-' + items[i]).addClass('in');
+                    var panel = $('#item-' + items[i]);//.parents('.panel');
+                    console.log(panel);
+                    helpers.collapse(panel);
+                    //$('#item-' + items[i]).addClass('in');
                 }
 
             },
@@ -269,12 +244,65 @@ projektmotor.Survey = function () {
         }
     },
 
+    dialog = {
+        open: function (message, buttons = null) {
+            $('#dialog').html(message);
+            if (!buttons) {
+                buttons = { 'Gut': function () {
+                    $(this).dialog('close');
+                }};
+            }
+            $("#dialog").dialog({
+                resizable: false,
+                modal: true,
+                title: "SurveyThor",
+                height: 'auto',
+                width: 400,
+                close: function() { $('#dialog').html(null); },
+                buttons: buttons
+            });
+        }
+    },
+
+    choice = {
+        init: function () {
+            $('body').delegate('a.choice-title', 'click', function(e) {
+                e.preventDefault();
+                var panel = $(this).parents('.panel-heading').siblings('.panel-collapse');
+                helpers.collapse(panel);
+            });
+        }
+    },
+
+    helpers = {
+        collapse: function (panel) {
+            var indicator = $(panel).siblings('.panel-heading')
+                .find('.panel-title .panel-indicator');
+
+            console.log(indicator);
+            if ($(panel).hasClass('in')) {
+                $(panel).removeClass('in');
+                $(panel).css('display', 'none');
+
+                $(indicator).find('.panel-indicator-bottom').css('display', 'block');
+                $(indicator).find('.panel-indicator-top').css('display', 'none');
+            } else {
+                $(panel).addClass('in');
+                $(panel).css('display', 'block');
+                $(panel).addClass('in');
+                $(indicator).find('.panel-indicator-bottom').css('display', 'none');
+                $(indicator).find('.panel-indicator-top').css('display', 'block');
+            }
+        }
+    },
+
     (function () {
         survey.init();
         surveyItem.init();
         sortable.init();
         draggable.init();
         toolbox.init();
+        choice.init();
     }());
 };
 //        panel,
