@@ -65,20 +65,34 @@ class SurveyItemController
 
     public function updateAction(FormRequest $formRequest, SurveyItem $item)
     {
-        if (!$formRequest->handle(SurveyItemType::class, $item)) {
+        if (!$formRequest->handle(
+            SurveyItemType::class,
+            $item,
+            array('action' => $this->router->generate(
+                'surveyitem_update',
+                array('item' => $item->getId())
+            ))
+        )) {
             return array(
-                'form' => $formRequest->createFormView(),
-                'parent' => $item->isParent()
+                'form' => $formRequest->createFormView()
             );
         }
 
         $surveyItem = $formRequest->getValidData();
         $this->surveyItemRepository->save($surveyItem);
 
-        return array(
-            'form' => $formRequest->createFormView(),
-            'parent' => $item->isParent()
+        $html = $this->twig->render(
+            '@PMSurveythorBundle/SurveyItem/new.html.twig',
+            array(
+                'form'  => $formRequest->createFormView()
+            )
         );
+
+        return new JsonResponse(json_encode(array(
+            'html' => $html,
+            'status' => 'OK',
+            'open' => array($surveyItem->getId())
+        )));
     }
 
     public function newAction(Survey $survey, $type)
@@ -98,8 +112,7 @@ class SurveyItemController
         $html = $this->twig->render(
             '@PMSurveythorBundle/SurveyItem/new.html.twig',
             array(
-                'form'  => $form->createView(),
-                'parent' => $item->isParent()
+                'form'  => $form->createView()
             )
         );
 

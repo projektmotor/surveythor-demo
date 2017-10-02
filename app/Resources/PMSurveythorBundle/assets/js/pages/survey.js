@@ -52,6 +52,15 @@ projektmotor.Survey = function () {
 
     surveyItem = {
         init: function () {
+
+            // keep value before input gets the focus, to save the value only if it has changed
+            $('body').delegate(
+                '#survey-elements input, #survey-elements textarea',
+                'focus',
+                function() {
+                    $(this).attr('data-value-on-focus', $(this).val());
+                }
+            );
             // save inputs at blur
             $('body').delegate(
                 '#survey-elements input, #survey-elements textarea',
@@ -73,15 +82,22 @@ projektmotor.Survey = function () {
             });
         },
         save: function (elem) {
-            var form = $(elem).parents('form').first();
-            var url = $(form).attr('action');
-            $.ajax({
-                url: url,
-                method: 'post',
-                data: form.serialize()
-                //success: function (response) {
-                //}
-            });
+            if ($(elem).val() !== $(elem).attr('data-value-on-focus')) {
+                var form = $(elem).parents('form').first();
+                var url = $(form).attr('action');
+                $.ajax({
+                    url: url,
+                    method: 'post',
+                    data: form.serialize(),
+                    success: function (response) {
+                        var itemContainer = $(form).parents('.panel-default').first();
+                        response = JSON.parse(response);
+
+                        $(itemContainer).html($(response.html).html());
+                        sortable.helpers.collapse(response.open);
+                    }
+                });
+            }
         },
         collapse: function (item) {
             var panelbody = $(item).parents('.panel-heading').first().next();
