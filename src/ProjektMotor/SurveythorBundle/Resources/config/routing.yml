@@ -9,3 +9,7 @@ result:
 survey_item:
     resource: "@PMSurveythorBundle/Resources/config/routing/survey-item.yml"
     prefix:     /surveyitem
+
+choice:
+    resource: "@PMSurveythorBundle/Resources/config/routing/choice.yml"
+    prefix:     /choice

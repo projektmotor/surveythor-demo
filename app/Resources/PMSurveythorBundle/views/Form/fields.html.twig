@@ -61,9 +61,9 @@
 {% endblock %}
 
 {% block backend_choice_widget %}
-<div class="panel panel-default answer">
-    <div class="panel-heading" role="tab">
-        <span class="panel-title clearfix">
+<div class="panel panel-default choice">
+    <div class="panel-heading clearfix">
+        <span class="panel-title clearfix pull-left">
             <a class="choice-title clearfix">
                 <span class="pull-left panel-indicator">
                     <span class="panel-indicator-bottom">
@@ -78,6 +78,18 @@
                 {% endif %}
             </a>
         </span>
+        <div class="pull-right choice-toolbox">
+            <a
+                href="#"
+                class="remove-panel remove-choice"
+                {% if data is not null and data.id is not null%}
+                    id="remove-choice-{{ data.id }}" data-url={{ path('choice_delete', {'choice' : data.id}) }}
+                {% endif %}
+            >
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </a>
+        </div>
+
     </div>
     <div class="panel-collapse collapse">
         <div class="panel-body">

@@ -188,8 +188,7 @@ class SurveyItemController
             $id = $item->getId();
             $this->surveyItemRepository->remove($item);
             return new JsonResponse(json_encode(array(
-                'status' => 'OK',
-                'item' => $id
+                'status' => 'OK'
             )));
         } else {
             $items = [];
@@ -198,8 +197,7 @@ class SurveyItemController
             }
             return new JsonResponse(json_encode(array(
                 'status' => 'FAIL',
-                'reason' => 'Diese Frage kann nicht gelöscht werden, sie wird von mind. einer Bedingung verwendet.',
-                'items' => $items
+                'reason' => 'Diese Frage kann nicht gelöscht werden, sie wird von mind. einer Bedingung verwendet.'
             )));
         }
     }

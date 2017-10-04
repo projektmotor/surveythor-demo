@@ -286,10 +286,58 @@ projektmotor.Survey = function () {
                 e.preventDefault();
                 choice.add($(this).siblings('.question-answer-prototype').first());
             });
+            // remove choice
+            $('body').delegate('a.remove-choice', 'click', function (e) {
+                e.preventDefault();
+                choice.removeDialog(this);
+            });
         },
         add: function (collectionHolder) {
             helpers.addFormFromPrototype(collectionHolder, '__choice__');
             helpers.collapse($(collectionHolder).children().last().children('.panel-collapse'));
+        },
+        removeDialog: function (a) {
+            var buttons = {
+                "Ja": function () {
+                    $(this).dialog('close');
+                    choice.remove(a);
+                },
+                "Nein": function () {
+                    $(this).dialog('close');
+                }
+            };
+            dialog.open('Wollen Sie diese Antwort wirklich löschen?', buttons);
+        },
+        remove: function (a) {
+            var panel = $(a).parents('.panel.choice');
+
+            if (typeof $(a).attr('data-url') !== 'undefined') {
+                var url = $(a).attr('data-url');
+
+                $.ajax({
+                    url: url,
+                    method: 'post',
+                    global: false,
+                    success: function (response) {
+                        response = JSON.parse(response);
+                        if (response.status === 'OK') {
+                            $(panel).remove();
+                        } else if(response.status === 'FAIL') {
+                            dialog.open(response.reason);
+                        }
+                    },
+                    beforeSend: function () {
+                        $('#update-indicator').css('display', 'block');
+                    },
+                    complete: function () {
+                        $('#update-indicator').css('display', 'none');
+                    }
+                });
+
+                return;
+            }
+
+            $(panel).remove();
         }
     },
 
@@ -301,13 +349,11 @@ projektmotor.Survey = function () {
             if ($(panel).hasClass('in')) {
                 $(panel).removeClass('in');
                 $(panel).css('display', 'none');
-
                 $(indicator).find('.panel-indicator-bottom').css('display', 'block');
                 $(indicator).find('.panel-indicator-top').css('display', 'none');
             } else {
                 $(panel).addClass('in');
                 $(panel).css('display', 'block');
-                $(panel).addClass('in');
                 $(indicator).find('.panel-indicator-bottom').css('display', 'none');
                 $(indicator).find('.panel-indicator-top').css('display', 'block');
             }

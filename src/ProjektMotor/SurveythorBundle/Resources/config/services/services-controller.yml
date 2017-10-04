@@ -24,3 +24,4 @@ services:
         class: PM\SurveythorBundle\Controller\ChoiceController
         arguments:
             - "@choice_repository"
+            - '@condition_repository'
