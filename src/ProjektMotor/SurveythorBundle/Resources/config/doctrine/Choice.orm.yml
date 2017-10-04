@@ -11,10 +11,13 @@ PM\SurveythorBundle\Entity\Choice:
     fields:
         text:
             type: text
+            nullable: true
         value:
             type: integer
+            nullable: true
         sortOrder:
             type: integer
+            nullable: true
 
     manyToOne:
         question:

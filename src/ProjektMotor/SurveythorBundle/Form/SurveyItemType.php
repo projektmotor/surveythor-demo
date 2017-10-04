@@ -122,10 +122,12 @@ class SurveyItemType extends AbstractType
                             break;
 
                         case ItemGroup::class:
-                            $form->add('surveyItems', CollectionType::class, array(
+                            $form->add('surveyItems', SurveyItemCollectionType::class, array(
                                 'entry_type' => SurveyItemType::class,
+                                'entry_options' => array('label' => false),
                                 'allow_add' => true,
-                                'label' => false
+                                'label' => false,
+                                'attr' => array('class' => 'sortable-itemgroup draggable-connect')
                             ));
                             $form->remove('type');
                             $form->add('type', HiddenType::class, array(

@@ -73,13 +73,22 @@ class SurveyItemController
                 array('item' => $item->getId())
             ))
         )) {
-            return array(
-                'form' => $formRequest->createFormView()
+            $html = $this->twig->render(
+                '@PMSurveythorBundle/SurveyItem/new.html.twig',
+                array(
+                    'form'  => $formRequest->createFormView()
+                )
             );
+
+            return new JsonResponse(json_encode(array(
+                'html' => $formRequest->createFormView(),
+                'status' => 'NOT VALID',
+                'open' => array($item->getId())
+            )));
         }
 
-        $surveyItem = $formRequest->getValidData();
-        $this->surveyItemRepository->save($surveyItem);
+        $item = $formRequest->getValidData();
+        $this->surveyItemRepository->save($item);
 
         $html = $this->twig->render(
             '@PMSurveythorBundle/SurveyItem/new.html.twig',
@@ -91,7 +100,7 @@ class SurveyItemController
         return new JsonResponse(json_encode(array(
             'html' => $html,
             'status' => 'OK',
-            'open' => array($surveyItem->getId())
+            'open' => array($item->getId())
         )));
     }
 
@@ -139,21 +148,15 @@ class SurveyItemController
         $parentItem->addSurveyItem($item);
         $item->setSortOrder($sortOrder);
         $this->surveyItemRepository->save($parentItem);
-
         $this->surveyItemRepository->detach($parentItem);
         $parentItem = $this->surveyItemRepository->findOneById($request->query->get('parent'));
-        if ($request->query->get('parent') == $request->query->get('root')) {
-            $rootItem = $parentItem;
-        } else {
-            $rootItem = $this->surveyItemRepository->findOneById($request->query->get('root'));
-        }
 
         $form = $this->formFactory->create(
             SurveyItemType::class,
-            $rootItem,
+            $parentItem->getRoot(),
             array('action' => $this->router->generate(
                 'surveyitem_update',
-                array('item' => $rootItem->getId())
+                array('item' => $parentItem->getRoot()->getId())
             ))
         );
 
@@ -164,7 +167,8 @@ class SurveyItemController
 
         return new JsonResponse(json_encode(array(
             'html' => $html,
-            'open' => array($item->getId(), $parentItem->getId()),
+            'open' => array_merge(array($item->getId()), $parentItem->getGroupIdsFromTop()),
+            'root' => $parentItem->getRoot()->getId(),
             'status' => 'OK'
         )));
     }

@@ -19,3 +19,8 @@ services:
             - "@form.factory"
             - "@twig"
             - "@router"
+
+    choice_controller:
+        class: PM\SurveythorBundle\Controller\ChoiceController
+        arguments:
+            - "@choice_repository"

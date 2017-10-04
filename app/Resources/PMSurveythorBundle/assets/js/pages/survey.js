@@ -77,6 +77,10 @@ projektmotor.Survey = function () {
 
                         $(itemContainer).html($(response.html).html());
                         sortable.helpers.openPanels(response.open);
+
+                        if ($(elem).hasClass('choice-field')) {
+                            helpers.collapse(elem);
+                        }
                     }
                 });
             }
@@ -192,20 +196,19 @@ projektmotor.Survey = function () {
                 stop: function(event, ui) {
                     if ($(ui.item).hasClass('new-item')) {
                         var draggableConnect = event.target;
-                        var parentGroup = $(draggableConnect).parents('.panel-collapse').first().attr('id').substring(5);
-                        var rootContainer = $(draggableConnect).parents('.parent-item').first();
-                        var rootGroup = $(rootContainer).attr('id').substring(5);
                         var url = ui.item.attr('data-itemgroup-add-item-url');
+                        var parentGroup = $(draggableConnect).parents('.panel-collapse').first().attr('id').substring(5);
+                        var rootContainer = $(draggableConnect).parents('.parent-item').last();
                         var form = $(ui.item).closest('form[name=surveyitem]');
                         var sortOrder = $(ui.item).index();
                         $.ajax({
-                            url: url + '?parent=' + parentGroup + '&sortorder=' + sortOrder + '&root=' + rootGroup,
+                            url: url + '?parent=' + parentGroup + '&sortorder=' + sortOrder,
                             method: 'POST',
                             data: form.serialize(),
                             success: function (response) {
                                 response = JSON.parse(response);
-                                $(rootContainer).html(response.html);
-                                $(rootContainer).removeClass('in');
+                                $('#item-' + response.root).html(response.html);
+                                $('#item-' + response.root).removeClass('in');
                                 $(draggableConnect).remove();
                                 sortable.helpers.openPanels(response.open);
                                 sortable.initSortable();
@@ -229,7 +232,6 @@ projektmotor.Survey = function () {
             openPanels: function (items) {
                 for (var i = items.length - 1; i >= 0; i--) {
                     var panel = $('#item-' + items[i]);//.parents('.panel');
-                    console.log(panel);
                     helpers.collapse(panel);
                     //$('#item-' + items[i]).addClass('in');
                 }
@@ -266,11 +268,33 @@ projektmotor.Survey = function () {
 
     choice = {
         init: function () {
+            // collapse title
             $('body').delegate('a.choice-title', 'click', function(e) {
                 e.preventDefault();
                 var panel = $(this).parents('.panel-heading').siblings('.panel-collapse');
                 helpers.collapse(panel);
             });
+            // add new choice
+            $('body').delegate('.add-new-choice', 'click', function (e) {
+                e.preventDefault();
+                choice.add($(this).siblings('.question-answer-prototype').first());
+            });
+            // save inputs at blur
+            //$('body').delegate(
+             //   '#survey-elements input.choice-field, #survey-elements textarea',
+              //  'blur',
+               // function() {
+                //    choice.save(this);
+                //}
+            //);
+
+        },
+        add: function (collectionHolder) {
+            helpers.addFormFromPrototype(collectionHolder, '__choice__');
+        },
+        save: function (elem) {
+            surveyItem.save(elem);
+            helpers.collapse(elem);
         }
     },
 
@@ -279,7 +303,6 @@ projektmotor.Survey = function () {
             var indicator = $(panel).siblings('.panel-heading')
                 .find('.panel-title .panel-indicator');
 
-            console.log(indicator);
             if ($(panel).hasClass('in')) {
                 $(panel).removeClass('in');
                 $(panel).css('display', 'none');
@@ -293,7 +316,16 @@ projektmotor.Survey = function () {
                 $(indicator).find('.panel-indicator-bottom').css('display', 'none');
                 $(indicator).find('.panel-indicator-top').css('display', 'block');
             }
+        },
+        addFormFromPrototype: function (collectionHolder, prototypeName = '__choice__') {
+            var prototype = collectionHolder.data('prototype');
+            var index = collectionHolder.children('.panel-default').length;
+            var re = new RegExp(prototypeName, 'g');
+            var newForm = prototype.replace(re, index);
+            collectionHolder.append(newForm);
+            helpers.collapse($(newForm).find('.panel-collapse'));
         }
+
     },
 
     (function () {

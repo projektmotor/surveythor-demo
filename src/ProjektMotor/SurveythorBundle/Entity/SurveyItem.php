@@ -57,7 +57,7 @@ abstract class SurveyItem
     /**
      * @var ItemGroup
      */
-    private $itemGroup;
+    protected $itemGroup;
 
 
     public function __construct()
@@ -320,5 +320,14 @@ abstract class SurveyItem
     public function isParent()
     {
         return is_null($this->itemGroup);
+    }
+
+    public function getRoot()
+    {
+        if (is_null($this->itemGroup)) {
+            return $this;
+        } else {
+            return $this->itemGroup->getRoot();
+        }
     }
 }

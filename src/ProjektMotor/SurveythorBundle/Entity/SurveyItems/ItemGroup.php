@@ -49,4 +49,15 @@ class ItemGroup extends SurveyItem
     {
         return $this->surveyItems;
     }
+
+    public function getGroupIdsFromTop($ids = null)
+    {
+        $ids = $ids === null ? array() : $ids;
+
+        array_push($ids, $this->id);
+        if (!is_null($this->itemGroup)) {
+            $ids = $this->itemGroup->getGroupIdsFromTop($ids);
+        }
+        return $ids;
+    }
 }

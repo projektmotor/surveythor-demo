@@ -53,4 +53,9 @@ class QuestionChoiceType extends AbstractType
     {
         return self::FORM_NAME;
     }
+
+    public function getBlockPrefix()
+    {
+        return 'choice';
+    }
 }

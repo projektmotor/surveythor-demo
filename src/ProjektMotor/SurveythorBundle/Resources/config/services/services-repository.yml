@@ -22,3 +22,8 @@ services:
         factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
         arguments:
             - PM\SurveythorBundle\Entity\Condition
+    choice_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
+        arguments:
+            - PM\SurveythorBundle\Entity\Choice
