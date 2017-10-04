@@ -60,7 +60,7 @@
     <a class="add-new-choice">Antwort hinzufügen</a>
 {% endblock %}
 
-{% block choice_widget %}
+{% block backend_choice_widget %}
 <div class="panel panel-default answer">
     <div class="panel-heading" role="tab">
         <span class="panel-title clearfix">
@@ -79,9 +79,9 @@
             </a>
         </span>
     </div>
-    <div id="collapse-answer-{{ form.vars.id }}" class="panel-collapse collapse">
+    <div class="panel-collapse collapse">
         <div class="panel-body">
-            {{- form_row(form) -}}
+            {{ form_widget(form) }}
         </div>
     </div>
 </div>

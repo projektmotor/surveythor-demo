@@ -71,17 +71,24 @@ projektmotor.Survey = function () {
                     url: url,
                     method: 'post',
                     data: form.serialize(),
-                    success: function (response) {
-                        var itemContainer = $(form).parents('.panel-default').first();
-                        response = JSON.parse(response);
-
-                        $(itemContainer).html($(response.html).html());
-                        sortable.helpers.openPanels(response.open);
-
-                        if ($(elem).hasClass('choice-field')) {
-                            helpers.collapse(elem);
-                        }
+                    global: false,
+                    beforeSend: function () {
+                        $('#update-indicator').css('display', 'block');
+                    },
+                    complete: function () {
+                        $('#update-indicator').css('display', 'none');
                     }
+                    //success: function (response) {
+                    //    var itemContainer = $(form).parents('.panel-default').first();
+                    //    response = JSON.parse(response);
+
+                    //    $(itemContainer).html($(response.html).html());
+                    //    sortable.helpers.openPanels(response.open);
+
+                    //    if ($(elem).hasClass('choice-field')) {
+                    //        helpers.collapse(elem);
+                    //    }
+                    //}
                 });
             }
         },
@@ -279,22 +286,10 @@ projektmotor.Survey = function () {
                 e.preventDefault();
                 choice.add($(this).siblings('.question-answer-prototype').first());
             });
-            // save inputs at blur
-            //$('body').delegate(
-             //   '#survey-elements input.choice-field, #survey-elements textarea',
-              //  'blur',
-               // function() {
-                //    choice.save(this);
-                //}
-            //);
-
         },
         add: function (collectionHolder) {
             helpers.addFormFromPrototype(collectionHolder, '__choice__');
-        },
-        save: function (elem) {
-            surveyItem.save(elem);
-            helpers.collapse(elem);
+            helpers.collapse($(collectionHolder).children().last().children('.panel-collapse'));
         }
     },
 

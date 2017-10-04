@@ -73,15 +73,7 @@ class SurveyItemController
                 array('item' => $item->getId())
             ))
         )) {
-            $html = $this->twig->render(
-                '@PMSurveythorBundle/SurveyItem/new.html.twig',
-                array(
-                    'form'  => $formRequest->createFormView()
-                )
-            );
-
             return new JsonResponse(json_encode(array(
-                'html' => $formRequest->createFormView(),
                 'status' => 'NOT VALID',
                 'open' => array($item->getId())
             )));
@@ -90,15 +82,7 @@ class SurveyItemController
         $item = $formRequest->getValidData();
         $this->surveyItemRepository->save($item);
 
-        $html = $this->twig->render(
-            '@PMSurveythorBundle/SurveyItem/new.html.twig',
-            array(
-                'form'  => $formRequest->createFormView()
-            )
-        );
-
         return new JsonResponse(json_encode(array(
-            'html' => $html,
             'status' => 'OK',
             'open' => array($item->getId())
         )));

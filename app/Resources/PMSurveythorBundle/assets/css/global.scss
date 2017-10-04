@@ -74,6 +74,15 @@ $fa-font-path: "~font-awesome/fonts";
     .surveyitem-form {
     }
 }
+
+#update-indicator {
+    display:    none;
+    height:     100px;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) url('/images/loading.gif') 50% 50% no-repeat;
+    border: 1px dotted #454545;
+}
+
 #survey-tools.affix{
     margin-left: 83.3333%;
 }

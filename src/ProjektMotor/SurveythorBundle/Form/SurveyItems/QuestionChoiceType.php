@@ -56,6 +56,6 @@ class QuestionChoiceType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'choice';
+        return 'backend_choice';
     }
 }
