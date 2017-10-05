@@ -26,8 +26,17 @@ projektmotor.Survey = function () {
     survey = {
         init: function () {
             $(document).on({
-                ajaxStart: function() { $('body').addClass("loading"); },
-                ajaxStop: function() { $('body').removeClass("loading"); }
+                ajaxSend: function(e, jqXHR, options) {
+                    if (options.isLocal) {
+                        $('#action-visualizer').css('display', 'block');
+                    } else {
+                        $('body').addClass("loading");
+                    }
+                },
+                ajaxStop: function() {
+                    $('body').removeClass("loading");
+                    $('#action-visualizer').css('display', 'none');
+                }
             });
         }
     },
@@ -71,13 +80,7 @@ projektmotor.Survey = function () {
                     url: url,
                     method: 'post',
                     data: form.serialize(),
-                    global: false,
-                    beforeSend: function () {
-                        $('#update-indicator').css('display', 'block');
-                    },
-                    complete: function () {
-                        $('#update-indicator').css('display', 'none');
-                    }
+                    isLocal: true,
                     //success: function (response) {
                     //    var itemContainer = $(form).parents('.panel-default').first();
                     //    response = JSON.parse(response);
@@ -112,16 +115,7 @@ projektmotor.Survey = function () {
             helpers.collapse(panel);
         },
         removeDialog: function (link) {
-            var buttons = {
-                "Ja": function () {
-                    $(this).dialog('close');
-                    surveyItem.remove(link);
-                },
-                "Nein": function () {
-                    $(this).dialog('close');
-                }
-            };
-            dialog.open('Wollen Sie dieses Element wirklich löschen?', buttons);
+            dialog.open('Wollen Sie dieses Element wirklich löschen?', dialog.buttonsYesNo(surveyItem.remove, link));
         },
         remove: function (link) {
             $.ajax({
@@ -231,6 +225,7 @@ projektmotor.Survey = function () {
                 for (var i = 0; i < sortableList.children.length; i++ ) {
                     var child = sortableList.children[i];
                     $.ajax({
+                        isLocal: true,
                         url: $(child).attr('data-sortorder-url') + '?sortorder=' + i,
                         method: 'GET'
                     });
@@ -238,9 +233,8 @@ projektmotor.Survey = function () {
             },
             openPanels: function (items) {
                 for (var i = items.length - 1; i >= 0; i--) {
-                    var panel = $('#item-' + items[i]);//.parents('.panel');
+                    var panel = $('#item-' + items[i]);
                     helpers.collapse(panel);
-                    //$('#item-' + items[i]).addClass('in');
                 }
 
             },
@@ -270,6 +264,18 @@ projektmotor.Survey = function () {
                 close: function() { $('#dialog').html(null); },
                 buttons: buttons
             });
+        },
+
+        buttonsYesNo: function (callback, link) {
+            return {
+                "Ja": function () {
+                    $(this).dialog('close');
+                    callback(link);
+                },
+                "Nein": function () {
+                    $(this).dialog('close');
+                }
+            };
         }
     },
 
@@ -297,16 +303,7 @@ projektmotor.Survey = function () {
             helpers.collapse($(collectionHolder).children().last().children('.panel-collapse'));
         },
         removeDialog: function (a) {
-            var buttons = {
-                "Ja": function () {
-                    $(this).dialog('close');
-                    choice.remove(a);
-                },
-                "Nein": function () {
-                    $(this).dialog('close');
-                }
-            };
-            dialog.open('Wollen Sie diese Antwort wirklich löschen?', buttons);
+            dialog.open('Wollen Sie diese Antwort wirklich löschen?', dialog.buttonsYesNo(choice.remove, a));
         },
         remove: function (a) {
             var panel = $(a).parents('.panel.choice');
@@ -317,7 +314,7 @@ projektmotor.Survey = function () {
                 $.ajax({
                     url: url,
                     method: 'post',
-                    global: false,
+                    isLocal: true,
                     success: function (response) {
                         response = JSON.parse(response);
                         if (response.status === 'OK') {
@@ -325,12 +322,6 @@ projektmotor.Survey = function () {
                         } else if(response.status === 'FAIL') {
                             dialog.open(response.reason);
                         }
-                    },
-                    beforeSend: function () {
-                        $('#update-indicator').css('display', 'block');
-                    },
-                    complete: function () {
-                        $('#update-indicator').css('display', 'none');
                     }
                 });
 
