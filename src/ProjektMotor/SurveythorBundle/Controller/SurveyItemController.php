@@ -188,7 +188,8 @@ class SurveyItemController
             $id = $item->getId();
             $this->surveyItemRepository->remove($item);
             return new JsonResponse(json_encode(array(
-                'status' => 'OK'
+                'status' => 'OK',
+                'item' => $id
             )));
         } else {
             $items = [];
