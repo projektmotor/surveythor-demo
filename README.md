@@ -31,6 +31,7 @@ Still not features:
   
     ...
     127.0.0.1 surveythor-demo
+    127.0.0.1 surveythor-frontend
     ```
 
 ## Development with docker containers

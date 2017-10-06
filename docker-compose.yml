@@ -13,6 +13,7 @@ services:
       - "4445:4445"
     networks:
       - surveythor-demo
+      - surveythor-frontend
     command: /init-project.sh
     environment:
       PHP_XDEBUG_ENABLED: 0
@@ -75,4 +76,6 @@ volumes:
 
 networks:
   surveythor-demo:
+    driver: bridge
+  surveythor-frontend:
     driver: bridge
