@@ -2,16 +2,14 @@
 
 APACHE_VHOST=/etc/apache2/sites-available/000-default.conf
 APACHE_ROOT=/var/www/html
-APACHE_HOST_NAME=surveythor_demo
+APACHE_LOG_NAME=surveythor_demo
 
 # ###############################################
 # Prepare Apache VHost
 # ###############################################
 rm "$APACHE_VHOST"
 
-sh -c "echo 'ServerName ${APACHE_HOST_NAME}'                                            >> $APACHE_VHOST"
 sh -c "echo '<VirtualHost *:80>'                                                        >> $APACHE_VHOST"
-sh -c "echo '    ServerName ${APACHE_HOST_NAME}'                                        >> $APACHE_VHOST"
 sh -c "echo '    DocumentRoot ${APACHE_ROOT}/web'                                       >> $APACHE_VHOST"
 sh -c "echo '    <Directory ${APACHE_ROOT}/web>'                                        >> $APACHE_VHOST"
 sh -c "echo '        # enable the .htaccess rewrites'                                   >> $APACHE_VHOST"
@@ -19,8 +17,8 @@ sh -c "echo '        AllowOverride All'                                         
 sh -c "echo '        Order allow,deny'                                                  >> $APACHE_VHOST"
 sh -c "echo '        Allow from All'                                                    >> $APACHE_VHOST"
 sh -c "echo '    </Directory>'                                                          >> $APACHE_VHOST"
-sh -c "echo '    ErrorLog /var/log/apache2/${APACHE_HOST_NAME}_error.log'               >> $APACHE_VHOST"
-sh -c "echo '    CustomLog /var/log/apache2/${APACHE_HOST_NAME}_access.log combined'    >> $APACHE_VHOST"
+sh -c "echo '    ErrorLog /var/log/apache2/${APACHE_LOG_NAME}_error.log'               >> $APACHE_VHOST"
+sh -c "echo '    CustomLog /var/log/apache2/${APACHE_LOG_NAME}_access.log combined'    >> $APACHE_VHOST"
 sh -c "echo '</VirtualHost>'                                                            >> $APACHE_VHOST"
 
 # ###############################################
