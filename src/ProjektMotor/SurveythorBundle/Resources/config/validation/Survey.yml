@@ -1,6 +1,6 @@
-PM\SurveythorBundle\Entity\Survey:
-    properties:
-        title:
-            - NotBlank: ~
-    constraints:
-        - Callback: validate
+#PM\SurveythorBundle\Entity\Survey:
+#    properties:
+#        title:
+#            - NotBlank: ~
+#    constraints:
+#        - Callback: validate

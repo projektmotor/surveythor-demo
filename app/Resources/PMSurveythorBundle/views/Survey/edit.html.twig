@@ -12,103 +12,104 @@
                     </h4>
                 </div>
 
-                <div id="survey-title" class="panel-collapse collapse" role="tabpanel" aria-labelledby="survey-title-heading">
+                <div id="survey-title" class="panel-collapse collapse{% if not survey %} in{% endif %}" role="tabpanel" aria-labelledby="survey-title-heading">
                     <div class="panel-body">
-                        {{ survey.title }}
-                        {{ survey.description }}
+                        {{ form(surveyTitleForm) }}
                     </div>
                 </div>
             </div>
 
+            {% if survey %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" id="questions-heading">
+                            Umfrageelemente
+                        </h4>
+                    </div>
+
+                    <div class="panel-collapse collapse in">
+                        <div class="panel-body" id="survey-elements">
+                            <div class="panel-group sortable draggable-connect">
+                                {% for item in survey.surveyItems %}
+                                    {% include '@PMSurveythorBundle/Survey/Partials/surveyItem.html.twig' with { 'item' : item } %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab">
+                        <h4 class="panel-title" id="resultranges-heading">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#survey-resultranges" aria-expanded="false" aria-controls="collapseThree">Ergebnisse bearbeiten</a>
+                        </h4>
+                    </div>
+
+                    <div id="survey-resultranges" class="panel-collapse collapse" role="tabpanel" aria-labelledby="resultranges-heading">
+                        <div class="panel-body">
+                                maximal erreichbare Punktzahl: 100
+                                <div class="form-row">
+                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    </div>
+                                </div>
+                            <a href="#" class="btn btn-primary" id="add-resultrange">Ergebnis hinzufügen</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2" id="survey-tools">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title" id="questions-heading">
-                        Umfrageelemente
+                    <h4 class="panel-title">
+                        Umfrageelemente anlegen
                     </h4>
                 </div>
 
-                <div class="panel-collapse collapse in">
-                    <div class="panel-body" id="survey-elements">
-                        <div class="panel-group sortable draggable-connect">
-                            {% for item in survey.surveyItems %}
-                                {% include '@PMSurveythorBundle/Survey/Partials/surveyItem.html.twig' with { 'item' : item } %}
-                            {% endfor %}
+                <div id="info-panel" class="panel-collapse collapse in">
+                    <div class="panel-body" id="new-items">
+                        <div
+                            class="new-item single-choice"
+                            data-url="{{ path('surveyitem_new', {'type' : 'singleChoice', 'survey' : survey.id }) }}"
+                            data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'singleChoice', 'survey' : survey.id }) }}"
+                        >
+                            Single Choice Frage
+                        </div>
+                        <div
+                            class="new-item multiple-choice"
+                            data-url="{{ path('surveyitem_new', {'type' : 'multipleChoice', 'survey' : survey.id }) }}"
+                            data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'multipleChoice', 'survey' : survey.id }) }}"
+                        >
+                            Multiple Choice Frage
+                        </div>
+                        <div
+                            class="new-item text-question"
+                            data-url="{{ path('surveyitem_new', {'type' : 'textQuestion', 'survey' : survey.id }) }}"
+                            data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'textQuestion', 'survey' : survey.id }) }}"
+                        >
+                            Freitext Frage
+                        </div>
+                        <div
+                            class="new-item text-element"
+                            data-url="{{ path('surveyitem_new', {'type' : 'textItem', 'survey' : survey.id }) }}"
+                            data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'textItem', 'survey' : survey.id }) }}"
+                        >
+                            Textelement
+                        </div>
+                        <div
+                            class="new-item item-group"
+                            data-url="{{ path('surveyitem_new', {'type' : 'itemGroup', 'survey' : survey.id }) }}"
+                            data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'itemGroup', 'survey' : survey.id }) }}"
+                        >
+                            Gruppe von Elementen
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab">
-                    <h4 class="panel-title" id="resultranges-heading">
-                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#survey-resultranges" aria-expanded="false" aria-controls="collapseThree">Ergebnisse bearbeiten</a>
-                    </h4>
-                </div>
-
-                <div id="survey-resultranges" class="panel-collapse collapse" role="tabpanel" aria-labelledby="resultranges-heading">
-                    <div class="panel-body">
-                            maximal erreichbare Punktzahl: 100
-                            <div class="form-row">
-                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                </div>
-                            </div>
-                        <a href="#" class="btn btn-primary" id="add-resultrange">Ergebnis hinzufügen</a>
-                    </div>
-                </div>
+            <div id="action-visualizer">
             </div>
-        </div>
-    </div>
-    <div class="col-md-2" id="survey-tools">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    Umfrageelemente anlegen
-                </h4>
-            </div>
-
-            <div id="info-panel" class="panel-collapse collapse in">
-                <div class="panel-body" id="new-items">
-                    <div
-                        class="new-item single-choice"
-                        data-url="{{ path('surveyitem_new', {'type' : 'singleChoice', 'survey' : survey.id }) }}"
-                        data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'singleChoice', 'survey' : survey.id }) }}"
-                    >
-                        Single Choice Frage
-                    </div>
-                    <div
-                        class="new-item multiple-choice"
-                        data-url="{{ path('surveyitem_new', {'type' : 'multipleChoice', 'survey' : survey.id }) }}"
-                        data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'multipleChoice', 'survey' : survey.id }) }}"
-                    >
-                        Multiple Choice Frage
-                    </div>
-                    <div
-                        class="new-item text-question"
-                        data-url="{{ path('surveyitem_new', {'type' : 'textQuestion', 'survey' : survey.id }) }}"
-                        data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'textQuestion', 'survey' : survey.id }) }}"
-                    >
-                        Freitext Frage
-                    </div>
-                    <div
-                        class="new-item text-element"
-                        data-url="{{ path('surveyitem_new', {'type' : 'textItem', 'survey' : survey.id }) }}"
-                        data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'textItem', 'survey' : survey.id }) }}"
-                    >
-                        Textelement
-                    </div>
-                    <div
-                        class="new-item item-group"
-                        data-url="{{ path('surveyitem_new', {'type' : 'itemGroup', 'survey' : survey.id }) }}"
-                        data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'itemGroup', 'survey' : survey.id }) }}"
-                    >
-                        Gruppe von Elementen
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="action-visualizer">
-        </div>
+        {% endif %}
     </div>
 </div>
 

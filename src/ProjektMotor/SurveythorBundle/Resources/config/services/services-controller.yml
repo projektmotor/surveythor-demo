@@ -3,6 +3,8 @@ services:
         class: PM\SurveythorBundle\Controller\SurveyController
         arguments:
             - "@survey_repository"
+            - "@form.factory"
+            - "@router"
 
     result_controller:
         class: PM\SurveythorBundle\Controller\ResultController

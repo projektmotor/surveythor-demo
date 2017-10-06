@@ -10,6 +10,10 @@ survey_edit:
     path: /edit/{id}
     defaults: { _controller: survey_controller:editAction }
 
+survey_update_title:
+    path: /update-title/{survey}
+    defaults: { _controller: survey_controller:updateTitleAction }
+
 survey_evaluations:
     path: /evaluations/{survey}
     defaults: { _controller: survey_controller:evaluationsAction }

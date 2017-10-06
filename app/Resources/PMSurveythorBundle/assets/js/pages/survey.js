@@ -38,6 +38,17 @@ projektmotor.Survey = function () {
                     $('#action-visualizer').css('display', 'none');
                 }
             });
+
+            $('.survey-title-field').change(function() {
+                var form = $('form[name=survey_title]');
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'post',
+                    data: form.serialize(),
+                    isLocal: true,
+                    success: function () {} // mal sehen
+                });
+            });
         }
     },
 

@@ -151,24 +151,24 @@ class Survey
      * @param ExecutionContextInterface $context
      * @param $payload
      */
-    public function validate(ExecutionContextInterface $context, $payload)
-    {
-        if ($this->getSurveyItems()->count() < 1) {
-            $context->buildViolation('A Survey should have at least one SurveyItem')
-                ->atPath('surveyItems')
-                ->addViolation();
-        } else {
-            foreach ($this->getSurveyItems() as $surveyItem) {
-                if (get_class($surveyItem) == Question::class) {
-                    if ($surveyItem->getText() == '') {
-                        $context->buildViolation('A surveyItem should have a text.')
-                            ->atPath('surveyItems')
-                            ->addViolation();
-                    }
-                }
-            }
-        }
-    }
+    //public function validate(ExecutionContextInterface $context, $payload)
+    //{
+    //    if ($this->getSurveyItems()->count() < 1) {
+    //        $context->buildViolation('A Survey should have at least one SurveyItem')
+    //            ->atPath('surveyItems')
+    //            ->addViolation();
+    //    } else {
+    //        foreach ($this->getSurveyItems() as $surveyItem) {
+    //            if (get_class($surveyItem) == Question::class) {
+    //                if ($surveyItem->getText() == '') {
+    //                    $context->buildViolation('A surveyItem should have a text.')
+    //                        ->atPath('surveyItems')
+    //                        ->addViolation();
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     public function getMaxPoints()
     {
