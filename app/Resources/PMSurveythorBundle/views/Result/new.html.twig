@@ -1,9 +1,13 @@
 {% extends '::base.html.twig' %}
 
+{# result \PM\SurveythorBundle\Entity\Result #}
+{# survey \PM\SurveythorBundle\Entity\Survey #}
+{# item \PM\SurveythorBundle\Entity\SurveyItem #}
+
 {% block navbar %}{% endblock %}
 {% block body %}
 
-    <h2>{{ app.session.get('survey').title }}</h2>
+    <h2>{{ survey.getTitle }}</h2>
     <hr />
 
     <div id="result">
@@ -15,9 +19,9 @@
         {{ form_row(form) }}
         {{ form_end(form) }}
         <button
-            class="btn btn-default"
-            id="survey-next"
-            data-next-url="{{ path('result_next', { 'id' : app.session.get('survey').id, 'surveyItem' : item.id }) }}"
+                class="btn btn-default"
+                id="survey-next"
+                data-next-url="{{ path('result_next', { 'survey' : survey.getId, 'surveyItem' : item.id, 'result': result.getId }, true) }}"
         >
             weiter
         </button>

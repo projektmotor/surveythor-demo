@@ -1,7 +1,8 @@
 result_new:
-    path: /new/{id}
+    path: /new/{survey}
     defaults: { _controller: result_controller:newAction }
 result_next:
-    path: /next/{id}/{surveyItem}
+    path: /next/{survey}/{surveyItem}/{result}
     defaults: { _controller: result_controller:nextAction }
     methods: [ POST ]
+    host: surveythor-frontend

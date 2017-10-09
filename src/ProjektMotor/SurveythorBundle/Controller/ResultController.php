@@ -1,31 +1,29 @@
 <?php
 namespace PM\SurveythorBundle\Controller;
 
+use AppBundle\Event\ResultReadySubscriber;
 use PM\SurveythorBundle\Entity\Answer;
-use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\Result;
+use PM\SurveythorBundle\Entity\ResultItem;
+use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\TextAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\TextItem as ResultTextItem;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\SurveyItem;
+use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
 use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
-use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
-use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
-use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
-use PM\SurveythorBundle\Entity\ResultItems\TextAnswer;
-use PM\SurveythorBundle\Entity\ResultItem;
-use PM\SurveythorBundle\Entity\ResultItems\TextItem as ResultTextItem;
 use PM\SurveythorBundle\Event\ResultEvent;
-use PM\SurveythorBundle\Repository\ResultRepository;
 use PM\SurveythorBundle\Form\ResultItemType;
+use PM\SurveythorBundle\Repository\ResultRepository;
 use QafooLabs\MVC\FormRequest;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\FormFactory;
-use Doctrine\ORM\PersistentCollection;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class ResultController
@@ -43,13 +41,16 @@ class ResultController
      */
     private $formFactory;
 
+    /**
+     * @var ResultRepository
+     */
     private $resultRepository;
 
 
     /**
-     * __construct
-     *
-     * @param SurveyRepository $surveyRepository
+     * @param EventSubscriberInterface $resultReadySubscriber
+     * @param FormFactory              $formFactory
+     * @param ResultRepository         $resultRepository
      */
     public function __construct(
         EventSubscriberInterface $resultReadySubscriber,
@@ -62,49 +63,59 @@ class ResultController
     }
 
     /**
-     * @param Survey $survey
+     * @param FormRequest $formRequest
+     * @param Survey      $survey
      *
      * @return array|Response
      */
     public function newAction(FormRequest $formRequest, Survey $survey)
     {
-        $session = new Session();
         $result = new Result();
         $surveyItem = $survey->getSurveyItems()->first();
         $resultItem = $this->prepareResultItem($surveyItem);
 
-        $session->set('survey', $survey);
-        $this->resultRepository->detach($result);
-        $session->set('result', $result);
-
+        $this->resultRepository->save($result);
 
         $formRequest->handle(ResultItemType::class, $resultItem);
+
         return array(
             'form'  => $formRequest->createFormView(),
-            'item'  => $surveyItem
+            'item' => $surveyItem,
+            'result' => $result,
+            'survey' => $survey,
         );
     }
 
-    public function nextAction(FormRequest $formRequest, Survey $survey, SurveyItem $surveyItem)
+    /**
+     * @param FormRequest $formRequest
+     * @param Survey      $survey
+     * @param SurveyItem  $surveyItem
+     * @param Result      $result
+     *
+     * @return array|JsonResponse
+     */
+    public function nextAction(FormRequest $formRequest, Survey $survey, SurveyItem $surveyItem, Result $result)
     {
         $resultItem = $this->prepareResultItem($surveyItem);
         if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
             return array(
                 'item'  => $surveyItem,
+                'result' => $result,
+                'survey' => $survey,
                 'form'  => $formRequest->createFormView()
             );
         }
 
-        $session = new Session();
-        $result = $session->get('result');
         $resultItem = $formRequest->getValidData();
         $result->addResultItem($resultItem);
-        $session->set('result', $result);
 
         if ($nextSurveyItem = $this->getNextItem($surveyItem, $survey)) {
             $nextResultItem = $this->prepareResultItem($nextSurveyItem);
+
             return array(
-                'item'  => $nextSurveyItem,
+                'item' => $nextSurveyItem,
+                'result' => $result,
+                'survey' => $survey,
                 'form'  => $this->formFactory->create(ResultItemType::class, $nextResultItem)->createView()
             );
         } else {
@@ -116,11 +127,17 @@ class ResultController
             $dispatcher->addSubscriber($this->resultReadySubscriber);
             $dispatcher->dispatch(ResultEvent::NAME, $event);
 
-            return new JsonResponse(
+            $jsonResponse = new JsonResponse(
                 json_encode(
                     array('url' => $event->getUrl())
-                )
+                ),
+                200,
+                [
+                    'Access-Control-Allow-Origin' => 'http://surveythor-demo',
+                ]
             );
+
+            return $jsonResponse;
         }
     }
 
@@ -130,8 +147,10 @@ class ResultController
             if ($this->isItemVisible($nextItem)) {
                 return $nextItem;
             }
+
             return $this->getNextItem($nextItem, $survey);
         }
+
         return false;
     }
 
@@ -171,14 +190,17 @@ class ResultController
                 }
             }
         }
+
         return $visible;
     }
 
+    /**
+     * @param SurveyItem $item
+     *
+     * @return ResultItem
+     */
     private function prepareResultItem(SurveyItem $item)
     {
-        $session = new Session();
-        $result = $session->get('result');
-
         if ($item instanceof Question) {
             $resultItem = $this->prepareAnswer($item);
         }
@@ -237,6 +259,7 @@ class ResultController
         foreach ($result->getResultItems() as $resultItem) {
             $resultItem = $this->mergeResultItem($resultItem);
         }
+
         return $result;
     }
 

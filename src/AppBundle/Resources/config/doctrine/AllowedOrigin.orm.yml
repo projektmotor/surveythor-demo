@@ -1,0 +1,51 @@
+AppBundle\Entity\AllowedOrigin:
+    type: entity
+    table: allowed_origin
+    repositoryClass: AppBundle\Repository\AllowedOriginRepository
+    gedmo:
+        loggable:
+            loggable: true
+    id:
+        id:
+            type: uuid
+            id: true
+            generator:
+                strategy: CUSTOM
+            customIdGenerator:
+                class: Ramsey\Uuid\Doctrine\UuidGenerator
+    fields:
+        title:
+            type: text
+            nullable: false
+        originName:
+            type: string
+            column: origin_name
+            nullable: false
+        isActive:
+            type: boolean
+            column: is_active
+            nullable: false
+        createdAt:
+            type: datetime
+            column: created_at
+            gedmo:
+                timestampable:
+                    on: create
+        updatedAt:
+            type: datetime
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
+        createdBy:
+            type: string
+            column: created_by
+            gedmo:
+                blameable:
+                    on: create
+        updatedBy:
+            type: string
+            column: updated_by
+            gedmo:
+                blameable:
+                    on: update
