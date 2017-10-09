@@ -21,7 +21,7 @@
         <button
                 class="btn btn-default"
                 id="survey-next"
-                data-next-url="{{ path('result_next', { 'survey' : survey.getId, 'surveyItem' : item.id, 'result': result.getId }, true) }}"
+                data-next-url="{{ url('result_next', { 'survey' : survey.getId, 'surveyItem' : item.id, 'result': result.getId }, true) }}"
         >
             weiter
         </button>
