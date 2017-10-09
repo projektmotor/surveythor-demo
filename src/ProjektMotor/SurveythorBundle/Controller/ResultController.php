@@ -23,7 +23,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class ResultController
@@ -72,7 +71,7 @@ class ResultController
     {
         $result = new Result();
         $surveyItem = $survey->getSurveyItems()->first();
-        $resultItem = $this->prepareResultItem($surveyItem);
+        $resultItem = $this->prepareResultItem($surveyItem, $result);
 
         $this->resultRepository->save($result);
 
@@ -96,7 +95,7 @@ class ResultController
      */
     public function nextAction(FormRequest $formRequest, Survey $survey, SurveyItem $surveyItem, Result $result)
     {
-        $resultItem = $this->prepareResultItem($surveyItem);
+        $resultItem = $this->prepareResultItem($surveyItem, $result);
         if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
             return array(
                 'item'  => $surveyItem,
@@ -109,8 +108,8 @@ class ResultController
         $resultItem = $formRequest->getValidData();
         $result->addResultItem($resultItem);
 
-        if ($nextSurveyItem = $this->getNextItem($surveyItem, $survey)) {
-            $nextResultItem = $this->prepareResultItem($nextSurveyItem);
+        if ($nextSurveyItem = $this->getNextItem($surveyItem, $survey, $result)) {
+            $nextResultItem = $this->prepareResultItem($nextSurveyItem, $result);
 
             return array(
                 'item' => $nextSurveyItem,
@@ -141,24 +140,35 @@ class ResultController
         }
     }
 
-    private function getNextItem(SurveyItem $item, Survey $survey)
+    /**
+     * @param SurveyItem $item
+     * @param Survey     $survey
+     * @param Result     $result
+     *
+     * @return bool|mixed
+     */
+    private function getNextItem(SurveyItem $item, Survey $survey, Result $result)
     {
         if ($nextItem = $survey->getNextItem($item)) {
-            if ($this->isItemVisible($nextItem)) {
+            if ($this->isItemVisible($nextItem, $result)) {
                 return $nextItem;
             }
 
-            return $this->getNextItem($nextItem, $survey);
+            return $this->getNextItem($nextItem, $survey, $result);
         }
 
         return false;
     }
 
-    private function isItemVisible(SurveyItem $item, $condition = null, $visible = null)
+    /**
+     * @param SurveyItem $item
+     * @param Result     $result
+     *
+     * @return bool|null
+     *
+     */
+    private function isItemVisible(SurveyItem $item, Result $result)
     {
-        $session = new Session();
-        $result = $session->get('result');
-
         $visible = true;
         if (0 != sizeof($item->getConditions())) {
             $resultChoices = array();
@@ -196,10 +206,11 @@ class ResultController
 
     /**
      * @param SurveyItem $item
+     * @param Result     $result
      *
      * @return ResultItem
      */
-    private function prepareResultItem(SurveyItem $item)
+    private function prepareResultItem(SurveyItem $item, Result $result)
     {
         if ($item instanceof Question) {
             $resultItem = $this->prepareAnswer($item);
@@ -217,14 +228,14 @@ class ResultController
             $resultItem = new ResultItem();
             $childItems = $item->getSurveyItems();
             $childItem = $childItems->current();
-            if ($this->isItemVisible($childItem)) {
+            if ($this->isItemVisible($childItem, $result)) {
                 $resultItem = new ResultItem();
-                $resultItem->addChildItem($this->prepareResultItem($childItem));
+                $resultItem->addChildItem($this->prepareResultItem($childItem, $result));
             }
             while ($childItem = $childItems->next()) {
-                if ($this->isItemVisible($childItem)) {
+                if ($this->isItemVisible($childItem, $result)) {
                     $resultItem->addChildItem(
-                        $this->prepareResultItem($childItem)
+                        $this->prepareResultItem($childItem, $result)
                     );
                 }
             }
@@ -235,6 +246,11 @@ class ResultController
         return $resultItem;
     }
 
+    /**
+     * @param SurveyItem $item
+     *
+     * @return ResultItem
+     */
     private function prepareAnswer(SurveyItem $item)
     {
         $resultItem = new ResultItem();
@@ -254,7 +270,12 @@ class ResultController
         return $resultItem;
     }
 
-    private function mergeResult($result)
+    /**
+     * @param Result $result
+     *
+     * @return Result
+     */
+    private function mergeResult(Result $result)
     {
         foreach ($result->getResultItems() as $resultItem) {
             $resultItem = $this->mergeResultItem($resultItem);
@@ -263,7 +284,13 @@ class ResultController
         return $result;
     }
 
-    private function mergeResultItem($resultItem, $recursive = false)
+    /**
+     * @param ResultItem $resultItem
+     * @param bool       $recursive
+     *
+     * @return ResultItem
+     */
+    private function mergeResultItem(ResultItem $resultItem, $recursive = false)
     {
         $surveyItem = $resultItem->getSurveyItem();
         $surveyItem = $this->resultRepository->merge($surveyItem);
@@ -307,7 +334,10 @@ class ResultController
         return $resultItem;
     }
 
-    private function mergeChildren($resultItem)
+    /**
+     * @param ResultItem $resultItem
+     */
+    private function mergeChildren(ResultItem $resultItem)
     {
         $childItems = $resultItem->getChildItems();
         foreach ($childItems as $childItem) {
