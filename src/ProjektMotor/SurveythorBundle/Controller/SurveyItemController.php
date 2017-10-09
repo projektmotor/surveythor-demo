@@ -1,20 +1,17 @@
 <?php
 namespace PM\SurveythorBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Form\FormFactory;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use QafooLabs\MVC\FormRequest;
+use PM\SurveythorBundle\Entity\Factory\SurveyItemFactory;
 use PM\SurveythorBundle\Entity\Survey;
-use PM\SurveythorBundle\Entity\SurveyItems\Question;
-use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
-use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Entity\SurveyItem;
 use PM\SurveythorBundle\Form\SurveyItemType;
-use PM\SurveythorBundle\Repository\SurveyItemRepository;
 use PM\SurveythorBundle\Repository\ConditionRepository;
-use PM\SurveythorBundle\Entity\Factory\SurveyItemFactory;
+use PM\SurveythorBundle\Repository\SurveyItemRepository;
+use QafooLabs\MVC\FormRequest;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Twig_Environment;
 
 /**
@@ -23,11 +20,6 @@ use Twig_Environment;
  */
 class SurveyItemController
 {
-    /**
-     * @var SurveyItemRepository
-     */
-    private $surveyItemRespository;
-
     /**
      * @var ConditionRepository
      */
@@ -48,21 +40,38 @@ class SurveyItemController
      */
     private $router;
 
+    /**
+     * @var SurveyItemRepository
+     */
+    private $surveyItemRepository;
 
+    /**
+     * @param SurveyItemRepository $surveyItemRepository
+     * @param ConditionRepository  $conditionRepository
+     * @param FormFactory          $formFactory
+     * @param Twig_Environment     $twig
+     * @param Router               $router
+     */
     public function __construct(
-        SurveyItemRepository $surveyItemRespository,
+        SurveyItemRepository $surveyItemRepository,
         ConditionRepository $conditionRepository,
         FormFactory $formFactory,
         Twig_Environment $twig,
         Router $router
     ) {
-        $this->surveyItemRepository = $surveyItemRespository;
+        $this->surveyItemRepository = $surveyItemRepository;
         $this->conditionRepository = $conditionRepository;
         $this->formFactory = $formFactory;
         $this->twig = $twig;
         $this->router = $router;
     }
 
+    /**
+     * @param FormRequest $formRequest
+     * @param SurveyItem  $item
+     *
+     * @return JsonResponse
+     */
     public function updateAction(FormRequest $formRequest, SurveyItem $item)
     {
         if (!$formRequest->handle(
@@ -88,6 +97,12 @@ class SurveyItemController
         )));
     }
 
+    /**
+     * @param Survey $survey
+     * @param string $type
+     *
+     * @return JsonResponse
+     */
     public function newAction(Survey $survey, $type)
     {
         $item = SurveyItemFactory::createByType($type);
@@ -116,8 +131,16 @@ class SurveyItemController
         )));
     }
 
+    /**
+     * @param Request $request
+     * @param Survey  $survey
+     * @param string  $type
+     *
+     * @return JsonResponse
+     */
     public function itemGroupAddItemAction(Request $request, Survey $survey, $type)
     {
+        /** @var SurveyItem $parentItem */
         $parentItem = $this->surveyItemRepository->findOneById($request->query->get('parent'));
         $sortOrder = $request->query->get('sortorder');
         $item = SurveyItemFactory::createByType($type);
@@ -157,6 +180,11 @@ class SurveyItemController
         )));
     }
 
+    /**
+     * @param SurveyItem $item
+     *
+     * @return array
+     */
     public function formAction(SurveyItem $item)
     {
          $form = $this->formFactory->create(
@@ -171,6 +199,12 @@ class SurveyItemController
          return array('form' => $form->createView());
     }
 
+    /**
+     * @param Request    $request
+     * @param SurveyItem $item
+     *
+     * @return JsonResponse
+     */
     public function setSortOrderAction(Request $request, SurveyItem $item)
     {
         $sortOrder = $request->query->get('sortorder');
@@ -180,6 +214,11 @@ class SurveyItemController
         return new JsonResponse(json_encode(['status' => 'OK']));
     }
 
+    /**
+     * @param SurveyItem $item
+     *
+     * @return JsonResponse
+     */
     public function removeAction(SurveyItem $item)
     {
         $conditions = $this->conditionRepository->getConditionsByQuestion($item);

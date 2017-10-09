@@ -168,11 +168,11 @@ class Survey
     }
 
     /**
-     * @param ResultItem $item
+     * @param SurveyItem $item
      *
-     * @return ResultItem|null
+     * @return SurveyItem|null
      */
-    public function getNextItem(ResultItem $item)
+    public function getNextItem(SurveyItem $item)
     {
         while ($current = $this->surveyItems->current()) {
             if ($current->getId() == $item->getId()) {
@@ -214,8 +214,6 @@ class Survey
     }
 
     /**
-     * Get SurveyItems.
-     *
      * @return SurveyItem[]|ArrayCollection
      */
     public function getSurveyItems()

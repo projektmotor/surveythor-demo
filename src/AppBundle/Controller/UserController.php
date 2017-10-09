@@ -7,11 +7,19 @@ namespace AppBundle\Controller;
  */
 class UserController
 {
+    /**
+     * @return array
+     */
     public function indexAction()
     {
         return array('users' => self::$users);
     }
 
+    /**
+     * @param $id
+     *
+     * @return array
+     */
     public function detailAction($id)
     {
         foreach (self::$users as $user) {
@@ -21,6 +29,9 @@ class UserController
         }
     }
 
+    /**
+     * @var array
+     */
     public static $users = [
         ["id"=>3,"name"=>"Theodore","email"=>"sodales.nisi.magna@quislectus.com","address"=>"948-2735 Dolor Av.","city"=>"Barrhead","zip"=>"32586"],
         ["id"=>4,"name"=>"Ingrid","email"=>"aliquet@Vestibulumanteipsum.net","address"=>"P.O. Box 668, 3227 Dictum Avenue","city"=>"Heusweiler","zip"=>"64239-618"],

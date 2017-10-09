@@ -1,15 +1,15 @@
 <?php
 namespace PM\SurveythorBundle\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\Form\FormFactory;
-use QafooLabs\MVC\FormRequest;
-use QafooLabs\MVC\RedirectRoute;
 use AppBundle\Controller\UserController;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Form\SurveyTitleType;
 use PM\SurveythorBundle\Repository\SurveyRepository;
+use QafooLabs\MVC\FormRequest;
+use QafooLabs\MVC\RedirectRoute;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * SurveyController
@@ -35,6 +35,8 @@ class SurveyController
 
     /**
      * @param SurveyRepository $surveyRepository
+     * @param FormFactory      $formFactory
+     * @param Router           $router
      */
     public function __construct(
         SurveyRepository $surveyRepository,
@@ -47,7 +49,7 @@ class SurveyController
     }
 
     /**
-     * indexAction
+     * @return array
      */
     public function indexAction()
     {
@@ -57,11 +59,9 @@ class SurveyController
     }
 
     /**
-     * formAction
-     *
      * @param Survey $survey
      *
-     * @return array|RedirectRoute
+     * @return array
      */
     public function editAction(Survey $survey)
     {
@@ -80,6 +80,11 @@ class SurveyController
         );
     }
 
+    /**
+     * @param FormRequest $formRequest
+     *
+     * @return array|RedirectRoute
+     */
     public function newAction(FormRequest $formRequest)
     {
         if (!$formRequest->handle(SurveyTitleType::class)) {
@@ -97,6 +102,12 @@ class SurveyController
         ));
     }
 
+    /**
+     * @param FormRequest $formRequest
+     * @param Survey      $survey
+     *
+     * @return JsonResponse
+     */
     public function updateTitleAction(FormRequest $formRequest, Survey $survey)
     {
         if (!$formRequest->handle(SurveyTitleType::class, $survey)) {
@@ -113,6 +124,11 @@ class SurveyController
         )));
     }
 
+    /**
+     * @param Survey $survey
+     *
+     * @return array
+     */
     public function evaluationsAction(Survey $survey)
     {
         return array(

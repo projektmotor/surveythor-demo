@@ -2,6 +2,7 @@
 
 namespace PM\SurveythorBundle\Repository;
 
+use PM\SurveythorBundle\Entity\Condition;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
 use PM\SurveythorBundle\Entity\Choice;
 
@@ -13,15 +14,19 @@ use PM\SurveythorBundle\Entity\Choice;
  */
 class ConditionRepository extends BaseRepository
 {
-    public function getConditionsByQuestion($question)
+    /**
+     * @param Question $question
+     *
+     * @return Condition[]
+     */
+    public function getConditionsByQuestion(Question $question)
     {
         $qb = $this->createQueryBuilder('c');
         $qb
             ->select('c')
             ->join('c.choices', 'ch')
             ->where('ch.question = :idQuestion')
-            ->setParameter('idQuestion', $question->getId());
-        ;
+            ->setParameter('idQuestion', $question->getId());;
 
         return $qb->getQuery()->getResult();
     }
@@ -33,8 +38,7 @@ class ConditionRepository extends BaseRepository
             ->select('c')
             ->join('c.choices', 'ch')
             ->where('c.id = :idChoice')
-            ->setParameter('idChoice', $choice->getId());
-        ;
+            ->setParameter('idChoice', $choice->getId());;
 
         return $qb->getQuery()->getResult();
     }

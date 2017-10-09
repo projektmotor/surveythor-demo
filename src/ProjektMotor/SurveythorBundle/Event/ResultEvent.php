@@ -40,7 +40,7 @@ class ResultEvent extends Event
     }
 
     /**
-     * @return url
+     * @return string
      */
     public function getUrl()
     {
@@ -48,7 +48,7 @@ class ResultEvent extends Event
     }
 
     /**
-     * @param url $url
+     * @param string $url
      */
     public function setUrl($url)
     {

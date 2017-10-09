@@ -1,10 +1,10 @@
 <?php
 namespace PM\SurveythorBundle\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Repository\ChoiceRepository;
 use PM\SurveythorBundle\Repository\ConditionRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * ChoiceController
@@ -22,7 +22,10 @@ class ChoiceController
      */
     private $conditionRepository;
 
-
+    /**
+     * @param ChoiceRepository    $choiceRepository
+     * @param ConditionRepository $conditionRepository
+     */
     public function __construct(
         ChoiceRepository $choiceRepository,
         ConditionRepository $conditionRepository
@@ -31,6 +34,11 @@ class ChoiceController
         $this->conditionRepository = $conditionRepository;
     }
 
+    /**
+     * @param Choice $choice
+     *
+     * @return JsonResponse
+     */
     public function deleteAction(Choice $choice)
     {
         $conditions = $this->conditionRepository->getConditionsByChoice($choice);

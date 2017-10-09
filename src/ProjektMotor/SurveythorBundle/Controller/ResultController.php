@@ -3,6 +3,7 @@ namespace PM\SurveythorBundle\Controller;
 
 use AppBundle\Event\ResultReadySubscriber;
 use PM\SurveythorBundle\Entity\Answer;
+use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\Result;
 use PM\SurveythorBundle\Entity\ResultItem;
 use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
@@ -145,7 +146,7 @@ class ResultController
      * @param Survey     $survey
      * @param Result     $result
      *
-     * @return bool|mixed
+     * @return bool|SurveyItem
      */
     private function getNextItem(SurveyItem $item, Survey $survey, Result $result)
     {
@@ -293,14 +294,17 @@ class ResultController
     private function mergeResultItem(ResultItem $resultItem, $recursive = false)
     {
         $surveyItem = $resultItem->getSurveyItem();
+        /** @var SurveyItem $surveyItem */
         $surveyItem = $this->resultRepository->merge($surveyItem);
         $resultItem->setSurveyItem($surveyItem);
 
         if ($answer = $resultItem->getSingleChoiceAnswer()) {
             $question = $answer->getQuestion();
+            /** @var Question $question */
             $question = $this->resultRepository->merge($question);
 
             $choice = $answer->getChoice();
+            /** @var Choice $choice */
             $choice = $this->resultRepository->merge($choice);
 
             $answer->setChoice($choice);
