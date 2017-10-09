@@ -24,8 +24,6 @@ class ResultItemTemplate
 
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -34,8 +32,6 @@ class ResultItemTemplate
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      *
      * @return ResultItemTemplate
@@ -48,8 +44,6 @@ class ResultItemTemplate
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -58,13 +52,11 @@ class ResultItemTemplate
     }
 
     /**
-     * Set formType
-     *
      * @param string $formType
      *
      * @return ResultItemTemplate
      */
-    public function setformType($formType)
+    public function setFormType($formType)
     {
         $this->formType = $formType;
 
@@ -72,13 +64,10 @@ class ResultItemTemplate
     }
 
     /**
-     * Get formType
-     *
      * @return string
      */
-    public function getformType()
+    public function getFormType()
     {
         return $this->formType;
     }
 }
-

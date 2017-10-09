@@ -4,10 +4,6 @@ namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use PM\SurveythorBundle\Entity\SurveyItems\Question;
-use PM\SurveythorBundle\Entity\SurveyItems\QuestionGroup;
-use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
-use PM\SurveythorBundle\Entity\Result;
 
 /**
  * Survey
@@ -40,11 +36,11 @@ class Survey
     private $resultRanges;
 
     /**
-     * @var Result
+     * @var Result[]|ArrayCollection
      */
     private $results;
 
-    public function __tostring()
+    public function __toString()
     {
         return get_class($this);
     }
@@ -57,8 +53,6 @@ class Survey
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -67,8 +61,6 @@ class Survey
     }
 
     /**
-     * Set title
-     *
      * @param string $title
      *
      * @return Survey
@@ -81,8 +73,6 @@ class Survey
     }
 
     /**
-     * Get title
-     *
      * @return string
      */
     public function getTitle()
@@ -91,8 +81,6 @@ class Survey
     }
 
     /**
-     * Set description
-     *
      * @param string $description
      *
      * @return Survey
@@ -105,8 +93,6 @@ class Survey
     }
 
     /**
-     * Get description
-     *
      * @return string
      */
     public function getDescription()
@@ -115,8 +101,6 @@ class Survey
     }
 
     /**
-     * Get resultRanges.
-     *
      * @return ResultRange[]|ArrayCollection
      */
     public function getResultRanges()
@@ -170,6 +154,9 @@ class Survey
     //    }
     //}
 
+    /**
+     * @return int
+     */
     public function getMaxPoints()
     {
         $points = 0;
@@ -180,7 +167,12 @@ class Survey
         return $points;
     }
 
-    public function getNextItem($item)
+    /**
+     * @param ResultItem $item
+     *
+     * @return ResultItem|null
+     */
+    public function getNextItem(ResultItem $item)
     {
         while ($current = $this->surveyItems->current()) {
             if ($current->getId() == $item->getId()) {
@@ -191,8 +183,6 @@ class Survey
     }
 
     /**
-     * Get results.
-     *
      * @return Result[]|ArrayCollection
      */
     public function getResults()

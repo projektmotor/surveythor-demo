@@ -1,8 +1,8 @@
 <?php
 namespace PM\SurveythorBundle\Entity\SurveyItems;
 
-use PM\SurveythorBundle\Entity\SurveyItem;
 use Doctrine\Common\Collections\ArrayCollection;
+use PM\SurveythorBundle\Entity\SurveyItem;
 
 /**
  * ItemGroup
@@ -17,10 +17,14 @@ class ItemGroup extends SurveyItem
     public function __construct()
     {
         $this->surveyItems = new ArrayCollection();
+
+        parent::__construct();
     }
 
     /**
      * @param SurveyItem $surveyItem
+     *
+     * @return ItemGroup
      */
     public function addSurveyItem(SurveyItem $surveyItem)
     {
@@ -41,8 +45,6 @@ class ItemGroup extends SurveyItem
     }
 
     /**
-     * Get surveyItems.
-     *
      * @return SurveyItem[]|ArrayCollection
      */
     public function getSurveyItems()
@@ -50,6 +52,11 @@ class ItemGroup extends SurveyItem
         return $this->surveyItems;
     }
 
+    /**
+     * @param int[]|null $ids
+     *
+     * @return int[]
+     */
     public function getGroupIdsFromTop($ids = null)
     {
         $ids = $ids === null ? array() : $ids;
@@ -58,6 +65,7 @@ class ItemGroup extends SurveyItem
         if (!is_null($this->itemGroup)) {
             $ids = $this->itemGroup->getGroupIdsFromTop($ids);
         }
+
         return $ids;
     }
 }

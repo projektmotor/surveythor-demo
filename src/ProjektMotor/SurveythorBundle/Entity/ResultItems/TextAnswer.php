@@ -1,8 +1,8 @@
 <?php
 namespace PM\SurveythorBundle\Entity\ResultItems;
 
-use PM\SurveythorBundle\Entity\SurveyItems\Question;
 use PM\SurveythorBundle\Entity\ResultItem;
+use PM\SurveythorBundle\Entity\SurveyItems\Question;
 
 /**
  * TextAnswer
@@ -19,14 +19,18 @@ class TextAnswer
      */
     private $value;
 
+    /**
+     * @var Question
+     */
     private $question;
 
+    /**
+     * @var ResultItem
+     */
     private $resultItem;
 
     /**
-     * Get id.
-     *
-     * @return id.
+     * @return int
      */
     public function getId()
     {
@@ -34,8 +38,6 @@ class TextAnswer
     }
 
     /**
-     * Set value
-     *
      * @param string $value
      *
      * @return TextAnswer
@@ -48,8 +50,6 @@ class TextAnswer
     }
 
     /**
-     * Get value
-     *
      * @return string
      */
     public function getValue()
@@ -58,9 +58,7 @@ class TextAnswer
     }
     
     /**
-     * Get question.
-     *
-     * @return question.
+     * @return Question
      */
     public function getQuestion()
     {
@@ -68,19 +66,15 @@ class TextAnswer
     }
     
     /**
-     * Set question.
-     *
-     * @param question the value to set.
+     * @param Question $question
      */
-    public function setQuestion($question)
+    public function setQuestion(Question $question)
     {
         $this->question = $question;
     }
     
     /**
-     * Get resultItem.
-     *
-     * @return resultItem.
+     * @return ResultItem
      */
     public function getResultItem()
     {
@@ -88,11 +82,9 @@ class TextAnswer
     }
     
     /**
-     * Set resultItem.
-     *
-     * @param resultItem the value to set.
+     * @param ResultItem $resultItem
      */
-    public function setResultItem($resultItem)
+    public function setResultItem(ResultItem $resultItem)
     {
         $this->resultItem = $resultItem;
     }

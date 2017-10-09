@@ -37,10 +37,7 @@ class ResultRange
      */
     private $survey;
 
-
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -49,8 +46,6 @@ class ResultRange
     }
 
     /**
-     * Set meaning
-     *
      * @param string $meaning
      *
      * @return ResultRange
@@ -63,8 +58,6 @@ class ResultRange
     }
 
     /**
-     * Get meaning
-     *
      * @return string
      */
     public function getMeaning()
@@ -73,9 +66,7 @@ class ResultRange
     }
 
     /**
-     * Set start
-     *
-     * @param integer $start
+     * @param int $start
      *
      * @return ResultRange
      */
@@ -87,8 +78,6 @@ class ResultRange
     }
 
     /**
-     * Get start
-     *
      * @return int
      */
     public function getStart()
@@ -97,8 +86,6 @@ class ResultRange
     }
 
     /**
-     * Set stop
-     *
      * @param int $stop
      *
      * @return ResultRange
@@ -111,8 +98,6 @@ class ResultRange
     }
 
     /**
-     * Get stop
-     *
      * @return int
      */
     public function getStop()
@@ -121,8 +106,6 @@ class ResultRange
     }
 
     /**
-     * Set event
-     *
      * @param string $event
      *
      * @return ResultRange
@@ -135,8 +118,6 @@ class ResultRange
     }
 
     /**
-     * Get event
-     *
      * @return string
      */
     public function getEvent()
@@ -145,8 +126,6 @@ class ResultRange
     }
 
     /**
-     * Get survey.
-     *
      * @return Survey
      */
     public function getSurvey()
@@ -155,8 +134,6 @@ class ResultRange
     }
 
     /**
-     * Set survey.
-     *
      * @param Survey $survey
      */
     public function setSurvey($survey)

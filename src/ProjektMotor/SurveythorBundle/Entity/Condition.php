@@ -27,7 +27,7 @@ class Condition
     private $surveyItem;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $isNegative;
 
@@ -38,8 +38,6 @@ class Condition
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -95,11 +93,17 @@ class Condition
         $this->surveyItem = $surveyItem;
     }
 
+    /**
+     * @return bool
+     */
     public function getIsNegative()
     {
         return $this->isNegative;
     }
 
+    /**
+     * @param bool $isNegative
+     */
     public function setIsNegative($isNegative)
     {
         $this->isNegative = $isNegative;

@@ -4,6 +4,7 @@ namespace PM\SurveythorBundle\Entity\SurveyItems;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PM\SurveythorBundle\Entity\Choice;
+use PM\SurveythorBundle\Entity\QuestionTemplate;
 use PM\SurveythorBundle\Entity\SurveyItem;
 
 /**
@@ -34,11 +35,11 @@ class Question extends SurveyItem
     public function __construct()
     {
         $this->choices = new ArrayCollection();
+
+        parent::__construct();
     }
 
     /**
-     * Set text
-     *
      * @param string $text
      *
      * @return Question
@@ -51,8 +52,6 @@ class Question extends SurveyItem
     }
 
     /**
-     * Get text
-     *
      * @return string
      */
     public function getText()
@@ -84,8 +83,6 @@ class Question extends SurveyItem
     }
 
     /**
-     * Get choices.
-     *
      * @return Choice[]|ArrayCollection
      */
     public function getChoices()
@@ -103,11 +100,17 @@ class Question extends SurveyItem
         return $this->getType() === 'mc' || $this->getType() === 'sc';
     }
 
+    /**
+     * @return bool
+     */
     public function hasChoices()
     {
         return $this->choices->count() > 0;
     }
 
+    /**
+     * @return int
+     */
     public function getMaxPoints()
     {
         $points = 0;
@@ -121,9 +124,7 @@ class Question extends SurveyItem
     }
 
     /**
-     * Get questionTemplate.
-     *
-     * @return QuestionTemplate.
+     * @return QuestionTemplate
      */
     public function getQuestionTemplate()
     {
@@ -133,14 +134,12 @@ class Question extends SurveyItem
     /**
      * @param QuestionTemplate $questionTemplate
      */
-    public function setQuestionTemplate($questionTemplate)
+    public function setQuestionTemplate(QuestionTemplate $questionTemplate)
     {
         $this->questionTemplate = $questionTemplate;
     }
 
     /**
-     * Get type.
-     *
      * @return string
      */
     public function getType()
@@ -149,8 +148,6 @@ class Question extends SurveyItem
     }
 
     /**
-     * Set type.
-     *
      * @param string $type
      */
     public function setType($type)

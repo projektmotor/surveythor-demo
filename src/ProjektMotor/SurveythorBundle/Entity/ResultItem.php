@@ -2,8 +2,10 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\Result;
-use PM\SurveythorBundle\Entity\ResultItem;
+use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\TextAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\TextItem;
 
 /**
  * ResultItem
@@ -21,23 +23,42 @@ class ResultItem
     protected $result;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $sortOrder;
 
+    /**
+     * @var SingleChoiceAnswer
+     */
     protected $singleChoiceAnswer;
+
+    /**
+     * @var MultipleChoiceAnswer
+     */
     protected $multipleChoiceAnswer;
+
+    /**
+     * @var TextAnswer
+     */
     protected $textAnswer;
+
+    /**
+     * @var TextItem
+     */
     protected $textItem;
+
+    /**
+     * @var SurveyItem
+     */
     protected $surveyItem;
 
     /**
-     * @var ResultItem[]
+     * @var ResultItem[]|ArrayCollection
      */
     protected $childItems;
 
     /**
-     * @var Resultitem
+     * @var ResultItem
      */
     protected $parentItem;
 
@@ -48,8 +69,6 @@ class ResultItem
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -58,7 +77,7 @@ class ResultItem
     }
 
     /**
-     * @return result.
+     * @return Result
      */
     public function getResult()
     {
@@ -66,9 +85,7 @@ class ResultItem
     }
 
     /**
-     * Set result.
-     *
-     * @param result the value to set.
+     * @param Result $result
      */
     public function setResult(Result $result)
     {
@@ -76,7 +93,7 @@ class ResultItem
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getSortOrder()
     {
@@ -92,9 +109,7 @@ class ResultItem
     }
     
     /**
-     * Get singleChoiceAnswer.
-     *
-     * @return singleChoiceAnswer.
+     * @return SingleChoiceAnswer
      */
     public function getSingleChoiceAnswer()
     {
@@ -102,20 +117,16 @@ class ResultItem
     }
     
     /**
-     * Set singleChoiceAnswer.
-     *
-     * @param singleChoiceAnswer the value to set.
+     * @param SingleChoiceAnswer $singleChoiceAnswer
      */
-    public function setSingleChoiceAnswer($singleChoiceAnswer)
+    public function setSingleChoiceAnswer(SingleChoiceAnswer $singleChoiceAnswer)
     {
         $this->singleChoiceAnswer = $singleChoiceAnswer;
         $singleChoiceAnswer->setResultItem($this);
     }
     
     /**
-     * Get multipleChoiceAnswer.
-     *
-     * @return multipleChoiceAnswer.
+     * @return MultipleChoiceAnswer
      */
     public function getMultipleChoiceAnswer()
     {
@@ -123,20 +134,16 @@ class ResultItem
     }
     
     /**
-     * Set multipleChoiceAnswer.
-     *
-     * @param multipleChoiceAnswer the value to set.
+     * @param MultipleChoiceAnswer $multipleChoiceAnswer
      */
-    public function setMultipleChoiceAnswer($multipleChoiceAnswer)
+    public function setMultipleChoiceAnswer(MultipleChoiceAnswer $multipleChoiceAnswer)
     {
         $this->multipleChoiceAnswer = $multipleChoiceAnswer;
         $multipleChoiceAnswer->setResultItem($this);
     }
 
     /**
-     * Get textAnswer.
-     *
-     * @return textAnswer.
+     * @return TextAnswer
      */
     public function getTextAnswer()
     {
@@ -144,20 +151,16 @@ class ResultItem
     }
 
     /**
-     * Set textAnswer.
-     *
-     * @param textAnswer the value to set.
+     * @param TextAnswer $textAnswer
      */
-    public function setTextAnswer($textAnswer)
+    public function setTextAnswer(TextAnswer $textAnswer)
     {
         $this->textAnswer = $textAnswer;
         $textAnswer->setResultItem($this);
     }
 
     /**
-     * Get textItem.
-     *
-     * @return textItem.
+     * @return TextItem
      */
     public function getTextItem()
     {
@@ -165,16 +168,17 @@ class ResultItem
     }
 
     /**
-     * Set textItem.
-     *
-     * @param textItem the value to set.
+     * @param TextItem $textItem
      */
-    public function setTextItem($textItem)
+    public function setTextItem(TextItem $textItem)
     {
         $this->textItem = $textItem;
         $textItem->setResultItem($this);
     }
 
+    /**
+     * @return ArrayCollection|ResultItem[]|MultipleChoiceAnswer|SingleChoiceAnswer|TextAnswer|TextItem
+     */
     public function getContent()
     {
         if (!is_null($this->singleChoiceAnswer)) {
@@ -193,9 +197,8 @@ class ResultItem
             return $this->childItems;
         }
     }
+
     /**
-     * Get childItems.
-     *
      * @return ResultItem[]|ArrayCollection
      */
     public function getChildItems()
@@ -206,7 +209,7 @@ class ResultItem
     /**
      * @param ResultItem $resultItem
      *
-     * @return Survey
+     * @return ResultItem
      */
     public function addChildItem(ResultItem $resultItem)
     {
@@ -227,9 +230,7 @@ class ResultItem
     }
 
     /**
-     * Get parentItem.
-     *
-     * @return parentItem.
+     * @return ResultItem
      */
     public function getParentItem()
     {
@@ -237,9 +238,7 @@ class ResultItem
     }
 
     /**
-     * Set parentItem.
-     *
-     * @param parentItem the value to set.
+     * @param ResultItem $parentItem
      */
     public function setParentItem($parentItem)
     {
@@ -247,9 +246,7 @@ class ResultItem
     }
     
     /**
-     * Get surveyItem.
-     *
-     * @return surveyItem.
+     * @return SurveyItem
      */
     public function getSurveyItem()
     {
@@ -257,15 +254,16 @@ class ResultItem
     }
     
     /**
-     * Set surveyItem.
-     *
-     * @param surveyItem the value to set.
+     * @param SurveyItem $surveyItem
      */
-    public function setSurveyItem($surveyItem)
+    public function setSurveyItem(SurveyItem $surveyItem)
     {
         $this->surveyItem = $surveyItem;
     }
 
+    /**
+     * @return bool
+     */
     public function hasChildren()
     {
         return $this->childItems->count() > 0;

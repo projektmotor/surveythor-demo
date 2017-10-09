@@ -14,8 +14,6 @@ class TextItem extends SurveyItem
     private $text;
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -38,8 +36,6 @@ class TextItem extends SurveyItem
     }
 
     /**
-     * Get text
-     *
      * @return string
      */
     public function getText()

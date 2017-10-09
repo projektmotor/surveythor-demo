@@ -1,9 +1,9 @@
 <?php
 namespace PM\SurveythorBundle\Entity\ResultItems;
 
-use PM\SurveythorBundle\Entity\SurveyItems\Question;
 use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\ResultItem;
+use PM\SurveythorBundle\Entity\SurveyItems\Question;
 
 /**
  * SingleChoiceAnswer
@@ -20,14 +20,18 @@ class SingleChoiceAnswer
      */
     private $choice;
 
+    /**
+     * @var Question
+     */
     private $question;
 
+    /**
+     * @var ResultItem
+     */
     private $resultItem;
 
     /**
-     * Get id.
-     *
-     * @return id.
+     * @return int
      */
     public function getId()
     {
@@ -51,9 +55,7 @@ class SingleChoiceAnswer
     }
 
     /**
-     * Get question.
-     *
-     * @return question.
+     * @return Question
      */
     public function getQuestion()
     {
@@ -61,19 +63,15 @@ class SingleChoiceAnswer
     }
     
     /**
-     * Set question.
-     *
-     * @param question the value to set.
+     * @param Question $question
      */
-    public function setQuestion($question)
+    public function setQuestion(Question $question)
     {
         $this->question = $question;
     }
     
     /**
-     * Get resultItem.
-     *
-     * @return resultItem.
+     * @return ResultItem $resultItem
      */
     public function getResultItem()
     {
@@ -81,9 +79,7 @@ class SingleChoiceAnswer
     }
     
     /**
-     * Set resultItem.
-     *
-     * @param resultItem the value to set.
+     * @param ResultItem $resultItem
      */
     public function setResultItem($resultItem)
     {

@@ -2,9 +2,9 @@
 namespace PM\SurveythorBundle\Entity\ResultItems;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\SurveyItems\Question;
 use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\ResultItem;
+use PM\SurveythorBundle\Entity\SurveyItems\Question;
 
 /**
  * MultipleChoiceAnswer
@@ -21,8 +21,14 @@ class MultipleChoiceAnswer
      */
     private $choices;
 
+    /**
+     * @var Question
+     */
     private $question;
 
+    /**
+     * @var ResultItem
+     */
     private $resultItem;
 
     public function __construct()
@@ -31,9 +37,7 @@ class MultipleChoiceAnswer
     }
 
     /**
-     * Get id.
-     *
-     * @return id.
+     * @return int
      */
     public function getId()
     {
@@ -41,8 +45,6 @@ class MultipleChoiceAnswer
     }
 
     /**
-     * Get choices.
-     *
      * @return Choice[]|ArrayCollection
      */
     public function getChoices()
@@ -71,9 +73,7 @@ class MultipleChoiceAnswer
     }
 
     /**
-     * Get question.
-     *
-     * @return question.
+     * @return Question
      */
     public function getQuestion()
     {
@@ -81,19 +81,15 @@ class MultipleChoiceAnswer
     }
     
     /**
-     * Set question.
-     *
-     * @param question the value to set.
+     * @param Question $question
      */
-    public function setQuestion($question)
+    public function setQuestion(Question $question)
     {
         $this->question = $question;
     }
     
     /**
-     * Get resultItem.
-     *
-     * @return resultItem.
+     * @return ResultItem
      */
     public function getResultItem()
     {
@@ -101,11 +97,9 @@ class MultipleChoiceAnswer
     }
     
     /**
-     * Set resultItem.
-     *
-     * @param resultItem the value to set.
+     * @param ResultItem $resultItem
      */
-    public function setResultItem($resultItem)
+    public function setResultItem(ResultItem $resultItem)
     {
         $this->resultItem = $resultItem;
     }

@@ -1,10 +1,10 @@
 <?php
 namespace PM\SurveythorBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
 use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
 use PM\SurveythorBundle\Entity\ResultItems\TextAnswer;
+use PM\SurveythorBundle\Entity\SurveyItems\Question;
 
 /**
  * Answer
@@ -17,7 +17,7 @@ abstract class Answer
      * @return MultipleChoiceAnswer|SingleChoiceAnswer|TextAnswer
      * @throws \Exception
      */
-    public static function createByQuestionType($question)
+    public static function createByQuestionType(Question $question)
     {
         switch ($question->getType()) {
             case 'mc':

@@ -2,12 +2,9 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\Survey;
-use PM\SurveythorBundle\Entity\Condition;
+use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
 use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
-use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
-use PM\SurveythorBundle\Entity\ResultItemTemplate;
 
 /**
  * SurveyItem
@@ -27,12 +24,12 @@ abstract class SurveyItem
     protected $survey;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $sortOrder;
 
     /**
-     * @var Condition[]|Arraycollection
+     * @var Condition[]|ArrayCollection
      */
     protected $conditions;
 
@@ -42,12 +39,12 @@ abstract class SurveyItem
     protected $title;
 
     /**
-     * @var ResultTemplate
+     * @var ResultItemTemplate
      */
     private $template;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $displayTitle = false;
 
@@ -68,8 +65,6 @@ abstract class SurveyItem
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -78,8 +73,6 @@ abstract class SurveyItem
     }
 
     /**
-     * Get survey.
-     *
      * @return Survey
      */
     public function getSurvey()
@@ -88,8 +81,6 @@ abstract class SurveyItem
     }
 
     /**
-     * Set survey.
-     *
      * @param Survey $survey
      *
      * @return SurveyItem
@@ -102,7 +93,7 @@ abstract class SurveyItem
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getSortOrder()
     {
@@ -110,7 +101,7 @@ abstract class SurveyItem
     }
 
     /**
-     * @param integer $sortOrder
+     * @param int $sortOrder
      */
     public function setSortOrder($sortOrder)
     {
@@ -119,6 +110,8 @@ abstract class SurveyItem
 
     /**
      * @param Condition $condition
+     *
+     * @return SurveyItem
      */
     public function addCondition(Condition $condition)
     {
@@ -139,8 +132,6 @@ abstract class SurveyItem
     }
 
     /**
-     * Get conditions.
-     *
      * @return Condition[]|ArrayCollection
      */
     public function getConditions()
@@ -148,11 +139,14 @@ abstract class SurveyItem
         return $this->conditions;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContentTypeName()
     {
         if ($this instanceof Question) {
             if ($this->getType() == 'mc') {
-                return 'Mutltiple Choice Frage';
+                return 'Multiple Choice Frage';
             } elseif ($this->getType() == 'text') {
                 return 'Freitext Frage';
             } else {
@@ -170,6 +164,9 @@ abstract class SurveyItem
         }
     }
 
+    /**
+     * @return string|null
+     */
     public function getItemType()
     {
         if ($this instanceof Question) {
@@ -191,9 +188,7 @@ abstract class SurveyItem
 
 
     /**
-     * Get title.
-     *
-     * @return title.
+     * @return string
      */
     public function getTitle()
     {
@@ -201,15 +196,16 @@ abstract class SurveyItem
     }
     
     /**
-     * Set title.
-     *
-     * @param title the value to set.
+     * @param string $title
      */
     public function setTitle($title)
     {
         $this->title = $title;
     }
 
+    /**
+     * @return string|null
+     */
     public function getBackendTitle()
     {
         if (!is_null($this->title)) {
@@ -229,9 +225,7 @@ abstract class SurveyItem
     }
 
     /**
-     * Get template.
-     *
-     * @return template.
+     * @return ResultItemTemplate
      */
     public function getTemplate()
     {
@@ -239,19 +233,15 @@ abstract class SurveyItem
     }
     
     /**
-     * Set template.
-     *
-     * @param template the value to set.
+     * @param ResultItemTemplate $template
      */
-    public function setTemplate($template)
+    public function setTemplate(ResultItemTemplate $template)
     {
         $this->template = $template;
     }
     
     /**
-     * Get displayTitle.
-     *
-     * @return displayTitle.
+     * @return string
      */
     public function getDisplayTitle()
     {
@@ -259,9 +249,7 @@ abstract class SurveyItem
     }
 
     /**
-     * Set displayTitle.
-     *
-     * @param displayTitle the value to set.
+     * @param string $displayTitle
      */
     public function setDisplayTitle($displayTitle)
     {
@@ -269,9 +257,7 @@ abstract class SurveyItem
     }
     
     /**
-     * Get description.
-     *
-     * @return description.
+     * @return string
      */
     public function getDescription()
     {
@@ -279,9 +265,7 @@ abstract class SurveyItem
     }
     
     /**
-     * Set description.
-     *
-     * @param description the value to set.
+     * @param string $description
      */
     public function setDescription($description)
     {
@@ -289,9 +273,7 @@ abstract class SurveyItem
     }
     
     /**
-     * Get itemGroup.
-     *
-     * @return itemGroup.
+     * @return ItemGroup
      */
     public function getItemGroup()
     {
@@ -299,11 +281,9 @@ abstract class SurveyItem
     }
     
     /**
-     * Set itemGroup.
-     *
-     * @param itemGroup the value to set.
+     * @param ItemGroup $itemGroup
      */
-    public function setItemGroup($itemGroup)
+    public function setItemGroup(ItemGroup $itemGroup)
     {
         $this->itemGroup = $itemGroup;
     }
@@ -319,11 +299,17 @@ abstract class SurveyItem
         }
     }
 
+    /**
+     * @return bool
+     */
     public function isParent()
     {
         return is_null($this->itemGroup);
     }
 
+    /**
+     * @return SurveyItem
+     */
     public function getRoot()
     {
         if (is_null($this->itemGroup)) {

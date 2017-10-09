@@ -8,17 +8,20 @@ use PM\SurveythorBundle\Entity\ResultItem;
  */
 class TextItem
 {
+    /**
+     * @var int
+     */
     private $id;
     /**
      * @var string
      */
     private $text;
-
+    /**
+     * @var ResultItem
+     */
     private $resultItem;
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -27,8 +30,6 @@ class TextItem
     }
 
     /**
-     * Set text
-     *
      * @param string $text
      *
      * @return TextItem
@@ -41,8 +42,6 @@ class TextItem
     }
 
     /**
-     * Get text
-     *
      * @return string
      */
     public function getText()
@@ -51,21 +50,17 @@ class TextItem
     }
     
     /**
-     * Get resultItem.
-     *
-     * @return resultItem.
+     * @return ResultItem
      */
     public function getResultItem()
     {
         return $this->resultItem;
     }
-    
+
     /**
-     * Set resultItem.
-     *
-     * @param resultItem the value to set.
+     * @param ResultItem $resultItem
      */
-    public function setResultItem($resultItem)
+    public function setResultItem(ResultItem $resultItem)
     {
         $this->resultItem = $resultItem;
     }

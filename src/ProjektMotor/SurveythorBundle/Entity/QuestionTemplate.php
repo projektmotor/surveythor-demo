@@ -2,8 +2,6 @@
 
 namespace PM\SurveythorBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * QuestionTemplate
  */
@@ -30,8 +28,6 @@ class QuestionTemplate
     private $result;
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -40,8 +36,6 @@ class QuestionTemplate
     }
 
     /**
-     * Set name
-     *
      * @param string $name
      *
      * @return QuestionTemplate
@@ -54,8 +48,6 @@ class QuestionTemplate
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -64,8 +56,6 @@ class QuestionTemplate
     }
 
     /**
-     * Set result
-     *
      * @param string $result
      *
      * @return QuestionTemplate
@@ -78,8 +68,6 @@ class QuestionTemplate
     }
 
     /**
-     * Get result
-     *
      * @return string
      */
     public function getResult()
@@ -88,9 +76,7 @@ class QuestionTemplate
     }
 
     /**
-     * Get formType.
-     *
-     * @return formType.
+     * @return string
      */
     public function getFormType()
     {
@@ -98,9 +84,7 @@ class QuestionTemplate
     }
 
     /**
-     * Set formType.
-     *
-     * @param formType the value to set.
+     * @param string $formType
      */
     public function setFormType($formType)
     {

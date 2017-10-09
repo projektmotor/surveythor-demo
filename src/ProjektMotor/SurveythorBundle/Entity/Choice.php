@@ -2,7 +2,6 @@
 
 namespace PM\SurveythorBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
 
 /**
@@ -36,14 +35,12 @@ class Choice
     private $question;
 
     /**
-     * @var integer
+     * @var int
      */
     private $sortOrder;
 
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -52,8 +49,6 @@ class Choice
     }
 
     /**
-     * Set text
-     *
      * @param string $text
      *
      * @return Choice
@@ -66,8 +61,6 @@ class Choice
     }
 
     /**
-     * Get text
-     *
      * @return string
      */
     public function getText()
@@ -76,8 +69,6 @@ class Choice
     }
 
     /**
-     * Set value
-     *
      * @param int $value
      *
      * @return Choice
@@ -90,8 +81,6 @@ class Choice
     }
 
     /**
-     * Get value
-     *
      * @return integer
      */
     public function getValue()
@@ -100,8 +89,6 @@ class Choice
     }
 
     /**
-     * Set event
-     *
      * @param string $event
      *
      * @return Choice
@@ -114,8 +101,6 @@ class Choice
     }
 
     /**
-     * Get event
-     *
      * @return string
      */
     public function getEvent()
@@ -124,8 +109,6 @@ class Choice
     }
 
     /**
-     * Get question.
-     *
      * @return Question
      */
     public function getQuestion()
@@ -134,9 +117,7 @@ class Choice
     }
 
     /**
-     * Set question.
-     *
-     * @param Question $question the value to set.
+     * @param Question $question
      */
     public function setQuestion(Question $question)
     {
@@ -144,7 +125,7 @@ class Choice
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getSortOrder()
     {
@@ -152,7 +133,7 @@ class Choice
     }
 
     /**
-     * @param integer $sortOrder
+     * @param int $sortOrder
      */
     public function setSortOrder($sortOrder)
     {

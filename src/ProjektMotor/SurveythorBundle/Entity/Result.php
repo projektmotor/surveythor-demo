@@ -3,9 +3,6 @@
 namespace PM\SurveythorBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PM\SurveythorBundle\Entity\ResultItem;
-use PM\SurveythorBundle\Entity\Answer;
-use PM\SurveythorBundle\Entity\Survey;
 
 /**
  * Result
@@ -23,12 +20,12 @@ class Result
     private $created;
 
     /**
-     * @var ResultItem[]
+     * @var ResultItem[]|ArrayCollection
      */
     private $resultItems;
 
     /**
-     * ævar Survey
+     * @var Survey
      */
     private $survey;
 
@@ -39,8 +36,6 @@ class Result
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -49,13 +44,11 @@ class Result
     }
 
     /**
-     * Set created
-     *
      * @param \DateTime $created
      *
      * @return Result
      */
-    public function setCreated($created)
+    public function setCreated(\DateTime $created)
     {
         $this->created = $created;
 
@@ -63,8 +56,6 @@ class Result
     }
 
     /**
-     * Get created
-     *
      * @return \DateTime
      */
     public function getCreated()
@@ -105,6 +96,9 @@ class Result
         return $this->resultItems;
     }
 
+    /**
+     * @return Answer[]|ArrayCollection
+     */
     public function getAnswers()
     {
         $answers = new ArrayCollection();
@@ -123,11 +117,17 @@ class Result
         return $answers;
     }
 
+    /**
+     * @return Survey
+     */
     public function getSurvey()
     {
         return $this->survey;
     }
 
+    /**
+     * @param Survey $survey
+     */
     public function setSurvey(Survey $survey)
     {
         $this->survey = $survey;
