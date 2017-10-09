@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 class ResponseHeaderListener
 {
     /** @var array */
-    private static $frontendRoutes = ['result_next'];
+    private static $frontendRoutes = ['result_next', 'result_first'];
     /** @var AllowedOriginRepository */
     private $allowedOriginRepository;
 

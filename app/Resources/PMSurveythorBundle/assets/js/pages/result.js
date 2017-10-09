@@ -1,22 +1,29 @@
-var projektmotor = projektmotor || {};
+module.exports = function (params) {
 
-projektmotor.Result = function () {
-    "use strict";
-    var result;
+    let config = {};
 
-    result = {
-        init: function () {
-            result.delegateNext();
+    $.extend(
+        config,
+        {
+            containerSelector: '#js-st-surveythor-container',
+            nextSelector: '.js-st-survey-next',
+            surveyId: null,
+            surveythorHost: null,
+            surveythorUri: '/result/first/'
         },
-        delegateNext: function () {
-            $('body').delegate('#survey-next', 'click', function (e) {
-                e.preventDefault();
-                result.getNext();
-            });
-        },
-        getNext: function () {
-            var form = $('#result').find('form').first();
-            var url = $('#survey-next').data('next-url');
+        params
+    );
+
+    config.surveythorUri = config.surveythorHost + config.surveythorUri + config.surveyId;
+
+    const container = $(config.containerSelector);
+
+    function bindClickOnNext() {
+        container.on('click', config.nextSelector, function (e) {
+            e.preventDefault();
+
+            let form = container.find('form').first();
+            let url = container.find(config.nextSelector).data('next-url');
 
             $.ajax({
                 url: url,
@@ -24,21 +31,29 @@ projektmotor.Result = function () {
                 data: form.serialize(),
                 success: function (response) {
                     try {
-                        var data = JSON.parse(response);
+                        let data = JSON.parse(response);
                         window.location = data.url;
                     } catch (e) {
                         $('#result').html(response);
                     }
                 }
             });
-        }
-    };
+        });
+    }
 
-    (function () {
-        result.init();
-    }());
+    function initialize() {
+        bindClickOnNext();
+
+        $.ajax({
+            url: config.surveythorUri,
+            method: 'post',
+            success: function (response) {
+                container.html(response);
+            }
+        });
+    }
+
+    $(function () {
+        initialize();
+    });
 };
-
-$(document).ready(function() {
-    new projektmotor.Result();
-});

@@ -1,35 +1,27 @@
 {% extends '::base.html.twig' %}
 
-{# result \PM\SurveythorBundle\Entity\Result #}
 {# survey \PM\SurveythorBundle\Entity\Survey #}
-{# item \PM\SurveythorBundle\Entity\SurveyItem #}
 
 {% block navbar %}{% endblock %}
 {% block body %}
 
-    <h2>{{ survey.getTitle }}</h2>
-    <hr />
-
-    <div id="result">
-        {% if item.header is defined %}
-            <h4>{{ item.header }}</h4>
-        {% endif %}
-
-        {{ form_start(form) }}
-        {{ form_row(form) }}
-        {{ form_end(form) }}
-        <button
-                class="btn btn-default"
-                id="survey-next"
-                data-next-url="{{ url('result_next', { 'survey' : survey.getId, 'surveyItem' : item.id, 'result': result.getId }, true) }}"
-        >
-            weiter
-        </button>
+    ...external content...
+    <div id="js-st-surveythor-container" style="border: 1px solid grey;">
+        ... survey will be placed in here ...
     </div>
+    ...external content...
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="application/javascript" src="{{ asset('build/result.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('build/frontend.js') }}"></script>
+    <script type="application/javascript">
+        var params = {
+            surveyId: {{ survey.getId }},
+            surveythorHost: 'http://surveythor-frontend/app_dev.php',
+        };
+
+        Surveythor(params);
+    </script>
 {% endblock %}
 

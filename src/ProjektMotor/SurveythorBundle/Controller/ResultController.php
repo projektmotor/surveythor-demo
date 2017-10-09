@@ -63,12 +63,22 @@ class ResultController
     }
 
     /**
+     * @param Survey $survey
+     *
+     * @return array
+     */
+    public function newAction(Survey $survey)
+    {
+        return ['survey' => $survey];
+    }
+
+    /**
      * @param FormRequest $formRequest
      * @param Survey      $survey
      *
      * @return array|Response
      */
-    public function newAction(FormRequest $formRequest, Survey $survey)
+    public function firstAction(FormRequest $formRequest, Survey $survey)
     {
         $result = new Result();
         $surveyItem = $survey->getSurveyItems()->first();

@@ -17,6 +17,7 @@ Encore
     // will output as web/build/survey.js
     .addEntry('survey', assets_dir + '/js/pages/survey.js')
     .addEntry('result', assets_dir + '/js/pages/result.js')
+    .addEntry('frontend', assets_dir + '/js/pages/frontend.js')
 
     // will output as web/build/global.css
     .addStyleEntry('global', assets_dir + '/css/global.scss')
