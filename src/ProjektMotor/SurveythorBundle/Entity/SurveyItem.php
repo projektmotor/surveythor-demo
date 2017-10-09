@@ -14,6 +14,8 @@ use PM\SurveythorBundle\Entity\ResultItemTemplate;
  */
 abstract class SurveyItem
 {
+    const BACKEND_TITLE_LENGTH = 90;
+
     /**
      * @var int
      */
@@ -215,12 +217,12 @@ abstract class SurveyItem
         }
 
         if ($this instanceof Question || $this instanceof TextItem) {
-            if (strlen($this->getText()) < 90) {
+            if (strlen($this->getText()) < self::BACKEND_TITLE_LENGTH) {
                 return $this->getText();
             } else {
                 return sprintf(
                     '%s ...',
-                    substr($this->getText(), 0, 90)
+                    substr($this->getText(), 0, self::BACKEND_TITLE_LENGTH)
                 );
             }
         }

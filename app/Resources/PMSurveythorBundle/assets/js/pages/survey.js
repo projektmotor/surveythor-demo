@@ -53,6 +53,9 @@ projektmotor.Survey = function () {
     },
 
     surveyItem = {
+        options : {
+            backendTitleLength: 90
+        },
         init: function () {
 
             // keep value before input gets the focus, to save the value only if it has changed
@@ -92,17 +95,19 @@ projektmotor.Survey = function () {
                     method: 'post',
                     data: form.serialize(),
                     isLocal: true,
-                    //success: function (response) {
-                    //    var itemContainer = $(form).parents('.panel-default').first();
-                    //    response = JSON.parse(response);
+                    success: function () {
+                        var panel = $(elem).parents('.panel-default.survey-item').first();
+                        var panelTitle = $(panel).children('.panel-heading').find('span.item-title-text');
+                        var text = $(panel).find('.surveyitem-text').last().val();
+                        var title = $(panel).find('.surveyitem-title').last().val();
+                        title = title === '' ? text : title;
 
-                    //    $(itemContainer).html($(response.html).html());
-                    //    sortable.helpers.openPanels(response.open);
-
-                    //    if ($(elem).hasClass('choice-field')) {
-                    //        helpers.collapse(elem);
-                    //    }
-                    //}
+                        if (title.length > surveyItem.options.backendTitleLength) {
+                            $(panelTitle).text(title.substring(0, surveyItem.options.backendTitleLength) + '...');
+                        } else {
+                            $(panelTitle).text(title);
+                        }
+                    }
                 });
             }
         },

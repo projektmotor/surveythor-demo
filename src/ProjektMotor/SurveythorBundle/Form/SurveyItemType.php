@@ -35,7 +35,8 @@ class SurveyItemType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, array(
-                'label' => 'Titel'
+                'label' => 'Titel',
+                'attr' => array('class' => 'surveyitem-title')
             ))
             ->add('displayTitle', null, array(
                 'label' => 'Titel anzeigen'
@@ -67,7 +68,9 @@ class SurveyItemType extends AbstractType
                         case Question::class:
                             $questionType = $item->getType();
 
-                            $form->add('text');
+                            $form->add('text', null, array(
+                                'attr' => array('class' => 'surveyitem-text')
+                            ));
                             if ($questionType == 'mc' || $questionType == 'sc') {
                                 $form->add('choices', ChoiceCollectionType::class, array(
                                     'entry_type' => QuestionChoiceType::class,
@@ -111,7 +114,9 @@ class SurveyItemType extends AbstractType
                             break;
 
                         case TextItem::class:
-                            $form->add('text');
+                            $form->add('text', null, array(
+                                'attr' => array('class' => 'surveyitem-text')
+                            ));
                             $form->remove('type');
                             $form->add('type', HiddenType::class, array(
                                 'label' => false,
