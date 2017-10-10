@@ -18,7 +18,7 @@
     <script type="application/javascript">
         var params = {
             surveyId: {{ survey.getId }},
-            surveythorHost: 'http://surveythor-frontend/app_dev.php',
+            surveythorHost: '{{ surveythorHost }}',
         };
 
         Surveythor(params);

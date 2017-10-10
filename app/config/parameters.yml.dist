@@ -26,3 +26,5 @@ parameters:
     mink_api_username_env_name: 'SAUCE_USERNAME'
     mink_api_key_env_name: 'SAUCE_ACCESS_KEY'
     mink_tunnel_id_env_name: 'TRAVIS_JOB_NUMBER'
+
+    twig.param.surveythor_host: 'http://surveythor-frontend/app_dev.php'
