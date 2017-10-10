@@ -33,6 +33,7 @@ before_script:
 
 script:
   - vendor/bin/phpunit -v --coverage-text
+  - node_modules/.bin/jshint --config=.jshintrc app/Resources/PMSurveythorBundle/assets/js
 
 deploy:
   provider: heroku

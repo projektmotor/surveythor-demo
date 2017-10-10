@@ -23,7 +23,7 @@ Encore
     .addStyleEntry('global', assets_dir + '/css/global.scss')
 
     // allow sass/scss files to be processed
-    .enableSassLoader(function (sassOptions) {
+    .enableSassLoader(function () {
     }, {
         resolveUrlLoader: false
     })
@@ -40,7 +40,7 @@ Encore
 ;
 
 // export the final configuration
-config = Encore.getWebpackConfig();
+let config = Encore.getWebpackConfig();
 
 if (config.devServer) {
     config.devServer.host = '0.0.0.0';

@@ -25,6 +25,7 @@ projektmotor.Survey = function () {
 
     survey = {
         init: function () {
+            // begin disable form on website loading
             $(document).on({
                 ajaxSend: function(e, jqXHR, options) {
                     if (options.isLocal) {
@@ -38,7 +39,9 @@ projektmotor.Survey = function () {
                     $('#action-visualizer').css('display', 'none');
                 }
             });
+            // end disable form on website loading
 
+            // begin save title on edit
             $('.survey-title-field').change(function() {
                 var form = $('form[name=survey_title]');
                 $.ajax({
@@ -49,6 +52,7 @@ projektmotor.Survey = function () {
                     success: function () {} // mal sehen
                 });
             });
+            // end save title on edit
         }
     },
 
@@ -81,6 +85,7 @@ projektmotor.Survey = function () {
                 surveyItem.collapse(this);
             });
 
+            // bind delete button
             $('body').delegate('a.item-delete', 'click', function(e) {
                 e.preventDefault();
                 surveyItem.removeDialog(this);
@@ -149,6 +154,7 @@ projektmotor.Survey = function () {
         }
     },
 
+        // bind draggable
     draggable = {
         init: function () {
             $('#new-items > div').draggable(draggable.draggableOptions);
@@ -159,11 +165,11 @@ projektmotor.Survey = function () {
             connectToSortable: '.draggable-connect',
             revert: false
         }
-
     },
 
     toolbox = {
         init: function() {
+            // lock toolbox on page
             $('#survey-tools').affix({});
         }
     },
@@ -215,7 +221,6 @@ projektmotor.Survey = function () {
                         var draggableConnect = event.target;
                         var url = ui.item.attr('data-itemgroup-add-item-url');
                         var parentGroup = $(draggableConnect).parents('.panel-collapse').first().attr('id').substring(5);
-                        var rootContainer = $(draggableConnect).parents('.parent-item').last();
                         var form = $(ui.item).closest('form[name=surveyitem]');
                         var sortOrder = $(ui.item).index();
                         $.ajax({
