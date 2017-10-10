@@ -14,13 +14,13 @@ PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer:
         resultItem:
             targetEntity: PM\SurveythorBundle\Entity\ResultItem
             inversedBy: singleChoiceAnswer
-            cascade:
-                - merge
-                - detach
 
     manyToOne:
         choice:
             targetEntity: PM\SurveythorBundle\Entity\Choice
+            cascade:
+                - persist
+                - remove
 
         question:
             targetEntity: PM\SurveythorBundle\Entity\SurveyItems\Question

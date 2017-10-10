@@ -26,7 +26,7 @@ class ConditionRepository extends BaseRepository
             ->select('c')
             ->join('c.choices', 'ch')
             ->where('ch.question = :idQuestion')
-            ->setParameter('idQuestion', $question->getId());;
+            ->setParameter('idQuestion', $question->getId());
 
         return $qb->getQuery()->getResult();
     }
@@ -38,7 +38,7 @@ class ConditionRepository extends BaseRepository
             ->select('c')
             ->join('c.choices', 'ch')
             ->where('c.id = :idChoice')
-            ->setParameter('idChoice', $choice->getId());;
+            ->setParameter('idChoice', $choice->getId());
 
         return $qb->getQuery()->getResult();
     }

@@ -10,7 +10,6 @@ use PM\SurveythorBundle\Entity\Choice;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
  * SingleChoiceAnswerType
@@ -46,6 +45,7 @@ class SingleChoiceAnswerType extends AbstractType
                     'choice_label' => 'text',
                     'choices' => $question->getChoices(),
                     'expanded' => true,
+                    'by_reference' => false,
                     'attr' => array(
                         'class' => 'choice-answer'
                     ),

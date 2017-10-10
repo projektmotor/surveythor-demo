@@ -5,11 +5,17 @@
 {% block navbar %}{% endblock %}
 {% block body %}
 
-    ...external content...
-    <div id="js-st-surveythor-container" style="border: 1px solid grey;">
-        ... survey will be placed in here ...
+    <h3>{{ survey.title }}</h3>
+
+    <div id="js-st-surveythor-container" style="border: 1px solid grey; padding: 12px;">
+        {% include '@PMSurveythorBundle/Result/next.html.twig' with {
+            'item' : item,
+            'form' : form,
+            'survey' : survey,
+            'result' : result
+        } %}
     </div>
-    ...external content...
+
 {% endblock %}
 
 {% block javascripts %}

@@ -9,7 +9,7 @@ module.exports = function (params) {
             nextSelector: '.js-st-survey-next',
             surveyId: null,
             surveythorHost: null,
-            surveythorUri: '/result/first/'
+            surveythorUri: '/result/new/'
         },
         params
     );
@@ -19,22 +19,24 @@ module.exports = function (params) {
     const container = $(config.containerSelector);
 
     function bindClickOnNext() {
-        container.on('click', config.nextSelector, function (e) {
+        $('body').delegate(config.nextSelector, 'click', function (e) {
             e.preventDefault();
 
             let form = container.find('form').first();
             let url = container.find(config.nextSelector).data('next-url');
+            console.log(url);
 
             $.ajax({
                 url: url,
                 method: 'post',
                 data: form.serialize(),
                 success: function (response) {
-                    try {
-                        let data = JSON.parse(response);
+                    let data = JSON.parse(response);
+                    if (data.status === 'OK') {
+                        container.html(data.html);
+                    }
+                    if (data.status === 'finished') {
                         window.location = data.url;
-                    } catch (e) {
-                        $('#result').html(response);
                     }
                 }
             });
@@ -44,13 +46,14 @@ module.exports = function (params) {
     function initialize() {
         bindClickOnNext();
 
-        $.ajax({
-            url: config.surveythorUri,
-            method: 'post',
-            success: function (response) {
-                container.html(response);
-            }
-        });
+        //$.ajax({
+        //    url: config.surveythorUri,
+        //    method: 'post',
+        //    success: function (response) {
+        //        let data = JSON.parse(response);
+        //        container.html(data.html);
+        //    }
+        //});
     }
 
     $(function () {

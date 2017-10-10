@@ -100,7 +100,7 @@ class ResultItemType extends AbstractType
         $resolver->setDefaults(array(
             'label' => false,
             'data_class' => ResultItem::class,
-            'csrf_protection' => false,
+            'csrf_protection' => false
         ));
     }
 

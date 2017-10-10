@@ -4,6 +4,9 @@ namespace PM\SurveythorBundle\Controller;
 use PM\SurveythorBundle\Entity\Factory\SurveyItemFactory;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\SurveyItem;
+use PM\SurveythorBundle\Entity\SurveyItems\Question;
+use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
+use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Form\SurveyItemType;
 use PM\SurveythorBundle\Repository\ConditionRepository;
 use PM\SurveythorBundle\Repository\SurveyItemRepository;
@@ -221,8 +224,7 @@ class SurveyItemController
      */
     public function removeAction(SurveyItem $item)
     {
-        $conditions = $this->conditionRepository->getConditionsByQuestion($item);
-
+        $conditions = $this->getItemConditions($item);
         if (empty(($conditions))) {
             $id = $item->getId();
             $this->surveyItemRepository->remove($item);
@@ -231,14 +233,27 @@ class SurveyItemController
                 'item' => $id
             )));
         } else {
-            $items = [];
-            foreach ($conditions as $condition) {
-                $items[] = $condition->getSurveyItem()->getId();
-            }
             return new JsonResponse(json_encode(array(
                 'status' => 'FAIL',
                 'reason' => 'Diese Frage kann nicht gelöscht werden, sie wird von mind. einer Bedingung verwendet.'
             )));
         }
+    }
+
+    private function getItemConditions(SurveyItem $item, $conditions = null)
+    {
+        $conditions = $conditions === null ? array() : $conditions;
+        switch (get_class($item)) {
+            case Question::class:
+                $conditions = $this->conditionRepository->getConditionsByQuestion($item);
+                break;
+            case ItemGroup::class:
+                foreach ($item->getSurveyItems() as $item) {
+                    $conditions = $this->getItemConditions($item, $conditions);
+                }
+                break;
+        }
+
+        return $conditions;
     }
 }

@@ -5,6 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use PM\SurveythorBundle\Entity\ResultItems\TextItem;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
  * TextItemType
@@ -19,6 +20,7 @@ class TextItemType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('text', HiddenType::class, [ 'label' => false ]);
     }
 
     /**

@@ -1,10 +1,6 @@
 result_new:
     path: /new/{survey}
     defaults: { _controller: result_controller:newAction }
-result_first:
-    path: /first/{survey}
-    defaults: { _controller: result_controller:firstAction }
-    methods: [ POST ]
 result_next:
     path: /next/{survey}/{surveyItem}/{result}
     defaults: { _controller: result_controller:nextAction }

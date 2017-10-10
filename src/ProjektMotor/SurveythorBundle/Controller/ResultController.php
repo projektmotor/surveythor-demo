@@ -24,6 +24,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Twig_Environment;
 
 /**
  * Class ResultController
@@ -46,20 +48,36 @@ class ResultController
      */
     private $resultRepository;
 
+    /**
+     * @var Twig_Environment
+     */
+    private $twig;
+
+    /**
+     * @var Router
+     */
+    private $router;
+
 
     /**
      * @param EventSubscriberInterface $resultReadySubscriber
      * @param FormFactory              $formFactory
      * @param ResultRepository         $resultRepository
+     * @param Twig_Environment         $twig
+     * @param Router               $router
      */
     public function __construct(
         EventSubscriberInterface $resultReadySubscriber,
         FormFactory $formFactory,
-        ResultRepository $resultRepository
+        ResultRepository $resultRepository,
+        Twig_Environment $twig,
+        Router $router
     ) {
         $this->resultReadySubscriber = $resultReadySubscriber;
         $this->formFactory = $formFactory;
         $this->resultRepository = $resultRepository;
+        $this->twig = $twig;
+        $this->router = $router;
     }
 
     /**
@@ -69,30 +87,31 @@ class ResultController
      */
     public function newAction(Survey $survey)
     {
-        return ['survey' => $survey];
-    }
-
-    /**
-     * @param FormRequest $formRequest
-     * @param Survey      $survey
-     *
-     * @return array|Response
-     */
-    public function firstAction(FormRequest $formRequest, Survey $survey)
-    {
         $result = new Result();
         $surveyItem = $survey->getSurveyItems()->first();
         $resultItem = $this->prepareResultItem($surveyItem, $result);
 
+        $result->setSurvey($survey);
         $this->resultRepository->save($result);
 
-        $formRequest->handle(ResultItemType::class, $resultItem);
+        $form = $this->formFactory->create(
+            ResultItemType::class,
+            $resultItem,
+            array('action' => $this->router->generate(
+                'result_next',
+                array(
+                    'survey' => $survey->getId(),
+                    'surveyItem' => $surveyItem->getId(),
+                    'result' => $result->getId()
+                )
+            ))
+        );
 
         return array(
-            'form'  => $formRequest->createFormView(),
+            'form'  => $form->createView(),
             'item' => $surveyItem,
-            'result' => $result,
             'survey' => $survey,
+            'result' => $result
         );
     }
 
@@ -108,29 +127,48 @@ class ResultController
     {
         $resultItem = $this->prepareResultItem($surveyItem, $result);
         if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
-            return array(
-                'item'  => $surveyItem,
-                'result' => $result,
-                'survey' => $survey,
-                'form'  => $formRequest->createFormView()
+            $form = $this->formFactory->create(ResultItemType::class, $resultItem);
+            $html = $this->twig->render(
+                '@PMSurveythorBundle/Result/next.html.twig',
+                array(
+                    'item' => $surveyItem,
+                    'result' => $result,
+                    'survey' => $survey,
+                    'form' => $form->createView()
+                )
             );
+
+            return new JsonResponse(json_encode(array(
+                'status' => 'OK',
+                'html' => $html
+            )));
         }
 
         $resultItem = $formRequest->getValidData();
         $result->addResultItem($resultItem);
+        $this->resultRepository->save($result);
 
         if ($nextSurveyItem = $this->getNextItem($surveyItem, $survey, $result)) {
             $nextResultItem = $this->prepareResultItem($nextSurveyItem, $result);
 
-            return array(
-                'item' => $nextSurveyItem,
-                'result' => $result,
-                'survey' => $survey,
-                'form'  => $this->formFactory->create(ResultItemType::class, $nextResultItem)->createView()
+            $html = $this->twig->render(
+                '@PMSurveythorBundle/Result/next.html.twig',
+                array(
+                    'item' => $nextSurveyItem,
+                    'result' => $result,
+                    'survey' => $survey,
+                    'form' => $this->formFactory->create(
+                        ResultItemType::class,
+                        $nextResultItem
+                    )->createView()
+                )
             );
+
+            return new JsonResponse(json_encode(array(
+                'status' => 'OK',
+                'html' => $html
+            )));
         } else {
-            $result->setSurvey($survey);
-            $result = $this->mergeResult($result);
             $dispatcher = new EventDispatcher();
             $event = new ResultEvent($result);
 
@@ -139,7 +177,10 @@ class ResultController
 
             $jsonResponse = new JsonResponse(
                 json_encode(
-                    array('url' => $event->getUrl())
+                    array(
+                        'status' => 'finished',
+                        'url' => $event->getUrl()
+                    )
                 ),
                 200,
                 [
@@ -185,6 +226,7 @@ class ResultController
             $resultChoices = array();
             foreach ($result->getResultItems() as $resultItem) {
                 if ($answer = $resultItem->getSingleChoiceAnswer()) {
+                    //dump($answer); die();
                     $resultChoices[] = $answer->getChoice()->getId();
                 }
                 if ($answer = $resultItem->getMultipleChoiceAnswer()) {
@@ -279,84 +321,5 @@ class ResultController
         }
 
         return $resultItem;
-    }
-
-    /**
-     * @param Result $result
-     *
-     * @return Result
-     */
-    private function mergeResult(Result $result)
-    {
-        foreach ($result->getResultItems() as $resultItem) {
-            $resultItem = $this->mergeResultItem($resultItem);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param ResultItem $resultItem
-     * @param bool       $recursive
-     *
-     * @return ResultItem
-     */
-    private function mergeResultItem(ResultItem $resultItem, $recursive = false)
-    {
-        $surveyItem = $resultItem->getSurveyItem();
-        /** @var SurveyItem $surveyItem */
-        $surveyItem = $this->resultRepository->merge($surveyItem);
-        $resultItem->setSurveyItem($surveyItem);
-
-        if ($answer = $resultItem->getSingleChoiceAnswer()) {
-            $question = $answer->getQuestion();
-            /** @var Question $question */
-            $question = $this->resultRepository->merge($question);
-
-            $choice = $answer->getChoice();
-            /** @var Choice $choice */
-            $choice = $this->resultRepository->merge($choice);
-
-            $answer->setChoice($choice);
-            $answer->setQuestion($question);
-        }
-
-        if ($answer = $resultItem->getMultipleChoiceAnswer()) {
-            $question = $answer->getQuestion();
-            $question = $this->resultRepository->merge($question);
-
-            $choices = $answer->getChoices();
-            $answer->clearChoices();
-
-            foreach ($choices as $choice) {
-                $choice = $this->resultRepository->merge($choice);
-                $answer->addChoice($choice);
-            }
-            $answer->setQuestion($question);
-        }
-
-        if ($answer = $resultItem->getTextAnswer()) {
-            $question = $answer->getQuestion();
-            $question = $this->resultRepository->merge($question);
-            $answer->setQuestion($question);
-        }
-
-        if ($resultItem->hasChildren() && $recursive === false) {
-            $this->mergeChildren($resultItem);
-        }
-
-        return $resultItem;
-    }
-
-    /**
-     * @param ResultItem $resultItem
-     */
-    private function mergeChildren(ResultItem $resultItem)
-    {
-        $childItems = $resultItem->getChildItems();
-        foreach ($childItems as $childItem) {
-            $this->mergeChildren($childItem);
-        }
-        $this->mergeResultItem($resultItem, true);
     }
 }

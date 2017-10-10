@@ -14,22 +14,15 @@ PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer:
         resultItem:
             targetEntity: PM\SurveythorBundle\Entity\ResultItem
             inversedBy: multipleChoiceAnswer
-            cascade:
-                - merge
-                - detach
 
     manyToOne:
         question:
             targetEntity: PM\SurveythorBundle\Entity\SurveyItems\Question
-            cascade:
-                - merge
-                - detach
 
     manyToMany:
         choices:
             targetEntity: PM\SurveythorBundle\Entity\Choice
             cascade:
-                - merge
-                - detach
+                - persist
 
     lifecycleCallbacks: {  }
