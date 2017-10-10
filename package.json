@@ -10,7 +10,7 @@
         "type": "git"
     },
     "dependencies": {
-        "@symfony/webpack-encore": "git://github.com/robertfausk/webpack-encore.git#master",
+        "@symfony/webpack-encore": "^0.15.1",
         "bootstrap-sass": "^3.3.7",
         "jquery": "^3.2.1",
         "jquery-ui": "^1.12.1",
