@@ -28,3 +28,4 @@ parameters:
     mink_tunnel_id_env_name: 'TRAVIS_JOB_NUMBER'
 
     twig.param.surveythor_host: 'http://surveythor-frontend/app_dev.php'
+    test.surveythor_host: 'http://surveythor-frontend'
