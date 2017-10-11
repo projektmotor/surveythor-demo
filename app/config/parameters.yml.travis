@@ -23,4 +23,3 @@ parameters:
     mink_tunnel_id_env_name: 'TRAVIS_JOB_NUMBER'
 
     twig.param.surveythor_host: 'http://localhost/app_test.php'
-    test.surveythor_host: 'http://localhost'
