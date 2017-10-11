@@ -5,6 +5,7 @@ cache:
   yarn: true
   directories:
     - node_modules
+    - $HOME/.composer/cache/files
 
 language: php
 
