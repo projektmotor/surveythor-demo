@@ -1,13 +1,6 @@
 <?php
 namespace PM\SurveythorBundle\Form;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Collections\ArrayCollection;
 use PM\SurveythorBundle\Entity\ResultItem;
 use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
@@ -18,7 +11,11 @@ use PM\SurveythorBundle\Form\ResultItems\MultipleChoiceAnswerType;
 use PM\SurveythorBundle\Form\ResultItems\SingleChoiceAnswerType;
 use PM\SurveythorBundle\Form\ResultItems\TextAnswerType;
 use PM\SurveythorBundle\Form\ResultItems\TextItemType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * ResultItemType
@@ -34,6 +31,7 @@ class ResultItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            /** @var ResultItem $resultItem */
             $resultItem = $event->getData();
             $form = $event->getForm();
 
