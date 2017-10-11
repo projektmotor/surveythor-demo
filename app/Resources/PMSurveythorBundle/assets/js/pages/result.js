@@ -7,14 +7,11 @@ module.exports = function (params) {
         {
             containerSelector: '#js-st-surveythor-container',
             nextSelector: '.js-st-survey-next',
-            surveyId: null,
-            surveythorHost: null,
-            surveythorUri: '/result/new/'
+            surveythorUri: null
         },
         params
     );
 
-    config.surveythorUri = config.surveythorHost + config.surveythorUri + config.surveyId;
 
     const container = $(config.containerSelector);
 
@@ -24,7 +21,6 @@ module.exports = function (params) {
 
             let form = container.find('form').first();
             let url = container.find(config.nextSelector).data('next-url');
-            console.log(url);
 
             $.ajax({
                 url: url,
@@ -46,14 +42,14 @@ module.exports = function (params) {
     function initialize() {
         bindClickOnNext();
 
-        //$.ajax({
-        //    url: config.surveythorUri,
-        //    method: 'post',
-        //    success: function (response) {
-        //        let data = JSON.parse(response);
-        //        container.html(data.html);
-        //    }
-        //});
+        $.ajax({
+            url: config.surveythorUri,
+            method: 'post',
+            success: function (response) {
+                let data = JSON.parse(response);
+                container.html(data.html);
+            }
+        });
     }
 
     $(function () {

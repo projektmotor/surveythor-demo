@@ -7,14 +7,7 @@
 
     <h3>{{ survey.title }}</h3>
 
-    <div id="js-st-surveythor-container" style="border: 1px solid grey; padding: 12px;">
-        {% include '@PMSurveythorBundle/Result/next.html.twig' with {
-            'item' : item,
-            'form' : form,
-            'survey' : survey,
-            'result' : result
-        } %}
-    </div>
+    <div id="js-st-surveythor-container" style="border: 1px solid grey; padding: 12px;"></div>
 
 {% endblock %}
 
@@ -23,8 +16,7 @@
     <script type="application/javascript" src="{{ asset('build/frontend.js') }}"></script>
     <script type="application/javascript">
         var params = {
-            surveyId: {{ survey.getId }},
-            surveythorHost: '{{ surveythorHost }}',
+            surveythorUri: '{{ url('result_first', { 'survey' : survey.getId }, true) }}'
         };
 
         Surveythor(params);

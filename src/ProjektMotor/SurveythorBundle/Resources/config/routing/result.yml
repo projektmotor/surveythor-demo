@@ -5,3 +5,7 @@ result_next:
     path: /next/{survey}/{surveyItem}/{result}
     defaults: { _controller: result_controller:nextAction }
     methods: [ POST ]
+result_first:
+    path: /first/{survey}
+    defaults: { _controller: result_controller:firstAction }
+    methods: [ POST ]

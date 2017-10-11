@@ -87,6 +87,13 @@ class ResultController
      */
     public function newAction(Survey $survey)
     {
+        return array(
+            'survey' => $survey
+        );
+    }
+
+    public function firstAction(Survey $survey)
+    {
         $result = new Result();
         $surveyItem = $survey->getSurveyItems()->first();
         $resultItem = $this->prepareResultItem($surveyItem, $result);
@@ -94,25 +101,21 @@ class ResultController
         $result->setSurvey($survey);
         $this->resultRepository->save($result);
 
-        $form = $this->formFactory->create(
-            ResultItemType::class,
-            $resultItem,
-            array('action' => $this->router->generate(
-                'result_next',
-                array(
-                    'survey' => $survey->getId(),
-                    'surveyItem' => $surveyItem->getId(),
-                    'result' => $result->getId()
-                )
-            ))
+        $form = $this->formFactory->create(ResultItemType::class, $resultItem);
+        $html = $this->twig->render(
+            '@PMSurveythorBundle/Result/next.html.twig',
+            array(
+                'item' => $surveyItem,
+                'result' => $result,
+                'survey' => $survey,
+                'form' => $form->createView()
+            )
         );
 
-        return array(
-            'form'  => $form->createView(),
-            'item' => $surveyItem,
-            'survey' => $survey,
-            'result' => $result
-        );
+        return new JsonResponse(json_encode(array(
+            'status' => 'OK',
+            'html' => $html
+        )));
     }
 
     /**
@@ -151,16 +154,14 @@ class ResultController
         if ($nextSurveyItem = $this->getNextItem($surveyItem, $survey, $result)) {
             $nextResultItem = $this->prepareResultItem($nextSurveyItem, $result);
 
+            $form = $this->formFactory->create(ResultItemType::class, $nextResultItem);
             $html = $this->twig->render(
                 '@PMSurveythorBundle/Result/next.html.twig',
                 array(
                     'item' => $nextSurveyItem,
                     'result' => $result,
                     'survey' => $survey,
-                    'form' => $this->formFactory->create(
-                        ResultItemType::class,
-                        $nextResultItem
-                    )->createView()
+                    'form' => $form->createView()
                 )
             );
 
