@@ -48,10 +48,12 @@ deploy:
   provider: heroku
   api_key:
     secure: LOeGmWtq5fEEpBGA8c0OcofPeGzDaP/UPjgEUfQqBKlemirauwC/E6OrCbQjnoGQBUoB1h/GailozlAO7x2OGQ+Bdflvk7TUonLSicTVsKlhAaZPH7508wwvSWy5lv8CmtHR4lPu2Xm9UfN/GORDyYvL/TK7LFq9Az+I1f4FNvbOb1ujOdqX2DgXqNoNKShG+t+TQbdWWXjHr9ZOhAYAEPlEjvPlMbeHx4R2sarEolrwYU0iUnCjMZbcD8S1PxIk5sPXXrGBv1IBJb4CxOw1UcTyMHd7tzX0JynticfucQcv4RLhPihmzfkoBVTZ22eAFRZYJ89oeNYV9tNb/dSOt1LaRHuiJA8leBbz5hVxeqmVtM3LRffNpMZZ1ZFdv/G1blYnMMmqifg44l5rs/s4Nbsmai3eU8w+URI/IINf84C11M1D6aukKFPYe7n7q8MxkCs8NVqi4bgOTN0iRIbQrbVfXCKK6Ki36wOqhe/97rkB43YLGVUW5iHPjrxhayqaJnXfdUhGs9aQttunuGlWZfs98MDP8Tw8ykK5+v/WSPm1fxbYd2VL782tthPix3LuWw6bP5RmoYjmcuPS6Gt9bcxiThHsQhotSpNYwzQ+dqgtiIhsQnI8iUd8U7eSogz5V9kch0bFYiyNJL7iBHxBJqs31QotGWeq48MejJ952y0=
-  app: surveythor-demo-app
+  app:
+    - surveythor-demo-app
+    - surveythor-frontend-app
   on:
     repo: projektmotor/surveythor-demo
-    branch: master # default is master
+    all_branches: true # default is master
     php: 5.6
 
 addons:
