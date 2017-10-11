@@ -1,11 +1,17 @@
 dist: trusty
 sudo: required
 
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
 language: php
 
 php:
   - 5.6
   - 7.0
+  - 7.1
 
 before_script:
   - sudo apt-get update
@@ -30,9 +36,11 @@ before_script:
   - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:create --env=test
   - php bin/console doctrine:schema:update --env=test --force
+  - yarn install
 
 script:
   - vendor/bin/phpunit -v --coverage-text
+  - node_modules/.bin/jshint --config=.jshintrc app/Resources/PMSurveythorBundle/assets/js
 
 deploy:
   provider: heroku

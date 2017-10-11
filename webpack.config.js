@@ -23,8 +23,9 @@ Encore
     .addStyleEntry('global', assets_dir + '/css/global.scss')
 
     // allow sass/scss files to be processed
-    .enableSassLoader({
-        resolve_url_loader: false
+    .enableSassLoader(function () {
+    }, {
+        resolveUrlLoader: false
     })
 
     // allow legacy applications to use $/jQuery as a global variable
@@ -39,7 +40,7 @@ Encore
 ;
 
 // export the final configuration
-config = Encore.getWebpackConfig();
+let config = Encore.getWebpackConfig();
 
 if (config.devServer) {
     config.devServer.host = '0.0.0.0';

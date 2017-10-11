@@ -17,16 +17,11 @@ class CrossOriginResourceSharingTest extends WebTestCase
             ]
         );
 
-        $client->request(
-            'POST',
-            'http://surveythor-frontend/result/next/1/8/1'
-        );
+        $uri = $client->getContainer()->getParameter('test.surveythor_host').'/result/next/1/8/1';
 
-        if ($client->getResponse()->getStatusCode() !== 200) {
-            $this->markTestSkipped('only works locally atm cause we don\'t have another domain in ci yet');
-        }
+        $client->request('POST', $uri);
 
-        $this->assertSame(200, $client->getResponse()->getStatusCode(), 'wrong status code');
+        $this->assertSame(200, $client->getResponse()->getStatusCode(), 'wrong status code for uri '.$uri);
 
         $this->assertTrue(
             $client->getResponse()->headers->has('Access-Control-Allow-Origin'),
