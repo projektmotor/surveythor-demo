@@ -176,10 +176,14 @@ class Survey
     {
         while ($current = $this->surveyItems->current()) {
             if ($current->getId() == $item->getId()) {
-                return $this->surveyItems->next();
+                $next = $this->surveyItems->next();
+                $this->surveyItems->first();
+                return $next;
             }
             $this->surveyItems->next();
         }
+
+        return null;
     }
 
     /**

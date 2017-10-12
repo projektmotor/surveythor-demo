@@ -300,7 +300,7 @@ abstract class SurveyItem
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isParent()
     {

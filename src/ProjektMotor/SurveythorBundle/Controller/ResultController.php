@@ -150,17 +150,45 @@ class ResultController
         $result->addResultItem($resultItem);
         $this->resultRepository->save($result);
 
-        if ($nextSurveyItem = $this->getNextItem($surveyItem, $survey, $result)) {
-            $nextResultItem = $this->prepareResultItem($nextSurveyItem, $result);
+        $nextSurveyItem = $this->getNextItem($surveyItem, $survey, $result);
+        $nextResultItem = $this->prepareResultItem($nextSurveyItem, $result);
 
-            $form = $this->formFactory->create(ResultItemType::class, $nextResultItem);
+        $form = $this->formFactory->create(ResultItemType::class, $nextResultItem);
+        $html = $this->twig->render(
+            '@PMSurveythorBundle/Result/next.html.twig',
+            array(
+                'item' => $nextSurveyItem,
+                'result' => $result,
+                'survey' => $survey,
+                'form' => $form->createView()
+            )
+        );
+
+        return new JsonResponse(json_encode(array(
+            'status' => 'OK',
+            'html' => $html
+        )));
+    }
+
+    /**
+     * @param FormRequest $formRequest
+     * @param Survey      $survey
+     * @param SurveyItem  $surveyItem
+     * @param Result      $result
+     *
+     * @return array|JsonResponse
+     */
+    public function lastAction(FormRequest $formRequest, Survey $survey, SurveyItem $surveyItem, Result $result)
+    {
+        $resultItem = $this->prepareResultItem($surveyItem, $result);
+        if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
             $html = $this->twig->render(
                 '@PMSurveythorBundle/Result/next.html.twig',
                 array(
-                    'item' => $nextSurveyItem,
+                    'item' => $surveyItem,
                     'result' => $result,
                     'survey' => $survey,
-                    'form' => $form->createView()
+                    'form' => $formRequest->getForm()->createView()
                 )
             );
 
@@ -168,28 +196,32 @@ class ResultController
                 'status' => 'OK',
                 'html' => $html
             )));
-        } else {
-            $dispatcher = new EventDispatcher();
-            $event = new ResultEvent($result);
-
-            $dispatcher->addSubscriber($this->resultReadySubscriber);
-            $dispatcher->dispatch(ResultEvent::NAME, $event);
-
-            $jsonResponse = new JsonResponse(
-                json_encode(
-                    array(
-                        'status' => 'finished',
-                        'url' => $event->getUrl()
-                    )
-                ),
-                200,
-                [
-                    'Access-Control-Allow-Origin' => 'http://surveythor-demo',
-                ]
-            );
-
-            return $jsonResponse;
         }
+
+        $resultItem = $formRequest->getValidData();
+        $result->addResultItem($resultItem);
+        $this->resultRepository->save($result);
+
+        $dispatcher = new EventDispatcher();
+        $event = new ResultEvent($result);
+
+        $dispatcher->addSubscriber($this->resultReadySubscriber);
+        $dispatcher->dispatch(ResultEvent::NAME, $event);
+
+        $jsonResponse = new JsonResponse(
+            json_encode(
+                array(
+                    'status' => 'finished',
+                    'url' => $event->getUrl()
+                )
+            ),
+            200,
+            [
+                'Access-Control-Allow-Origin' => 'http://surveythor-demo',
+            ]
+        );
+
+        return $jsonResponse;
     }
 
     /**
