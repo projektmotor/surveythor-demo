@@ -2,7 +2,7 @@
 {% block resultitem_collection_widget %}
     {% for child in form %}
         {% if child.vars.value.surveyItem is defined and child.vars.value.surveyItem.displayTitle %}
-            <span class="surveyitem-title">{{ child.vars.value.surveyItem.title }}</span>
+            <span class="resultitem-title">{{ child.vars.value.surveyItem.title }}</span>
         {% endif %}
         {{ form_row(child) }}
     {% endfor %}
