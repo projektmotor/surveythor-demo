@@ -6,7 +6,7 @@ module.exports = function (params) {
         config,
         {
             containerSelector: '#js-st-surveythor-container',
-            nextSelector: '.js-st-survey-next',
+            buttonSelector: '.js-st-survey-button',
             surveyId: null,
             surveythorHost: null,
             surveythorUri: '/result/first/'
@@ -19,12 +19,12 @@ module.exports = function (params) {
 
     config.surveythorUri = config.surveythorHost + config.surveythorUri + config.surveyId;
 
-    function bindClickOnNext() {
-        $(container).on('click', config.nextSelector, function (e) {
+    function bindClickOnButton() {
+        $(container).on('click', config.buttonSelector, function (e) {
             e.preventDefault();
 
             let form = container.find('form').first();
-            let url = container.find(config.nextSelector).data('next-url');
+            let url = $(e.target).data('url');
 
             $.ajax({
                 url: url,
@@ -44,7 +44,7 @@ module.exports = function (params) {
     }
 
     function initialize() {
-        bindClickOnNext();
+        bindClickOnButton();
 
         $.ajax({
             url: config.surveythorUri,

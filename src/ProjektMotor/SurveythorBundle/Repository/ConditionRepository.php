@@ -31,6 +31,11 @@ class ConditionRepository extends BaseRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param Choice $choice
+     *
+     * @return Condition[]
+     */
     public function getConditionsByChoice(Choice $choice)
     {
         $qb = $this->createQueryBuilder('c');

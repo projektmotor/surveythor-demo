@@ -149,6 +149,37 @@ class ResultController
     }
 
     /**
+     * @param SurveyItem  $surveyItem
+     * @param Result      $result
+     *
+     * @return array|JsonResponse
+     */
+    public function prevAction(SurveyItem $surveyItem, Result $result)
+    {
+        $prevItem = $this->getPrevItem($surveyItem, $result);
+        $resultItem = $this->prepareResultItem($prevItem, $result);
+
+        $form = $this->formFactory->create(ResultItemType::class, $resultItem);
+        $html = $this->renderNext($prevItem, $result, $form);
+
+        return new JsonResponse(
+            json_encode(
+                array(
+                    'status' => 'OK',
+                    'html' => $html
+                )
+            ),
+            200,
+            [
+                'Access-Control-Allow-Origin' => 'http://surveythor-demo',
+            ]
+        );
+    }
+
+
+
+
+    /**
      * @param FormRequest $formRequest
      * @param SurveyItem  $surveyItem
      * @param Result      $result
@@ -218,6 +249,26 @@ class ResultController
      * @param SurveyItem $item
      * @param Result     $result
      *
+     * @return bool|SurveyItem
+     */
+    private function getPrevItem(SurveyItem $item, Result $result)
+    {
+        $survey = $item->getSurvey();
+        if ($prev = $survey->getPrevItem($item)) {
+            if ($this->isItemVisible($prev, $result)) {
+                return $prev;
+            }
+
+            return $this->getPrevItem($prev, $result);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param SurveyItem $item
+     * @param Result     $result
+     *
      * @return bool
      */
     private function isLastItem(SurveyItem $item, Result $result)
@@ -246,7 +297,6 @@ class ResultController
             $resultChoices = array();
             foreach ($result->getResultItems() as $resultItem) {
                 if ($answer = $resultItem->getSingleChoiceAnswer()) {
-                    //dump($answer); die();
                     $resultChoices[] = $answer->getChoice()->getId();
                 }
                 if ($answer = $resultItem->getMultipleChoiceAnswer()) {

@@ -12,17 +12,25 @@
 {{ form(form) }}
 {{ form_end(form) }}
 
+{% if result.survey.getPrevItem(item) %}
+    <button
+            class="btn btn-default js-st-survey-button"
+            data-url="{{ url('result_prev', { 'surveyItem' : item.getId, 'result': result.getId }, true) }}"
+    >
+        zurück
+    </button>
+{% endif %}
 {% if not isLast %}
     <button
-            class="btn btn-default js-st-survey-next"
-            data-next-url="{{ url('result_next', { 'surveyItem' : item.getId, 'result': result.getId }, true) }}"
+            class="btn btn-default js-st-survey-button"
+            data-url="{{ url('result_next', { 'surveyItem' : item.getId, 'result': result.getId }, true) }}"
     >
         weiter
     </button>
 {% else %}
     <button
-            class="btn btn-default js-st-survey-next"
-            data-next-url="{{ url('result_last', { 'surveyItem' : item.getId, 'result': result.getId }, true) }}"
+            class="btn btn-default js-st-survey-button"
+            data-url="{{ url('result_last', { 'surveyItem' : item.getId, 'result': result.getId }, true) }}"
     >
         fertigstellen
     </button>
