@@ -7,7 +7,9 @@ module.exports = function (params) {
         {
             containerSelector: '#js-st-surveythor-container',
             nextSelector: '.js-st-survey-next',
-            surveythorUri: null
+            surveyId: null,
+            surveythorHost: null,
+            surveythorUri: '/result/first/'
         },
         params
     );
@@ -15,8 +17,10 @@ module.exports = function (params) {
 
     const container = $(config.containerSelector);
 
+    config.surveythorUri = config.surveythorHost + config.surveythorUri + config.surveyId;
+
     function bindClickOnNext() {
-        $('body').delegate(config.nextSelector, 'click', function (e) {
+        $(container).on('click', config.nextSelector, function (e) {
             e.preventDefault();
 
             let form = container.find('form').first();

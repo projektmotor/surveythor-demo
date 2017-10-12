@@ -16,7 +16,8 @@
     <script type="application/javascript" src="{{ asset('build/frontend.js') }}"></script>
     <script type="application/javascript">
         var params = {
-            surveythorUri: '{{ url('result_first', { 'survey' : survey.getId }, true) }}'
+            surveyId: {{ survey.getId }},
+            surveythorHost: '{{ surveythorHost }}'
         };
 
         Surveythor(params);

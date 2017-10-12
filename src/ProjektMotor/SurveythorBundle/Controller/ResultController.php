@@ -130,14 +130,13 @@ class ResultController
     {
         $resultItem = $this->prepareResultItem($surveyItem, $result);
         if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
-            $form = $this->formFactory->create(ResultItemType::class, $resultItem);
             $html = $this->twig->render(
                 '@PMSurveythorBundle/Result/next.html.twig',
                 array(
                     'item' => $surveyItem,
                     'result' => $result,
                     'survey' => $survey,
-                    'form' => $form->createView()
+                    'form' => $formRequest->getForm()->createView()
                 )
             );
 
