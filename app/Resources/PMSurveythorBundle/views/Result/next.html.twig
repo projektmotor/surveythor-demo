@@ -12,7 +12,7 @@
 {{ form(form) }}
 {{ form_end(form) }}
 
-{% if survey.getNextItem(item) %}
+{% if not isLast %}
     <button
             class="btn btn-default js-st-survey-next"
             data-next-url="{{ url('result_next', { 'survey' : survey.getId, 'surveyItem' : item.getId, 'result': result.getId }, true) }}"

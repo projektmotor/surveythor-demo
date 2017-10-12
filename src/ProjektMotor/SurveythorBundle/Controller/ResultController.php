@@ -97,6 +97,7 @@ class ResultController
         $result = new Result();
         $surveyItem = $survey->getSurveyItems()->first();
         $resultItem = $this->prepareResultItem($surveyItem, $result);
+        $nextSurveyItem = $this->getNextItem($surveyItem, $result);
 
         $result->setSurvey($survey);
         $this->resultRepository->save($result);
@@ -108,7 +109,8 @@ class ResultController
                 'item' => $surveyItem,
                 'result' => $result,
                 'survey' => $survey,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'isLast' => $this->isLastItem($surveyItem, $result)
             )
         );
 
@@ -136,7 +138,8 @@ class ResultController
                     'item' => $surveyItem,
                     'result' => $result,
                     'survey' => $survey,
-                    'form' => $formRequest->getForm()->createView()
+                    'form' => $formRequest->getForm()->createView(),
+                    'isLast' => $this->isLastItem($surveyItem, $result)
                 )
             );
 
@@ -150,7 +153,7 @@ class ResultController
         $result->addResultItem($resultItem);
         $this->resultRepository->save($result);
 
-        $nextSurveyItem = $this->getNextItem($surveyItem, $survey, $result);
+        $nextSurveyItem = $this->getNextItem($surveyItem, $result);
         $nextResultItem = $this->prepareResultItem($nextSurveyItem, $result);
 
         $form = $this->formFactory->create(ResultItemType::class, $nextResultItem);
@@ -160,7 +163,8 @@ class ResultController
                 'item' => $nextSurveyItem,
                 'result' => $result,
                 'survey' => $survey,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'isLast' => $this->isLastItem($nextSurveyItem, $result)
             )
         );
 
@@ -188,7 +192,8 @@ class ResultController
                     'item' => $surveyItem,
                     'result' => $result,
                     'survey' => $survey,
-                    'form' => $formRequest->getForm()->createView()
+                    'form' => $formRequest->getForm()->createView(),
+                    'isLast' => false
                 )
             );
 
@@ -226,22 +231,40 @@ class ResultController
 
     /**
      * @param SurveyItem $item
-     * @param Survey     $survey
      * @param Result     $result
      *
      * @return bool|SurveyItem
      */
-    private function getNextItem(SurveyItem $item, Survey $survey, Result $result)
+    private function getNextItem(SurveyItem $item, Result $result)
     {
+        $survey = $item->getSurvey();
         if ($nextItem = $survey->getNextItem($item)) {
             if ($this->isItemVisible($nextItem, $result)) {
                 return $nextItem;
             }
 
-            return $this->getNextItem($nextItem, $survey, $result);
+            return $this->getNextItem($nextItem, $result);
         }
 
         return false;
+    }
+
+    /**
+     * @param SurveyItem $item
+     * @param Result     $result
+     *
+     * @return bool
+     */
+    private function isLastItem(SurveyItem $item, Result $result)
+    {
+        $survey = $item->getSurvey();
+        if ($nextItem = $survey->getNextItem($item)) {
+            if ($this->isItemVisible($nextItem, $result)) {
+                return false;
+            }
+            return $this->isLastItem($nextItem, $result);
+        }
+        return true;
     }
 
     /**
