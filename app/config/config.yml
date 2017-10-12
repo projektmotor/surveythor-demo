@@ -57,7 +57,8 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'bootstrap_3_layout.html.twig'
-        - PMSurveythorBundle:Form:fields.html.twig
+        - 'PMSurveythorBundle:Form:Result/fields.html.twig'
+        - 'PMSurveythorBundle:Form:Survey/fields.html.twig'
     globals:
         surveythorHost: '%twig.param.surveythor_host%'
     paths:

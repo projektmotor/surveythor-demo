@@ -1,0 +1,50 @@
+
+{% block resultitem_collection_widget %}
+    {% for child in form %}
+        {% if child.vars.value.surveyItem is defined and child.vars.value.surveyItem.displayTitle %}
+            <u>{{ child.vars.value.surveyItem.title }}</u>
+        {% endif %}
+        {{ form_row(child) }}
+    {% endfor %}
+{% endblock %}
+
+{%- block choices_horizontal_widget -%}
+    {% set attr = attr|merge({ 'class' : 'clearfix' }) %}
+    {% set type = form.parent.vars.data.question.type %}
+        <div {{ block('widget_container_attributes') }}>
+            {%- for child in form %}
+                <div class="pull-left">
+                    <div class="text-center" style="border: 1px solid #e7e7e7; margin-right: 8px; padding: 4px;">
+                        <div>{{ child.vars.label }}</div>
+                        {% if type == "sc" %}
+                            <input type="radio" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
+                        {% else %}
+                            <input type="checkbox" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor -%}
+        </div>
+{%- endblock -%}
+
+{% block choices_children_below_widget %}
+    {% set attr = attr|merge({ 'class' : 'clearfix' }) %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form.parent is empty -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+
+        <div class="clearfix row">
+        {% for child in form.children %}
+            <div class="pull-left col-md-2">
+                {{- form_widget(child) -}}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block pm_surveythor_textitem_widget %}
+    <p>{{ value.text }}</p>
+    {{ form(form) }}
+{% endblock %}
