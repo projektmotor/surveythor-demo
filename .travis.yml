@@ -56,7 +56,7 @@ deploy:
   - provider: heroku
     api_key:
       secure: bFtt9RXC8HeBI+IBY9Wod6vsCd0yMvQ3SGb45mccBs0VVXDwBXCs+i1ry5SU892YqUEci5zb5BsGNm/Acka39o+kE9jfi5OGosHsxjaqu14xwPv3NLE7drMm/U+q5JTzx+3l9lY+AVkoXcDYt6YZHN8c6LK/2eFEvBG3bShw6OJcQj0m6aHNi27S6ywYDwtxLI24Vz+VmN+AMj+DG/sBmmsTipLT3t5kTo79pl4DYPfUvTo1M2rrcJI4+CSZb3FB3w5doGwtiGJFsXV2hBMHYywN15hg9gNdl1o6WU8GgvQHDATGYrWFjb6DhM9B8jlTVvg9r/jTkX0M1l8FsZfJKCiY1pSzw3iieoAhgTk7UAsUqXOHfxerWFiTbzgnS/lVxlCNvMYHF8ICzAfmpMmoj917Njy2HCzcYmA4XD3Qc5MyTfdHd0bVEgJZN+28YiZwVtTM9E0tsEkBpdnXyemJ751+Ho8bi10Opq9JA/xPustLcSM2jhKnDEMO/xbL6D3oRC0d6WMzwUuilhTrhS4TTJsKS57knF5+PAuf1CmkKA2A/K1uvddh1AQEWpZ9dA/mTL0qHjAWei4RXsbcG9yX5O/8bpTYInUr7U+Be4HwjE9TuYhMYjc7BdwYgmRzP+Mgocuc4phVDBDxEgxIxxXCFI1J7kuMzUHU2eYwoixVJwI=
-    app: surveythor-frontend-app
+    app: surveythor-demo-frontend-app
     on:
       repo: projektmotor/surveythor-demo
       branch: frontend_app_on_heroku # default is master
