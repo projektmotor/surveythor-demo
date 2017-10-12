@@ -1,6 +1,9 @@
 imports:
     - { resource: config.yml }
 
+parameters:
+  twig.param.surveythor_host: 'http://surveythor-demo-frontend-app.herokuapp.com' # dirty workaround atm; we will need to set it via env vars later like %env(JAWSDB_URL)% e.g.
+
 doctrine:
     dbal:
         url: "%env(JAWSDB_URL)%"
