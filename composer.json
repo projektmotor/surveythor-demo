@@ -55,7 +55,7 @@
             "bin/console doctrine:database:drop --force",
             "bin/console doctrine:database:create -n",
             "bin/console doctrine:schema:update --force",
-            "bin/console hautelook_alice:doctrine:fixtures:load -n"
+          "bin/console hautelook_alice:doctrine:fixtures:load --no-interaction --purge-with-truncate"
         ],
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
