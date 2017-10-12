@@ -24,6 +24,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Form;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Twig_Environment;
 
@@ -103,16 +104,7 @@ class ResultController
         $this->resultRepository->save($result);
 
         $form = $this->formFactory->create(ResultItemType::class, $resultItem);
-        $html = $this->twig->render(
-            '@PMSurveythorBundle/Result/next.html.twig',
-            array(
-                'item' => $surveyItem,
-                'result' => $result,
-                'survey' => $survey,
-                'form' => $form->createView(),
-                'isLast' => $this->isLastItem($surveyItem, $result)
-            )
-        );
+        $html = $this->renderNext($surveyItem, $result, $form);
 
         return new JsonResponse(json_encode(array(
             'status' => 'OK',
@@ -122,26 +114,17 @@ class ResultController
 
     /**
      * @param FormRequest $formRequest
-     * @param Survey      $survey
      * @param SurveyItem  $surveyItem
      * @param Result      $result
      *
      * @return array|JsonResponse
      */
-    public function nextAction(FormRequest $formRequest, Survey $survey, SurveyItem $surveyItem, Result $result)
+    public function nextAction(FormRequest $formRequest, SurveyItem $surveyItem, Result $result)
     {
         $resultItem = $this->prepareResultItem($surveyItem, $result);
         if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
-            $html = $this->twig->render(
-                '@PMSurveythorBundle/Result/next.html.twig',
-                array(
-                    'item' => $surveyItem,
-                    'result' => $result,
-                    'survey' => $survey,
-                    'form' => $formRequest->getForm()->createView(),
-                    'isLast' => $this->isLastItem($surveyItem, $result)
-                )
-            );
+            $form = $formRequest->getForm();
+            $html = $this->renderNext($surveyItem, $result, $form);
 
             return new JsonResponse(json_encode(array(
                 'status' => 'OK',
@@ -157,16 +140,7 @@ class ResultController
         $nextResultItem = $this->prepareResultItem($nextSurveyItem, $result);
 
         $form = $this->formFactory->create(ResultItemType::class, $nextResultItem);
-        $html = $this->twig->render(
-            '@PMSurveythorBundle/Result/next.html.twig',
-            array(
-                'item' => $nextSurveyItem,
-                'result' => $result,
-                'survey' => $survey,
-                'form' => $form->createView(),
-                'isLast' => $this->isLastItem($nextSurveyItem, $result)
-            )
-        );
+        $html = $this->renderNext($nextSurveyItem, $result, $form);
 
         return new JsonResponse(json_encode(array(
             'status' => 'OK',
@@ -176,26 +150,17 @@ class ResultController
 
     /**
      * @param FormRequest $formRequest
-     * @param Survey      $survey
      * @param SurveyItem  $surveyItem
      * @param Result      $result
      *
      * @return array|JsonResponse
      */
-    public function lastAction(FormRequest $formRequest, Survey $survey, SurveyItem $surveyItem, Result $result)
+    public function lastAction(FormRequest $formRequest, SurveyItem $surveyItem, Result $result)
     {
         $resultItem = $this->prepareResultItem($surveyItem, $result);
         if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
-            $html = $this->twig->render(
-                '@PMSurveythorBundle/Result/next.html.twig',
-                array(
-                    'item' => $surveyItem,
-                    'result' => $result,
-                    'survey' => $survey,
-                    'form' => $formRequest->getForm()->createView(),
-                    'isLast' => false
-                )
-            );
+            $form = $formRequest->getForm();
+            $html = $this->renderNext($surveyItem, $result, $form);
 
             return new JsonResponse(json_encode(array(
                 'status' => 'OK',
@@ -376,5 +341,19 @@ class ResultController
         }
 
         return $resultItem;
+    }
+
+    private function renderNext(SurveyItem $surveyItem, Result $result, Form $form)
+    {
+        return $this->twig->render(
+            '@PMSurveythorBundle/Result/next.html.twig',
+            array(
+                'item' => $surveyItem,
+                'result' => $result,
+                'survey' => $result->getSurvey(),
+                'form' => $form->createView(),
+                'isLast' => $this->isLastItem($surveyItem, $result)
+            )
+        );
     }
 }

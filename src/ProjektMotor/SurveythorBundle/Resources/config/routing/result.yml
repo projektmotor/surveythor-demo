@@ -2,7 +2,7 @@ result_new:
     path: /new/{survey}
     defaults: { _controller: result_controller:newAction }
 result_next:
-    path: /next/{survey}/{surveyItem}/{result}
+    path: /next/{surveyItem}/{result}
     defaults: { _controller: result_controller:nextAction }
     methods: [ POST ]
 result_first:
@@ -10,6 +10,6 @@ result_first:
     defaults: { _controller: result_controller:firstAction }
     methods: [ POST ]
 result_last:
-    path: /last/{survey}/{surveyItem}/{result}
+    path: /last/{surveyItem}/{result}
     defaults: { _controller: result_controller:lastAction }
     methods: [ POST ]
