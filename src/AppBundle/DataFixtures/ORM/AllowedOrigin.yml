@@ -1,0 +1,25 @@
+AppBundle\Entity\AllowedOrigin:
+    allowed_origin_1:
+        title: 'First Integration'
+        originName: 'http://surveythor-demo'
+        isActive: true
+        createdAt: '<dateTimeThisYear()>'
+        updatedAt: '<dateTimeThisYear()>'
+        createdBy: '<firstName()>'
+        updatedBy: '<firstName()>'
+    allowed_origin_2:
+        title: 'Second Integration'
+        originName: 'http://surveythor-another-frontend'
+        isActive: false
+        createdAt: '<dateTimeThisYear()>'
+        updatedAt: '<dateTimeThisYear()>'
+        createdBy: '<firstName()>'
+        updatedBy: '<firstName()>'
+    allowed_origin_heroku_deploy:
+        title: 'Heroku Integration'
+        originName: 'http://surveythor-demo-app.herokuapp.com'
+        isActive: true
+        createdAt: '<dateTimeThisYear()>'
+        updatedAt: '<dateTimeThisYear()>'
+        createdBy: '<firstName()>'
+        updatedBy: '<firstName()>'

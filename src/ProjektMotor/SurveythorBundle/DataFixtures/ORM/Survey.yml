@@ -1,0 +1,6 @@
+PM\SurveythorBundle\Entity\Survey:
+    fragenkatalog:
+        title: 'Fragenkatalog'
+    eu_dsgvo:
+        title: "EU-DSGVO Check"
+        description: <sentence()>

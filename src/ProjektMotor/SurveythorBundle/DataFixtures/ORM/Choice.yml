@@ -1,0 +1,1844 @@
+PM\SurveythorBundle\Entity\Choice:
+    ## Fragenkatalog
+    choice_frage_1_1:
+        text: 'CEO/CIO/CTO'
+        value: '0'
+        question: '@frage_1'
+    choice_frage_1_2:
+        text: 'Admin'
+        value: '100'
+        question: '@frage_1'
+
+
+    choice_group_1_frage_1_1:
+        text: 'Prio 1'
+        value: '1'
+        question: '@group_1_frage_1'
+    choice_group_1_frage_1_2:
+        text: 'Prio 2'
+        value: '2'
+        question: '@group_1_frage_1'
+    choice_group_1_frage_1_3:
+        text: 'Prio 3'
+        value: '3'
+        question: '@group_1_frage_1'
+    choice_group_1_frage_1_4:
+        text: 'Prio 4'
+        value: '4'
+        question: '@group_1_frage_1'
+    choice_group_1_frage_1_5:
+        text: 'Prio 5'
+        value: '5'
+        question: '@group_1_frage_1'
+    choice_group_1_frage_1_6:
+        text: 'Prio 6'
+        value: '6'
+        question: '@group_1_frage_1'
+    choice_group_1_frage_2_1:
+        text: 'Prio 1'
+        value: '1'
+        question: '@group_1_frage_2'
+    choice_group_1_frage_2_2:
+        text: 'Prio 2'
+        value: '2'
+        question: '@group_1_frage_2'
+    choice_group_1_frage_2_3:
+        text: 'Prio 3'
+        value: '3'
+        question: '@group_1_frage_2'
+    choice_group_1_frage_2_4:
+        text: 'Prio 4'
+        value: '4'
+        question: '@group_1_frage_2'
+    choice_group_1_frage_2_5:
+        text: 'Prio 5'
+        value: '5'
+        question: '@group_1_frage_2'
+    choice_group_1_frage_2_6:
+        text: 'Prio 6'
+        value: '6'
+        question: '@group_1_frage_2'
+    choice_group_1_frage_3_1:
+        text: 'Prio 1'
+        value: '1'
+        question: '@group_1_frage_3'
+    choice_group_1_frage_3_2:
+        text: 'Prio 2'
+        value: '2'
+        question: '@group_1_frage_3'
+    choice_group_1_frage_3_3:
+        text: 'Prio 3'
+        value: '3'
+        question: '@group_1_frage_3'
+    choice_group_1_frage_3_4:
+        text: 'Prio 4'
+        value: '4'
+        question: '@group_1_frage_3'
+    choice_group_1_frage_3_5:
+        text: 'Prio 5'
+        value: '5'
+        question: '@group_1_frage_3'
+    choice_group_1_frage_3_6:
+        text: 'Prio 6'
+        value: '6'
+        question: '@group_1_frage_3'
+    choice_group_1_frage_4_1:
+        text: 'Prio 1'
+        value: '1'
+        question: '@group_1_frage_4'
+    choice_group_1_frage_4_2:
+        text: 'Prio 2'
+        value: '2'
+        question: '@group_1_frage_4'
+    choice_group_1_frage_4_3:
+        text: 'Prio 3'
+        value: '3'
+        question: '@group_1_frage_4'
+    choice_group_1_frage_4_4:
+        text: 'Prio 4'
+        value: '4'
+        question: '@group_1_frage_4'
+    choice_group_1_frage_4_5:
+        text: 'Prio 5'
+        value: '5'
+        question: '@group_1_frage_4'
+    choice_group_1_frage_4_6:
+        text: 'Prio 6'
+        value: '6'
+        question: '@group_1_frage_4'
+    choice_group_1_frage_5_1:
+        text: 'Prio 1'
+        value: '1'
+        question: '@group_1_frage_5'
+    choice_group_1_frage_5_2:
+        text: 'Prio 2'
+        value: '2'
+        question: '@group_1_frage_5'
+    choice_group_1_frage_5_3:
+        text: 'Prio 3'
+        value: '3'
+        question: '@group_1_frage_5'
+    choice_group_1_frage_5_4:
+        text: 'Prio 4'
+        value: '4'
+        question: '@group_1_frage_5'
+    choice_group_1_frage_5_5:
+        text: 'Prio 5'
+        value: '5'
+        question: '@group_1_frage_5'
+    choice_group_1_frage_5_6:
+        text: 'Prio 6'
+        value: '6'
+        question: '@group_1_frage_5'
+    choice_group_1_frage_6_1:
+        text: 'Prio 1'
+        value: '1'
+        question: '@group_1_frage_6'
+    choice_group_1_frage_6_2:
+        text: 'Prio 2'
+        value: '2'
+        question: '@group_1_frage_6'
+    choice_group_1_frage_6_3:
+        text: 'Prio 3'
+        value: '3'
+        question: '@group_1_frage_6'
+    choice_group_1_frage_6_4:
+        text: 'Prio 4'
+        value: '4'
+        question: '@group_1_frage_6'
+    choice_group_1_frage_6_5:
+        text: 'Prio 5'
+        value: '5'
+        question: '@group_1_frage_6'
+    choice_group_1_frage_6_6:
+        text: 'Prio 6'
+        value: '6'
+        question: '@group_1_frage_6'
+    choice_frage_2_1:
+        text: 'weniger 100'
+        value: 1
+        question: '@frage_3'
+    choice_frage_2_2:
+        text: '100 bis 500'
+        value: 1
+        question: '@frage_3'
+    choice_frage_2_3:
+        text: 'mehr als 500'
+        value: 1
+        question: '@frage_3'
+    choice_frage_3_1:
+        text: 'Ja'
+        value: 1
+        question: '@frage_4'
+    choice_frage_3_2:
+        text: 'Nein'
+        value: 1
+        question: '@frage_4'
+    choice_frage_5_1:
+        text: <sentence()>
+        value: 1
+        question: '@frage_5'
+    choice_frage_5_2:
+        text: <sentence()>
+        value: 2
+        question: '@frage_5'
+    choice_frage_6_1:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_2:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_3:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_4:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_5:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_6:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_7:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_8:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_9:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_10:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_11:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_12:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_13:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_14:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_15:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_16:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_17:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_18:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_19:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_frage_6_20:
+        text: <word()>
+        value: '0'
+        question: '@frage_6'
+    choice_zufrieden_performance_1:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_1'
+    choice_zufrieden_performance_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_1'
+    choice_zufrieden_performance_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_1'
+    choice_zufrieden_usabilty_1:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_1'
+    choice_zufrieden_usabilty_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_1'
+    choice_zufrieden_usabilty_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_1'
+    choice_zufrieden_features_1:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_1'
+    choice_zufrieden_features_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_1'
+    choice_zufrieden_features_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_1'
+    choice_zufrieden_performance_1_2:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_2'
+    choice_zufrieden_performance_2_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_2'
+    choice_zufrieden_performance_3_2:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_2'
+    choice_zufrieden_usabilty_1_2:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_2'
+    choice_zufrieden_usabilty_2_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_2'
+    choice_zufrieden_usabilty_3_2:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_2'
+    choice_zufrieden_features_1_2:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_2'
+    choice_zufrieden_features_2_2:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_2'
+    choice_zufrieden_features_3_2:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_2'
+    choice_zufrieden_performance_1_3:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_3'
+    choice_zufrieden_performance_2_3:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_3'
+    choice_zufrieden_performance_3_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_3'
+    choice_zufrieden_usabilty_1_3:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_3'
+    choice_zufrieden_usabilty_2_3:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_3'
+    choice_zufrieden_usabilty_3_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_3'
+    choice_zufrieden_features_1_3:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_3'
+    choice_zufrieden_features_2_3:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_3'
+    choice_zufrieden_features_3_3:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_3'
+    choice_zufrieden_performance_1_4:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_4'
+    choice_zufrieden_performance_2_4:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_4'
+    choice_zufrieden_performance_3_4:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_4'
+    choice_zufrieden_usabilty_1_4:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_4'
+    choice_zufrieden_usabilty_2_4:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_4'
+    choice_zufrieden_usabilty_3_4:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_4'
+    choice_zufrieden_features_1_4:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_4'
+    choice_zufrieden_features_2_4:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_4'
+    choice_zufrieden_features_3_4:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_4'
+    choice_zufrieden_performance_1_5:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_5'
+    choice_zufrieden_performance_2_5:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_5'
+    choice_zufrieden_performance_3_5:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_5'
+    choice_zufrieden_usabilty_1_5:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_5'
+    choice_zufrieden_usabilty_2_5:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_5'
+    choice_zufrieden_usabilty_3_5:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_5'
+    choice_zufrieden_features_1_5:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_5'
+    choice_zufrieden_features_2_5:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_5'
+    choice_zufrieden_features_3_5:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_5'
+    choice_zufrieden_performance_1_6:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_6'
+    choice_zufrieden_performance_2_6:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_6'
+    choice_zufrieden_performance_3_6:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_6'
+    choice_zufrieden_usabilty_1_6:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_6'
+    choice_zufrieden_usabilty_2_6:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_6'
+    choice_zufrieden_usabilty_3_6:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_6'
+    choice_zufrieden_features_1_6:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_6'
+    choice_zufrieden_features_2_6:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_6'
+    choice_zufrieden_features_3_6:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_6'
+    choice_zufrieden_performance_1_7:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_7'
+    choice_zufrieden_performance_2_7:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_7'
+    choice_zufrieden_performance_3_7:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_7'
+    choice_zufrieden_usabilty_1_7:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_7'
+    choice_zufrieden_usabilty_2_7:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_7'
+    choice_zufrieden_usabilty_3_7:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_7'
+    choice_zufrieden_features_1_7:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_7'
+    choice_zufrieden_features_2_7:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_7'
+    choice_zufrieden_features_3_7:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_7'
+    choice_zufrieden_performance_1_8:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_8'
+    choice_zufrieden_performance_2_8:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_8'
+    choice_zufrieden_performance_3_8:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_8'
+    choice_zufrieden_usabilty_1_8:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_8'
+    choice_zufrieden_usabilty_2_8:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_8'
+    choice_zufrieden_usabilty_3_8:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_8'
+    choice_zufrieden_features_1_8:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_8'
+    choice_zufrieden_features_2_8:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_8'
+    choice_zufrieden_features_3_8:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_8'
+    choice_zufrieden_performance_1_9:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_9'
+    choice_zufrieden_performance_2_9:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_9'
+    choice_zufrieden_performance_3_9:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_9'
+    choice_zufrieden_usabilty_1_9:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_9'
+    choice_zufrieden_usabilty_2_9:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_9'
+    choice_zufrieden_usabilty_3_9:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_9'
+    choice_zufrieden_features_1_9:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_9'
+    choice_zufrieden_features_2_9:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_9'
+    choice_zufrieden_features_3_9:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_9'
+    choice_zufrieden_performance_1_10:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_10'
+    choice_zufrieden_performance_2_10:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_10'
+    choice_zufrieden_performance_3_10:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_10'
+    choice_zufrieden_usabilty_1_10:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_10'
+    choice_zufrieden_usabilty_2_10:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_10'
+    choice_zufrieden_usabilty_3_10:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_10'
+    choice_zufrieden_features_1_10:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_10'
+    choice_zufrieden_features_2_10:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_10'
+    choice_zufrieden_features_3_10:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_10'
+    choice_zufrieden_performance_1_11:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_11'
+    choice_zufrieden_performance_2_11:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_11'
+    choice_zufrieden_performance_3_11:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_11'
+    choice_zufrieden_usabilty_1_11:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_11'
+    choice_zufrieden_usabilty_2_11:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_11'
+    choice_zufrieden_usabilty_3_11:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_11'
+    choice_zufrieden_features_1_11:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_11'
+    choice_zufrieden_features_2_11:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_11'
+    choice_zufrieden_features_3_11:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_11'
+    choice_zufrieden_performance_1_12:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_12'
+    choice_zufrieden_performance_2_12:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_12'
+    choice_zufrieden_performance_3_12:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_12'
+    choice_zufrieden_usabilty_1_12:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_12'
+    choice_zufrieden_usabilty_2_12:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_12'
+    choice_zufrieden_usabilty_3_12:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_12'
+    choice_zufrieden_features_1_12:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_12'
+    choice_zufrieden_features_2_12:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_12'
+    choice_zufrieden_features_3_12:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_12'
+    choice_zufrieden_performance_1_13:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_13'
+    choice_zufrieden_performance_2_13:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_13'
+    choice_zufrieden_performance_3_13:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_13'
+    choice_zufrieden_usabilty_1_13:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_13'
+    choice_zufrieden_usabilty_2_13:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_13'
+    choice_zufrieden_usabilty_3_13:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_13'
+    choice_zufrieden_features_1_13:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_13'
+    choice_zufrieden_features_2_13:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_13'
+    choice_zufrieden_features_3_13:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_13'
+    choice_zufrieden_performance_1_14:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_14'
+    choice_zufrieden_performance_2_14:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_14'
+    choice_zufrieden_performance_3_14:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_14'
+    choice_zufrieden_usabilty_1_14:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_14'
+    choice_zufrieden_usabilty_2_14:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_14'
+    choice_zufrieden_usabilty_3_14:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_14'
+    choice_zufrieden_features_1_14:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_14'
+    choice_zufrieden_features_2_14:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_14'
+    choice_zufrieden_features_3_14:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_14'
+    choice_zufrieden_performance_1_15:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_15'
+    choice_zufrieden_performance_2_15:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_15'
+    choice_zufrieden_performance_3_15:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_15'
+    choice_zufrieden_usabilty_1_15:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_15'
+    choice_zufrieden_usabilty_2_15:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_15'
+    choice_zufrieden_usabilty_3_15:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_15'
+    choice_zufrieden_features_1_15:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_15'
+    choice_zufrieden_features_2_15:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_15'
+    choice_zufrieden_features_3_15:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_15'
+    choice_zufrieden_performance_1_16:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_16'
+    choice_zufrieden_performance_2_16:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_16'
+    choice_zufrieden_performance_3_16:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_16'
+    choice_zufrieden_usabilty_1_16:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_16'
+    choice_zufrieden_usabilty_2_16:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_16'
+    choice_zufrieden_usabilty_3_16:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_16'
+    choice_zufrieden_features_1_16:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_16'
+    choice_zufrieden_features_2_16:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_16'
+    choice_zufrieden_features_3_16:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_16'
+    choice_zufrieden_performance_1_17:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_17'
+    choice_zufrieden_performance_2_17:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_17'
+    choice_zufrieden_performance_3_17:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_17'
+    choice_zufrieden_usabilty_1_17:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_17'
+    choice_zufrieden_usabilty_2_17:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_17'
+    choice_zufrieden_usabilty_3_17:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_17'
+    choice_zufrieden_features_1_17:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_17'
+    choice_zufrieden_features_2_17:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_17'
+    choice_zufrieden_features_3_17:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_17'
+    choice_zufrieden_performance_1_18:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_18'
+    choice_zufrieden_performance_2_18:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_18'
+    choice_zufrieden_performance_3_18:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_18'
+    choice_zufrieden_usabilty_1_18:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_18'
+    choice_zufrieden_usabilty_2_18:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_18'
+    choice_zufrieden_usabilty_3_18:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_18'
+    choice_zufrieden_features_1_18:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_18'
+    choice_zufrieden_features_2_18:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_18'
+    choice_zufrieden_features_3_18:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_18'
+    choice_zufrieden_performance_1_19:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_19'
+    choice_zufrieden_performance_2_19:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_19'
+    choice_zufrieden_performance_3_19:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_19'
+    choice_zufrieden_usabilty_1_19:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_19'
+    choice_zufrieden_usabilty_2_19:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_19'
+    choice_zufrieden_usabilty_3_19:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_19'
+    choice_zufrieden_features_1_19:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_19'
+    choice_zufrieden_features_2_19:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_19'
+    choice_zufrieden_features_3_19:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_19'
+    choice_zufrieden_performance_1_20:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_performance_20'
+    choice_zufrieden_performance_2_20:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_performance_20'
+    choice_zufrieden_performance_3_20:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_performance_20'
+    choice_zufrieden_usabilty_1_20:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_usability_20'
+    choice_zufrieden_usabilty_2_20:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_usability_20'
+    choice_zufrieden_usabilty_3_20:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_usability_20'
+    choice_zufrieden_features_1_20:
+        text: '1'
+        value: '0'
+        question: '@zufrieden_features_20'
+    choice_zufrieden_features_2_20:
+        text: '2'
+        value: '0'
+        question: '@zufrieden_features_20'
+    choice_zufrieden_features_3_20:
+        text: '3'
+        value: '0'
+        question: '@zufrieden_features_20'
+
+    choice_frage_8_1:
+        text: 'Ja'
+        value: '1'
+        question: '@frage_8'
+    choice_frage_8_2:
+        text: 'Nein'
+        value: '0'
+        question: '@frage_8'
+    choice_frage_9_1:
+        text: 'Ja'
+        value: '1'
+        question: '@frage_9'
+    choice_frage_9_2:
+        text: 'Nein'
+        value: '0'
+        question: '@frage_9'
+
+    choice_frage_10_1:
+        text: 'Android'
+        value: 1
+        question: '@frage_10'
+    choice_frage_10_2:
+        text: 'Microsoft'
+        value: 1
+        question: '@frage_10'
+    choice_frage_10_3:
+        text: 'Apple'
+        value: 1
+        question: '@frage_10'
+    choice_frage_10_4:
+        text: 'Sonstige'
+        value: 1
+        question: '@frage_10'
+
+    choice_frage_11_1:
+        text: 'Ja'
+        value: 1
+        question: '@frage_11'
+    choice_frage_11_2:
+        text: 'Nein'
+        value: 0
+        question: '@frage_11'
+
+#### eu dsgvo
+    data_governance_1_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@data_governance_1"
+    data_governance_1_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@data_governance_1"
+    data_governance_1_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@data_governance_1"
+    data_governance_1_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@data_governance_1"
+    data_governance_2_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@data_governance_2"
+    data_governance_2_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@data_governance_2"
+    data_governance_2_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@data_governance_2"
+    data_governance_2_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@data_governance_2"
+    data_governance_3_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@data_governance_3"
+    data_governance_3_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@data_governance_3"
+    data_governance_3_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@data_governance_3"
+    data_governance_3_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@data_governance_3"
+    data_governance_4_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@data_governance_4"
+    data_governance_4_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@data_governance_4"
+    data_governance_4_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@data_governance_4"
+    data_governance_4_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@data_governance_4"
+    data_governance_5_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@data_governance_5"
+    data_governance_5_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@data_governance_5"
+    data_governance_5_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@data_governance_5"
+    data_governance_5_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@data_governance_5"
+
+    person_data_1_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@person_data_1"
+    person_data_1_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@person_data_1"
+    person_data_1_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@person_data_1"
+    person_data_1_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@person_data_1"
+    person_data_2_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@person_data_2"
+    person_data_2_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@person_data_2"
+    person_data_2_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@person_data_2"
+    person_data_2_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@person_data_2"
+    person_data_3_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@person_data_3"
+    person_data_3_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@person_data_3"
+    person_data_3_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@person_data_3"
+    person_data_3_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@person_data_3"
+    person_data_4_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@person_data_4"
+    person_data_4_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@person_data_4"
+    person_data_4_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@person_data_4"
+    person_data_4_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@person_data_4"
+    person_data_5_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@person_data_5"
+    person_data_5_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@person_data_5"
+    person_data_5_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@person_data_5"
+    person_data_5_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@person_data_5"
+
+    datenschutzrichtlinie_1_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzrichtlinie_1"
+    datenschutzrichtlinie_1_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzrichtlinie_1"
+    datenschutzrichtlinie_1_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzrichtlinie_1"
+    datenschutzrichtlinie_1_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzrichtlinie_1"
+    datenschutzrichtlinie_2_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzrichtlinie_2"
+    datenschutzrichtlinie_2_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzrichtlinie_2"
+    datenschutzrichtlinie_2_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzrichtlinie_2"
+    datenschutzrichtlinie_2_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzrichtlinie_2"
+
+    datenschutzbestimmungen_inner_1_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzbestimmungen_inner_1"
+    datenschutzbestimmungen_inner_1_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzbestimmungen_inner_1"
+    datenschutzbestimmungen_inner_1_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzbestimmungen_inner_1"
+    datenschutzbestimmungen_inner_1_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzbestimmungen_inner_1"
+    datenschutzbestimmungen_inner_2_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzbestimmungen_inner_2"
+    datenschutzbestimmungen_inner_2_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzbestimmungen_inner_2"
+    datenschutzbestimmungen_inner_2_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzbestimmungen_inner_2"
+    datenschutzbestimmungen_inner_2_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzbestimmungen_inner_2"
+    datenschutzbestimmungen_inner_3_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzbestimmungen_inner_3"
+    datenschutzbestimmungen_inner_3_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzbestimmungen_inner_3"
+    datenschutzbestimmungen_inner_3_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzbestimmungen_inner_3"
+    datenschutzbestimmungen_inner_3_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzbestimmungen_inner_3"
+    datenschutzbestimmungen_inner_4_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzbestimmungen_inner_4"
+    datenschutzbestimmungen_inner_4_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzbestimmungen_inner_4"
+    datenschutzbestimmungen_inner_4_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzbestimmungen_inner_4"
+    datenschutzbestimmungen_inner_4_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzbestimmungen_inner_4"
+    datenschutzbestimmungen_inner_5_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzbestimmungen_inner_5"
+    datenschutzbestimmungen_inner_5_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzbestimmungen_inner_5"
+    datenschutzbestimmungen_inner_5_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzbestimmungen_inner_5"
+    datenschutzbestimmungen_inner_5_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzbestimmungen_inner_5"
+    datenschutzbestimmungen_inner_6_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzbestimmungen_inner_6"
+    datenschutzbestimmungen_inner_6_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzbestimmungen_inner_6"
+    datenschutzbestimmungen_inner_6_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzbestimmungen_inner_6"
+    datenschutzbestimmungen_inner_6_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzbestimmungen_inner_6"
+    datenschutzbestimmungen_inner_7_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzbestimmungen_inner_7"
+    datenschutzbestimmungen_inner_7_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzbestimmungen_inner_7"
+    datenschutzbestimmungen_inner_7_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzbestimmungen_inner_7"
+    datenschutzbestimmungen_inner_7_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzbestimmungen_inner_7"
+    datenschutzbestimmungen_inner_8_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzbestimmungen_inner_8"
+    datenschutzbestimmungen_inner_8_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzbestimmungen_inner_8"
+    datenschutzbestimmungen_inner_8_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzbestimmungen_inner_8"
+    datenschutzbestimmungen_inner_8_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzbestimmungen_inner_8"
+    datenschutzbestimmungen_inner_9_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzbestimmungen_inner_9"
+    datenschutzbestimmungen_inner_9_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzbestimmungen_inner_9"
+    datenschutzbestimmungen_inner_9_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzbestimmungen_inner_9"
+    datenschutzbestimmungen_inner_9_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzbestimmungen_inner_9"
+    datenschutzbestimmungen_inner_10_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@datenschutzbestimmungen_inner_10"
+    datenschutzbestimmungen_inner_10_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@datenschutzbestimmungen_inner_10"
+    datenschutzbestimmungen_inner_10_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@datenschutzbestimmungen_inner_10"
+    datenschutzbestimmungen_inner_10_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@datenschutzbestimmungen_inner_10"
+
+    benachrichtigungsverwaltung_1_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@benachrichtigungsverwaltung_1"
+    benachrichtigungsverwaltung_1_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@benachrichtigungsverwaltung_1"
+    benachrichtigungsverwaltung_1_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@benachrichtigungsverwaltung_1"
+    benachrichtigungsverwaltung_1_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@benachrichtigungsverwaltung_1"
+    benachrichtigungsverwaltung_2_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@benachrichtigungsverwaltung_2"
+    benachrichtigungsverwaltung_2_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@benachrichtigungsverwaltung_2"
+    benachrichtigungsverwaltung_2_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@benachrichtigungsverwaltung_2"
+    benachrichtigungsverwaltung_2_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@benachrichtigungsverwaltung_2"
+
+    reaktion_auf_anfragen_1_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@reaktion_auf_anfragen_1"
+    reaktion_auf_anfragen_1_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@reaktion_auf_anfragen_1"
+    reaktion_auf_anfragen_1_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@reaktion_auf_anfragen_1"
+    reaktion_auf_anfragen_1_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@reaktion_auf_anfragen_1"
+    reaktion_auf_anfragen_2_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@reaktion_auf_anfragen_2"
+    reaktion_auf_anfragen_2_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@reaktion_auf_anfragen_2"
+    reaktion_auf_anfragen_2_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@reaktion_auf_anfragen_2"
+    reaktion_auf_anfragen_2_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@reaktion_auf_anfragen_2"
+    reaktion_auf_anfragen_3_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@reaktion_auf_anfragen_3"
+    reaktion_auf_anfragen_3_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@reaktion_auf_anfragen_3"
+    reaktion_auf_anfragen_3_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@reaktion_auf_anfragen_3"
+    reaktion_auf_anfragen_3_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@reaktion_auf_anfragen_3"
+    reaktion_auf_anfragen_4_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@reaktion_auf_anfragen_4"
+    reaktion_auf_anfragen_4_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@reaktion_auf_anfragen_4"
+    reaktion_auf_anfragen_4_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@reaktion_auf_anfragen_4"
+    reaktion_auf_anfragen_4_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@reaktion_auf_anfragen_4"
+    reaktion_auf_anfragen_5_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@reaktion_auf_anfragen_5"
+    reaktion_auf_anfragen_5_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@reaktion_auf_anfragen_5"
+    reaktion_auf_anfragen_5_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@reaktion_auf_anfragen_5"
+    reaktion_auf_anfragen_5_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@reaktion_auf_anfragen_5"
+
+
+    operative_praktiken_1_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@operative_praktiken_1"
+    operative_praktiken_1_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@operative_praktiken_1"
+    operative_praktiken_1_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@operative_praktiken_1"
+    operative_praktiken_1_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@operative_praktiken_1"
+
+    operative_praktiken_2_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@operative_praktiken_2"
+    operative_praktiken_2_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@operative_praktiken_2"
+    operative_praktiken_2_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@operative_praktiken_2"
+    operative_praktiken_2_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@operative_praktiken_2"
+
+    operative_praktiken_3_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@operative_praktiken_3"
+    operative_praktiken_3_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@operative_praktiken_3"
+    operative_praktiken_3_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@operative_praktiken_3"
+    operative_praktiken_3_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@operative_praktiken_3"
+
+    operative_praktiken_4_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@operative_praktiken_4"
+    operative_praktiken_4_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@operative_praktiken_4"
+    operative_praktiken_4_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@operative_praktiken_4"
+    operative_praktiken_4_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@operative_praktiken_4"
+
+    operative_praktiken_5_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@operative_praktiken_5"
+    operative_praktiken_5_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@operative_praktiken_5"
+    operative_praktiken_5_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@operative_praktiken_5"
+    operative_praktiken_5_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@operative_praktiken_5"
+
+    operative_praktiken_6_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@operative_praktiken_6"
+    operative_praktiken_6_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@operative_praktiken_6"
+    operative_praktiken_6_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@operative_praktiken_6"
+    operative_praktiken_6_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@operative_praktiken_6"
+
+    operative_praktiken_7_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@operative_praktiken_7"
+    operative_praktiken_7_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@operative_praktiken_7"
+    operative_praktiken_7_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@operative_praktiken_7"
+    operative_praktiken_7_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@operative_praktiken_7"
+
+    ereignissmanagement_1_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@ereignissmanagement_1"
+    ereignissmanagement_1_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@ereignissmanagement_1"
+    ereignissmanagement_1_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@ereignissmanagement_1"
+    ereignissmanagement_1_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@ereignissmanagement_1"
+
+    ereignissmanagement_2_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@ereignissmanagement_2"
+    ereignissmanagement_2_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@ereignissmanagement_2"
+    ereignissmanagement_2_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@ereignissmanagement_2"
+    ereignissmanagement_2_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@ereignissmanagement_2"
+
+    ereignissmanagement_3_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@ereignissmanagement_3"
+    ereignissmanagement_3_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@ereignissmanagement_3"
+    ereignissmanagement_3_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@ereignissmanagement_3"
+    ereignissmanagement_3_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@ereignissmanagement_3"
+
+
+    informationssicherheitsmanagement_1_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@informationssicherheitsmanagement_1"
+    informationssicherheitsmanagement_1_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@informationssicherheitsmanagement_1"
+    informationssicherheitsmanagement_1_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@informationssicherheitsmanagement_1"
+    informationssicherheitsmanagement_1_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@informationssicherheitsmanagement_1"
+
+    informationssicherheitsmanagement_2_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@informationssicherheitsmanagement_2"
+    informationssicherheitsmanagement_2_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@informationssicherheitsmanagement_2"
+    informationssicherheitsmanagement_2_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@informationssicherheitsmanagement_2"
+    informationssicherheitsmanagement_2_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@informationssicherheitsmanagement_2"
+
+    informationssicherheitsmanagement_3_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@informationssicherheitsmanagement_3"
+    informationssicherheitsmanagement_3_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@informationssicherheitsmanagement_3"
+    informationssicherheitsmanagement_3_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@informationssicherheitsmanagement_3"
+    informationssicherheitsmanagement_3_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@informationssicherheitsmanagement_3"
+
+    informationssicherheitsmanagement_4_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@informationssicherheitsmanagement_4"
+    informationssicherheitsmanagement_4_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@informationssicherheitsmanagement_4"
+    informationssicherheitsmanagement_4_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@informationssicherheitsmanagement_4"
+    informationssicherheitsmanagement_4_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@informationssicherheitsmanagement_4"
+
+    informationssicherheitsmanagement_5_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@informationssicherheitsmanagement_5"
+    informationssicherheitsmanagement_5_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@informationssicherheitsmanagement_5"
+    informationssicherheitsmanagement_5_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@informationssicherheitsmanagement_5"
+    informationssicherheitsmanagement_5_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@informationssicherheitsmanagement_5"
+
+
+    management_drittunternehmen_1_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@management_drittunternehmen_1"
+    management_drittunternehmen_1_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@management_drittunternehmen_1"
+    management_drittunternehmen_1_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@management_drittunternehmen_1"
+    management_drittunternehmen_1_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@management_drittunternehmen_1"
+
+    management_drittunternehmen_2_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@management_drittunternehmen_2"
+    management_drittunternehmen_2_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@management_drittunternehmen_2"
+    management_drittunternehmen_2_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@management_drittunternehmen_2"
+    management_drittunternehmen_2_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@management_drittunternehmen_2"
+
+    management_drittunternehmen_3_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@management_drittunternehmen_3"
+    management_drittunternehmen_3_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@management_drittunternehmen_3"
+    management_drittunternehmen_3_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@management_drittunternehmen_3"
+    management_drittunternehmen_3_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@management_drittunternehmen_3"
+
+    training_and_awareness_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@training_and_awareness"
+    training_and_awareness_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@training_and_awareness"
+    training_and_awareness_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@training_and_awareness"
+    training_and_awareness_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@training_and_awareness"
+
+
+    ueberwachung_optimierung_1:
+        text: "nicht erreicht"
+        value: 15
+        question: "@ueberwachung_optimierung"
+    ueberwachung_optimierung_2:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@ueberwachung_optimierung"
+    ueberwachung_optimierung_3:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@ueberwachung_optimierung"
+    ueberwachung_optimierung_4:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@ueberwachung_optimierung"
+
+

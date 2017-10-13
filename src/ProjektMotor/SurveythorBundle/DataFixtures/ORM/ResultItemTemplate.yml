@@ -1,0 +1,4 @@
+PM\SurveythorBundle\Entity\ResultItemTemplate:
+    software_happiness_template:
+        name: 'Software Happiness'
+        formType: '\PM\SurveythorBundle\Form\Result\ChoicesChildrenGroupedBelowType'
