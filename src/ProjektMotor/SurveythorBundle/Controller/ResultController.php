@@ -3,7 +3,6 @@ namespace PM\SurveythorBundle\Controller;
 
 use AppBundle\Event\ResultReadySubscriber;
 use PM\SurveythorBundle\Entity\Answer;
-use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\Result;
 use PM\SurveythorBundle\Entity\ResultItem;
 use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
@@ -19,13 +18,12 @@ use PM\SurveythorBundle\Event\ResultEvent;
 use PM\SurveythorBundle\Form\ResultItemType;
 use PM\SurveythorBundle\Repository\ResultRepository;
 use QafooLabs\MVC\FormRequest;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Form;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Twig_Environment;
 
 /**
@@ -93,12 +91,16 @@ class ResultController
         );
     }
 
+    /**
+     * @param Survey $survey
+     *
+     * @return JsonResponse
+     */
     public function firstAction(Survey $survey)
     {
         $result = new Result();
         $surveyItem = $survey->getSurveyItems()->first();
         $resultItem = $this->prepareResultItem($surveyItem, $result);
-        $nextSurveyItem = $this->getNextItem($surveyItem, $result);
 
         $result->setSurvey($survey);
         $this->resultRepository->save($result);
@@ -106,10 +108,12 @@ class ResultController
         $form = $this->formFactory->create(ResultItemType::class, $resultItem);
         $html = $this->renderNext($surveyItem, $result, $form);
 
-        return new JsonResponse(json_encode(array(
-            'status' => 'OK',
-            'html' => $html
-        )));
+        return new JsonResponse(
+            [
+                'status' => 'OK',
+                'html' => $html,
+            ]
+        );
     }
 
     /**
@@ -126,10 +130,12 @@ class ResultController
             $form = $formRequest->getForm();
             $html = $this->renderNext($surveyItem, $result, $form);
 
-            return new JsonResponse(json_encode(array(
+            return new JsonResponse(
+                array(
                 'status' => 'OK',
                 'html' => $html
-            )));
+                )
+            );
         }
 
         $resultItem = $formRequest->getValidData();
@@ -142,10 +148,12 @@ class ResultController
         $form = $this->formFactory->create(ResultItemType::class, $nextResultItem);
         $html = $this->renderNext($nextSurveyItem, $result, $form);
 
-        return new JsonResponse(json_encode(array(
+        return new JsonResponse(
+            array(
             'status' => 'OK',
             'html' => $html
-        )));
+            )
+        );
     }
 
     /**
@@ -163,24 +171,19 @@ class ResultController
         $html = $this->renderNext($prevItem, $result, $form);
 
         return new JsonResponse(
-            json_encode(
-                array(
-                    'status' => 'OK',
-                    'html' => $html
-                )
-            )
+            [
+                'status' => 'OK',
+                'html' => $html,
+            ]
         );
     }
-
-
-
 
     /**
      * @param FormRequest $formRequest
      * @param SurveyItem  $surveyItem
      * @param Result      $result
      *
-     * @return array|JsonResponse
+     * @return JsonResponse
      */
     public function lastAction(FormRequest $formRequest, SurveyItem $surveyItem, Result $result)
     {
@@ -189,10 +192,12 @@ class ResultController
             $form = $formRequest->getForm();
             $html = $this->renderNext($surveyItem, $result, $form);
 
-            return new JsonResponse(json_encode(array(
-                'status' => 'OK',
-                'html' => $html
-            )));
+            return new JsonResponse(
+                [
+                    'status' => 'OK',
+                    'html' => $html,
+                ]
+            );
         }
 
         $resultItem = $formRequest->getValidData();
@@ -205,16 +210,12 @@ class ResultController
         $dispatcher->addSubscriber($this->resultReadySubscriber);
         $dispatcher->dispatch(ResultEvent::NAME, $event);
 
-        $jsonResponse = new JsonResponse(
-            json_encode(
-                array(
-                    'status' => 'finished',
-                    'url' => $event->getUrl()
-                )
-            )
+        return new JsonResponse(
+            [
+                'status' => 'finished',
+                'url' => $event->getUrl(),
+            ]
         );
-
-            return $jsonResponse;
     }
 
     /**
@@ -384,7 +385,14 @@ class ResultController
         return $resultItem;
     }
 
-    private function renderNext(SurveyItem $surveyItem, Result $result, Form $form)
+    /**
+     * @param SurveyItem    $surveyItem
+     * @param Result        $result
+     * @param FormInterface $form
+     *
+     * @return string
+     */
+    private function renderNext(SurveyItem $surveyItem, Result $result, FormInterface $form)
     {
         return $this->twig->render(
             '@PMSurveythorBundle/Result/next.html.twig',
