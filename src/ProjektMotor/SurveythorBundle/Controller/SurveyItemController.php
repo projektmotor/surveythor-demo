@@ -143,30 +143,30 @@ class SurveyItemController
      */
     public function itemGroupAddItemAction(Request $request, Survey $survey, $type)
     {
-        /** @var SurveyItem $parentItem */
-        $parentItem = $this->surveyItemRepository->findOneById($request->query->get('parent'));
+        /** @var ItemGroup $parentItemGroup */
+        $parentItemGroup = $this->surveyItemRepository->findOneById($request->query->get('parent'));
         $sortOrder = $request->query->get('sortorder');
         $item = SurveyItemFactory::createByType($type);
 
-        foreach ($parentItem->getSurveyItems() as $surveyItem) {
+        foreach ($parentItemGroup->getSurveyItems() as $surveyItem) {
             if ($surveyItem->getSortOrder() >= $sortOrder) {
                 $surveyItem->setSortOrder($surveyItem->getSortOrder() + 1);
                 $this->surveyItemRepository->save($surveyItem);
             }
         }
 
-        $parentItem->addSurveyItem($item);
+        $parentItemGroup->addSurveyItem($item);
         $item->setSortOrder($sortOrder);
-        $this->surveyItemRepository->save($parentItem);
-        $this->surveyItemRepository->detach($parentItem);
-        $parentItem = $this->surveyItemRepository->findOneById($request->query->get('parent'));
+        $this->surveyItemRepository->save($parentItemGroup);
+        $this->surveyItemRepository->detach($parentItemGroup);
+        $parentItemGroup = $this->surveyItemRepository->findOneById($request->query->get('parent'));
 
         $form = $this->formFactory->create(
             SurveyItemType::class,
-            $parentItem->getRoot(),
+            $parentItemGroup->getRoot(),
             array('action' => $this->router->generate(
                 'surveyitem_update',
-                array('item' => $parentItem->getRoot()->getId())
+                array('item' => $parentItemGroup->getRoot()->getId())
             ))
         );
 
@@ -177,8 +177,8 @@ class SurveyItemController
 
         return new JsonResponse(json_encode(array(
             'html' => $html,
-            'open' => array_merge(array($item->getId()), $parentItem->getGroupIdsFromTop()),
-            'root' => $parentItem->getRoot()->getId(),
+            'open' => array_merge(array($item->getId()), $parentItemGroup->getGroupIdsFromTop()),
+            'root' => $parentItemGroup->getRoot()->getId(),
             'status' => 'OK'
         )));
     }

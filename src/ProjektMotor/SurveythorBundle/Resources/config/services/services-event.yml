@@ -3,5 +3,3 @@ services:
         class: PM\SurveythorBundle\Event\ResultReadySubscriber
         tags:
             - { name: kernel.event_listener, event: result.ready, method: onResultReady }
-        arguments:
-            - "@result_repository"

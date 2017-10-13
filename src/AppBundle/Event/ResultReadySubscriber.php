@@ -13,20 +13,14 @@ use PM\SurveythorBundle\Repository\ResultRepository;
  */
 class ResultReadySubscriber implements EventSubscriberInterface
 {
-    private $resultRepository;
     private $router;
 
     /**
-     * ResultReadyListener constructor.
-     *
-     * @param ResultRepository $resultRepository
      * @param Router $router
      */
     public function __construct(
-        ResultRepository $resultRepository,
         Router $router
     ) {
-        $this->resultRepository = $resultRepository;
         $this->router = $router;
     }
 
@@ -40,8 +34,6 @@ class ResultReadySubscriber implements EventSubscriberInterface
      */
     public function onResultReady(ResultEvent $event)
     {
-        $this->resultRepository->save($event->getResult());
-
         $url = $this->router->generate(
             'result_evaluation',
             ['id' => $event->getResult()->getId()],

@@ -1,12 +1,10 @@
 <?php
 namespace AppBundle\DependencyInjection;
 
+use AppBundle\Event\ResultReadySubscriber;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
-use AppBundle\Event\ResultReadySubscriber;
-use PM\SurveythorBundle\Event\ResultEvent;
 
 /**
  * ResultReadyPass

@@ -1,9 +1,8 @@
 <?php
+
 namespace PM\SurveythorBundle\Event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use PM\SurveythorBundle\Event\ResultEvent;
-use PM\SurveythorBundle\Repository\ResultRepository;
 
 /**
  * ResultReadySubscriber
@@ -11,13 +10,6 @@ use PM\SurveythorBundle\Repository\ResultRepository;
  */
 class ResultReadySubscriber implements EventSubscriberInterface
 {
-    private $resultRepository;
-
-    public function __construct(ResultRepository $resultRepository)
-    {
-        $this->resultRepository = $resultRepository;
-    }
-
     public static function getSubscribedEvents()
     {
         return array('result.ready' => 'onResultReady');
@@ -25,6 +17,5 @@ class ResultReadySubscriber implements EventSubscriberInterface
 
     public function onResultReady(ResultEvent $event)
     {
-        $this->resultRepository->save($event->getResult());
     }
 }

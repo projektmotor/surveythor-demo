@@ -97,27 +97,6 @@ class Result
     }
 
     /**
-     * @return Answer[]|ArrayCollection
-     */
-    public function getAnswers()
-    {
-        $answers = new ArrayCollection();
-        foreach ($this->resultItems as $resultItem) {
-            if ($resultItem instanceof Answer) {
-                $answers->add($resultItem);
-            }
-            if ($resultItem instanceof AnswerGroup) {
-                foreach ($resultItem->getAnswers() as $answer) {
-                    $answers->add($answer);
-                }
-                $answers->add($resultItem);
-            }
-        }
-
-        return $answers;
-    }
-
-    /**
      * @return Survey
      */
     public function getSurvey()
