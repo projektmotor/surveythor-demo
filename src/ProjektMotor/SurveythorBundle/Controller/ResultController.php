@@ -320,28 +320,25 @@ class ResultController
     }
 
     /**
-     * @param SurveyItem $item
+     * @param SurveyItem $surveyItem
      * @param Result     $result
      *
      * @return ResultItem
+     * @throws \Exception
      */
-    private function prepareResultItem(SurveyItem $item, Result $result)
+    private function prepareResultItem(SurveyItem $surveyItem, Result $result)
     {
-        if ($item instanceof Question) {
-            $resultItem = $this->prepareAnswer($item);
-        }
-
-        if ($item instanceof TextItem) {
+        if ($surveyItem instanceof Question) {
+            $resultItem = $this->prepareAnswer($surveyItem);
+        } elseif ($surveyItem instanceof TextItem) {
             $resultItem = new ResultItem();
 
             $textItem = new ResultTextItem();
-            $textItem->setText($item->getText());
+            $textItem->setText($surveyItem->getText());
             $resultItem->setTextItem($textItem);
-        }
-
-        if ($item instanceof ItemGroup) {
+        } elseif ($surveyItem instanceof ItemGroup) {
             $resultItem = new ResultItem();
-            $childItems = $item->getSurveyItems();
+            $childItems = $surveyItem->getSurveyItems();
             $childItem = $childItems->current();
             if ($this->isItemVisible($childItem, $result)) {
                 $resultItem = new ResultItem();
@@ -354,9 +351,11 @@ class ResultController
                     );
                 }
             }
+        } else {
+            throw new \Exception('surveyItem has to be one of Question, ItemGroup or ResultItem');
         }
 
-        $resultItem->setSurveyItem($item);
+        $resultItem->setSurveyItem($surveyItem);
 
         return $resultItem;
     }
