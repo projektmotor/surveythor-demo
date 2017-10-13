@@ -25,7 +25,6 @@ module.exports = {
                         url: url,
                         method: 'GET',
                         success: function (response) {
-                            response = JSON.parse(response);
                             $(ui.item).before(response.html);
 
                             that.helpers.openPanels(response.open);
@@ -60,7 +59,6 @@ module.exports = {
                         method: 'POST',
                         data: form.serialize(),
                         success: function (response) {
-                            response = JSON.parse(response);
                             $('#item-' + response.root).html(response.html);
                             $('#item-' + response.root).removeClass('in');
                             $(draggableConnect).remove();

@@ -39,7 +39,6 @@ module.exports = {
                 method: 'post',
                 isLocal: true,
                 done: function (response) {
-                    response = JSON.parse(response);
                     if (response.status === 'OK') {
                         $(panel).remove();
                     } else if (response.status === 'FAIL') {

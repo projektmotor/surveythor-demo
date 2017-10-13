@@ -93,7 +93,6 @@ module.exports = {
             url: $(link).attr('href'),
             method: 'get',
             success: function (response) {
-                response = JSON.parse(response);
                 if (response.status === 'OK') {
                     $('#item-' + response.item).parent('.survey-item').remove();
                 } else if (response.status === 'FAIL') {

@@ -44,14 +44,19 @@ class ChoiceController
         $conditions = $this->conditionRepository->getConditionsByChoice($choice);
         if (empty(($conditions))) {
             $this->choiceRepository->remove($choice);
-            return new JsonResponse(json_encode(array(
-                'status' => 'OK'
-            )));
+
+            return new JsonResponse(
+                [
+                    'status' => 'OK',
+                ]
+            );
         } else {
-            return new JsonResponse(json_encode(array(
-                'status' => 'FAIL',
-                'reason' => 'Diese Antwort kann nicht gelöscht werden, sie wird von mind. einer Bedingung verwendet.'
-            )));
+            return new JsonResponse(
+                [
+                    'status' => 'FAIL',
+                    'reason' => 'Diese Antwort kann nicht gelöscht werden, sie wird von mind. einer Bedingung verwendet.',
+                ]
+            );
         }
     }
 }

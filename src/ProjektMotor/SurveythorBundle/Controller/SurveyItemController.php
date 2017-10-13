@@ -4,9 +4,8 @@ namespace PM\SurveythorBundle\Controller;
 use PM\SurveythorBundle\Entity\Factory\SurveyItemFactory;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\SurveyItem;
-use PM\SurveythorBundle\Entity\SurveyItems\Question;
-use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
 use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
+use PM\SurveythorBundle\Entity\SurveyItems\Question;
 use PM\SurveythorBundle\Form\SurveyItemType;
 use PM\SurveythorBundle\Repository\ConditionRepository;
 use PM\SurveythorBundle\Repository\SurveyItemRepository;
@@ -85,19 +84,23 @@ class SurveyItemController
                 array('item' => $item->getId())
             ))
         )) {
-            return new JsonResponse(json_encode(array(
-                'status' => 'NOT VALID',
-                'open' => array($item->getId())
-            )));
+            return new JsonResponse(
+                [
+                    'status' => 'NOT VALID',
+                    'open' => [$item->getId()],
+                ]
+            );
         }
 
         $item = $formRequest->getValidData();
         $this->surveyItemRepository->save($item);
 
-        return new JsonResponse(json_encode(array(
-            'status' => 'OK',
-            'open' => array($item->getId())
-        )));
+        return new JsonResponse(
+            [
+                'status' => 'OK',
+                'open' => [$item->getId()],
+            ]
+        );
     }
 
     /**
@@ -127,11 +130,13 @@ class SurveyItemController
             )
         );
 
-        return new JsonResponse(json_encode(array(
-            'html' => $html,
-            'open' => array($item->getId()),
-            'status' => 'OK'
-        )));
+        return new JsonResponse(
+            [
+                'html' => $html,
+                'open' => [$item->getId()],
+                'status' => 'OK',
+            ]
+        );
     }
 
     /**
@@ -175,12 +180,14 @@ class SurveyItemController
             array('form'  => $form->createView())
         );
 
-        return new JsonResponse(json_encode(array(
-            'html' => $html,
-            'open' => array_merge(array($item->getId()), $parentItemGroup->getGroupIdsFromTop()),
-            'root' => $parentItemGroup->getRoot()->getId(),
-            'status' => 'OK'
-        )));
+        return new JsonResponse(
+            [
+                'html' => $html,
+                'open' => array_merge([$item->getId()], $parentItemGroup->getGroupIdsFromTop()),
+                'root' => $parentItemGroup->getRoot()->getId(),
+                'status' => 'OK',
+            ]
+        );
     }
 
     /**
@@ -214,7 +221,7 @@ class SurveyItemController
         $item->setSortOrder($sortOrder);
         $this->surveyItemRepository->save($item);
 
-        return new JsonResponse(json_encode(['status' => 'OK']));
+        return new JsonResponse(['status' => 'OK']);
     }
 
     /**
@@ -228,15 +235,20 @@ class SurveyItemController
         if (empty(($conditions))) {
             $id = $item->getId();
             $this->surveyItemRepository->remove($item);
-            return new JsonResponse(json_encode(array(
-                'status' => 'OK',
-                'item' => $id
-            )));
+
+            return new JsonResponse(
+                [
+                    'status' => 'OK',
+                    'item' => $id,
+                ]
+            );
         } else {
-            return new JsonResponse(json_encode(array(
-                'status' => 'FAIL',
-                'reason' => 'Diese Frage kann nicht gelöscht werden, sie wird von mind. einer Bedingung verwendet.'
-            )));
+            return new JsonResponse(
+                [
+                    'status' => 'FAIL',
+                    'reason' => 'Diese Frage kann nicht gelöscht werden, sie wird von mind. einer Bedingung verwendet.',
+                ]
+            );
         }
     }
 

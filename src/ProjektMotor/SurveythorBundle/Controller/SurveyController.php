@@ -111,17 +111,21 @@ class SurveyController
     public function updateTitleAction(FormRequest $formRequest, Survey $survey)
     {
         if (!$formRequest->handle(SurveyTitleType::class, $survey)) {
-            return new JsonResponse(json_encode(array(
-                'status' => 'INVALID'
-            )));
+            return new JsonResponse(
+                [
+                    'status' => 'INVALID',
+                ]
+            );
         }
 
         $survey = $formRequest->getValidData();
         $this->surveyRepository->save($survey);
 
-        return new JsonResponse(json_encode(array(
-            'status' => 'OK'
-        )));
+        return new JsonResponse(
+            [
+                'status' => 'OK',
+            ]
+        );
     }
 
     /**
