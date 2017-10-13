@@ -1,0 +1,5 @@
+imports:
+  - { resource: validation/Question.yml }
+  - { resource: validation/ResultItem.yml }
+  - { resource: validation/SingleChoiceAnswer.yml }
+  - { resource: validation/Survey.yml }
