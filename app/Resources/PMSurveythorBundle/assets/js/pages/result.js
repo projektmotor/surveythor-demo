@@ -1,3 +1,5 @@
+require('jquery.scrollto');
+
 module.exports = function (params) {
 
     let config = {};
@@ -38,6 +40,7 @@ module.exports = function (params) {
                     if (data.status === 'finished') {
                         window.location = data.url;
                     }
+                    $(window).scrollTo(container);
                 }
             });
         });

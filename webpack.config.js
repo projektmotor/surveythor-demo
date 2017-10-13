@@ -21,7 +21,6 @@ Encore
 
     // will output as web/build/global.css
     .addStyleEntry('global', assets_dir + '/css/global.scss')
-    .addStyleEntry('frontend_css', assets_dir + '/css/frontend.scss')
 
     // allow sass/scss files to be processed
     .enableSassLoader(function () {

@@ -14,22 +14,26 @@
         <div {{ block('widget_container_attributes') }}>
             {%- for child in form %}
                 <div class="pull-left">
-                    <div class="text-center" style="border: 1px solid #e7e7e7; margin-right: 8px; padding: 4px;">
-                        <div>{{ child.vars.label }}</div>
-                        {% if type == "sc" %}
-                            <input type="radio" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
-                        {% else %}
-                            <input type="checkbox" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
-                        {% endif %}
+                    <div class="st-answer">
+                        <label>
+                            {% if type == "sc" %}
+                                <input type="radio" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
+                            {% else %}
+                                <input type="checkbox" {{ block('widget_attributes') }}{% if child.vars.value is defined %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} />
+                            {% endif %}
+                            {{ child.vars.label }}
+                        </label>
                     </div>
                 </div>
             {% endfor -%}
         </div>
+    <div class="clearfix"></div>
+    <hr>
 {%- endblock -%}
 
 {% block choices_children_below_widget %}
     {% set attr = attr|merge({ 'class' : 'clearfix' }) %}
-    <div {{ block('widget_container_attributes') }}>
+    <div {{ block('widget_container_attributes') }}>s
         {%- if form.parent is empty -%}
             {{ form_errors(form) }}
         {%- endif -%}

@@ -2,19 +2,25 @@
 {# survey \PM\SurveythorBundle\Entity\Survey #}
 {# item \PM\SurveythorBundle\Entity\SurveyItem #}
 
+<div class="st-h1">{{ survey.getTitle }}</div>
+
 {% if item.displayTitle %}
-    <h4>{{ item.title }}</h4>
+    <div class="st-h2">{{ item.title }}</div>
 {% endif %}
 
-<p>{{ item.description }}</p>
+{% if item.description %}
+    <p class="st-description">{{ item.description }}</p>
+{% endif %}
 
 {{ form_start(form) }}
 {{ form(form) }}
 {{ form_end(form) }}
 
+<div class="clearfix"></div>
+
 {% if result.survey.getPrevItem(item) %}
     <button
-            class="btn btn-default js-st-survey-button"
+            class="btn btn-default st-button pull-left js-st-survey-button"
             data-url="{{ url('result_prev', { 'surveyItem' : item.getId, 'result': result.getId }, true) }}"
     >
         zurück
@@ -22,16 +28,18 @@
 {% endif %}
 {% if not isLast %}
     <button
-            class="btn btn-default js-st-survey-button"
+            class="btn btn-default st-button pull-right js-st-survey-button"
             data-url="{{ url('result_next', { 'surveyItem' : item.getId, 'result': result.getId }, true) }}"
     >
         weiter
     </button>
 {% else %}
     <button
-            class="btn btn-default js-st-survey-button"
+            class="btn btn-default st-button pull-right js-st-survey-button"
             data-url="{{ url('result_last', { 'surveyItem' : item.getId, 'result': result.getId }, true) }}"
     >
         fertigstellen
     </button>
 {% endif %}
+
+<div class="clearfix"></div>

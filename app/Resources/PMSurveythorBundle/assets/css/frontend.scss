@@ -1,13 +1,101 @@
+$header-font-color: #0848A9;
+$text-font-color: #5F686D;
+$error-color: #D0021B;
+$button-color: #005EB8;
+$button-color-hover: #a20067;
+$button-font-color: #ffffff;
+$container-bg-color: #ffffff;
+$hr-color: #DDDDDD;
+
 #js-st-surveythor-container {
+    font-family: 'Vinci Sans Regular', sans-serif;
+    padding: 45px 50px;
+    //min-height: 500px;
+    margin: 20px 0;
+    color: $text-font-color;
+    background-color: $container-bg-color;
+    .st-h1 {
+        color: $header-font-color;
+        font-size: 33px;
+        font-style: italic;
+    }
+    .st-h2 {
+        color: $header-font-color;
+        font-size: 22px;
+        margin-top: 25px;
+    }
+    .st-description {
+        margin-top: 25px;
+    }
+    .st-question {
+        margin-top: 25px;
+        font-size: 17px;
+        color: $text-font-color;
+    }
+    .st-answer, .choice-answer {
+        font-size: 15px;
+        color: $text-font-color;
+        margin-top: 15px;
+        margin-right: 15px;
+        //float: left;
+        min-width: 157px;
+        .radio {
+            float: left;
+            min-width: 170px;
+            margin-top: 15px;
+        }
+    }
+    .clearfix {
+        clear: both;
+    }
+    .pull-left {
+        float: left;
+    }
+    .pull-right {
+        float: right;
+    }
+    .st-error {
+        color: $error-color;
+    }
+    .st-button {
+        font-family: 'Vinci Sans Regular', sans-serif;
+        background-color: $button-color;
+        color: $button-font-color;
+        //padding: 10px 60px;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 20px;
+        &:hover {
+            background: $button-color-hover;
+        }
+        font-weight: 500;
+        text-align: center;
+        vertical-align: middle;
+        border: 0;
+        padding: 10px 20px;
+        font-size: 16px;
+        line-height: 1.4;
+        min-width: 185px;
+        transition: color .25s ease-in;
+        margin-top: 87px;
+    }
+    .btn, label, input {
+        cursor: pointer;
+    }
+    a:active, a:hover, a:focus, .btn:active, .btn:hover, .btn:focus {
+        outline: 0;
+    }
     .resultitem-title {
         text-decoration: underline;
         font-weight: bold;
     }
     label.control-label {
         display: block;
-        margin: 20px 0 10px;
+        margin-top: 25px;
     }
-    button {
-        margin-top: 16px;
+    hr {
+        margin-top: 25px;
+        color: $hr-color;
+        height: 1px;
     }
 }
