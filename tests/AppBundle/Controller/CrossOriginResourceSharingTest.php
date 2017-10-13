@@ -27,7 +27,7 @@ class CrossOriginResourceSharingTest extends WebTestCase
             'wrong status code for uri '.$client->getRequest()->getUri()
         );
 
-        $uri = '/result/next/1/8/1';
+        $uri = '/result/next/8/1';
 
         $client->request('POST', $uri);
 
