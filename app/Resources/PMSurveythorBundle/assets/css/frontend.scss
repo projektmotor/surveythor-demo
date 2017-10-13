@@ -8,6 +8,9 @@ $container-bg-color: #ffffff;
 $hr-color: #DDDDDD;
 
 #js-st-surveythor-container {
+
+  @import './frontend_reset.scss';
+
     font-family: 'Vinci Sans Regular', sans-serif;
     padding: 45px 50px;
     //min-height: 500px;
