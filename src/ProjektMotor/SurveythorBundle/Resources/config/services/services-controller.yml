@@ -10,10 +10,7 @@ services:
         class: PM\SurveythorBundle\Controller\ResultController
         arguments:
             - "@result_ready_subscriber"
-            - "@form.factory"
             - "@result_repository"
-            - "@twig"
-            - "@router"
 
     survey_item_controller:
         class: PM\SurveythorBundle\Controller\SurveyItemController

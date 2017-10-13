@@ -46,9 +46,13 @@ class ResultItemType extends AbstractType
 
                     case $resultItem->getContent() instanceof SingleChoiceAnswer:
                         $question = $resultItem->getContent()->getQuestion();
-                        $form->add('singleChoiceAnswer', SingleChoiceAnswerType::class, [
-                            'label' => $question->getText()
-                        ]);
+                        $form->add(
+                            'singleChoiceAnswer',
+                            SingleChoiceAnswerType::class,
+                            [
+                                'label' => $question->getText(),
+                            ]
+                        );
                         break;
 
                     case $resultItem->getContent() instanceof TextAnswer:

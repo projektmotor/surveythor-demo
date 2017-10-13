@@ -1,14 +1,10 @@
 <?php
+
 namespace PM\SurveythorBundle\Controller;
 
 use AppBundle\Event\ResultReadySubscriber;
-use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\Result;
 use PM\SurveythorBundle\Entity\ResultItem;
-use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
-use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
-use PM\SurveythorBundle\Entity\ResultItems\TextAnswer;
-use PM\SurveythorBundle\Entity\ResultItems\TextItem as ResultTextItem;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\SurveyItem;
 use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
@@ -18,13 +14,10 @@ use PM\SurveythorBundle\Event\ResultEvent;
 use PM\SurveythorBundle\Form\ResultItemType;
 use PM\SurveythorBundle\Repository\ResultRepository;
 use QafooLabs\MVC\FormRequest;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use QafooLabs\MVC\RedirectRoute;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Twig_Environment;
 
 /**
  * Class ResultController
@@ -38,45 +31,20 @@ class ResultController
     private $resultReadySubscriber;
 
     /**
-     * @var FormFactory
-     */
-    private $formFactory;
-
-    /**
      * @var ResultRepository
      */
     private $resultRepository;
 
     /**
-     * @var Twig_Environment
-     */
-    private $twig;
-
-    /**
-     * @var Router
-     */
-    private $router;
-
-
-    /**
      * @param EventSubscriberInterface $resultReadySubscriber
-     * @param FormFactory              $formFactory
      * @param ResultRepository         $resultRepository
-     * @param Twig_Environment         $twig
-     * @param Router               $router
      */
     public function __construct(
         EventSubscriberInterface $resultReadySubscriber,
-        FormFactory $formFactory,
-        ResultRepository $resultRepository,
-        Twig_Environment $twig,
-        Router $router
+        ResultRepository $resultRepository
     ) {
         $this->resultReadySubscriber = $resultReadySubscriber;
-        $this->formFactory = $formFactory;
         $this->resultRepository = $resultRepository;
-        $this->twig = $twig;
-        $this->router = $router;
     }
 
     /**
@@ -86,17 +54,17 @@ class ResultController
      */
     public function newAction(Survey $survey)
     {
-        return array(
-            'survey' => $survey
-        );
+        return [
+            'survey' => $survey,
+        ];
     }
 
     /**
      * @param Survey $survey
      *
-     * @return JsonResponse
+     * @return array
      */
-    public function firstAction(Survey $survey)
+    public function firstAction(Survey $survey, FormRequest $formRequest)
     {
         $result = new Result();
         $surveyItem = $survey->getSurveyItems()->first();
@@ -105,15 +73,15 @@ class ResultController
         $result->setSurvey($survey);
         $this->resultRepository->save($result);
 
-        $form = $this->formFactory->create(ResultItemType::class, $resultItem);
-        $html = $this->renderNext($surveyItem, $result, $form);
+        $formRequest->handle(ResultItemType::class, $resultItem);
 
-        return new JsonResponse(
-            [
-                'status' => 'OK',
-                'html' => $html,
-            ]
-        );
+        return [
+            'item' => $surveyItem,
+            'result' => $result,
+            'survey' => $result->getSurvey(),
+            'form' => $formRequest->createFormView(),
+            'isLast' => $this->isLastItem($surveyItem, $result),
+        ];
     }
 
     /**
@@ -121,21 +89,20 @@ class ResultController
      * @param SurveyItem  $surveyItem
      * @param Result      $result
      *
-     * @return array|JsonResponse
+     * @return array|RedirectRoute
      */
     public function nextAction(FormRequest $formRequest, SurveyItem $surveyItem, Result $result)
     {
         $resultItem = $this->prepareResultItem($surveyItem, $result);
         if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
-            $form = $formRequest->getForm();
-            $html = $this->renderNext($surveyItem, $result, $form);
 
-            return new JsonResponse(
-                array(
-                'status' => 'OK',
-                'html' => $html
-                )
-            );
+            return [
+                'item' => $surveyItem,
+                'result' => $result,
+                'survey' => $result->getSurvey(),
+                'form' => $formRequest->createFormView(),
+                'isLast' => $this->isLastItem($surveyItem, $result),
+            ];
         }
 
         $resultItem = $formRequest->getValidData();
@@ -143,38 +110,9 @@ class ResultController
         $this->resultRepository->save($result);
 
         $nextSurveyItem = $this->getNextItem($surveyItem, $result);
-        $nextResultItem = $this->prepareResultItem($nextSurveyItem, $result);
 
-        $form = $this->formFactory->create(ResultItemType::class, $nextResultItem);
-        $html = $this->renderNext($nextSurveyItem, $result, $form);
-
-        return new JsonResponse(
-            array(
-            'status' => 'OK',
-            'html' => $html
-            )
-        );
-    }
-
-    /**
-     * @param SurveyItem  $surveyItem
-     * @param Result      $result
-     *
-     * @return array|JsonResponse
-     */
-    public function prevAction(SurveyItem $surveyItem, Result $result)
-    {
-        $prevItem = $this->getPrevItem($surveyItem, $result);
-        $resultItem = $this->prepareResultItem($prevItem, $result);
-
-        $form = $this->formFactory->create(ResultItemType::class, $resultItem);
-        $html = $this->renderNext($prevItem, $result, $form);
-
-        return new JsonResponse(
-            [
-                'status' => 'OK',
-                'html' => $html,
-            ]
+        return new RedirectRoute(
+            'result_next', ['surveyItem' => $nextSurveyItem->getId(), 'result' => $result->getId()]
         );
     }
 
@@ -183,21 +121,43 @@ class ResultController
      * @param SurveyItem  $surveyItem
      * @param Result      $result
      *
-     * @return JsonResponse
+     * @return array|JsonResponse
+     */
+    public function prevAction(FormRequest $formRequest, SurveyItem $surveyItem, Result $result)
+    {
+        $prevItem = $this->getPrevItem($surveyItem, $result);
+        $resultItem = $this->prepareResultItem($prevItem, $result);
+
+        $formRequest->handle(ResultItem::class, $resultItem);
+
+        return [
+            'item' => $surveyItem,
+            'result' => $result,
+            'survey' => $result->getSurvey(),
+            'form' => $formRequest->createFormView(),
+            'isLast' => $this->isLastItem($surveyItem, $result),
+        ];
+    }
+
+    /**
+     * @param FormRequest $formRequest
+     * @param SurveyItem  $surveyItem
+     * @param Result      $result
+     *
+     * @return array|JsonResponse
      */
     public function lastAction(FormRequest $formRequest, SurveyItem $surveyItem, Result $result)
     {
         $resultItem = $this->prepareResultItem($surveyItem, $result);
         if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
-            $form = $formRequest->getForm();
-            $html = $this->renderNext($surveyItem, $result, $form);
 
-            return new JsonResponse(
-                [
-                    'status' => 'OK',
-                    'html' => $html,
-                ]
-            );
+            return [
+                'item' => $surveyItem,
+                'result' => $result,
+                'survey' => $result->getSurvey(),
+                'form' => $formRequest->createFormView(),
+                'isLast' => $this->isLastItem($surveyItem, $result),
+            ];
         }
 
         $resultItem = $formRequest->getValidData();
@@ -259,21 +219,62 @@ class ResultController
     }
 
     /**
-     * @param SurveyItem $item
+     * @param SurveyItem $currentItem
      * @param Result     $result
      *
      * @return bool
      */
-    private function isLastItem(SurveyItem $item, Result $result)
+    private function isLastItem(SurveyItem $currentItem, Result $result)
     {
-        $survey = $item->getSurvey();
-        if ($nextItem = $survey->getNextItem($item)) {
+        $survey = $currentItem->getSurvey();
+        $nextItem = $survey->getNextItem($currentItem);
+
+        if ($nextItem) {
             if ($this->isItemVisible($nextItem, $result)) {
                 return false;
             }
+
             return $this->isLastItem($nextItem, $result);
         }
+
         return true;
+    }
+
+    /**
+     * @param SurveyItem $surveyItem
+     * @param Result     $result
+     *
+     * @return ResultItem
+     * @throws \Exception
+     */
+    private function prepareResultItem(SurveyItem $surveyItem, Result $result)
+    {
+        if ($surveyItem instanceof Question) {
+            $resultItem = $surveyItem->createResultItem();
+        } elseif ($surveyItem instanceof TextItem) {
+            $resultItem = $surveyItem->createResultItem();
+        } elseif ($surveyItem instanceof ItemGroup) {
+            $resultItem = new ResultItem();
+            $childItems = $surveyItem->getSurveyItems();
+            $childItem = $childItems->current();
+
+            if ($this->isItemVisible($childItem, $result)) {
+                $resultItem = new ResultItem();
+                $resultItem->addChildItem($this->prepareResultItem($childItem, $result));
+            }
+            while ($childItem = $childItems->next()) {
+                if ($this->isItemVisible($childItem, $result)) {
+                    $resultItem->addChildItem(
+                        $this->prepareResultItem($childItem, $result)
+                    );
+                }
+            }
+            $resultItem->setSurveyItem($surveyItem);
+        } else {
+            throw new \Exception('surveyItem has to be one of Question, ItemGroup or ResultItem');
+        }
+
+        return $resultItem;
     }
 
     /**
@@ -282,6 +283,7 @@ class ResultController
      *
      * @return bool|null
      *
+     * @todo too complex => lower complexity or unit test
      */
     private function isItemVisible(SurveyItem $item, Result $result)
     {
@@ -318,91 +320,5 @@ class ResultController
         }
 
         return $visible;
-    }
-
-    /**
-     * @param SurveyItem $surveyItem
-     * @param Result     $result
-     *
-     * @return ResultItem
-     * @throws \Exception
-     */
-    private function prepareResultItem(SurveyItem $surveyItem, Result $result)
-    {
-        if ($surveyItem instanceof Question) {
-            $resultItem = $this->prepareAnswer($surveyItem);
-        } elseif ($surveyItem instanceof TextItem) {
-            $resultItem = new ResultItem();
-
-            $textItem = new ResultTextItem();
-            $textItem->setText($surveyItem->getText());
-            $resultItem->setTextItem($textItem);
-        } elseif ($surveyItem instanceof ItemGroup) {
-            $resultItem = new ResultItem();
-            $childItems = $surveyItem->getSurveyItems();
-            $childItem = $childItems->current();
-            if ($this->isItemVisible($childItem, $result)) {
-                $resultItem = new ResultItem();
-                $resultItem->addChildItem($this->prepareResultItem($childItem, $result));
-            }
-            while ($childItem = $childItems->next()) {
-                if ($this->isItemVisible($childItem, $result)) {
-                    $resultItem->addChildItem(
-                        $this->prepareResultItem($childItem, $result)
-                    );
-                }
-            }
-        } else {
-            throw new \Exception('surveyItem has to be one of Question, ItemGroup or ResultItem');
-        }
-
-        $resultItem->setSurveyItem($surveyItem);
-
-        return $resultItem;
-    }
-
-    /**
-     * @param SurveyItem $item
-     *
-     * @return ResultItem
-     */
-    private function prepareAnswer(SurveyItem $item)
-    {
-        $resultItem = new ResultItem();
-        $answer = Answer::createByQuestionType($item);
-        $answer->setQuestion($item);
-
-        if ($answer instanceof MultipleChoiceAnswer) {
-            $resultItem->setMultipleChoiceAnswer($answer);
-        }
-        if ($answer instanceof SingleChoiceAnswer) {
-            $resultItem->setSingleChoiceAnswer($answer);
-        }
-        if ($answer instanceof TextAnswer) {
-            $resultItem->setTextAnswer($answer);
-        }
-
-        return $resultItem;
-    }
-
-    /**
-     * @param SurveyItem    $surveyItem
-     * @param Result        $result
-     * @param FormInterface $form
-     *
-     * @return string
-     */
-    private function renderNext(SurveyItem $surveyItem, Result $result, FormInterface $form)
-    {
-        return $this->twig->render(
-            '@PMSurveythorBundle/Result/next.html.twig',
-            array(
-                'item' => $surveyItem,
-                'result' => $result,
-                'survey' => $result->getSurvey(),
-                'form' => $form->createView(),
-                'isLast' => $this->isLastItem($surveyItem, $result)
-            )
-        );
     }
 }

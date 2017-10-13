@@ -33,12 +33,7 @@ module.exports = function (params) {
                 method: 'post',
                 data: form.serialize(),
                 success: function (response) {
-                    if (response.status === 'OK') {
-                        container.html(response.html);
-                    }
-                    if (response.status === 'finished') {
-                        window.location = response.url;
-                    }
+                    container.html(response);
                     $(window).scrollTo(container);
                 }
             });
@@ -52,7 +47,7 @@ module.exports = function (params) {
             url: config.surveythorUri,
             method: 'post',
             success: function (response) {
-                container.html(response.html);
+                container.html(response);
             }
         });
     }

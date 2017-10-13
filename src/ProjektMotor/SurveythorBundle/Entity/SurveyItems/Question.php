@@ -3,8 +3,13 @@
 namespace PM\SurveythorBundle\Entity\SurveyItems;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\QuestionTemplate;
+use PM\SurveythorBundle\Entity\ResultItem;
+use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
+use PM\SurveythorBundle\Entity\ResultItems\TextAnswer;
 use PM\SurveythorBundle\Entity\SurveyItem;
 
 /**
@@ -153,5 +158,28 @@ class Question extends SurveyItem
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return ResultItem
+     */
+    public function createResultItem()
+    {
+        $resultItem = new ResultItem();
+        $answer = Answer::createByQuestionType($this);
+        $answer->setQuestion($this);
+
+        if ($answer instanceof MultipleChoiceAnswer) {
+            $resultItem->setMultipleChoiceAnswer($answer);
+        }
+        if ($answer instanceof SingleChoiceAnswer) {
+            $resultItem->setSingleChoiceAnswer($answer);
+        }
+        if ($answer instanceof TextAnswer) {
+            $resultItem->setTextAnswer($answer);
+        }
+        $resultItem->setSurveyItem($this);
+
+        return $resultItem;
     }
 }

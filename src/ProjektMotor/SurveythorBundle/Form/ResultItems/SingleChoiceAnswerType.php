@@ -25,6 +25,7 @@ class SingleChoiceAnswerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            /** @var SingleChoiceAnswer $answer */
             $answer = $event->getData();
             $form = $event->getForm();
 

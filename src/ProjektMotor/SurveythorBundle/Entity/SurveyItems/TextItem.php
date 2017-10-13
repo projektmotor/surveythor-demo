@@ -1,6 +1,9 @@
 <?php
+
 namespace PM\SurveythorBundle\Entity\SurveyItems;
 
+use PM\SurveythorBundle\Entity\ResultItem;
+use PM\SurveythorBundle\Entity\ResultItems\TextItem as ResultTextItem;
 use PM\SurveythorBundle\Entity\SurveyItem;
 
 /**
@@ -41,5 +44,20 @@ class TextItem extends SurveyItem
     public function getText()
     {
         return $this->text;
+    }
+
+    /**
+     * @return ResultItem
+     */
+    public function createResultItem()
+    {
+        $resultItem = new ResultItem();
+
+        $textItem = new ResultTextItem();
+        $textItem->setText($this->getText());
+        $resultItem->setTextItem($textItem);
+        $resultItem->setSurveyItem($this);
+
+        return $resultItem;
     }
 }
