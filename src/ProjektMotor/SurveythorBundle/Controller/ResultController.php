@@ -168,11 +168,7 @@ class ResultController
                     'status' => 'OK',
                     'html' => $html
                 )
-            ),
-            200,
-            [
-                'Access-Control-Allow-Origin' => 'http://surveythor-demo',
-            ]
+            )
         );
     }
 
@@ -215,14 +211,10 @@ class ResultController
                     'status' => 'finished',
                     'url' => $event->getUrl()
                 )
-            ),
-            200,
-            [
-                'Access-Control-Allow-Origin' => 'http://surveythor-demo',
-            ]
+            )
         );
 
-        return $jsonResponse;
+            return $jsonResponse;
     }
 
     /**
