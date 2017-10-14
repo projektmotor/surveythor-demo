@@ -31,8 +31,9 @@ class MenuBuilder
             ]
         );
 
-        $menu->addChild('Umfragen', ['route' => 'survey_index']);
-        $menu->addChild('Nutzer', ['route' => 'user_index']);
+        $menu->addChild('menu.surveys', ['route' => 'survey_index']);
+        $menu->addChild('menu.users', ['route' => 'user_index']);
+        $menu->addChild('menu.allowed_origins', ['route' => 'allowed_origin_list']);
 
         return $menu;
     }

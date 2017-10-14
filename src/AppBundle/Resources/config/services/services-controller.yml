@@ -1,5 +1,0 @@
-services:
-    evaluation_controller:
-        class: AppBundle\Controller\EvaluationController
-    user_controller:
-        class: AppBundle\Controller\UserController

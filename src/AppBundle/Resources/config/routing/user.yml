@@ -1,6 +1,0 @@
-user_index:
-    path: /
-    defaults: { _controller: user_controller:indexAction}
-user_detail:
-    path: /detail/{id}
-    defaults: { _controller: user_controller:detailAction}

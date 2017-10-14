@@ -24,6 +24,14 @@ class AllowedOrigin
     private $updatedBy;
 
     /**
+     * @return Uuid
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @param string $originName
      *
      * @return AllowedOrigin

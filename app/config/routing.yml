@@ -10,6 +10,26 @@ pm_surveythor:
     resource: "@PMSurveythorBundle/Resources/config/routing.yml"
     prefix:   /
 
-app:
-    resource: '@AppBundle/Resources/config/routing.yml'
-    prefix:   /
+result_evaluation:
+    path: /evaluation/{id}
+    defaults: { _controller: app.controller.evaluation_controller:evaluateResultAction }
+
+user_index:
+    path: /users
+    defaults: { _controller: app.controller.user_controller:indexAction }
+
+user_detail:
+    path: /users/detail/{id}
+    defaults: { _controller: app.controller.user_controller:detailAction }
+
+allowed_origin_list:
+    path: /origin/list
+    defaults: { _controller: app.controller.allowed_origin_controller:listAction }
+
+allowed_origin_create:
+    path: /origin/create
+    defaults: { _controller: app.controller.allowed_origin_controller:createAction }
+
+allowed_origin_edit:
+    path: /origin/edit/{allowedOrigin}
+    defaults: { _controller: app.controller.allowed_origin_controller:editAction }

@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" value="Speichern und zurück zur Liste"
+           class="btn btn-default pull-right"/>
+    {{ form_end(form) }}
+
+{% endblock %}

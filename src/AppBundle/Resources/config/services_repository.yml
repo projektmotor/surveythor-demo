@@ -1,0 +1,6 @@
+services:
+    AppBundle\Repository\AllowedOriginRepository:
+        class: AppBundle\Repository\AllowedOriginRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - AppBundle:AllowedOrigin

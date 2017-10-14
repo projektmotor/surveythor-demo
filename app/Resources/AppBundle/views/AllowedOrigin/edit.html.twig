@@ -1,0 +1,16 @@
+{# allowedOrigin \AppBundle\Entity\AllowedOrigin #}
+
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <h1>Domainfreigabe für "{{ allowedOrigin.title }}" ändern</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" value="Speichern und zurück zur Liste"
+           class="btn btn-default pull-right"/>
+    {{ form_end(form) }}
+
+{% endblock %}

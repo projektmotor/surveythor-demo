@@ -1,0 +1,35 @@
+{# allowedOrigins \AppBundle\Entity\AllowedOrigin[] #}
+
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1>Domainfreigaben</h1>
+
+    <table class="table">
+        <tr>
+            <th>{{ 'allowed_origin.title'|trans }}</th>
+            <th>{{ 'allowed_origin.origin_name'|trans }}</th>
+            <th>{{ 'allowed_origin.is_active'|trans }}</th>
+            <th>{{ 'allowed_origin.created_by_at'|trans }}</th>
+            <th>{{ 'allowed_origin.updated_by_at'|trans }}</th>
+        </tr>
+        {% for allowedOrigin in allowedOrigins %}
+            <tr>
+                <td>
+                    <a href="{{ path('allowed_origin_edit', { 'allowedOrigin': allowedOrigin.getId }) }}">{{ allowedOrigin.title }}</a>
+                </td>
+                <td><a href="{{ allowedOrigin.originName }}">{{ allowedOrigin.originName }}</a></td>
+                <td>{{ allowedOrigin.active }}</td>
+                <td>{{ allowedOrigin.createdBy }} am {{ allowedOrigin.createdAt|localizeddate('short', 'short') }}</td>
+                <td>{{ allowedOrigin.updatedBy }} am {{ allowedOrigin.updatedAt|localizeddate('short', 'short') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div class="clearfix"></div>
+
+    <a class="btn btn-default pull-right" href="{{ path('allowed_origin_create') }}">
+        neue Domainfreigabe erstellen
+    </a>
+
+{% endblock %}

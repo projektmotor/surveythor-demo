@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    app.controller.evaluation_controller:
+        class: AppBundle\Controller\EvaluationController
+    app.controller.user_controller:
+        class: AppBundle\Controller\UserController
+    app.controller.allowed_origin_controller:
+        class: AppBundle\Controller\AllowedOriginController

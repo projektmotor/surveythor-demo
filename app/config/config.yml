@@ -7,7 +7,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: de
 
 bugsnag:
     api_key: '84700254b3807e04adb503f88a051da5'
@@ -16,7 +16,7 @@ bugsnag:
 
 framework:
     #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
+    translator: { fallbacks: ['de'] }
     secret: '%secret%'
     router:
         resource: '%kernel.root_dir%/config/routing.yml'
@@ -63,7 +63,6 @@ twig:
         surveythorHost: '%twig.param.surveythor_host%'
     paths:
         '%kernel.project_dir%/app/Resources/PMSurveythorBundle/views/': PMSurveythorBundle
-        '%kernel.project_dir%/src/AppBundle/Resources/views/': AppBundle
 
 # Doctrine Configuration
 doctrine:
@@ -92,6 +91,10 @@ doctrine:
 
 stof_doctrine_extensions:
     default_locale: de_DE
+    orm:
+        default:
+            blameable: true
+            timestampable: true
 
 # Swiftmailer Configuration
 swiftmailer:

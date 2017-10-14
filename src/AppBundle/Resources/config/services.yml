@@ -1,10 +1,22 @@
 imports:
-    - { resource: services/services-controller.yml }
-    - { resource: services/services-repository.yml }
+    - { resource: services_controller.yml }
+    - { resource: services_repository.yml }
 
 services:
     app.event_listener.response_header_listener:
         class:     AppBundle\EventListener\ResponseHeaderListener
-        arguments: ['@app.repository.allowed_origin_repository']
+        arguments: ['@AppBundle\Repository\AllowedOriginRepository']
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 1 }
+
+    gedmo.listener.blameable:
+        class: Gedmo\Blameable\BlameableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }

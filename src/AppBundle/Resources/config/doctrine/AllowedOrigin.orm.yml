@@ -15,7 +15,7 @@ AppBundle\Entity\AllowedOrigin:
                 class: Ramsey\Uuid\Doctrine\UuidGenerator
     fields:
         title:
-            type: text
+            type: string
             nullable: false
         originName:
             type: string
@@ -43,9 +43,11 @@ AppBundle\Entity\AllowedOrigin:
             gedmo:
                 blameable:
                     on: create
+            nullable: true
         updatedBy:
             type: string
             column: updated_by
             gedmo:
                 blameable:
                     on: update
+            nullable: true

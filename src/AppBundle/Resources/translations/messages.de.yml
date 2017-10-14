@@ -1,0 +1,16 @@
+allowed_origin:
+  origin_name: Erlaubte Domain
+  title: Name
+  is_active: Freigabe aktiv?
+  created_by_at: Erstellt
+  updated_by_at: Bearbeitet
+
+menu:
+  allowed_origins: Domainfreigaben
+  users: Nutzer
+  surveys: Umfragen
+
+# misc from forms
+Title: Name
+Origin name: Domain
+Is active: Domainfreigabe aktiv?
