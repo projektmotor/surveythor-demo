@@ -22,8 +22,10 @@ RUN apt-get update && apt-get install -y \
         php5-dev \
         acl \
         mysql-client && \
-        docker-php-ext-configure gd --with-jpeg-dir=/usr/include/  &&  \
-        docker-php-ext-install gd
+        docker-php-ext-configure gd --with-jpeg-dir=/usr/include/ && \
+        docker-php-ext-install gd && \
+        docker-php-ext-configure intl && \
+        docker-php-ext-install intl
 
 # nvm environment variables
 ENV NVM_DIR /usr/local/nvm

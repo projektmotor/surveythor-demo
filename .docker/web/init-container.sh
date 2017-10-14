@@ -27,17 +27,16 @@ sh -c "echo '</VirtualHost>'                                                    
 sh -c "echo '[PHP]'                                                     >> /usr/local/etc/php/php.ini"
 sh -c "echo '; Maximum amount of memory a script may consume'           >> /usr/local/etc/php/php.ini"
 sh -c "echo 'memory_limit = -1'                                         >> /usr/local/etc/php/php.ini"
+sh -c "echo 'short_ini_tag = Off'                                       >> /usr/local/etc/php/php.ini"
 sh -c "echo ''                                                          >> /usr/local/etc/php/php.ini"
 sh -c "echo '[Date]'                                                    >> /usr/local/etc/php/php.ini"
 sh -c "echo '; Defines the default timezone used by the date functions' >> /usr/local/etc/php/php.ini"
 sh -c "echo 'date.timezone=\"Europe/Berlin\"'                           >> /usr/local/etc/php/php.ini"
 
 pecl install zip
-pecl install intl
 pecl install xdebug
 
 sh -c "echo 'extension=zip.so'  >> /usr/local/etc/php/conf.d/zip.ini"
-sh -c "echo 'extension=intl.so' >> /usr/local/etc/php/conf.d/intl.ini"
 
 sh -c "echo 'zend_extension='$(find /usr/local/lib/php/extensions/ -name xdebug.so)  >  /usr/local/etc/php/conf.d/xdebug.ini"
 sh -c "echo 'xdebug.remote_enable=1'                                                 >> /usr/local/etc/php/conf.d/xdebug.ini"
