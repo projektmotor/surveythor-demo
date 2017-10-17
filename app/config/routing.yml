@@ -1,3 +1,6 @@
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
 homepage:
     path: /
     defaults:
@@ -14,13 +17,17 @@ result_evaluation:
     path: /evaluation/{id}
     defaults: { _controller: app.controller.evaluation_controller:evaluateResultAction }
 
-user_index:
-    path: /users
-    defaults: { _controller: app.controller.user_controller:indexAction }
+user_list:
+    path: /user/list
+    defaults: { _controller: app.controller.user_controller:listAction }
 
-user_detail:
-    path: /users/detail/{id}
-    defaults: { _controller: app.controller.user_controller:detailAction }
+user_create:
+    path: /user/create
+    defaults: { _controller: app.controller.user_controller:createAction }
+
+user_edit:
+    path: /user/edit/{user}
+    defaults: { _controller: app.controller.user_controller:editAction }
 
 allowed_origin_list:
     path: /origin/list

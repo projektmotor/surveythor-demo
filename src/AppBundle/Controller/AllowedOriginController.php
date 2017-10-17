@@ -26,7 +26,6 @@ class AllowedOriginController
         $this->allowedOriginRepository = $allowedOriginRepository;
     }
 
-
     /**
      * @param FormRequest $formRequest
      *
@@ -47,7 +46,6 @@ class AllowedOriginController
 
     /**
      * @param FormRequest   $formRequest
-     *
      * @param AllowedOrigin $allowedOrigin
      *
      * @return array|RedirectRoute

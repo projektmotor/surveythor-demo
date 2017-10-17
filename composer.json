@@ -27,6 +27,7 @@
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/orm": "^2.5",
+        "friendsofsymfony/user-bundle": "^2.0",
         "hautelook/alice-bundle": "^1.4",
         "incenteev/composer-parameter-handler": "^2.0",
         "knplabs/knp-menu-bundle": "^2.1",
@@ -57,7 +58,13 @@
             "bin/console doctrine:database:drop --force",
             "bin/console doctrine:database:create -n",
             "bin/console doctrine:schema:update --force",
-          "bin/console hautelook_alice:doctrine:fixtures:load --no-interaction --purge-with-truncate"
+            "bin/console hautelook_alice:doctrine:fixtures:load --no-interaction --purge-with-truncate"
+        ],
+        "compile-dev": [
+            "bin/console doctrine:database:drop --force",
+            "bin/console doctrine:database:create -n",
+            "bin/console doctrine:schema:update --force",
+            "bin/console hautelook_alice:doctrine:fixtures:load --no-interaction --purge-with-truncate"
         ],
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",

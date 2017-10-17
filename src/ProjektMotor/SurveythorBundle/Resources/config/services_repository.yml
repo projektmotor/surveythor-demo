@@ -1,29 +1,30 @@
 services:
-    survey_repository:
-        class: Doctrine\ORM\EntityRepository
+    app.repository.survey_repository:
+        class: PM\SurveythorBundle\Repository\SurveyRepository
         factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
         arguments:
             - PM\SurveythorBundle\Entity\Survey
 
-    surveyitem_repository:
-        class: Doctrine\ORM\EntityRepository
+    app.repository.survey_item_repository:
+        class: PM\SurveythorBundle\Repository\SurveyItemRepository
         factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
         arguments:
             - PM\SurveythorBundle\Entity\SurveyItem
 
-    result_repository:
-        class: Doctrine\ORM\EntityRepository
+    app.repository.result_repository:
+        class: PM\SurveythorBundle\Repository\ResultRepository
         factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
         arguments:
             - PM\SurveythorBundle\Entity\Result
 
-    condition_repository:
-        class: Doctrine\ORM\EntityRepository
+    app.repository.condition_repository:
+        class: PM\SurveythorBundle\Repository\ConditionRepository
         factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
         arguments:
             - PM\SurveythorBundle\Entity\Condition
-    choice_repository:
-        class: Doctrine\ORM\EntityRepository
+
+    app.repository.choice_repository:
+        class: PM\SurveythorBundle\Repository\ChoiceRepository
         factory: [ '@doctrine.orm.default_entity_manager', getRepository ]
         arguments:
             - PM\SurveythorBundle\Entity\Choice

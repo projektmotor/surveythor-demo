@@ -2,7 +2,7 @@ services:
     survey_controller:
         class: PM\SurveythorBundle\Controller\SurveyController
         arguments:
-            - "@survey_repository"
+            - "@app.repository.survey_repository"
             - "@form.factory"
             - "@router"
 
@@ -10,13 +10,13 @@ services:
         class: PM\SurveythorBundle\Controller\ResultController
         arguments:
             - "@result_ready_subscriber"
-            - "@result_repository"
+            - "@app.repository.result_repository"
 
     survey_item_controller:
         class: PM\SurveythorBundle\Controller\SurveyItemController
         arguments:
-            - '@surveyitem_repository'
-            - '@condition_repository'
+            - '@app.repository.survey_item_repository'
+            - '@app.repository.condition_repository'
             - "@form.factory"
             - "@twig"
             - "@router"
@@ -24,5 +24,5 @@ services:
     choice_controller:
         class: PM\SurveythorBundle\Controller\ChoiceController
         arguments:
-            - "@choice_repository"
-            - '@condition_repository'
+            - "@app.repository.choice_repository"
+            - '@app.repository.condition_repository'

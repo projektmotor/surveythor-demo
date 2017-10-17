@@ -16,6 +16,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
             new AppBundle\AppBundle(),
             new Bugsnag\BugsnagBundle\BugsnagBundle(),
             new PM\SurveythorBundle\PMSurveythorBundle(),
@@ -29,6 +30,10 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+
+            if ('test' === $this->getEnvironment()) {
+                $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
+            }
         }
 
         return $bundles;

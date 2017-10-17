@@ -2,10 +2,17 @@
 # http://symfony.com/doc/current/security.html
 security:
 
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_EDITOR:      ROLE_USER
+        ROLE_ADMIN:       ROLE_USER, ROLE_EDITOR
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
     providers:
-        in_memory:
-            memory: ~
+        fos_userbundle:
+            id: fos_user.user_provider.username
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,11 +21,19 @@ security:
             security: false
 
         main:
-            anonymous: ~
-            # activate different ways to authenticate
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
 
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+            logout:       true
+            anonymous:    true
 
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/result, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user, role: ROLE_ADMIN }
+        - { path: ^/origin, role: ROLE_ADMIN }
+        - { path: ^/, role: ROLE_EDITOR }

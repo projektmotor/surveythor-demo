@@ -1,7 +1,7 @@
 <?php
+
 namespace PM\SurveythorBundle\Controller;
 
-use AppBundle\Controller\UserController;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Form\SurveyTitleType;
 use PM\SurveythorBundle\Repository\SurveyRepository;
@@ -54,7 +54,7 @@ class SurveyController
     public function indexAction()
     {
         return array(
-            'surveys' => $this->surveyRepository->findAll()
+            'surveys' => $this->surveyRepository->findAll(),
         );
     }
 
@@ -74,9 +74,9 @@ class SurveyController
                     'action' => $this->router->generate(
                         'survey_update_title',
                         array('survey' => $survey->getId())
-                    )
+                    ),
                 )
-            )->createView()
+            )->createView(),
         );
     }
 
@@ -90,16 +90,18 @@ class SurveyController
         if (!$formRequest->handle(SurveyTitleType::class)) {
             return array(
                 'survey' => false,
-                'surveyTitleForm' => $formRequest->createFormView()
+                'surveyTitleForm' => $formRequest->createFormView(),
             );
         }
 
         $survey = $formRequest->getValidData();
         $this->surveyRepository->save($survey);
 
-        return new RedirectRoute('survey_edit', array(
-            'id' => $survey->getId()
-        ));
+        return new RedirectRoute(
+            'survey_edit', array(
+                'id' => $survey->getId(),
+            )
+        );
     }
 
     /**
@@ -135,9 +137,9 @@ class SurveyController
      */
     public function evaluationsAction(Survey $survey)
     {
-        return array(
+        return [
             'survey' => $survey,
-            'users' => UserController::$users
-        );
+            'users' => [],
+        ];
     }
 }

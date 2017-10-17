@@ -1,7 +1,9 @@
 <?php
+
 namespace PM\SurveythorBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * MenuBuilder
@@ -9,15 +11,24 @@ use Knp\Menu\FactoryInterface;
  */
 class MenuBuilder
 {
+    /**
+     * @var FactoryInterface
+     */
     private $factory;
 
     /**
-     * @param FactoryInterface $factory
-     * Add any other dependency you need
+     * @var AuthorizationCheckerInterface
      */
-    public function __construct(FactoryInterface $factory)
+    private $authorizationChecker;
+
+    /**
+     * @param FactoryInterface              $factory
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     */
+    public function __construct(FactoryInterface $factory, AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->factory = $factory;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     public function createMainMenu(array $options)
@@ -31,9 +42,13 @@ class MenuBuilder
             ]
         );
 
-        $menu->addChild('menu.surveys', ['route' => 'survey_index']);
-        $menu->addChild('menu.users', ['route' => 'user_index']);
-        $menu->addChild('menu.allowed_origins', ['route' => 'allowed_origin_list']);
+        if ($this->authorizationChecker->isGranted('ROLE_EDITOR')) {
+            $menu->addChild('menu.surveys', ['route' => 'survey_index']);
+        }
+        if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+            $menu->addChild('menu.users', ['route' => 'user_list']);
+            $menu->addChild('menu.allowed_origins', ['route' => 'allowed_origin_list']);
+        }
 
         return $menu;
     }

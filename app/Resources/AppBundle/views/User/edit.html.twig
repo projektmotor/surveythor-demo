@@ -1,8 +1,10 @@
+{# user \AppBundle\Entity\User #}
+
 {% extends '::base.html.twig' %}
 
 {% block body %}
 
-    <h1>Neue Domainfreigabe erstellen</h1>
+    <h1>Nutzer "{{ user.getUsername }}" ändern</h1>
 
     {{ form_start(form) }}
     {{ form_widget(form) }}

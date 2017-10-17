@@ -1,12 +1,28 @@
 imports:
     - { resource: config_dev.yml }
 
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver:   pdo_sqlite
+                path:     %kernel.cache_dir%/test.db
+
 framework:
     test: ~
     session:
         storage_id: session.storage.mock_file
     profiler:
         collect: false
+
+liip_functional_test:
+    cache_sqlite_db: true
+
+security:
+    firewalls:
+        main:
+            http_basic: ~
 
 web_profiler:
     toolbar: false

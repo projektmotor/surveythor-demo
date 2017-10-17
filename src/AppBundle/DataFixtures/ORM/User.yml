@@ -1,0 +1,13 @@
+AppBundle\Entity\User:
+    user_admin:
+        username: 'admin'
+        email: <email()>
+        plainPassword: 'admin'
+        enabled: true
+        roles: ['ROLE_USER', 'ROLE_ADMIN']
+    user_editor:
+        username: 'editor'
+        email: <email()>
+        plainPassword: 'editor'
+        enabled: true
+        roles: ['ROLE_USER', 'ROLE_EDITOR']

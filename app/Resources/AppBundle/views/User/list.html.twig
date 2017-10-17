@@ -1,0 +1,41 @@
+{# users \AppBundle\Entity\User[] #}
+
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1>Nutzerliste</h1>
+
+    <table class="table">
+        <tr>
+            <th>id</th>
+            <th>Nutzername</th>
+            <th>E-Mail</th>
+            <th>Ist aktiviert?</th>
+            <th>Rollen</th>
+            <th>letzter Login am</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td><a href="{{ path('user_edit', {'user' : user.getId}) }}">{{ user.getId }}</a></td>
+                <td><a href="{{ path('user_edit', {'user' : user.getId}) }}">{{ user.getUsername }}</a></td>
+                <td><a href="mailto:{{ user.getEmail }}">{{ user.getEmail }}</a></td>
+                <td>{{ user.enabled }}</td>
+                <td>
+                    {%- for role in user.getRoles -%}
+                        {{ role }}{% if not loop.last %},{% endif %}
+                    {% else %}
+                        keine Rollen zugewiesen
+                    {%- endfor -%}
+                </td>
+                <td>{{ user.getLastLogin|localizeddate('short', 'short') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <div class="clearfix"></div>
+
+    <a class="btn btn-default pull-right" href="{{ path('user_create') }}">
+        neuen Benutzer erstellen
+    </a>
+
+{% endblock %}
