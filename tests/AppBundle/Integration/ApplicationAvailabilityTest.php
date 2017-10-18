@@ -30,17 +30,9 @@ class ApplicationAvailabilityTest extends WebTestCase
             $client->request('GET', $url);
 
             if (in_array($user, $allowedUsers)) {
-                $this->assertSame(
-                    200,
-                    $client->getResponse()->getStatusCode(),
-                    sprintf('response for %s and %s should have been successful', $url, $user)
-                );
+                $this->assertStatusCode(200, $client);
             } else {
-                $this->assertSame(
-                    $user === 'anonymous' ? 302 : 403,
-                    $client->getResponse()->getStatusCode(),
-                    sprintf('response for %s and %s should have not been successful', $url, $user)
-                );
+                $this->assertStatusCode($user === 'anonymous' ? 302 : 403, $client);
             }
         }
     }
