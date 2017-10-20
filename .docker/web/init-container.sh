@@ -27,7 +27,7 @@ sh -c "echo '</VirtualHost>'                                                    
 sh -c "echo '[PHP]'                                                     >> /usr/local/etc/php/php.ini"
 sh -c "echo '; Maximum amount of memory a script may consume'           >> /usr/local/etc/php/php.ini"
 sh -c "echo 'memory_limit = -1'                                         >> /usr/local/etc/php/php.ini"
-sh -c "echo 'short_ini_tag = Off'                                       >> /usr/local/etc/php/php.ini"
+sh -c "echo 'short_open_tag = Off'                                      >> /usr/local/etc/php/php.ini"
 sh -c "echo ''                                                          >> /usr/local/etc/php/php.ini"
 sh -c "echo '[Date]'                                                    >> /usr/local/etc/php/php.ini"
 sh -c "echo '; Defines the default timezone used by the date functions' >> /usr/local/etc/php/php.ini"
