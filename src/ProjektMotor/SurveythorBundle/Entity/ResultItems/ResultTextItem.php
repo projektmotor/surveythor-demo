@@ -4,9 +4,9 @@ namespace PM\SurveythorBundle\Entity\ResultItems;
 use PM\SurveythorBundle\Entity\ResultItem;
 
 /**
- * TextItem
+ * ResultTextItem
  */
-class TextItem
+class ResultTextItem
 {
     /**
      * @var int
@@ -22,6 +22,19 @@ class TextItem
     private $resultItem;
 
     /**
+     * @param \PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem $surveyTextItem
+     *
+     * @return ResultTextItem
+     */
+    public static function createBySurveyTextItem(\PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem $surveyTextItem
+    ) {
+        $resultTextItem = new self();
+        $resultTextItem->setText($surveyTextItem->getText());
+
+        return $resultTextItem;
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -32,7 +45,7 @@ class TextItem
     /**
      * @param string $text
      *
-     * @return TextItem
+     * @return ResultTextItem
      */
     public function setText($text)
     {

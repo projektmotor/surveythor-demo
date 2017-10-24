@@ -6,7 +6,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvents;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
-use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
+use PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem;
 use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Entity\SurveyItem;
 use PM\SurveythorBundle\Form\SurveyItems\QuestionType;
@@ -51,7 +51,7 @@ class SurveyItemsCollectionSubscriber implements EventSubscriberInterface
                 case $data instanceof Question:
                     $type = QuestionType::class;
                     break;
-                case $data instanceof TextItem:
+                case $data instanceof SurveyTextItem:
                     $type = TextItemType::class;
                     break;
                 case $data instanceof ItemGroup:

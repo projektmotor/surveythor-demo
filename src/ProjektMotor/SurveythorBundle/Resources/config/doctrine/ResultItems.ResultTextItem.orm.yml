@@ -1,7 +1,7 @@
-PM\SurveythorBundle\Entity\ResultItems\TextItem:
+PM\SurveythorBundle\Entity\ResultItems\ResultTextItem:
     type: entity
     table: result_text_item
-    repositoryClass: PM\SurveythorBundle\Repository\ResultItems\TextItemRepository
+    repositoryClass: PM\SurveythorBundle\Repository\ResultItems\ResultTextItemRepository
 
     id:
         id:
@@ -13,7 +13,7 @@ PM\SurveythorBundle\Entity\ResultItems\TextItem:
     oneToOne:
         resultItem:
             targetEntity: PM\SurveythorBundle\Entity\ResultItem
-            inversedBy: textItem
+            inversedBy: resultTextItem
 
     fields:
         text:

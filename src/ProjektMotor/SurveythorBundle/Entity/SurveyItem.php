@@ -4,7 +4,7 @@ namespace PM\SurveythorBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
-use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
+use PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem;
 
 /**
  * SurveyItem
@@ -159,7 +159,7 @@ abstract class SurveyItem
                 $this->getSurveyItems()->count()
             );
         }
-        if ($this instanceof TextItem) {
+        if ($this instanceof SurveyTextItem) {
             return 'Textelement';
         }
     }
@@ -181,7 +181,7 @@ abstract class SurveyItem
         if ($this instanceof ItemGroup) {
             return 'itemGroup';
         }
-        if ($this instanceof TextItem) {
+        if ($this instanceof SurveyTextItem) {
             return 'textItem';
         }
     }
@@ -212,7 +212,7 @@ abstract class SurveyItem
             return $this->title;
         }
 
-        if ($this instanceof Question || $this instanceof TextItem) {
+        if ($this instanceof Question || $this instanceof SurveyTextItem) {
             if (strlen($this->getText()) < self::BACKEND_TITLE_LENGTH) {
                 return $this->getText();
             } else {

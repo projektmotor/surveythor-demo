@@ -162,22 +162,30 @@ class Question extends SurveyItem
 
     /**
      * @return ResultItem
+     * @throws \Exception
      */
     public function createResultItem()
     {
         $resultItem = new ResultItem();
-        $answer = Answer::createByQuestionType($this);
+
+        switch ($this->getType()) {
+            case 'mc':
+                $answer = new MultipleChoiceAnswer();
+                break;
+            case 'sc':
+                $answer = new SingleChoiceAnswer();
+                break;
+            case 'text':
+                $answer = new TextAnswer();
+                break;
+            default:
+                throw new \Exception('a question has to have a type');
+                break;
+        }
+
         $answer->setQuestion($this);
 
-        if ($answer instanceof MultipleChoiceAnswer) {
-            $resultItem->setMultipleChoiceAnswer($answer);
-        }
-        if ($answer instanceof SingleChoiceAnswer) {
-            $resultItem->setSingleChoiceAnswer($answer);
-        }
-        if ($answer instanceof TextAnswer) {
-            $resultItem->setTextAnswer($answer);
-        }
+        $resultItem->setAnswer($answer);
         $resultItem->setSurveyItem($this);
 
         return $resultItem;

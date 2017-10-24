@@ -6,7 +6,7 @@ use PM\SurveythorBundle\Entity\ResultItem;
 use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
 use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
 use PM\SurveythorBundle\Entity\ResultItems\TextAnswer;
-use PM\SurveythorBundle\Entity\ResultItems\TextItem;
+use PM\SurveythorBundle\Entity\ResultItems\ResultTextItem;
 use PM\SurveythorBundle\Form\ResultItems\MultipleChoiceAnswerType;
 use PM\SurveythorBundle\Form\ResultItems\SingleChoiceAnswerType;
 use PM\SurveythorBundle\Form\ResultItems\TextAnswerType;
@@ -62,7 +62,7 @@ class ResultItemType extends AbstractType
                         ]);
                         break;
 
-                    case $resultItem->getContent() instanceof TextItem:
+                    case $resultItem->getContent() instanceof ResultTextItem:
                         $form->add('textItem', TextItemType::class, [
                             'label' => false
                         ]);

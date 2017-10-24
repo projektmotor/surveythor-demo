@@ -3,13 +3,13 @@
 namespace PM\SurveythorBundle\Entity\SurveyItems;
 
 use PM\SurveythorBundle\Entity\ResultItem;
-use PM\SurveythorBundle\Entity\ResultItems\TextItem as ResultTextItem;
+use PM\SurveythorBundle\Entity\ResultItems\ResultTextItem;
 use PM\SurveythorBundle\Entity\SurveyItem;
 
 /**
- * TextItem
+ * SurveyTextItem
  */
-class TextItem extends SurveyItem
+class SurveyTextItem extends SurveyItem
 {
     /**
      * @var string
@@ -29,7 +29,7 @@ class TextItem extends SurveyItem
      *
      * @param string $text
      *
-     * @return TextItem
+     * @return SurveyTextItem
      */
     public function setText($text)
     {
@@ -53,9 +53,9 @@ class TextItem extends SurveyItem
     {
         $resultItem = new ResultItem();
 
-        $textItem = new ResultTextItem();
-        $textItem->setText($this->getText());
-        $resultItem->setTextItem($textItem);
+        $resultTextItem = new ResultTextItem();
+        $resultTextItem->setText($this->getText());
+        $resultItem->setResultTextItem($resultTextItem);
         $resultItem->setSurveyItem($this);
 
         return $resultItem;

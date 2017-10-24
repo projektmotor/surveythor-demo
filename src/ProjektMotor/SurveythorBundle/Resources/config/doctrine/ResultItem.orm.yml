@@ -31,8 +31,8 @@ PM\SurveythorBundle\Entity\ResultItem:
             mappedBy: resultItem
             cascade:
                 - persist
-        textItem:
-            targetEntity: PM\SurveythorBundle\Entity\ResultItems\TextItem
+        resultTextItem:
+            targetEntity: PM\SurveythorBundle\Entity\ResultItems\ResultTextItem
             mappedBy: resultItem
             cascade:
                 - persist

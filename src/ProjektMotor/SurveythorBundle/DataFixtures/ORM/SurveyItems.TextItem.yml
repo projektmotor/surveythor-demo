@@ -1,4 +1,4 @@
-PM\SurveythorBundle\Entity\SurveyItems\TextItem:
+PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem:
     text_item_1:
         sortOrder: 10
         text: <sentence()>

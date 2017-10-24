@@ -2,6 +2,7 @@
 namespace PM\SurveythorBundle\Entity\ResultItems;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\ResultItem;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
@@ -9,7 +10,7 @@ use PM\SurveythorBundle\Entity\SurveyItems\Question;
 /**
  * MultipleChoiceAnswer
  */
-class MultipleChoiceAnswer
+class MultipleChoiceAnswer implements Answer
 {
     /**
      * @var int $id

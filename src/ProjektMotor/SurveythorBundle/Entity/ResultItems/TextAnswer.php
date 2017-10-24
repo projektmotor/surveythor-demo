@@ -1,13 +1,14 @@
 <?php
 namespace PM\SurveythorBundle\Entity\ResultItems;
 
+use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\ResultItem;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
 
 /**
  * TextAnswer
  */
-class TextAnswer
+class TextAnswer implements Answer
 {
     /**
      * @var int $id
@@ -56,7 +57,7 @@ class TextAnswer
     {
         return $this->value;
     }
-    
+
     /**
      * @return Question
      */
@@ -64,7 +65,7 @@ class TextAnswer
     {
         return $this->question;
     }
-    
+
     /**
      * @param Question $question
      */
@@ -72,7 +73,7 @@ class TextAnswer
     {
         $this->question = $question;
     }
-    
+
     /**
      * @return ResultItem
      */
@@ -80,7 +81,7 @@ class TextAnswer
     {
         return $this->resultItem;
     }
-    
+
     /**
      * @param ResultItem $resultItem
      */

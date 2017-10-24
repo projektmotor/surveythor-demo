@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use PM\SurveythorBundle\Entity\SurveyItem;
 use PM\SurveythorBundle\Entity\QuestionTemplate;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
-use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
+use PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem;
 use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Form\SurveyItems\ChoiceCollectionType;
 use PM\SurveythorBundle\Form\SurveyItems\QuestionChoiceType;
@@ -113,7 +113,7 @@ class SurveyItemType extends AbstractType
                             ));
                             break;
 
-                        case TextItem::class:
+                        case SurveyTextItem::class:
                             $form->add('text', null, array(
                                 'attr' => array('class' => 'surveyitem-text')
                             ));
@@ -195,7 +195,7 @@ class SurveyItemType extends AbstractType
                         return new Question();
                         break;
                     case 'textitem':
-                        return new TextItem();
+                        return new SurveyTextItem();
                         break;
                     case 'itemgroup':
                         return new ItemGroup();

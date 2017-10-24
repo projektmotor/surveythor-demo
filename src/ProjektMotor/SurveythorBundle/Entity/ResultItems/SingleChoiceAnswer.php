@@ -1,6 +1,7 @@
 <?php
 namespace PM\SurveythorBundle\Entity\ResultItems;
 
+use PM\SurveythorBundle\Entity\Answer;
 use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\ResultItem;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
@@ -8,7 +9,7 @@ use PM\SurveythorBundle\Entity\SurveyItems\Question;
 /**
  * SingleChoiceAnswer
  */
-class SingleChoiceAnswer
+class SingleChoiceAnswer implements Answer
 {
     /**
      * @var int $id
@@ -61,7 +62,7 @@ class SingleChoiceAnswer
     {
         return $this->question;
     }
-    
+
     /**
      * @param Question $question
      */
@@ -69,7 +70,7 @@ class SingleChoiceAnswer
     {
         $this->question = $question;
     }
-    
+
     /**
      * @return ResultItem $resultItem
      */
@@ -77,7 +78,7 @@ class SingleChoiceAnswer
     {
         return $this->resultItem;
     }
-    
+
     /**
      * @param ResultItem $resultItem
      */

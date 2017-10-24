@@ -2,7 +2,7 @@
 namespace PM\SurveythorBundle\Entity\Factory;
 
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
-use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
+use PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem;
 use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 
 /**
@@ -27,7 +27,7 @@ class SurveyItemFactory
                 $item->setType('text');
                 break;
             case 'textItem':
-                $item = new TextItem();
+                $item = new SurveyTextItem();
                 break;
             case 'itemGroup':
                 $item = new ItemGroup();

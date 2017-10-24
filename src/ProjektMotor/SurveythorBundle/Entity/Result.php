@@ -36,6 +36,19 @@ class Result
     }
 
     /**
+     * @param $survey
+     *
+     * @return Result
+     */
+    public static function createBySurvey($survey)
+    {
+        $result = new self();
+        $result->setSurvey($survey);
+
+        return $result;
+    }
+
+    /**
      * @return int
      */
     public function getId()

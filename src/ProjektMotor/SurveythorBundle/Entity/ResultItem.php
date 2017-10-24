@@ -5,7 +5,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
 use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
 use PM\SurveythorBundle\Entity\ResultItems\TextAnswer;
-use PM\SurveythorBundle\Entity\ResultItems\TextItem;
+use PM\SurveythorBundle\Entity\ResultItems\ResultTextItem;
+use PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem;
 
 /**
  * ResultItem
@@ -43,9 +44,9 @@ class ResultItem
     protected $textAnswer;
 
     /**
-     * @var TextItem
+     * @var ResultTextItem
      */
-    protected $textItem;
+    protected $resultTextItem;
 
     /**
      * @var SurveyItem
@@ -67,6 +68,38 @@ class ResultItem
     {
         $this->childItems = new ArrayCollection();
     }
+
+    /**
+     * @param SurveyTextItem $surveyTextItem
+     *
+     * @return ResultItem
+     */
+    public function createBySurveyTextItem(SurveyTextItem $surveyTextItem)
+    {
+        $resultItem = new self();
+
+        $resultTextItem = ResultTextItem::createBySurveyTextItem($surveyTextItem);
+        $resultItem->setResultTextItem($resultTextItem);
+        $resultItem->setSurveyItem($surveyTextItem);
+
+        return $resultItem;
+    }
+
+//    /**
+//     * @return ResultItem
+//     */
+//    public function createResultItem()
+//    {
+//        $resultItem = new ResultItem();
+//
+//        $resultTextItem = new ResultTextItem();
+//        $resultTextItem->setText($surveyTextItem->getText());
+//        $resultItem->setResultTextItem($resultTextItem);
+//        $resultItem->setSurveyItem($this);
+//
+//        return $resultItem;
+//    }
+
 
     /**
      * @return int
@@ -160,20 +193,20 @@ class ResultItem
     }
 
     /**
-     * @return TextItem
+     * @return ResultTextItem
      */
-    public function getTextItem()
+    public function getResultTextItem()
     {
-        return $this->textItem;
+        return $this->resultTextItem;
     }
 
     /**
-     * @param TextItem $textItem
+     * @param ResultTextItem $resultTextItem
      */
-    public function setTextItem(TextItem $textItem)
+    public function setResultTextItem(ResultTextItem $resultTextItem)
     {
-        $this->textItem = $textItem;
-        $textItem->setResultItem($this);
+        $this->resultTextItem = $resultTextItem;
+        $resultTextItem->setResultItem($this);
     }
 
     /**
@@ -190,8 +223,8 @@ class ResultItem
         if (!is_null($this->textAnswer)) {
             return $this->textAnswer;
         }
-        if (!is_null($this->textItem)) {
-            return $this->textItem;
+        if (!is_null($this->resultTextItem)) {
+            return $this->resultTextItem;
         }
         if (!is_null($this->childItems)) {
             return $this->childItems;
@@ -267,5 +300,21 @@ class ResultItem
     public function hasChildren()
     {
         return $this->childItems->count() > 0;
+    }
+
+    /**
+     * @param Answer|MultipleChoiceAnswer|SingleChoiceAnswer|TextAnswer $answer
+     */
+    public function setAnswer(Answer $answer)
+    {
+        if ($answer instanceof MultipleChoiceAnswer) {
+            $this->setMultipleChoiceAnswer($answer);
+        }
+        if ($answer instanceof SingleChoiceAnswer) {
+            $this->setSingleChoiceAnswer($answer);
+        }
+        if ($answer instanceof TextAnswer) {
+            $this->setTextAnswer($answer);
+        }
     }
 }

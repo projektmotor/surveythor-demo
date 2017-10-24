@@ -9,7 +9,7 @@ use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\SurveyItem;
 use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
-use PM\SurveythorBundle\Entity\SurveyItems\TextItem;
+use PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem;
 use PM\SurveythorBundle\Event\ResultEvent;
 use PM\SurveythorBundle\Form\ResultItemType;
 use PM\SurveythorBundle\Repository\ResultRepository;
@@ -66,11 +66,10 @@ class ResultController
      */
     public function firstAction(Survey $survey, FormRequest $formRequest)
     {
-        $result = new Result();
+        $result = Result::createBySurvey($survey);
         $surveyItem = $survey->getSurveyItems()->first();
         $resultItem = $this->prepareResultItem($surveyItem, $result);
 
-        $result->setSurvey($survey);
         $this->resultRepository->save($result);
 
         $formRequest->handle(ResultItemType::class, $resultItem);
@@ -251,7 +250,7 @@ class ResultController
     {
         if ($surveyItem instanceof Question) {
             $resultItem = $surveyItem->createResultItem();
-        } elseif ($surveyItem instanceof TextItem) {
+        } elseif ($surveyItem instanceof SurveyTextItem) {
             $resultItem = $surveyItem->createResultItem();
         } elseif ($surveyItem instanceof ItemGroup) {
             $resultItem = new ResultItem();

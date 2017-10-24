@@ -1,17 +1,18 @@
 <?php
+
 namespace PM\SurveythorBundle\Form\ResultItems;
 
+use PM\SurveythorBundle\Entity\ResultItems\ResultTextItem;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use PM\SurveythorBundle\Entity\ResultItems\TextItem;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 /**
  * TextItemType
  * @author Rombo Kraft <kraft@projektmotor.de>
  */
-class TextItemType extends AbstractType
+class ResultTextItemType extends AbstractType
 {
     const FORM_NAME = 'pm_surveythor_textitem';
 
@@ -20,7 +21,7 @@ class TextItemType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('text', HiddenType::class, [ 'label' => false ]);
+        $builder->add('text', HiddenType::class, ['label' => false]);
     }
 
     /**
@@ -28,9 +29,11 @@ class TextItemType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => TextItem::class
-        ));
+        $resolver->setDefaults(
+            [
+                'data_class' => ResultTextItem::class,
+            ]
+        );
     }
 
     /**

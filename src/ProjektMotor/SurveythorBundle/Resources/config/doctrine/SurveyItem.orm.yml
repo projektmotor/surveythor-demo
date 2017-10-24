@@ -8,7 +8,7 @@ PM\SurveythorBundle\Entity\SurveyItem:
         type: string
     discriminatorMap:
         question: PM\SurveythorBundle\Entity\SurveyItems\Question
-        textItem: PM\SurveythorBundle\Entity\SurveyItems\TextItem
+        surveyTextItem: PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem
         itemGroup: PM\SurveythorBundle\Entity\SurveyItems\ItemGroup
 
     id:
