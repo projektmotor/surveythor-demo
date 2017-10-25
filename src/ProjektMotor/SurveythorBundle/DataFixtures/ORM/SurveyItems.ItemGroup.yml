@@ -337,3 +337,15 @@ PM\SurveythorBundle\Entity\SurveyItems\ItemGroup:
             - "@management_drittunternehmen_1"
             - "@management_drittunternehmen_2"
             - "@management_drittunternehmen_3"
+
+    item_group_{1..3}:
+        sortOrder: <current()>
+        survey: '@survey_group_single_and_multiple_choice'
+        title: <sentence()>
+        displayTitle: true
+        description: <sentence()>
+        surveyItems:
+            - '@question_group_single_choice_1_<current()>'
+            - '@question_group_single_choice_2_<current()>'
+            - '@question_group_multiple_choice_1_<current()>'
+            - '@question_group_multiple_choice_2_<current()>'

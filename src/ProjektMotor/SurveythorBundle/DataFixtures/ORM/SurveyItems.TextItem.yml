@@ -35,3 +35,8 @@ PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem:
         title: 'admin'
         displayTitle: false
 
+    text_item_survey_text_{1..5}:
+        sortOrder: <current()>
+        text: <sentence()>
+        title: <word()>
+        displayTitle: false

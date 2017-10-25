@@ -1842,3 +1842,43 @@ PM\SurveythorBundle\Entity\Choice:
         question: "@ueberwachung_optimierung"
 
 
+    choice_single_15_{1..4}:
+        text: "nicht erreicht"
+        value: 15
+        question: "@question_single_choice_<current()>"
+    choice_single_50_{1..4}:
+        text: "teilweise erreicht"
+        value: 50
+        question: "@question_single_choice_<current()>"
+    choice_single_85_{1..4}:
+        text: "weitgehend erreicht"
+        value: 85
+        question: "@question_single_choice_<current()>"
+    choice_single_100_{1..4}:
+        text: "vollständig erreicht"
+        value: 100
+        question: "@question_single_choice_<current()>"
+
+
+    choice_multiple_sausage_{1..4}:
+        text: 'Sausage'
+        value: 1
+        question: "@question_multiple_choice_<current()>"
+    choice_multiple_milk_{1..4}:
+        text: 'Milk'
+        value: 1
+        question: "@question_multiple_choice_<current()>"
+    choice_multiple_nutella_{1..4}:
+        text: 'Nutella'
+        value: 1
+        question: "@question_multiple_choice_<current()>"
+
+
+    choice_text_ceo_{1..4}:
+        text: 'CEO/CIO/CTO'
+        value: '0'
+        question: '@question_text_<current()>'
+    choice_text_admin_{1..4}:
+        text: 'Admin'
+        value: '100'
+        question: '@question_text_<current()>'
