@@ -5,7 +5,7 @@ imports:
 services:
     app.event_listener.response_header_listener:
         class:     AppBundle\EventListener\ResponseHeaderListener
-        arguments: ['@AppBundle\Repository\AllowedOriginRepository']
+        autowire:  true
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 1 }
 

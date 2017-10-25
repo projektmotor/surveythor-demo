@@ -1,8 +1,6 @@
 PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer:
     type: entity
     table: null
-    repositoryClass: PM\SurveythorBundle\Repository\MultipleChoiceAnswerRepository
-
     id:
         id:
             type: integer

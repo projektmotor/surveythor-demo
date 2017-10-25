@@ -3,14 +3,41 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\AllowedOrigin;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\EntityRepository;
 
 /**
  * AllowedOriginRepository
  */
-class AllowedOriginRepository extends EntityRepository
+class AllowedOriginRepository
 {
+    /**
+     * @var EntityRepository
+     */
+    private $repository;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->repository = $entityManager->getRepository(AllowedOrigin::class);
+        $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @return AllowedOrigin[]
+     */
+    public function findAll()
+    {
+        return $this->repository->findAll();
+    }
+
     /**
      * @param $originName
      *
@@ -19,8 +46,7 @@ class AllowedOriginRepository extends EntityRepository
      */
     public function findOneActiveByOriginName($originName)
     {
-        /** @var AllowedOrigin $allowedOrigin */
-        $allowedOrigin = $this->findOneBy(['originName' => $originName, 'isActive' => true]);
+        $allowedOrigin = $this->repository->findOneBy(['originName' => $originName, 'isActive' => true]);
 
         if (is_null($allowedOrigin)) {
             throw new EntityNotFoundException(
@@ -36,7 +62,7 @@ class AllowedOriginRepository extends EntityRepository
      */
     public function persist(AllowedOrigin $allowedOrigin)
     {
-        $this->_em->persist($allowedOrigin);
+        $this->entityManager->persist($allowedOrigin);
     }
 
     /**
@@ -44,8 +70,8 @@ class AllowedOriginRepository extends EntityRepository
      */
     public function save(AllowedOrigin $allowedOrigin)
     {
-        $this->_em->persist($allowedOrigin);
-        $this->_em->flush();
+        $this->entityManager->persist($allowedOrigin);
+        $this->entityManager->flush();
     }
 
     /**
@@ -53,7 +79,7 @@ class AllowedOriginRepository extends EntityRepository
      */
     public function remove(AllowedOrigin $allowedOrigin)
     {
-        $this->_em->remove($allowedOrigin);
-        $this->_em->flush();
+        $this->entityManager->remove($allowedOrigin);
+        $this->entityManager->flush();
     }
 }

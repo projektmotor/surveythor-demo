@@ -1,8 +1,6 @@
 PM\SurveythorBundle\Entity\SurveyItems\ItemGroup:
     type: entity
     table: null
-    repositoryClass: PM\SurveythorBundle\Repository\SurveyItems\ItemGroupRepository
-
     oneToMany:
         surveyItems:
             targetEntity: PM\SurveythorBundle\Entity\SurveyItem

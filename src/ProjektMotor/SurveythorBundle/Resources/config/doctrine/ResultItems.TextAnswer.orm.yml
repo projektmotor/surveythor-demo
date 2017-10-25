@@ -1,8 +1,6 @@
 PM\SurveythorBundle\Entity\ResultItems\TextAnswer:
     type: entity
     table: null
-    repositoryClass: PM\SurveythorBundle\Repository\TextAnswerRepository
-
     id:
         id:
             type: integer

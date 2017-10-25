@@ -1,7 +1,6 @@
 PM\SurveythorBundle\Entity\QuestionTemplate:
     type: entity
     table: null
-    repositoryClass: PM\SurveythorBundle\Repository\QuestionTemplateRepository
     id:
         id:
             type: integer

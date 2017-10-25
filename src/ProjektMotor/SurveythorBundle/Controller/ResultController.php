@@ -16,7 +16,6 @@ use PM\SurveythorBundle\Repository\ResultRepository;
 use QafooLabs\MVC\FormRequest;
 use QafooLabs\MVC\RedirectRoute;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -36,11 +35,11 @@ class ResultController
     private $resultRepository;
 
     /**
-     * @param EventSubscriberInterface $resultReadySubscriber
-     * @param ResultRepository         $resultRepository
+     * @param ResultReadySubscriber $resultReadySubscriber
+     * @param ResultRepository      $resultRepository
      */
     public function __construct(
-        EventSubscriberInterface $resultReadySubscriber,
+        ResultReadySubscriber $resultReadySubscriber,
         ResultRepository $resultRepository
     ) {
         $this->resultReadySubscriber = $resultReadySubscriber;

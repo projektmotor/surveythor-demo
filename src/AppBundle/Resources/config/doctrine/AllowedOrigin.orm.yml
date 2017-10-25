@@ -1,7 +1,6 @@
 AppBundle\Entity\AllowedOrigin:
     type: entity
     table: allowed_origin
-    repositoryClass: AppBundle\Repository\AllowedOriginRepository
     gedmo:
         loggable:
             loggable: true

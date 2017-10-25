@@ -1,28 +1,15 @@
 services:
+    _defaults:
+        autowire: true
+
     survey_controller:
         class: PM\SurveythorBundle\Controller\SurveyController
-        arguments:
-            - "@app.repository.survey_repository"
-            - "@form.factory"
-            - "@router"
 
     result_controller:
         class: PM\SurveythorBundle\Controller\ResultController
-        arguments:
-            - "@result_ready_subscriber"
-            - "@app.repository.result_repository"
 
     survey_item_controller:
         class: PM\SurveythorBundle\Controller\SurveyItemController
-        arguments:
-            - '@app.repository.survey_item_repository'
-            - '@app.repository.condition_repository'
-            - "@form.factory"
-            - "@twig"
-            - "@router"
 
     choice_controller:
         class: PM\SurveythorBundle\Controller\ChoiceController
-        arguments:
-            - "@app.repository.choice_repository"
-            - '@app.repository.condition_repository'

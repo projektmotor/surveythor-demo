@@ -1,7 +1,6 @@
 PM\SurveythorBundle\Entity\SurveyItem:
     type: entity
     table: null
-    repositoryClass: PM\SurveythorBundle\Repository\SurveyItemRepository
     inheritanceType: SINGLE_TABLE
     discriminatorColumn:
         name: discr

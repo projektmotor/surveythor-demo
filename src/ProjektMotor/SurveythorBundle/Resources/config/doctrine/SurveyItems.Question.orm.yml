@@ -1,8 +1,6 @@
 PM\SurveythorBundle\Entity\SurveyItems\Question:
     type: entity
     table: null
-    repositoryClass: PM\SurveythorBundle\Repository\QuestionRepository
-
     fields:
         text:
             type: text

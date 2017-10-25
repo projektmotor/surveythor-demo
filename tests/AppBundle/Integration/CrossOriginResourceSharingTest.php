@@ -4,6 +4,7 @@ namespace Tests\AppBundle\Integration;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use PM\SurveythorBundle\Entity\Survey;
+use PM\SurveythorBundle\Repository\SurveyRepository;
 
 class CrossOriginResourceSharingTest extends WebTestCase
 {
@@ -46,7 +47,7 @@ class CrossOriginResourceSharingTest extends WebTestCase
             'wrong status code for uri '.$client->getRequest()->getUri()
         );
 
-        $surveyRepository = $client->getContainer()->get('app.repository.survey_repository');
+        $surveyRepository = $client->getContainer()->get(SurveyRepository::class);
 
         $survey = $surveyRepository->find($survey->getId());
         $result = $survey->getResults()->first();

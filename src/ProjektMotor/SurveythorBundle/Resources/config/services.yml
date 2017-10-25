@@ -1,6 +1,5 @@
 imports:
     - { resource: services_controller.yml }
-    - { resource: services_repository.yml }
     - { resource: services_event.yml }
 
 services:

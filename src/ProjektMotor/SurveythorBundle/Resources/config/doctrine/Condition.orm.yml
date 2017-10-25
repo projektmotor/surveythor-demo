@@ -1,7 +1,6 @@
 PM\SurveythorBundle\Entity\Condition:
     type: entity
     table: item_condition
-    repositoryClass: PM\SurveythorBundle\Repository\ConditionRepository
     id:
         id:
             type: integer
