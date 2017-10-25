@@ -36,14 +36,18 @@ class Result
     }
 
     /**
-     * @param $survey
+     * @param Survey $survey
      *
      * @return Result
      */
-    public static function createBySurvey($survey)
+    public static function createBySurvey(Survey $survey)
     {
         $result = new self();
         $result->setSurvey($survey);
+
+        $surveyItem = $survey->getFirstSurveyItem();
+        $firstResultItem = $surveyItem->createResultItem();
+        $result->addResultItem($firstResultItem);
 
         return $result;
     }
@@ -124,4 +128,24 @@ class Result
     {
         $this->survey = $survey;
     }
+
+    /**
+     * @return ResultItem
+     */
+    public function getCurrentResultItem()
+    {
+        $resultItem = $this->resultItems->first();
+
+        return $resultItem;
+    }
+
+//    /**
+//     * @param ResultItem $resultItem
+//     */
+//    public function setCurrentResultItem($resultItem)
+//    {
+//        $this->resul
+//
+//        return $resultItem;
+//    }
 }

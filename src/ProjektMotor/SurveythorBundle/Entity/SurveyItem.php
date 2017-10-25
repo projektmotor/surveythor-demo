@@ -65,6 +65,11 @@ abstract class SurveyItem
     }
 
     /**
+     * @return ResultItem
+     */
+    public abstract function createResultItem();
+
+    /**
      * @return int
      */
     public function getId()

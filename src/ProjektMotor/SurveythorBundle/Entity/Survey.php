@@ -270,4 +270,12 @@ class Survey
     {
         $this->surveyItems->removeElement($surveyItem);
     }
+
+    /**
+     * @return SurveyItem
+     */
+    public function getFirstSurveyItem()
+    {
+        return $this->getSurveyItems()->first();
+    }
 }

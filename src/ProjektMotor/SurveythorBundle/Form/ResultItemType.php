@@ -2,6 +2,7 @@
 namespace PM\SurveythorBundle\Form;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 use PM\SurveythorBundle\Entity\ResultItem;
 use PM\SurveythorBundle\Entity\ResultItems\MultipleChoiceAnswer;
 use PM\SurveythorBundle\Entity\ResultItems\SingleChoiceAnswer;
@@ -69,13 +70,13 @@ class ResultItemType extends AbstractType
                         break;
 
                     case $resultItem->getContent() instanceof ArrayCollection:
+                    case $resultItem->getContent() instanceof PersistentCollection:
                         $type = ResultItemCollectionType::class;
                         if ($parent = $resultItem->getParentItem()) {
                             if (!is_null($parent->getSurveyItem()->getTemplate())) {
                                 $type = !is_null($parent->getSurveyItem()->getTemplate()->getFormType())
                                     ? $parent->getSurveyItem()->getTemplate()->getFormType()
-                                    : $type
-                                ;
+                                    : $type;
                             }
                         }
 
@@ -87,6 +88,8 @@ class ResultItemType extends AbstractType
 
                     default:
                         dump(get_class($resultItem->getContent()));
+                        dump($resultItem->getContent());
+                        dump($resultItem);
                         die();
                         break;
                 }

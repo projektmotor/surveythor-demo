@@ -1,7 +1,9 @@
 <?php
+
 namespace PM\SurveythorBundle\Entity\SurveyItems;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PM\SurveythorBundle\Entity\ResultItem;
 use PM\SurveythorBundle\Entity\SurveyItem;
 
 /**
@@ -67,5 +69,76 @@ class ItemGroup extends SurveyItem
         }
 
         return $ids;
+    }
+
+    /**
+     * @return ResultItem
+     */
+    public function createResultItem()
+    {
+        $resultItem = new ResultItem();
+
+        $childSurveyItems = $this->getSurveyItems();
+
+        foreach ($childSurveyItems as $childSurveyItem) {
+            $childResultItem = $childSurveyItem->createResultItem();
+
+            $resultItem->addChildItem($childResultItem);
+        }
+
+        $resultItem->setSurveyItem($this);
+
+//        $resultTextItem = new ResultItem();
+//        $resultTextItem->setText($this->getText());
+//        $resultItem->setResultTextItem($resultTextItem);
+//        $resultItem->setSurveyItem($this);
+
+        return $resultItem;
+    }
+
+    /**
+     * @return ResultItem
+     */
+    public function createResultItemT()
+    {
+        $resultItem = new ResultItem();
+
+        $resultTextItem = new ResultTextItem();
+        $resultTextItem->setText($this->getText());
+        $resultItem->setResultTextItem($resultTextItem);
+        $resultItem->setSurveyItem($this);
+
+        return $resultItem;
+    }
+
+    /**
+     * @return ResultItem
+     * @throws \Exception
+     */
+    public function createResultItemC()
+    {
+        $resultItem = new ResultItem();
+
+        switch ($this->getType()) {
+            case 'mc':
+                $answer = new MultipleChoiceAnswer();
+                break;
+            case 'sc':
+                $answer = new SingleChoiceAnswer();
+                break;
+            case 'text':
+                $answer = new TextAnswer();
+                break;
+            default:
+                throw new \Exception('a question has to have a type');
+                break;
+        }
+
+        $answer->setQuestion($this);
+
+        $resultItem->setAnswer($answer);
+        $resultItem->setSurveyItem($this);
+
+        return $resultItem;
     }
 }

@@ -59,22 +59,24 @@ class ResultController
     }
 
     /**
-     * @param Survey $survey
+     * @param Survey      $survey
+     * @param FormRequest $formRequest
      *
      * @return array
      */
     public function firstAction(Survey $survey, FormRequest $formRequest)
     {
         $result = Result::createBySurvey($survey);
+        $currentResultItem = $result->getCurrentResultItem();
+
         $surveyItem = $survey->getSurveyItems()->first();
-        $resultItem = $this->prepareResultItem($surveyItem, $result);
 
         $this->resultRepository->save($result);
 
-        $formRequest->handle(ResultItemType::class, $resultItem);
+        $formRequest->handle(ResultItemType::class, $currentResultItem);
 
         return [
-            'item' => $surveyItem,
+            'surveyItem' => $surveyItem,
             'result' => $result,
             'survey' => $result->getSurvey(),
             'form' => $formRequest->createFormView(),
@@ -95,7 +97,7 @@ class ResultController
         if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
 
             return [
-                'item' => $surveyItem,
+                'surveyItem' => $surveyItem,
                 'result' => $result,
                 'survey' => $result->getSurvey(),
                 'form' => $formRequest->createFormView(),
@@ -129,7 +131,7 @@ class ResultController
         $formRequest->handle(ResultItem::class, $resultItem);
 
         return [
-            'item' => $surveyItem,
+            'surveyItem' => $surveyItem,
             'result' => $result,
             'survey' => $result->getSurvey(),
             'form' => $formRequest->createFormView(),
@@ -150,7 +152,7 @@ class ResultController
         if (!$formRequest->handle(ResultItemType::class, $resultItem)) {
 
             return [
-                'item' => $surveyItem,
+                'surveyItem' => $surveyItem,
                 'result' => $result,
                 'survey' => $result->getSurvey(),
                 'form' => $formRequest->createFormView(),
