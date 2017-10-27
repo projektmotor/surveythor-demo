@@ -27,20 +27,16 @@ class ResponseHeaderListenerTest extends TestCase
      */
     private $response;
 
-    public function testRequestIsXmlHttpRequest()
+    public function testNoCORSHeaderSetOnXmlHttpRequest()
     {
         $request = $this->mockRequest(true);
         $listener = $this->createListener($request);
 
-        $this->allowedOriginRepository->expects($this->never())
-            ->method('findOneActiveByOriginName');
+        $this->assertNoCallOnRepository();
 
         $listener->onKernelResponse($this->event);
 
-        $this->assertFalse(
-            $this->response->headers->has('Access-Control-Allow-Origin'),
-            'header Access-Control-Allow-Origin should not be present'
-        );
+        $this->assertCORSHeaderIsNotPresent();
     }
 
     public function testAccessControlAllowOriginHeaderSet()
@@ -60,10 +56,7 @@ class ResponseHeaderListenerTest extends TestCase
 
         $listener->onKernelResponse($this->event);
 
-        $this->assertTrue(
-            $this->response->headers->has('Access-Control-Allow-Origin'),
-            'header Access-Control-Allow-Origin should be present'
-        );
+        $this->assertCORSHeaderIsPresent();
 
         $this->assertSame(
             $this->response->headers->get('Access-Control-Allow-Origin'),
@@ -127,5 +120,27 @@ class ResponseHeaderListenerTest extends TestCase
             ->will($this->returnValue($route));
 
         return $request;
+    }
+
+    private function assertNoCallOnRepository()
+    {
+        $this->allowedOriginRepository->expects($this->never())
+            ->method('findOneActiveByOriginName');
+    }
+
+    private function assertCORSHeaderIsPresent()
+    {
+        $this->assertTrue(
+            $this->response->headers->has('Access-Control-Allow-Origin'),
+            'header Access-Control-Allow-Origin should be present'
+        );
+    }
+
+    private function assertCORSHeaderIsNotPresent()
+    {
+        $this->assertFalse(
+            $this->response->headers->has('Access-Control-Allow-Origin'),
+            'header Access-Control-Allow-Origin should not be present'
+        );
     }
 }
