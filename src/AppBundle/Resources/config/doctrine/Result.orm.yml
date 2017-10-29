@@ -1,0 +1,28 @@
+AppBundle\Entity\Result:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        created:
+            type: datetimetz
+
+    oneToMany:
+        resultItems:
+            targetEntity: AppBundle\Entity\ResultItem
+            mappedBy: result
+            cascade:
+                - persist
+            orderBy: { 'sortOrder' : 'ASC'}
+
+    manyToOne:
+        survey:
+            targetEntity: AppBundle\Entity\Survey
+            inversedBy: results
+
+    lifecycleCallbacks:
+        prePersist: [ setCreatedValue ]

@@ -1,5 +1,0 @@
-services:
-    result_ready_subscriber:
-        class: PM\SurveythorBundle\Event\ResultReadySubscriber
-        tags:
-            - { name: kernel.event_listener, event: result.ready, method: onResultReady }

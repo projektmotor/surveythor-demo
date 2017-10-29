@@ -1,5 +1,0 @@
-PM\SurveythorBundle\Entity\QuestionTemplate:
-    horizontal_choices:
-        name: 'horizontale Choiceboxen'
-        formtype: '\PM\SurveythorBundle\Form\Result\ChoicesHorizontalType'
-

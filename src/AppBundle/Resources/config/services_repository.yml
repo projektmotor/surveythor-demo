@@ -4,12 +4,12 @@ services:
 
     AppBundle\Repository\AllowedOriginRepository: ~
 
-    PM\SurveythorBundle\Repository\ChoiceRepository: ~
+    AppBundle\Repository\ChoiceRepository: ~
 
-    PM\SurveythorBundle\Repository\ConditionRepository: ~
+    AppBundle\Repository\ConditionRepository: ~
 
-    PM\SurveythorBundle\Repository\ResultRepository: ~
+    AppBundle\Repository\ResultRepository: ~
 
-    PM\SurveythorBundle\Repository\SurveyItemRepository: ~
+    AppBundle\Repository\SurveyItemRepository: ~
 
-    PM\SurveythorBundle\Repository\SurveyRepository: ~
+    AppBundle\Repository\SurveyRepository: ~

@@ -1,0 +1,51 @@
+AppBundle\Entity\SurveyItem:
+    type: entity
+    table: null
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discr
+        type: string
+    discriminatorMap:
+        question: AppBundle\Entity\SurveyItems\Question
+        surveyTextItem: AppBundle\Entity\SurveyItems\SurveyTextItem
+        itemGroup: AppBundle\Entity\SurveyItems\ItemGroup
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        sortOrder:
+            type: integer
+            nullable: true
+        title:
+            type: text
+            nullable: true
+        description:
+            type: text
+            nullable: true
+        displayTitle:
+            type: boolean
+
+    manyToOne:
+        survey:
+            targetEntity: AppBundle\Entity\Survey
+            inversedBy: surveyItems
+        template:
+            targetEntity: AppBundle\Entity\ResultItemTemplate
+        itemGroup:
+            targetEntity: AppBundle\Entity\SurveyItems\ItemGroup
+            inversedBy: surveyItems
+
+    oneToMany:
+        conditions:
+            targetEntity: AppBundle\Entity\Condition
+            mappedBy: surveyItem
+            cascade:
+                - persist
+                - remove
+
+    lifecycleCallbacks: {}

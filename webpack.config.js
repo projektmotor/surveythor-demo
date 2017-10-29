@@ -1,4 +1,4 @@
-let assets_dir = './app/Resources/PMSurveythorBundle/assets';
+let assets_dir = './app/Resources/AppBundle/assets';
 
 let Encore = require('@symfony/webpack-encore');
 

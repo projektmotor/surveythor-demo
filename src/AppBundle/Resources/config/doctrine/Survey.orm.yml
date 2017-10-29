@@ -1,0 +1,37 @@
+AppBundle\Entity\Survey:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        description:
+            type: text
+            nullable: true
+
+    oneToMany:
+        surveyItems:
+            targetEntity: AppBundle\Entity\SurveyItem
+            mappedBy: survey
+            cascade:
+                - persist
+            orderBy: { 'sortOrder' : 'ASC'}
+        resultRanges:
+            targetEntity: AppBundle\Entity\ResultRange
+            mappedBy: survey
+            cascade:
+                - persist
+        results:
+            targetEntity: AppBundle\Entity\Result
+            mappedBy: survey
+            cascade:
+                - persist
+
+    lifecycleCallbacks: {}
+

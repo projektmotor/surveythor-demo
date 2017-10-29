@@ -1,0 +1,26 @@
+AppBundle\Entity\ResultItems\SingleChoiceAnswer:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    oneToOne:
+        resultItem:
+            targetEntity: AppBundle\Entity\ResultItem
+            inversedBy: singleChoiceAnswer
+
+    manyToOne:
+        choice:
+            targetEntity: AppBundle\Entity\Choice
+            cascade:
+                - persist
+                - remove
+
+        question:
+            targetEntity: AppBundle\Entity\SurveyItems\Question
+
+    lifecycleCallbacks: {  }

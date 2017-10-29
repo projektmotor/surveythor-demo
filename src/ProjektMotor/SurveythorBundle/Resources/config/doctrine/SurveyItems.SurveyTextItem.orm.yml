@@ -1,8 +1,0 @@
-PM\SurveythorBundle\Entity\SurveyItems\SurveyTextItem:
-    type: entity
-    table: null
-    fields:
-        text:
-            type: text
-
-    lifecycleCallbacks: {  }

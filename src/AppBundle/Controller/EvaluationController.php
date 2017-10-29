@@ -1,7 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
-use PM\SurveythorBundle\Entity\Result;
+use AppBundle\Entity\Result;
 
 /**
  * EvaluationController

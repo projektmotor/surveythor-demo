@@ -1,7 +1,0 @@
-PM\SurveythorBundle\Entity\ResultRange:
-        resultrange:
-            meaning: 'Nutzer zeigt mittleren Geschmack.'
-            start: '0'
-            stop: '2'
-            event: 'not sure for the moment'
-            survey: '@fragenkatalog'

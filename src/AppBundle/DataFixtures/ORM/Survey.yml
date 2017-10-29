@@ -1,0 +1,18 @@
+AppBundle\Entity\Survey:
+    fragenkatalog:
+        title: 'Fragenkatalog'
+    eu_dsgvo:
+        title: "EU-DSGVO Check"
+        description: <sentence()>
+    survey_multiple_choice:
+        title: "Multiple Choice Fragen"
+        description: <sentence()>
+    survey_single_choice:
+        title: "Single Choice Fragen"
+        description: <sentence()>
+    survey_text:
+        title: "Textfragen"
+        description: <sentence()>
+    survey_group_single_and_multiple_choice:
+        title: "Gruppen mit Single und Multiple Choice Fragen"
+        description: <sentence()>

@@ -1,0 +1,27 @@
+AppBundle\Entity\ResultRange:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        meaning:
+            type: string
+            length: 255
+        start:
+            type: integer
+        stop:
+            type: integer
+        event:
+            type: string
+            length: 255
+
+    manyToOne:
+        survey:
+            targetEntity: AppBundle\Entity\Survey
+            inversedBy: resultRanges
+
+    lifecycleCallbacks: {  }

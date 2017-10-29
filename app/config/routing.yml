@@ -9,9 +9,21 @@ homepage:
         permanent: false
         ignoreAttributes: true
 
-pm_surveythor:
-    resource: "@PMSurveythorBundle/Resources/config/routing.yml"
-    prefix:   /
+survey:
+    resource: "routing/survey.yml"
+    prefix:     /survey
+
+result:
+    resource: "routing/result.yml"
+    prefix: /result
+
+survey_item:
+    resource: "routing/survey-item.yml"
+    prefix:     /surveyitem
+
+choice:
+    resource: "routing/choice.yml"
+    prefix:     /choice
 
 result_evaluation:
     path: /result/evaluation/{id}

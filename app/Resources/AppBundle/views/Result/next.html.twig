@@ -1,0 +1,42 @@
+{# result \AppBundle\Entity\Result #}
+{# surveyItem \AppBundle\Entity\SurveyItem #}
+
+<div class="st-h1">{{ result.survey.getTitle }}</div>
+
+{% if resultItem.displayTitle %}
+    <div class="st-h2">{{ resultItem.title }}</div>
+{% endif %}
+
+{% if resultItem.description %}
+    <p class="st-description">{{ resultItem.description }}</p>
+{% endif %}
+
+{{ form(form) }}
+
+<div class="clearfix"></div>
+
+{% if hasPrev %}
+    <button
+            class="btn btn-default st-button pull-left js-st-survey-button"
+            data-url="{{ url('result_prev', { 'resultItem' : resultItem.getId, 'result': result.getId }, true) }}"
+    >
+        {{- 'button.back'|trans -}}
+    </button>
+{% endif %}
+{% if not isLast %}
+    <button
+            class="btn btn-default st-button pull-right js-st-survey-button"
+            data-url="{{ url('result_next', { 'resultItem' : resultItem.getId, 'result': result.getId }, true) }}"
+    >
+        {{- 'button.next'|trans -}}
+    </button>
+{% else %}
+    <button
+            class="btn btn-default st-button pull-right js-st-survey-button"
+            data-url="{{ url('result_last', { 'resultItem' : resultItem.getId, 'result': result.getId }, true) }}"
+    >
+        {{- 'button.done'|trans -}}
+    </button>
+{% endif %}
+
+<div class="clearfix"></div>

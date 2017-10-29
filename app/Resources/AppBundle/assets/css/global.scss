@@ -1,0 +1,137 @@
+// customize some Bootstrap variables
+//$brand-primary: darken(#428bca, 20%);
+
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+// set if you're also including font-awesome
+$fa-font-path: "~font-awesome/fonts";
+
+// the ~ allows you to reference things in node_modules
+@import '../../../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+
+// @import '~bootstrap-sass/assets/stylesheets/bootstrap/alerts';
+* {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    -webkit-font-smoothing: antialiased !important;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004) !important;
+    text-rendering: optimizeLegibility !important;
+}
+.navbar-default li.current {
+    background: #d7d7d7;
+}
+.form-row-horizontal {
+
+    margin-top: 12px;
+
+    div.pull-left {
+        margin-right: 12px;
+    }
+}
+
+
+.panel-title {
+}
+.panel-heading {
+    background: #fafafa;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+#survey-elements {
+    .panel-heading {
+        cursor: pointer;
+    }
+
+    .panel.survey-item {
+        > .panel-heading {
+            background: #d5d5d5;
+        }
+    }
+    .panel.settings {
+        .panel-heading {
+            background: #fafafa;
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+        .panel-title {
+            font-size: 14px;
+        }
+        .panel-body {
+            background: #fafafa;
+        }
+    }
+    .panel.answer {
+        .panel-heading {
+            background: #f1f1f1;
+        }
+    }
+
+
+    .panel-collapse {
+        padding: 18px;
+    }
+
+    .surveyitem-form {
+    }
+}
+
+#action-visualizer {
+    display:    none;
+    height:     100px;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) url('/images/loading.gif') 50% 50% no-repeat;
+    border: 1px dotted #454545;
+}
+
+#survey-tools.affix{
+    margin-left: 83.3333%;
+}
+
+.droppable,
+.droppable-group {
+    margin-top: 12px;
+    padding: 16px;
+    background: #656565;
+    color: #f5f5f5;
+    border: 2px dotted #f5f5f5;
+}
+.sortable-itemgroup,
+.sortable {
+    min-height: 40px;
+    background: #eee;
+}
+.add-new-choice:hover {
+    cursor: pointer;
+}
+
+#new-items div {
+    padding: 8px;
+    background: #656565;
+    color: #f5f5f5;
+    border: 2px dotted #f5f5f5;
+    margin-bottom: 6px;
+}
+
+#loading-indicator {
+    display:    none;
+    position:   fixed;
+    top: 0;
+    left: 0;
+    z-index:    1000;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) url('/images/loading.gif') 50% 50% no-repeat;
+}
+body.loading {
+    overflow: hidden;
+
+    #loading-indicator {
+        display: block;
+    }
+}
+#dialog {
+    display: none;
+}
+.panel-indicator-top {
+    display: none;
+}

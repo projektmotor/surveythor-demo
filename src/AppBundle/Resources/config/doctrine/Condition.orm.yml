@@ -1,0 +1,24 @@
+AppBundle\Entity\Condition:
+    type: entity
+    table: item_condition
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        isNegative:
+            type: boolean
+
+    manyToOne:
+        surveyItem:
+            targetEntity: AppBundle\Entity\SurveyItem
+            inversedBy: conditions
+
+    manyToMany:
+        choices:
+            targetEntity: AppBundle\Entity\Choice
+
+    lifecycleCallbacks: {  }

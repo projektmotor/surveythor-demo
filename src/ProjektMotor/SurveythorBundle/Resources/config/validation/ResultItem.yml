@@ -1,8 +1,0 @@
-PM\SurveythorBundle\Entity\ResultItem:
-    properties:
-        singleChoiceAnswer:
-            - Valid: ~
-        multipleChoiceAnswer:
-            - Valid: ~
-        childItems:
-            - Valid: ~

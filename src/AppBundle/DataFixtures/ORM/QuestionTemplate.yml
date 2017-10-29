@@ -1,0 +1,5 @@
+AppBundle\Entity\QuestionTemplate:
+    horizontal_choices:
+        name: 'horizontale Choiceboxen'
+        formtype: '\AppBundle\Form\Result\ChoicesHorizontalType'
+

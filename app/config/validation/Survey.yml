@@ -1,0 +1,6 @@
+AppBundle\Entity\Survey:
+    properties:
+        title:
+            - NotBlank: ~
+#    constraints:
+#        - Callback: validate

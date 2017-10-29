@@ -1,0 +1,13 @@
+AppBundle\Entity\SurveyItems\ItemGroup:
+    type: entity
+    table: null
+    oneToMany:
+        surveyItems:
+            targetEntity: AppBundle\Entity\SurveyItem
+            mappedBy: itemGroup
+            cascade:
+                - persist
+                - remove
+            orderBy: { 'sortOrder' : 'ASC'}
+
+    lifecycleCallbacks: {  }

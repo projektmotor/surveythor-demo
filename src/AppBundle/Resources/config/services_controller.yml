@@ -9,3 +9,11 @@ services:
         class: AppBundle\Controller\UserController
     app.controller.allowed_origin_controller:
         class: AppBundle\Controller\AllowedOriginController
+    app.controller.survey_controller:
+        class: AppBundle\Controller\SurveyController
+    app.controller.result_controller:
+        class: AppBundle\Controller\ResultController
+    app.controller.survey_item_controller:
+        class: AppBundle\Controller\SurveyItemController
+    app.controller.choice_controller:
+        class: AppBundle\Controller\ChoiceController

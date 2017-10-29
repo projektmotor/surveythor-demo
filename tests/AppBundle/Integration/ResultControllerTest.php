@@ -3,10 +3,10 @@
 namespace Tests\AppBundle\Integration;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
-use PM\SurveythorBundle\Entity\Choice;
-use PM\SurveythorBundle\Entity\Survey;
-use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
-use PM\SurveythorBundle\Entity\SurveyItems\Question;
+use AppBundle\Entity\Choice;
+use AppBundle\Entity\Survey;
+use AppBundle\Entity\SurveyItems\ItemGroup;
+use AppBundle\Entity\SurveyItems\Question;
 
 class ResultControllerTest extends WebTestCase
 {
@@ -155,15 +155,15 @@ class ResultControllerTest extends WebTestCase
     {
         return $this->loadFixtureFiles(
             [
-                '@PMSurveythorBundle/DataFixtures/ORM/Choice.yml',
-                '@PMSurveythorBundle/DataFixtures/ORM/Condition.yml',
-                '@PMSurveythorBundle/DataFixtures/ORM/QuestionTemplate.yml',
-                '@PMSurveythorBundle/DataFixtures/ORM/ResultItemTemplate.yml',
-                '@PMSurveythorBundle/DataFixtures/ORM/ResultRange.yml',
-                '@PMSurveythorBundle/DataFixtures/ORM/Survey.yml',
-                '@PMSurveythorBundle/DataFixtures/ORM/SurveyItems.ItemGroup.yml',
-                '@PMSurveythorBundle/DataFixtures/ORM/SurveyItems.Question.yml',
-                '@PMSurveythorBundle/DataFixtures/ORM/SurveyItems.TextItem.yml',
+                '@AppBundle/DataFixtures/ORM/Choice.yml',
+                '@AppBundle/DataFixtures/ORM/Condition.yml',
+                '@AppBundle/DataFixtures/ORM/QuestionTemplate.yml',
+                '@AppBundle/DataFixtures/ORM/ResultItemTemplate.yml',
+                '@AppBundle/DataFixtures/ORM/ResultRange.yml',
+                '@AppBundle/DataFixtures/ORM/Survey.yml',
+                '@AppBundle/DataFixtures/ORM/SurveyItems.ItemGroup.yml',
+                '@AppBundle/DataFixtures/ORM/SurveyItems.Question.yml',
+                '@AppBundle/DataFixtures/ORM/SurveyItems.TextItem.yml',
             ]
         );
     }

@@ -1,0 +1,24 @@
+AppBundle\Entity\ResultItems\TextAnswer:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    oneToOne:
+        resultItem:
+            targetEntity: AppBundle\Entity\ResultItem
+            inversedBy: textAnswer
+
+    manyToOne:
+        question:
+            targetEntity: AppBundle\Entity\SurveyItems\Question
+    fields:
+        value:
+            type: text
+            nullable: true
+
+    lifecycleCallbacks: {  }

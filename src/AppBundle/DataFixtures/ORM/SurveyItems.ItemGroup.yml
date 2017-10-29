@@ -1,0 +1,351 @@
+AppBundle\Entity\SurveyItems\ItemGroup:
+    it_themen:
+        sortOrder: 1
+        survey: '@fragenkatalog'
+        title: <sentence()>
+        displayTitle: true
+        description: <sentence()>
+        surveyItems:
+            - '@group_1_frage_1'
+            - '@group_1_frage_2'
+            - '@group_1_frage_3'
+            - '@group_1_frage_4'
+            - '@group_1_frage_5'
+            - '@group_1_frage_6'
+
+    software:
+        sortOrder: 6
+        survey: '@fragenkatalog'
+        title: <sentence()>
+        displayTitle: true
+        template: '@software_happiness_template'
+        surveyItems:
+            - '@software_1'
+            - '@software_2'
+            - '@software_3'
+            - '@software_4'
+            - '@software_5'
+            - '@software_6'
+            - '@software_7'
+            - '@software_8'
+            - '@software_9'
+            - '@software_10'
+            - '@software_11'
+            - '@software_12'
+            - '@software_13'
+            - '@software_14'
+            - '@software_15'
+            - '@software_16'
+            - '@software_17'
+            - '@software_18'
+            - '@software_19'
+            - '@software_20'
+    software_1:
+        sortOrder: 0
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_1'
+            - '@zufrieden_usability_1'
+            - '@zufrieden_features_1'
+    software_2:
+        sortOrder: 1
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_2'
+            - '@zufrieden_usability_2'
+            - '@zufrieden_features_2'
+    software_3:
+        sortOrder: 2
+        title: <sentence()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_3'
+            - '@zufrieden_usability_3'
+            - '@zufrieden_features_3'
+    software_4:
+        sortOrder: 3
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_4'
+            - '@zufrieden_usability_4'
+            - '@zufrieden_features_4'
+    software_5:
+        sortOrder: 4
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_5'
+            - '@zufrieden_usability_5'
+            - '@zufrieden_features_5'
+    software_6:
+        sortOrder: 5
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_6'
+            - '@zufrieden_usability_6'
+            - '@zufrieden_features_6'
+    software_7:
+        sortOrder: 6
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_7'
+            - '@zufrieden_usability_7'
+            - '@zufrieden_features_7'
+    software_8:
+        sortOrder: 7
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_8'
+            - '@zufrieden_usability_8'
+            - '@zufrieden_features_8'
+    software_9:
+        sortOrder: 8
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_9'
+            - '@zufrieden_usability_9'
+            - '@zufrieden_features_9'
+    software_10:
+        sortOrder: 9
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_10'
+            - '@zufrieden_usability_10'
+            - '@zufrieden_features_10'
+    software_11:
+        sortOrder: 10
+        title: <sentence()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_11'
+            - '@zufrieden_usability_11'
+            - '@zufrieden_features_11'
+    software_12:
+        sortOrder: 11
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_12'
+            - '@zufrieden_usability_12'
+            - '@zufrieden_features_12'
+    software_13:
+        sortOrder: 12
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_13'
+            - '@zufrieden_usability_13'
+            - '@zufrieden_features_13'
+    software_14:
+        sortOrder: 13
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_14'
+            - '@zufrieden_usability_14'
+            - '@zufrieden_features_14'
+    software_15:
+        sortOrder: 14
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_15'
+            - '@zufrieden_usability_15'
+            - '@zufrieden_features_15'
+    software_16:
+        sortOrder: 15
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_16'
+            - '@zufrieden_usability_16'
+            - '@zufrieden_features_16'
+    software_17:
+        sortOrder: 16
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_17'
+            - '@zufrieden_usability_17'
+            - '@zufrieden_features_17'
+    software_18:
+        sortOrder: 17
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_18'
+            - '@zufrieden_usability_18'
+            - '@zufrieden_features_18'
+    software_19:
+        sortOrder: 18
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_19'
+            - '@zufrieden_usability_19'
+            - '@zufrieden_features_19'
+    software_20:
+        sortOrder: 19
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - '@zufrieden_performance_20'
+            - '@zufrieden_usability_20'
+            - '@zufrieden_features_20'
+
+    texte_1:
+        sortOrder: 11
+        survey: '@fragenkatalog'
+        title: <word()>
+        surveyItems:
+            - '@text_item_1'
+            - '@text_item_2'
+            - '@text_item_3'
+            - '@text_item_4'
+            - '@text_item_5'
+    texte_2:
+        sortOrder: 13
+        survey: '@fragenkatalog'
+        title: '<word()>'
+        surveyItems:
+            - '@text_item_6'
+            - '@text_item_7'
+
+#### eu dsgvo
+    data_governance:
+        sortOrder: 0
+        title: <word()>
+        displayTitle: true
+        survey: "@eu_dsgvo"
+        surveyItems:
+            - '@data_governance_1'
+            - '@data_governance_2'
+            - '@data_governance_3'
+            - '@data_governance_4'
+            - '@data_governance_5'
+    person_data:
+        sortOrder: 1
+        title: <word()>
+        displayTitle: true
+        survey: "@eu_dsgvo"
+        surveyItems:
+            - "@person_data_1"
+            - "@person_data_2"
+            - "@person_data_3"
+            - "@person_data_4"
+            - "@person_data_5"
+    datenschutzrichtlinie:
+        sortOrder: 2
+        title: <word()>
+        displayTitle: true
+        survey: "@eu_dsgvo"
+        surveyItems:
+            - "@datenschutzrichtlinie_1"
+            - "@datenschutzrichtlinie_2"
+
+    datenschutzbestimmungen:
+        sortOrder: 3
+        title: <word()>
+        displayTitle: false
+        survey: "@eu_dsgvo"
+        surveyItems:
+            - "@datenschutzbestimmungen_inner"
+            - "@benachrichtigungsverwaltung"
+            - "@reaktion_auf_anfragen"
+            - "@operative_praktiken"
+    datenschutzbestimmungen_inner:
+        sortOrder: 0
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - "@datenschutzbestimmungen_inner_1"
+            - "@datenschutzbestimmungen_inner_2"
+            - "@datenschutzbestimmungen_inner_3"
+            - "@datenschutzbestimmungen_inner_4"
+            - "@datenschutzbestimmungen_inner_5"
+            - "@datenschutzbestimmungen_inner_6"
+            - "@datenschutzbestimmungen_inner_7"
+            - "@datenschutzbestimmungen_inner_8"
+            - "@datenschutzbestimmungen_inner_9"
+            - "@datenschutzbestimmungen_inner_10"
+    benachrichtigungsverwaltung:
+        sortOrder: 1
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - "@benachrichtigungsverwaltung_1"
+            - "@benachrichtigungsverwaltung_2"
+    reaktion_auf_anfragen:
+        sortOrder: 2
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - "@reaktion_auf_anfragen_1"
+            - "@reaktion_auf_anfragen_2"
+            - "@reaktion_auf_anfragen_3"
+            - "@reaktion_auf_anfragen_4"
+            - "@reaktion_auf_anfragen_5"
+    operative_praktiken:
+        sortOrder: 3
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - "@operative_praktiken_1"
+            - "@operative_praktiken_2"
+            - "@operative_praktiken_3"
+            - "@operative_praktiken_4"
+            - "@operative_praktiken_5"
+            - "@operative_praktiken_6"
+            - "@operative_praktiken_7"
+
+    ereignissmanagement:
+        sortOrder: 4
+        survey: "@eu_dsgvo"
+        title: <word()>
+        displayTitle: true
+        surveyItems:
+            - "@ereignissmanagement_1"
+            - "@ereignissmanagement_2"
+            - "@ereignissmanagement_3"
+
+    informationssicherheitsmanagement:
+        sortOrder: 5
+        title: <word()>
+        displayTitle: true
+        survey: "@eu_dsgvo"
+        surveyItems:
+            - "@informationssicherheitsmanagement_1"
+            - "@informationssicherheitsmanagement_2"
+            - "@informationssicherheitsmanagement_3"
+            - "@informationssicherheitsmanagement_4"
+            - "@informationssicherheitsmanagement_5"
+
+    management_drittunternehmen:
+        sortOrder: 6
+        title: <word()>
+        displayTitle: true
+        survey: "@eu_dsgvo"
+        surveyItems:
+            - "@management_drittunternehmen_1"
+            - "@management_drittunternehmen_2"
+            - "@management_drittunternehmen_3"
+
+    item_group_{1..3}:
+        sortOrder: <current()>
+        survey: '@survey_group_single_and_multiple_choice'
+        title: <sentence()>
+        displayTitle: true
+        description: <sentence()>
+        surveyItems:
+            - '@question_group_single_choice_1_<current()>'
+            - '@question_group_single_choice_2_<current()>'
+            - '@question_group_multiple_choice_1_<current()>'
+            - '@question_group_multiple_choice_2_<current()>'

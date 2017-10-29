@@ -1,0 +1,68 @@
+AppBundle\Entity\ResultItem:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        isCurrent:
+            type: boolean
+            nullable: false
+        sortOrder:
+            type: integer
+            nullable: true
+        title:
+            type: text
+            nullable: true
+        description:
+            type: text
+            nullable: true
+        displayTitle:
+            type: boolean
+
+    oneToOne:
+        singleChoiceAnswer:
+            targetEntity: AppBundle\Entity\ResultItems\SingleChoiceAnswer
+            mappedBy: resultItem
+            cascade:
+                - persist
+        multipleChoiceAnswer:
+            targetEntity: AppBundle\Entity\ResultItems\MultipleChoiceAnswer
+            mappedBy: resultItem
+            cascade:
+                - persist
+        textAnswer:
+            targetEntity: AppBundle\Entity\ResultItems\TextAnswer
+            mappedBy: resultItem
+            cascade:
+                - persist
+        resultTextItem:
+            targetEntity: AppBundle\Entity\ResultItems\ResultTextItem
+            mappedBy: resultItem
+            cascade:
+                - persist
+
+    oneToMany:
+        childItems:
+            targetEntity: AppBundle\Entity\ResultItem
+            mappedBy: parentItem
+            cascade:
+                - persist
+
+    manyToOne:
+        result:
+            targetEntity: AppBundle\Entity\Result
+            inversedBy: resultItems
+
+        parentItem:
+            targetEntity: AppBundle\Entity\ResultItem
+            inversedBy: childItems
+
+        surveyItem:
+            targetEntity: AppBundle\Entity\SurveyItem
+
+    lifecycleCallbacks: {  }

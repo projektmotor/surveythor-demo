@@ -1,0 +1,3 @@
+choice_delete:
+    path: /delete/{choice}
+    defaults: { _controller: app.controller.choice_controller:deleteAction }

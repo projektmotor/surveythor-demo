@@ -3,6 +3,12 @@ imports:
     - { resource: services_repository.yml }
 
 services:
+    app.menu_builder:
+        class: AppBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory", "@security.authorization_checker"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
+
     app.event_listener.response_header_listener:
         class:     AppBundle\EventListener\ResponseHeaderListener
         autowire:  true
@@ -15,6 +21,12 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    result_ready_subscriber:
+        class: AppBundle\Event\ResultReadySubscriber
+        autowire: true
+        tags:
+            - { name: kernel.event_listener, event: result.ready, method: onResultReady }
 
     twig.extension.intl:
         class: Twig_Extensions_Extension_Intl

@@ -1,11 +1,9 @@
 <?php
 namespace AppBundle\Event;
 
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use PM\SurveythorBundle\Event\ResultEvent;
-use PM\SurveythorBundle\Repository\ResultRepository;
 
 /**
  * ResultReadySubscriber

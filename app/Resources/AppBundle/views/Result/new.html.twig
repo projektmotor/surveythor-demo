@@ -1,0 +1,31 @@
+{# survey \AppBundle\Entity\Survey #}
+<body style="margin: 0;">
+<div style="background-color: lightgray; padding:50px 10px;">
+    Ut itaque et quaerat doloremque eum praesentium. Rerum in saepe dolorem. Explicabo qui consequuntur commodi minima
+    rem.
+    <br>
+    Harum temporibus rerum dolores. Non molestiae id dolorem placeat.
+    <br>
+    Aut asperiores nihil eius repellendus. Vero nihil corporis voluptatem explicabo commodi. Occaecati omnis blanditiis
+    beatae quod aspernatur eos.
+    <br>
+    <div id="js-st-surveythor-container"></div>
+    <br>
+    Dolorem consequatur voluptates unde optio unde. Accusantium dolorem est est architecto impedit. Corrupti et
+    provident quo.
+    <br>
+    Reprehenderit dolores aut quidem suscipit repudiandae corporis error. Molestiae enim aperiam illo.
+    <br>
+    Et similique qui non expedita quia dolorum. Ex rem incidunt ea accusantium temporibus minus non.
+</div>
+
+<script type="application/javascript" src="{{ asset('build/frontend.js') }}"></script>
+<script type="application/javascript">
+    var params = {
+        surveyId: {{ survey.getId }},
+        surveythorHost: '{{ surveythorHost }}'
+    };
+
+    Surveythor(params);
+</script>
+</body>

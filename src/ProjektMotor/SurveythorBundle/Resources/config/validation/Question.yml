@@ -1,4 +1,0 @@
-PM\SurveythorBundle\Entity\Question:
-    properties:
-        text:
-            - NotBlank: ~
