@@ -51,6 +51,7 @@ RUN npm -v
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
+RUN a2enmod headers
 RUN ["/init-container.sh"]
 
 WORKDIR /var/www/html

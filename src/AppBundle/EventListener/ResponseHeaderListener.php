@@ -37,6 +37,22 @@ class ResponseHeaderListener
         // security header
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
 
+        $pageInfo = $request->attributes->get('_route');
+
+        if ($request->isXmlHttpRequest()) {
+            $pageInfo .= '-xhr';
+        }
+
+        if (0 === strpos($response->headers->get('content-type'), 'image/')) {
+            $pageInfo .= '-image';
+        }
+
+        if (0 === strpos($response->headers->get('content-type'), 'application/json')) {
+            $pageInfo .= '-json';
+        }
+
+        $response->headers->set('X-Route', $pageInfo);
+
         if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
             return;
         }

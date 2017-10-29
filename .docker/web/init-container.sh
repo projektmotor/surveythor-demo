@@ -9,8 +9,11 @@ APACHE_LOG_NAME=surveythor_demo
 # ###############################################
 rm "$APACHE_VHOST"
 
+sh -c "echo 'LogFormat \"%h %l %u %t \\\"%r\\\" %>s %O \\\"%{Referer}i\\\" \\\"%{User-Agent}i\\\" \\\"%D\\\" \\\"%{X-Route}o\\\"\" symfony'>> $APACHE_VHOST"
+sh -c "echo ''                                                                          >> $APACHE_VHOST"
 sh -c "echo '<VirtualHost *:80>'                                                        >> $APACHE_VHOST"
 sh -c "echo '    DocumentRoot ${APACHE_ROOT}/web'                                       >> $APACHE_VHOST"
+sh -c "echo '    Header Set X-Robots-Tag none'                                          >> $APACHE_VHOST"
 sh -c "echo '    <Directory ${APACHE_ROOT}/web>'                                        >> $APACHE_VHOST"
 sh -c "echo '        # enable the .htaccess rewrites'                                   >> $APACHE_VHOST"
 sh -c "echo '        AllowOverride All'                                                 >> $APACHE_VHOST"
@@ -18,7 +21,7 @@ sh -c "echo '        Order allow,deny'                                          
 sh -c "echo '        Allow from All'                                                    >> $APACHE_VHOST"
 sh -c "echo '    </Directory>'                                                          >> $APACHE_VHOST"
 sh -c "echo '    ErrorLog /var/log/apache2/${APACHE_LOG_NAME}_error.log'                >> $APACHE_VHOST"
-sh -c "echo '    CustomLog /var/log/apache2/${APACHE_LOG_NAME}_access.log combined'     >> $APACHE_VHOST"
+sh -c "echo '    CustomLog /var/log/apache2/${APACHE_LOG_NAME}_access.log symfony'      >> $APACHE_VHOST"
 sh -c "echo '</VirtualHost>'                                                            >> $APACHE_VHOST"
 
 # ###############################################
