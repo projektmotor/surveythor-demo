@@ -1,9 +1,34 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/service_container.html
-parameters:
-    #parameter_name: value
+imports:
+    - { resource: services_controller.yml }
+    - { resource: services_repository.yml }
 
 services:
-    #service_name:
-    #    class: AppBundle\Directory\ClassName
-    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+    app.menu_builder:
+        class: AppBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory", "@security.authorization_checker"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
+
+    app.event_listener.response_header_listener:
+        class:     AppBundle\EventListener\ResponseHeaderListener
+        autowire:  true
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 1 }
+
+    gedmo.listener.blameable:
+        class: Gedmo\Blameable\BlameableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    result_ready_subscriber:
+        class: AppBundle\Event\ResultReadySubscriber
+        autowire: true
+        tags:
+            - { name: kernel.event_listener, event: result.ready, method: onResultReady }
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
