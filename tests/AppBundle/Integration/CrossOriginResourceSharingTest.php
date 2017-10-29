@@ -3,6 +3,7 @@
 namespace Tests\AppBundle\Integration;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use PM\SurveythorBundle\Entity\Result;
 use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Repository\SurveyRepository;
 
@@ -50,11 +51,12 @@ class CrossOriginResourceSharingTest extends WebTestCase
         $surveyRepository = $client->getContainer()->get(SurveyRepository::class);
 
         $survey = $surveyRepository->find($survey->getId());
+        /** @var Result $result */
         $result = $survey->getResults()->first();
 
-        $uri = '/result/next/'.$fixtures['it_themen']->getId().'/'.$result->getId();
+        $uri = '/result/next/'.$result->getCurrentResultItem()->getId().'/'.$result->getId();
 
-        $client->request('POST', $uri);
+        $client->request('GET', $uri);
 
         $this->assertSame(
             200,

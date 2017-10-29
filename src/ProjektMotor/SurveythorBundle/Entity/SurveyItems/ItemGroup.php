@@ -88,57 +88,6 @@ class ItemGroup extends SurveyItem
 
         $resultItem->setSurveyItem($this);
 
-//        $resultTextItem = new ResultItem();
-//        $resultTextItem->setText($this->getText());
-//        $resultItem->setResultTextItem($resultTextItem);
-//        $resultItem->setSurveyItem($this);
-
-        return $resultItem;
-    }
-
-    /**
-     * @return ResultItem
-     */
-    public function createResultItemT()
-    {
-        $resultItem = new ResultItem();
-
-        $resultTextItem = new ResultTextItem();
-        $resultTextItem->setText($this->getText());
-        $resultItem->setResultTextItem($resultTextItem);
-        $resultItem->setSurveyItem($this);
-
-        return $resultItem;
-    }
-
-    /**
-     * @return ResultItem
-     * @throws \Exception
-     */
-    public function createResultItemC()
-    {
-        $resultItem = new ResultItem();
-
-        switch ($this->getType()) {
-            case 'mc':
-                $answer = new MultipleChoiceAnswer();
-                break;
-            case 'sc':
-                $answer = new SingleChoiceAnswer();
-                break;
-            case 'text':
-                $answer = new TextAnswer();
-                break;
-            default:
-                throw new \Exception('a question has to have a type');
-                break;
-        }
-
-        $answer->setQuestion($this);
-
-        $resultItem->setAnswer($answer);
-        $resultItem->setSurveyItem($this);
-
         return $resultItem;
     }
 }

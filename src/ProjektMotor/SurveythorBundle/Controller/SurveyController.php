@@ -142,4 +142,15 @@ class SurveyController
             'users' => [],
         ];
     }
+
+    /**
+     * @return RedirectRoute
+     */
+    public function evaluationsLastAction()
+    {
+        $surveys = $this->surveyRepository->findAll();
+        $lastSurvey = $surveys[count($surveys) - 1];
+
+        return new RedirectRoute('survey_evaluations', ['survey' => $lastSurvey->getId()]);
+    }
 }

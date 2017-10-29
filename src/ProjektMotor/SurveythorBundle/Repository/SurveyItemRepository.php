@@ -2,29 +2,21 @@
 
 namespace PM\SurveythorBundle\Repository;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
-use Doctrine\ORM\EntityRepository;
 use PM\SurveythorBundle\Entity\SurveyItem;
 
 class SurveyItemRepository
 {
     /**
-     * @var EntityRepository
+     * @var Registry
      */
-    private $repository;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private $registry;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(Registry $registry)
     {
-        $this->repository = $entityManager->getRepository(SurveyItem::class);
-        $this->entityManager = $entityManager;
+        $this->registry = $registry;
     }
 
     /**
@@ -35,7 +27,7 @@ class SurveyItemRepository
      */
     public function findOneById($id)
     {
-        $surveyItem = $this->repository->findOneBy(['id' => $id]);
+        $surveyItem = $this->getManager()->find(SurveyItem::class, $id);
 
         if (is_null($surveyItem)) {
             throw new EntityNotFoundException(
@@ -51,7 +43,8 @@ class SurveyItemRepository
      */
     public function detach(SurveyItem $surveyItem)
     {
-        $this->entityManager->detach($surveyItem);
+        $this->getManager()->detach($surveyItem);
+        $this->getManager()->flush();
     }
 
     /**
@@ -59,8 +52,8 @@ class SurveyItemRepository
      */
     public function remove(SurveyItem $surveyItem)
     {
-        $this->entityManager->remove($surveyItem);
-        $this->entityManager->flush();
+        $this->getManager()->remove($surveyItem);
+        $this->getManager()->flush();
     }
 
     /**
@@ -68,7 +61,18 @@ class SurveyItemRepository
      */
     public function save(SurveyItem $surveyItem)
     {
-        $this->entityManager->persist($surveyItem);
-        $this->entityManager->flush();
+        $this->getManager()->persist($surveyItem);
+        $this->getManager()->flush();
+    }
+
+    /**
+     * @return EntityManager
+     */
+    private function getManager()
+    {
+        /** @var EntityManager $manager */
+        $manager = $this->registry->getManagerForClass(SurveyItem::class);
+
+        return $manager;
     }
 }

@@ -16,6 +16,6 @@ class EvaluationController
      */
     public function evaluateResultAction(Result $result)
     {
-        return array( 'result' => $result);
+        return ['result' => $result];
     }
 }

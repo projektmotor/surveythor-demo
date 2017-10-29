@@ -1,11 +1,7 @@
-{% extends '::base.html.twig' %}
-{% import '@AppBundle/macros/evaluateResult.html.twig' as macros %}
+{% import ':macros:evaluateResult.html.twig' as macros %}
 
-{% block navbar %}{% endblock %}
-{% block body %}
-    <h4>{{ result.survey.title }}</h4>
-    {% for item in result.resultItems %}
-        {{ macros.renderResultItem(item) }}
-        <hr />
-    {% endfor %}
-{% endblock %}
+<h4>{{ result.survey.title }}</h4>
+{% for resultItem in result.resultItems %}
+    {{ macros.renderResultItem(resultItem) }}
+    <hr/>
+{% endfor %}

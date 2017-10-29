@@ -19,6 +19,26 @@ class ResultItem
     protected $id;
 
     /**
+     * @var bool
+     */
+    protected $isCurrent = false;
+
+    /**
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * @var bool
+     */
+    private $displayTitle = false;
+
+    /**
+     * @var string
+     */
+    protected $description;
+
+    /**
      * @var Result
      */
     protected $result;
@@ -85,28 +105,84 @@ class ResultItem
         return $resultItem;
     }
 
-//    /**
-//     * @return ResultItem
-//     */
-//    public function createResultItem()
-//    {
-//        $resultItem = new ResultItem();
-//
-//        $resultTextItem = new ResultTextItem();
-//        $resultTextItem->setText($surveyTextItem->getText());
-//        $resultItem->setResultTextItem($resultTextItem);
-//        $resultItem->setSurveyItem($this);
-//
-//        return $resultItem;
-//    }
-
-
     /**
      * @return int
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCurrent()
+    {
+        return $this->isCurrent;
+    }
+
+    /**
+     * @return bool
+     */
+    public function setIsCurrent()
+    {
+        return $this->isCurrent = true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function setIsNotCurrent()
+    {
+        return $this->isCurrent = false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisplayTitle()
+    {
+        return $this->displayTitle;
+    }
+
+    /**
+     * @param string $displayTitle
+     */
+    public function setDisplayTitle($displayTitle)
+    {
+        $this->displayTitle = $displayTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     /**
@@ -210,7 +286,7 @@ class ResultItem
     }
 
     /**
-     * @return ArrayCollection|ResultItem[]|MultipleChoiceAnswer|SingleChoiceAnswer|TextAnswer|TextItem
+     * @return ArrayCollection|ResultItem[]|MultipleChoiceAnswer|SingleChoiceAnswer|TextAnswer|ResultTextItem
      */
     public function getContent()
     {

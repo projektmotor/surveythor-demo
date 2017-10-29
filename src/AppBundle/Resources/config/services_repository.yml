@@ -2,20 +2,14 @@ services:
     _defaults:
         autowire: true
 
-    AppBundle\Repository\AllowedOriginRepository:
-        class: AppBundle\Repository\AllowedOriginRepository
+    AppBundle\Repository\AllowedOriginRepository: ~
 
-    PM\SurveythorBundle\Repository\ChoiceRepository:
-        class: PM\SurveythorBundle\Repository\ChoiceRepository
+    PM\SurveythorBundle\Repository\ChoiceRepository: ~
 
-    PM\SurveythorBundle\Repository\ConditionRepository:
-        class: PM\SurveythorBundle\Repository\ConditionRepository
+    PM\SurveythorBundle\Repository\ConditionRepository: ~
 
-    PM\SurveythorBundle\Repository\ResultRepository:
-        class: PM\SurveythorBundle\Repository\ResultRepository
+    PM\SurveythorBundle\Repository\ResultRepository: ~
 
-    PM\SurveythorBundle\Repository\SurveyItemRepository:
-        class: PM\SurveythorBundle\Repository\SurveyItemRepository
+    PM\SurveythorBundle\Repository\SurveyItemRepository: ~
 
-    PM\SurveythorBundle\Repository\SurveyRepository:
-        class: PM\SurveythorBundle\Repository\SurveyRepository
+    PM\SurveythorBundle\Repository\SurveyRepository: ~

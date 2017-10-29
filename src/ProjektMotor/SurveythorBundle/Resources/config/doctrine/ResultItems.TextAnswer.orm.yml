@@ -19,5 +19,6 @@ PM\SurveythorBundle\Entity\ResultItems\TextAnswer:
     fields:
         value:
             type: text
+            nullable: true
 
     lifecycleCallbacks: {  }

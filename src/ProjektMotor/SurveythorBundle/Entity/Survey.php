@@ -168,48 +168,6 @@ class Survey
     }
 
     /**
-     * @param SurveyItem $item
-     *
-     * @return SurveyItem|null
-     */
-    public function getNextItem(SurveyItem $item)
-    {
-        while ($current = $this->surveyItems->current()) {
-            $next = $this->surveyItems->next();
-            if ($current->getId() == $item->getId()) {
-                // rewind pointer
-                $this->surveyItems->first();
-                return $next;
-            }
-        }
-        $this->surveyItems->first();
-
-        return null;
-    }
-
-    /**
-     * @param SurveyItem $item
-     *
-     * @return SurveyItem|null
-     */
-    public function getPrevItem(SurveyItem $item)
-    {
-        while ($current = $this->surveyItems->current()) {
-            $next = $this->surveyItems->next();
-
-            if ($next && $next->getId() == $item->getId()) {
-                // rewind pointer
-                $this->surveyItems->first();
-                return $current;
-            }
-        }
-        $this->surveyItems->first();
-
-        return null;
-    }
-
-
-    /**
      * @return Result[]|ArrayCollection
      */
     public function getResults()

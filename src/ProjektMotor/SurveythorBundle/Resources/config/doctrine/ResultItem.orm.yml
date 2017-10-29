@@ -9,9 +9,20 @@ PM\SurveythorBundle\Entity\ResultItem:
                 strategy: AUTO
 
     fields:
+        isCurrent:
+            type: boolean
+            nullable: false
         sortOrder:
             type: integer
             nullable: true
+        title:
+            type: text
+            nullable: true
+        description:
+            type: text
+            nullable: true
+        displayTitle:
+            type: boolean
 
     oneToOne:
         singleChoiceAnswer:

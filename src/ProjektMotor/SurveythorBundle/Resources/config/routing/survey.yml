@@ -14,6 +14,10 @@ survey_update_title:
     path: /update-title/{survey}
     defaults: { _controller: survey_controller:updateTitleAction }
 
+survey_evaluations_last:
+    path: /evaluations/last
+    defaults: { _controller: survey_controller:evaluationsLastAction }
+
 survey_evaluations:
     path: /evaluations/{survey}
     defaults: { _controller: survey_controller:evaluationsAction }

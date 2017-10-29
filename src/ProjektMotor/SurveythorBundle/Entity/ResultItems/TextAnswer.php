@@ -11,7 +11,7 @@ use PM\SurveythorBundle\Entity\SurveyItems\Question;
 class TextAnswer implements Answer
 {
     /**
-     * @var int $id
+     * @var int
      */
     private $id;
 

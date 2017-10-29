@@ -14,3 +14,7 @@ menu:
 Title: Name
 Origin name: Domain
 Is active: Domainfreigabe aktiv?
+button:
+  back: 'zurück'
+  next: 'weiter'
+  done: 'fertigstellen'

@@ -45,9 +45,15 @@ class Result
         $result = new self();
         $result->setSurvey($survey);
 
-        $surveyItem = $survey->getFirstSurveyItem();
-        $firstResultItem = $surveyItem->createResultItem();
-        $result->addResultItem($firstResultItem);
+        $isFirst = true;
+        foreach ($survey->getSurveyItems() as $surveyItem) {
+            $resultItem = $surveyItem->createResultItem();
+            if ($isFirst) {
+                $resultItem->setIsCurrent();
+                $isFirst = false;
+            }
+            $result->addResultItem($resultItem);
+        }
 
         return $result;
     }
@@ -134,18 +140,52 @@ class Result
      */
     public function getCurrentResultItem()
     {
-        $resultItem = $this->resultItems->first();
+        foreach ($this->resultItems as $resultItem) {
+            if ($resultItem->isCurrent()) {
+                return $resultItem;
+            }
+        }
 
-        return $resultItem;
+        // fallback use first item
+        return $this->resultItems->first();
     }
 
-//    /**
-//     * @param ResultItem $resultItem
-//     */
-//    public function setCurrentResultItem($resultItem)
-//    {
-//        $this->resul
-//
-//        return $resultItem;
-//    }
+    /**
+     * @param ResultItem $newCurrentResultItem
+     */
+    public function setCurrentResultItem($newCurrentResultItem)
+    {
+        foreach ($this->resultItems as $resultItem) {
+            if ($resultItem->isCurrent()) {
+                $resultItem->setIsNotCurrent();
+            }
+            if ($resultItem->equals($newCurrentResultItem)) {
+                $resultItem->setIsCurrent();
+            }
+        }
+    }
+
+    public function markNextResultItemAsCurrent()
+    {
+        $newCurrentResultItem = null;
+        foreach ($this->resultItems as $key => $resultItem) {
+            if ($resultItem->isCurrent()) {
+                $resultItem->setIsNotCurrent();
+                $newCurrentResultItem = $this->resultItems[$key + 1];
+            }
+        }
+        $newCurrentResultItem->setIsCurrent();
+    }
+
+    public function markPreviousResultItemAsCurrent()
+    {
+        $newCurrentResultItem = null;
+        foreach ($this->resultItems as $key => $resultItem) {
+            if ($resultItem->isCurrent()) {
+                $resultItem->setIsNotCurrent();
+                $newCurrentResultItem = $this->resultItems[$key - 1];
+            }
+        }
+        $newCurrentResultItem->setIsCurrent();
+    }
 }

@@ -2,25 +2,22 @@
 
 namespace PM\SurveythorBundle\Repository;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\ORM\EntityManager;
+use PM\SurveythorBundle\Entity\Choice;
 use PM\SurveythorBundle\Entity\Condition;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
-use PM\SurveythorBundle\Entity\Choice;
 
 class ConditionRepository
 {
     /**
-     * @var EntityRepository
+     * @var Registry
      */
-    private $repository;
+    private $registry;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(Registry $registry)
     {
-        $this->repository = $entityManager->getRepository(Condition::class);
+        $this->registry = $registry;
     }
 
     /**
@@ -30,8 +27,8 @@ class ConditionRepository
      */
     public function getConditionsByQuestion(Question $question)
     {
-        $qb = $this->repository->createQueryBuilder('c');
-        $qb
+        $qb = $this->getManager()->createQueryBuilder()
+            ->from(Condition::class, 'c')
             ->select('c')
             ->join('c.choices', 'ch')
             ->where('ch.question = :idQuestion')
@@ -47,13 +44,24 @@ class ConditionRepository
      */
     public function getConditionsByChoice(Choice $choice)
     {
-        $qb = $this->repository->createQueryBuilder('c');
-        $qb
+        $qb = $this->getManager()->createQueryBuilder()
+            ->from(Condition::class, 'c')
             ->select('c')
             ->join('c.choices', 'ch')
             ->where('c.id = :idChoice')
             ->setParameter('idChoice', $choice->getId());
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return EntityManager
+     */
+    private function getManager()
+    {
+        /** @var EntityManager $manager */
+        $manager = $this->registry->getManagerForClass(Condition::class);
+
+        return $manager;
     }
 }

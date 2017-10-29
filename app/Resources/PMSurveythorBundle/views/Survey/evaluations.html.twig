@@ -1,3 +1,7 @@
+{# result \PM\SurveythorBundle\Entity\Result #}
+{# resultItem \PM\SurveythorBundle\Entity\ResultItem #}
+{# survey \PM\SurveythorBundle\Entity\Survey #}
+
 {% extends '::base.html.twig' %}
 
 {% block body %}
@@ -6,8 +10,37 @@
         {{ survey.description }}
     </p>
     <p>
-        Die Umfrage wurde 36 mal durchgeführt
+        Die Umfrage wurde {{ survey.getResults|length }} mal durchgeführt
     </p>
+
+    {% for result in survey.getResults|reverse %}
+        <hr>
+        <b>{{ result.id }}</b>
+        {% for resultItem in result.getResultItems if resultItem.singleChoiceAnswer.choice.value is defined %}
+            <ul>
+                {#<li>{{ resultItem.title }}</li>#}
+                {#<li>{{ resultItem.singleChoiceAnswer.question.title }}</li>#}
+                <li>BackendTitile: {{ resultItem.singleChoiceAnswer.question.backendTitle }}</li>
+                <li>Fragetype: {{ resultItem.singleChoiceAnswer.question.contentTypeName }}</li>
+                {#<li>{{ resultItem.singleChoiceAnswer.question.displayTitle }}</li>#}
+                {#<li>{{ resultItem.singleChoiceAnswer.question.description }}</li>#}
+                {#<li>{{ resultItem.singleChoiceAnswer.question.template }}</li>#}
+                <li>
+                    {{ resultItem.singleChoiceAnswer.choice.text }}
+                    ({{ resultItem.singleChoiceAnswer.choice.value }})
+                </li>
+                {#<li>{{ resultItem.singleChoiceAnswer.id }}</li>#}
+                {#<li></li>#}
+                {#<li></li>#}
+                {#<li></li>#}
+                {#<li></li>#}
+
+            </ul>
+            <hr>
+        {% else %}
+            - nicht ausgefüllt
+        {% endfor %}
+    {% endfor %}
 
     <table class="table">
         <tr>

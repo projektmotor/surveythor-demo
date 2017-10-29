@@ -2,28 +2,20 @@
 
 namespace PM\SurveythorBundle\Repository;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\ORM\EntityManager;
 use PM\SurveythorBundle\Entity\Choice;
 
 class ChoiceRepository
 {
     /**
-     * @var EntityRepository
+     * @var Registry
      */
-    private $repository;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private $registry;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(Registry $registry)
     {
-        $this->repository = $entityManager->getRepository(Choice::class);
-        $this->entityManager = $entityManager;
+        $this->registry = $registry;
     }
 
     /**
@@ -31,7 +23,18 @@ class ChoiceRepository
      */
     public function remove(Choice $choice)
     {
-        $this->entityManager->remove($choice);
-        $this->entityManager->flush();
+        $this->getManager()->remove($choice);
+        $this->getManager()->flush();
+    }
+
+    /**
+     * @return EntityManager
+     */
+    private function getManager()
+    {
+        /** @var EntityManager $manager */
+        $manager = $this->registry->getManagerForClass(Choice::class);
+
+        return $manager;
     }
 }

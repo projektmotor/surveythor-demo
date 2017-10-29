@@ -1,0 +1,40 @@
+{% macro renderResultItem(resultItem) %}
+    {# resultItem \PM\SurveythorBundle\Entity\ResultItem #}
+    {% import _self as self %}
+
+    {% if resultItem.surveyItem.displayTitle %}
+        <b>{{ resultItem.surveyItem.title }}</b><br/>
+    {% endif %}
+
+    {% if resultItem.singleChoiceAnswer is not null and resultItem.singleChoiceAnswer.choice is not null %}
+        <u>{{ resultItem.singleChoiceAnswer.question.text }}</u><br/>
+        {{ resultItem.singleChoiceAnswer.choice.text }}<br/>
+    {% endif %}
+
+    {% if resultItem.multipleChoiceAnswer is not null %}
+        <u>{{ resultItem.multipleChoiceAnswer.question.text }}</u><br/>
+        <ul>
+            {% for choice in resultItem.multipleChoiceAnswer.choices %}
+            <li>{{ choice.text }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if resultItem.textAnswer is not null %}
+        <u>{{ resultItem.textAnswer.question.text }}</u>
+        <p>{{ resultItem.textAnswer.value }}</p>
+    {% endif %}
+
+    {% if resultItem.resultTextItem is not null %}
+        <div class="well well-sm"><i>{{ resultItem.resultTextItem.text }}</i></div>
+    {% endif %}
+
+    {% if resultItem.childItems|length > 0 %}
+        {% for resultItem in resultItem.childItems %}
+            {{ self.renderResultItem(resultItem) }}
+        {% endfor %}
+    {% endif %}
+
+{% endmacro %}
+
+

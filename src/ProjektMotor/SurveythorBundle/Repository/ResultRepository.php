@@ -2,28 +2,31 @@
 
 namespace PM\SurveythorBundle\Repository;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\ORM\EntityManager;
 use PM\SurveythorBundle\Entity\Result;
+use PM\SurveythorBundle\Entity\Survey;
 
 class ResultRepository
 {
     /**
-     * @var EntityRepository
+     * @var Registry
      */
-    private $repository;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private $registry;
+
+    public function __construct(Registry $registry)
+    {
+        $this->registry = $registry;
+    }
 
     /**
-     * @param EntityManagerInterface $entityManager
+     * @param Survey $survey
+     *
+     * @return null|Result
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function findOneBySurvey(Survey $survey)
     {
-        $this->repository = $entityManager->getRepository(Result::class);
-        $this->entityManager = $entityManager;
+        return $this->getManager()->find(Result::class, $survey->getId());
     }
 
     /**
@@ -31,7 +34,18 @@ class ResultRepository
      */
     public function save(Result $result)
     {
-        $this->entityManager->persist($result);
-        $this->entityManager->flush();
+        $this->getManager()->persist($result);
+        $this->getManager()->flush();
+    }
+
+    /**
+     * @return EntityManager
+     */
+    private function getManager()
+    {
+        /** @var EntityManager $manager */
+        $manager = $this->registry->getManagerForClass(Result::class);
+
+        return $manager;
     }
 }

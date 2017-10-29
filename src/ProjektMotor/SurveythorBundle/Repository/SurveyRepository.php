@@ -2,40 +2,32 @@
 
 namespace PM\SurveythorBundle\Repository;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
-use Doctrine\ORM\EntityRepository;
 use PM\SurveythorBundle\Entity\Survey;
 
 class SurveyRepository
 {
     /**
-     * @var EntityRepository
+     * @var Registry
      */
-    private $repository;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private $registry;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(Registry $registry)
     {
-        $this->repository = $entityManager->getRepository(Survey::class);
-        $this->entityManager = $entityManager;
+        $this->registry = $registry;
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
      *
      * @return Survey
      * @throws EntityNotFoundException
      */
     public function find($id)
     {
-        $survey = $this->repository->find($id);
+        $survey = $this->getManager()->find(Survey::class, $id);
         if (is_null($survey)) {
             throw new EntityNotFoundException(sprintf('no survey found for id "%s"', json_encode($id)));
         }
@@ -48,7 +40,13 @@ class SurveyRepository
      */
     public function findAll()
     {
-        return $this->repository->findAll();
+        return $this
+            ->getManager()
+            ->createQueryBuilder()
+            ->from(Survey::class, 's')
+            ->select('s')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -56,7 +54,18 @@ class SurveyRepository
      */
     public function save(Survey $survey)
     {
-        $this->entityManager->persist($survey);
-        $this->entityManager->flush();
+        $this->getManager()->persist($survey);
+        $this->getManager()->flush($survey);
+    }
+
+    /**
+     * @return EntityManager
+     */
+    private function getManager()
+    {
+        /** @var EntityManager $manager */
+        $manager = $this->registry->getManagerForClass(Survey::class);
+
+        return $manager;
     }
 }

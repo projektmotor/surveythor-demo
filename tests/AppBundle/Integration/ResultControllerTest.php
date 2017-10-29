@@ -8,7 +8,7 @@ use PM\SurveythorBundle\Entity\Survey;
 use PM\SurveythorBundle\Entity\SurveyItems\ItemGroup;
 use PM\SurveythorBundle\Entity\SurveyItems\Question;
 
-class ResultFirstTest extends WebTestCase
+class ResultControllerTest extends WebTestCase
 {
     public function testSingleChoice()
     {
@@ -25,6 +25,7 @@ class ResultFirstTest extends WebTestCase
 
         $url = 'result/first/'.$survey->getId();
         $client = static::makeClient();
+        $client->followRedirects();
         $crawler = $client->request('GET', $url);
 
         $this->assertStatusCode(200, $client);
@@ -32,6 +33,40 @@ class ResultFirstTest extends WebTestCase
         $this->assertContains($firstSurveyItem->getText(), $crawler->text());
         $this->assertContains($firstChoice->getText(), $crawler->text());
         $this->assertContains($secondChoice->getText(), $crawler->text());
+
+        while ($button = $crawler->selectButton('weiter') and $button->count()) {
+//        for ($i = 1; $i <= 3; $i++) {
+
+//            $button = $crawler->selectButton('weiter');
+            $form = $crawler->filter('form');
+            $inputField = $form->filter('input');
+            $inputName = $inputField->attr('name');
+            $inputValue = $inputField->attr('value');
+            $form = $form->form([$inputName => $inputValue]);
+            $weiterUri = $button->attr('data-url');
+            $crawler = $client->request('POST', $weiterUri, $form->getPhpValues(), $form->getPhpFiles());
+        }
+
+
+        $button = $crawler->selectButton('fertigstellen');
+        $form = $crawler->filter('form');
+        $inputField = $form->filter('input');
+        $inputName = $inputField->attr('name');
+        $inputValue = $inputField->attr('value');
+        $form = $form->form([$inputName => $inputValue]);
+        $fertigstellenUri = $button->attr('data-url');
+        $crawler = $client->request('POST', $fertigstellenUri, $form->getPhpValues(), $form->getPhpFiles());
+
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
+
+        $jsonResponseContent = json_decode($client->getResponse()->getContent());
+        $this->assertObjectHasAttribute('url', $jsonResponseContent);
+        $evaluationUri = $jsonResponseContent->url;
+
+        $crawler = $client->request('GET', $evaluationUri);
+
+        $this->assertContains($firstChoice->getText(), $crawler->text());
+        $this->assertContains($survey->getTitle(), $crawler->text());
     }
 
     public function testMultipleChoice()
@@ -84,6 +119,7 @@ class ResultFirstTest extends WebTestCase
 
     public function testSurveyGroupSingleAndMultipleChoice()
     {
+        $this->markTestSkipped('groups not supported yet');
         $fixtures = $this->loadAllFixturesWithoutUsersAndAllowedOrigins();
 
         /** @var Survey $survey */

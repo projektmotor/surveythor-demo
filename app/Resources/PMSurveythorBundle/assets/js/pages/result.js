@@ -33,7 +33,17 @@ module.exports = function (params) {
                 method: 'post',
                 data: form.serialize(),
                 success: function (response) {
-                    container.html(response);
+                    if (response.url !== undefined) {
+                        $.ajax({
+                            url: response.url,
+                            method: 'post',
+                            success: function (response) {
+                                container.html(response);
+                            }
+                        });
+                    } else {
+                        container.html(response);
+                    }
                     $(window).scrollTo(container);
                 }
             });
