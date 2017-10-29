@@ -32,6 +32,11 @@ sh -c "echo ''                                                          >> /usr/
 sh -c "echo '[Date]'                                                    >> /usr/local/etc/php/php.ini"
 sh -c "echo '; Defines the default timezone used by the date functions' >> /usr/local/etc/php/php.ini"
 sh -c "echo 'date.timezone=\"Europe/Berlin\"'                           >> /usr/local/etc/php/php.ini"
+sh -c "echo ''                                                          >> /usr/local/etc/php/php.ini"
+sh -c "echo '[Performance Symfony related]'                             >> /usr/local/etc/php/php.ini"
+sh -c "echo 'opcache.max_accelerated_files = 20000'                     >> /usr/local/etc/php/php.ini"
+sh -c "echo 'realpath_cache_size = 4096K'                               >> /usr/local/etc/php/php.ini"
+sh -c "echo 'realpath_cache_ttl = 600'                                  >> /usr/local/etc/php/php.ini"
 
 pecl install zip
 pecl install xdebug

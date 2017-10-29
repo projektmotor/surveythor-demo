@@ -1,4 +1,4 @@
-FROM php:5.6-apache
+FROM php:7.1-apache
 
 COPY ./init-container.sh /init-container.sh
 COPY ./init-project.sh /init-project.sh
@@ -15,13 +15,12 @@ RUN apt-get update && apt-get install -y \
         libjpeg-dev \
         libpng-dev \
         git-core \
-        php5-sqlite \
-        php5-intl \
-        php5-mysql \
-        php5-curl \
-        php5-dev \
         acl \
         mysql-client && \
+        docker-php-ext-configure opcache --enable-opcache && \
+        docker-php-ext-install opcache && \
+        pecl install apcu && \
+        docker-php-ext-enable apcu && \
         docker-php-ext-configure gd --with-jpeg-dir=/usr/include/ && \
         docker-php-ext-install gd && \
         docker-php-ext-configure intl && \
