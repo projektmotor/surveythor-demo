@@ -9,5 +9,6 @@ finder:
     - "*.php"
   not-name:
     - "*Stub.php"
+    - "SymfonyRequirements.php"
   depth:
     - "< 3"
