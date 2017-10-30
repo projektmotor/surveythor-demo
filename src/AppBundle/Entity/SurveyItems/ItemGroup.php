@@ -24,6 +24,18 @@ class ItemGroup extends SurveyItem
     }
 
     /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return sprintf(
+            '%s (%s)',
+            $this->getTitle(),
+            $this->getSurvey()->getTitle()
+        );
+    }
+
+    /**
      * @param SurveyItem $surveyItem
      *
      * @return ItemGroup
