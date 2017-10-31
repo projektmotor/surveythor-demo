@@ -14,8 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ResultTextItemType extends AbstractType
 {
-    const FORM_NAME = 'pm_surveythor_textitem';
-
     /**
      * {@inheritDoc}
      */
@@ -34,18 +32,5 @@ class ResultTextItemType extends AbstractType
                 'data_class' => ResultTextItem::class,
             ]
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return self::FORM_NAME;
-    }
-
-    public function getBlockPrefix()
-    {
-        return self::FORM_NAME;
     }
 }

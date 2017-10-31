@@ -17,45 +17,51 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MultipleChoiceAnswerType extends AbstractType
 {
-    const FORM_NAME = 'pm_surveythor_multiplechoiceanswer';
-
     /**
      * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $answer = $event->getData();
-            $form = $event->getForm();
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                /** @var MultipleChoiceAnswer $answer */
+                $answer = $event->getData();
+                $form = $event->getForm();
 
-            if ($answer) {
-                $question = $answer->getQuestion();
+                if ($answer) {
+                    $question = $answer->getQuestion();
 
-                $type = EntityType::class;
-                if (!is_null($question->getQuestionTemplate())) {
-                    $type = !is_null($question->getQuestionTemplate()->getFormType())
-                        ? $question->getQuestionTemplate()->getFormType()
-                        : $type;
-                }
-
-                $form->add('choices', $type, array(
-                    'label' => false,
-                    'class' => Choice::class,
-                    'choice_label' => 'text',
-                    'choices' => $question->getChoices(),
-                    'expanded' => true,
-                    'multiple' => true,
-                    'attr' => array(
-                        'class' => 'choice-answer'
-                    ),
-                    'choice_attr' => function ($val, $key, $index) {
-                        return array(
-                            'data-answer-id' => $val->getId()
-                        );
+                    $type = EntityType::class;
+                    if (!is_null($question->getQuestionTemplate())) {
+                        $type = !is_null($question->getQuestionTemplate()->getFormType())
+                            ? $question->getQuestionTemplate()->getFormType()
+                            : $type;
                     }
-                ));
+
+                    $form->add(
+                        'choices',
+                        $type,
+                        [
+                            'label' => false,
+                            'class' => Choice::class,
+                            'choice_label' => 'text',
+                            'choices' => $question->getChoices(),
+                            'expanded' => true,
+                            'multiple' => true,
+                            'attr' => [
+                                'class' => 'choice-answer',
+                            ],
+                            'choice_attr' => function ($val, $key, $index) {
+                                return [
+                                    'data-answer-id' => $val->getId(),
+                                ];
+                            },
+                        ]
+                    );
+                }
             }
-        });
+        );
     }
 
     /**
@@ -63,17 +69,11 @@ class MultipleChoiceAnswerType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'question' => null,
-            'data_class' => MultipleChoiceAnswer::class
-        ));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return self::FORM_NAME;
+        $resolver->setDefaults(
+            [
+                'question' => null,
+                'data_class' => MultipleChoiceAnswer::class,
+            ]
+        );
     }
 }

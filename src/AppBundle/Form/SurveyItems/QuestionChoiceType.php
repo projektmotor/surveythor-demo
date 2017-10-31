@@ -15,25 +15,34 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class QuestionChoiceType extends AbstractType
 {
-    const FORM_NAME = 'pm_surveythor_answer';
-
     /**
      * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text', TextType::class, array(
-                'attr' => array('class' => 'title-field'),
-                'label' => 'Antwort'
-            ))
-            ->add('value', TextType::class, array(
-                'label' => 'Punkte'
-            ))
-            ->add('sortOrder', HiddenType::class, array(
-                'attr' => array('class' => 'sortorder')
-            ))
-        ;
+            ->add(
+                'text',
+                TextType::class,
+                [
+                    'attr' => ['class' => 'title-field'],
+                    'label' => 'Antwort',
+                ]
+            )
+            ->add(
+                'value',
+                TextType::class,
+                [
+                    'label' => 'Punkte',
+                ]
+            )
+            ->add(
+                'sortOrder',
+                HiddenType::class,
+                [
+                    'attr' => ['class' => 'sortorder'],
+                ]
+            );
     }
 
     /**
@@ -41,17 +50,11 @@ class QuestionChoiceType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => Choice::class
-        ));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return self::FORM_NAME;
+        $resolver->setDefaults(
+            array(
+                'data_class' => Choice::class,
+            )
+        );
     }
 
     public function getBlockPrefix()

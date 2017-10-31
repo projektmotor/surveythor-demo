@@ -17,42 +17,52 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SurveyType extends AbstractType
 {
-    const FORM_NAME = 'pm_surveythor_survey';
-
     /**
      * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, array())
-            ->add('description', TextareaType::class, array(
-                'label' => 'Beschreibung',
-                'required' => false
-            ))
-            ->add('surveyItems', QuestionCollectionType::class, array(
-                'entry_type' => SurveyItemType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'entry_options' => array(
-                    'label' => false
-                ),
-                'prototype_name' => '__surveyitem__',
-                'attr' => array('class' => 'sortable')
-            ))
-            ->add('resultRanges', ResultRangeCollectionType::class, array(
-                'entry_type' => ResultRangeType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'entry_options' => array(
-                    'label' => false
-                ),
-                'prototype_name' => '__resultRange__',
-                'label' => false
-            ))
-            ->add('submit', SubmitType::class, [ 'label' => 'Speichern' ]);
+            ->add('title', TextType::class)
+            ->add(
+                'description',
+                TextareaType::class,
+                [
+                    'label' => 'Beschreibung',
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'surveyItems',
+                QuestionCollectionType::class,
+                [
+                    'entry_type' => SurveyItemType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_options' => [
+                        'label' => false,
+                    ],
+                    'prototype_name' => '__surveyitem__',
+                    'attr' => ['class' => 'sortable'],
+                ]
+            )
+            ->add(
+                'resultRanges',
+                ResultRangeCollectionType::class,
+                [
+                    'entry_type' => ResultRangeType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'entry_options' => [
+                        'label' => false,
+                    ],
+                    'prototype_name' => '__resultRange__',
+                    'label' => false,
+                ]
+            )
+            ->add('submit', SubmitType::class, ['label' => 'Speichern']);
     }
 
     /**
@@ -60,16 +70,10 @@ class SurveyType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => Survey::class
-        ));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return self::FORM_NAME;
+        $resolver->setDefaults(
+            [
+                'data_class' => Survey::class,
+            ]
+        );
     }
 }

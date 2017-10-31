@@ -204,14 +204,6 @@ class SurveyItemType extends AbstractType
         ));
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return self::FORM_NAME;
-    }
-
     public function getBlockPrefix()
     {
         return 'surveyitem';

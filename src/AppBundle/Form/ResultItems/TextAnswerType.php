@@ -13,14 +13,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class TextAnswerType extends AbstractType
 {
-    const FORM_NAME = 'pm_surveythor_textanswer';
-
     /**
      * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('value', null, array('label' => false));
+        $builder->add('value', null, ['label' => false]);
     }
 
     /**
@@ -28,17 +26,11 @@ class TextAnswerType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            [
             'question' => null,
             'data_class' => TextAnswer::class
-        ));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return self::FORM_NAME;
+            ]
+        );
     }
 }

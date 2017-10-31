@@ -18,20 +18,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SurveyTitleType extends AbstractType
 {
-    const FORM_NAME = 'pm_surveythor_surveytitle';
-
     /**
      * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, array( 'label' => 'Name der Umfrage'))
-            ->add('description', TextareaType::class, array(
-                'label' => 'Beschreibung',
-                'required' => false
-            ))
-        ;
+            ->add('title', TextType::class, ['label' => 'Name der Umfrage'])
+            ->add(
+                'description',
+                TextareaType::class,
+                [
+                    'label' => 'Beschreibung',
+                    'required' => false,
+                ]
+            );
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -45,16 +46,23 @@ class SurveyTitleType extends AbstractType
                     $form->remove('title');
                     $form->remove('description');
                     $form
-                        ->add('title', TextType::class, array(
-                            'label' => 'Name der Umfrage',
-                            'attr' => array('class' => 'survey-title-field')
-                        ))
-                        ->add('description', TextareaType::class, array(
-                            'label' => 'Beschreibung',
-                            'required' => false,
-                            'attr' => array('class' => 'survey-title-field')
-                        ))
-                    ;
+                        ->add(
+                            'title',
+                            TextType::class,
+                            [
+                                'label' => 'Name der Umfrage',
+                                'attr' => ['class' => 'survey-title-field'],
+                            ]
+                        )
+                        ->add(
+                            'description',
+                            TextareaType::class,
+                            [
+                                'label' => 'Beschreibung',
+                                'required' => false,
+                                'attr' => ['class' => 'survey-title-field'],
+                            ]
+                        );
                 }
             }
         );
@@ -65,16 +73,10 @@ class SurveyTitleType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => Survey::class
-        ));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return self::FORM_NAME;
+        $resolver->setDefaults(
+            [
+                'data_class' => Survey::class,
+            ]
+        );
     }
 }
