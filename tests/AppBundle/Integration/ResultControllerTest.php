@@ -2,11 +2,11 @@
 
 namespace Tests\AppBundle\Integration;
 
-use Liip\FunctionalTestBundle\Test\WebTestCase;
 use AppBundle\Entity\Choice;
 use AppBundle\Entity\Survey;
 use AppBundle\Entity\SurveyItems\ItemGroup;
 use AppBundle\Entity\SurveyItems\Question;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\DomCrawler\Field\FormField;
@@ -15,6 +15,12 @@ use Symfony\Component\HttpKernel\Client;
 
 class ResultControllerTest extends WebTestCase
 {
+    private static $validationMessages = [
+        'Bitte wählen Sie eine Antwort.',
+        'Bitte wählen Sie mindestens eine Antwort aus.',
+        'Bitte tragen Sie ihre Antwort ein.',
+    ];
+
     public function testSingleChoice()
     {
         $fixtures = $this->loadAllFixturesWithoutUsersAndAllowedOrigins();
@@ -38,6 +44,8 @@ class ResultControllerTest extends WebTestCase
         $this->assertContains($firstSurveyItem->getText(), $crawler->text());
         $this->assertContains($firstChoice->getText(), $crawler->text());
         $this->assertContains($secondChoice->getText(), $crawler->text());
+
+        $client = $this->assertValidationMessageIsShown($crawler, $client);
 
         $client = $this->clickProceedUntilEndOfSurveyReached($crawler, $client);
 
@@ -71,6 +79,8 @@ class ResultControllerTest extends WebTestCase
         $this->assertContains($firstChoice->getText(), $crawler->text());
         $this->assertContains($secondChoice->getText(), $crawler->text());
 
+        $client = $this->assertValidationMessageIsShown($crawler, $client);
+
         $client = $this->clickProceedUntilEndOfSurveyReached($crawler, $client);
 
         $crawler = $this->assertEvaluationResponse($client);
@@ -96,6 +106,8 @@ class ResultControllerTest extends WebTestCase
         $this->assertStatusCode(200, $client);
         $this->assertContains($survey->getTitle(), $crawler->text());
         $this->assertContains($firstSurveyItem->getText(), $crawler->text());
+
+        $client = $this->assertValidationMessageIsShown($crawler, $client);
 
         $client = $this->clickProceedUntilEndOfSurveyReached($crawler, $client);;
 
@@ -139,6 +151,8 @@ class ResultControllerTest extends WebTestCase
         $this->assertContains($thirdQuestion->getText(), $crawler->text());
         $this->assertContains($fourthQuestion->getText(), $crawler->text());
 
+        $client = $this->assertValidationMessageIsShown($crawler, $client);
+
         $client = $this->clickProceedUntilEndOfSurveyReached($crawler, $client);
 
         $crawler = $this->assertEvaluationResponse($client);
@@ -171,12 +185,14 @@ class ResultControllerTest extends WebTestCase
     {
         $formUri = '';
 
-        while ($button = $crawler->filter('[data-test="next"]') and $button->count()) {
+        while ($nextUri = $this->getNextUriOfForm($crawler)) {
             $form = $crawler->filter('form')->form();
 
-            if ($formUri === $form->getUri()) {
-                $this->fail(sprintf('form was not successfully submitted with last uri %s', $formUri));
-            }
+            $this->assertNotSame(
+                $formUri,
+                $form->getUri(),
+                sprintf('form was not successfully submitted with last uri %s', $formUri)
+            );
             $formUri = $form->getUri();
             $formValues = [];
 
@@ -197,7 +213,6 @@ class ResultControllerTest extends WebTestCase
             }
 
             $form->setValues($formValues);
-            $nextUri = $button->attr('data-url');
             $crawler = $client->request('POST', $nextUri, $form->getPhpValues(), $form->getPhpFiles());
         }
 
@@ -215,5 +230,40 @@ class ResultControllerTest extends WebTestCase
         $crawler = $client->request('GET', $evaluationUri);
 
         return $crawler;
+    }
+
+    private function assertValidationMessageIsShown(Crawler $crawler, Client $client): Client
+    {
+        $nextUri = $this->getNextUriOfForm($crawler);
+        $crawler = $client->request('POST', $nextUri, ['result_item' => '']);
+
+        $hasValidation = false;
+        foreach (self::$validationMessages as $validationMessage) {
+            if (false !== strpos($crawler->text(), $validationMessage)) {
+                $hasValidation = true;
+            }
+        }
+
+        $this->assertTrue(
+            $hasValidation,
+            sprintf(
+                'no validation message in %s on url %s',
+                $crawler->text(),
+                $nextUri
+            )
+        );
+
+        return $client;
+    }
+
+    private function getNextUriOfForm(Crawler $crawler): string
+    {
+        $nextUri = '';
+        $button = $crawler->filter('[data-test="next"]');
+        if ($button->count()) {
+            $nextUri = $button->attr('data-url');
+        }
+
+        return $nextUri;
     }
 }
