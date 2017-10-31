@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * QuestionCondtionType
  * @author Rombo Kraft <kraft@projektmotor.de>
  */
-class CondtionType extends AbstractType
+class ConditionType extends AbstractType
 {
     const FORM_NAME = 'pm_surveythor_questioncondition';
 
@@ -36,7 +36,7 @@ class CondtionType extends AbstractType
             'label' => 'Frage'
         ));
 
-        $questionModifier = function (FormInterface $form, $question) {
+        $questionModifier = function (FormInterface $form, Question $question) {
             if (!is_null($question)) {
                 $form->remove('question');
                 $form->add('question', EntityType::class, array(

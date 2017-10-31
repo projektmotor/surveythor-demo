@@ -165,7 +165,7 @@ class SurveyItemType extends AbstractType
                 if (!is_null($surveyItem)) {
                     $form = $event->getForm();
                     $form->add('conditions', CollectionType::class, array(
-                        'entry_type' => CondtionType::class,
+                        'entry_type' => ConditionType::class,
                         'allow_add' => true,
                         'allow_delete' => true,
                         'by_reference' => true,
