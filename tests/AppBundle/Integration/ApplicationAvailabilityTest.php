@@ -6,6 +6,27 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class ApplicationAvailabilityTest extends WebTestCase
 {
+    private static $clients = [];
+    private static $allUsers = ['anonymous', 'admin', 'editor'];
+
+    public static function setUpBeforeClass()
+    {
+        foreach (self::$allUsers as $user) {
+            $credentials = [];
+
+            if ($user !== 'anonymous') {
+                $credentials = [
+                    'username' => $user,
+                    'password' => $user,
+                    'PHP_AUTH_USER' => $user,
+                    'PHP_AUTH_PW' => $user,
+                ];
+            }
+
+            self::$clients[$user] = self::createClient(['environment' => 'test'], $credentials);
+        }
+    }
+
     /**
      * @param array  $allowedUsers
      * @param string $url
@@ -14,19 +35,8 @@ class ApplicationAvailabilityTest extends WebTestCase
      */
     public function testPageIsSuccessful($allowedUsers, $url)
     {
-        $allUsers = ['anonymous', 'admin', 'editor'];
-
-        foreach ($allUsers as $user) {
-            $credentials = [];
-
-            if ($user !== 'anonymous') {
-                $credentials = [
-                    'username' => $user,
-                    'password' => $user,
-                ];
-            }
-
-            $client = static::makeClient($credentials);
+        foreach (self::$allUsers as $user) {
+            $client = self::$clients[$user];
             $client->request('GET', $url);
 
             if (in_array($user, $allowedUsers)) {
