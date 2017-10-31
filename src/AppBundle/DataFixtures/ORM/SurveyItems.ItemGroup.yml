@@ -48,7 +48,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_1'
             - '@zufrieden_usability_1'
             - '@zufrieden_features_1'
-        survey: '@fragenkatalog'
     software_2:
         sortOrder: 1
         title: <word()>
@@ -57,7 +56,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_2'
             - '@zufrieden_usability_2'
             - '@zufrieden_features_2'
-        survey: '@fragenkatalog'
     software_3:
         sortOrder: 2
         title: <sentence()>
@@ -66,7 +64,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_3'
             - '@zufrieden_usability_3'
             - '@zufrieden_features_3'
-        survey: '@fragenkatalog'
     software_4:
         sortOrder: 3
         title: <word()>
@@ -75,7 +72,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_4'
             - '@zufrieden_usability_4'
             - '@zufrieden_features_4'
-        survey: '@fragenkatalog'
     software_5:
         sortOrder: 4
         title: <word()>
@@ -84,7 +80,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_5'
             - '@zufrieden_usability_5'
             - '@zufrieden_features_5'
-        survey: '@fragenkatalog'
     software_6:
         sortOrder: 5
         title: <word()>
@@ -93,7 +88,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_6'
             - '@zufrieden_usability_6'
             - '@zufrieden_features_6'
-        survey: '@fragenkatalog'
     software_7:
         sortOrder: 6
         title: <word()>
@@ -102,7 +96,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_7'
             - '@zufrieden_usability_7'
             - '@zufrieden_features_7'
-        survey: '@fragenkatalog'
     software_8:
         sortOrder: 7
         title: <word()>
@@ -111,7 +104,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_8'
             - '@zufrieden_usability_8'
             - '@zufrieden_features_8'
-        survey: '@fragenkatalog'
     software_9:
         sortOrder: 8
         title: <word()>
@@ -120,7 +112,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_9'
             - '@zufrieden_usability_9'
             - '@zufrieden_features_9'
-        survey: '@fragenkatalog'
     software_10:
         sortOrder: 9
         title: <word()>
@@ -129,7 +120,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_10'
             - '@zufrieden_usability_10'
             - '@zufrieden_features_10'
-        survey: '@fragenkatalog'
     software_11:
         sortOrder: 10
         title: <sentence()>
@@ -138,7 +128,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_11'
             - '@zufrieden_usability_11'
             - '@zufrieden_features_11'
-        survey: '@fragenkatalog'
     software_12:
         sortOrder: 11
         title: <word()>
@@ -147,7 +136,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_12'
             - '@zufrieden_usability_12'
             - '@zufrieden_features_12'
-        survey: '@fragenkatalog'
     software_13:
         sortOrder: 12
         title: <word()>
@@ -156,7 +144,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_13'
             - '@zufrieden_usability_13'
             - '@zufrieden_features_13'
-        survey: '@fragenkatalog'
     software_14:
         sortOrder: 13
         title: <word()>
@@ -165,7 +152,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_14'
             - '@zufrieden_usability_14'
             - '@zufrieden_features_14'
-        survey: '@fragenkatalog'
     software_15:
         sortOrder: 14
         title: <word()>
@@ -174,7 +160,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_15'
             - '@zufrieden_usability_15'
             - '@zufrieden_features_15'
-        survey: '@fragenkatalog'
     software_16:
         sortOrder: 15
         title: <word()>
@@ -183,7 +168,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_16'
             - '@zufrieden_usability_16'
             - '@zufrieden_features_16'
-        survey: '@fragenkatalog'
     software_17:
         sortOrder: 16
         title: <word()>
@@ -192,7 +176,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_17'
             - '@zufrieden_usability_17'
             - '@zufrieden_features_17'
-        survey: '@fragenkatalog'
     software_18:
         sortOrder: 17
         title: <word()>
@@ -201,7 +184,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_18'
             - '@zufrieden_usability_18'
             - '@zufrieden_features_18'
-        survey: '@fragenkatalog'
     software_19:
         sortOrder: 18
         title: <word()>
@@ -210,7 +192,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_19'
             - '@zufrieden_usability_19'
             - '@zufrieden_features_19'
-        survey: '@fragenkatalog'
     software_20:
         sortOrder: 19
         title: <word()>
@@ -219,7 +200,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - '@zufrieden_performance_20'
             - '@zufrieden_usability_20'
             - '@zufrieden_features_20'
-        survey: '@fragenkatalog'
 
     texte_1:
         sortOrder: 11
@@ -296,7 +276,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - "@datenschutzbestimmungen_inner_8"
             - "@datenschutzbestimmungen_inner_9"
             - "@datenschutzbestimmungen_inner_10"
-        survey: "@eu_dsgvo"
     benachrichtigungsverwaltung:
         sortOrder: 1
         title: <word()>
@@ -304,7 +283,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
         surveyItems:
             - "@benachrichtigungsverwaltung_1"
             - "@benachrichtigungsverwaltung_2"
-        survey: "@eu_dsgvo"
     reaktion_auf_anfragen:
         sortOrder: 2
         title: <word()>
@@ -315,7 +293,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - "@reaktion_auf_anfragen_3"
             - "@reaktion_auf_anfragen_4"
             - "@reaktion_auf_anfragen_5"
-        survey: "@eu_dsgvo"
     operative_praktiken:
         sortOrder: 3
         title: <word()>
@@ -328,7 +305,6 @@ AppBundle\Entity\SurveyItems\ItemGroup:
             - "@operative_praktiken_5"
             - "@operative_praktiken_6"
             - "@operative_praktiken_7"
-        survey: "@eu_dsgvo"
 
     ereignissmanagement:
         sortOrder: 4
