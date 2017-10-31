@@ -101,10 +101,6 @@ class ResultControllerTest extends WebTestCase
         $survey = $fixtures['survey_text'];
         /** @var Question $firstSurveyItem */
         $firstSurveyItem = $fixtures['question_text_1'];
-        /** @var Choice $firstChoice */
-        $firstChoice = $fixtures['choice_text_ceo_1'];
-        /** @var Choice $secondChoice */
-        $secondChoice = $fixtures['choice_text_admin_1'];
 
         $url = 'result/first/'.$survey->getId();
         $client = static::makeClient();
@@ -113,8 +109,6 @@ class ResultControllerTest extends WebTestCase
         $this->assertStatusCode(200, $client);
         $this->assertContains($survey->getTitle(), $crawler->text());
         $this->assertContains($firstSurveyItem->getText(), $crawler->text());
-        $this->assertContains($firstChoice->getText(), $crawler->text());
-        $this->assertContains($secondChoice->getText(), $crawler->text());
     }
 
     public function testSurveyGroupSingleAndMultipleChoice()

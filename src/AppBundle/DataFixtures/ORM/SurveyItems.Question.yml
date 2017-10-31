@@ -645,43 +645,43 @@ AppBundle\Entity\SurveyItems\Question:
         text: <sentence()>
 
     question_single_choice_{1..4}:
-        text: <sentence()>
+        text: What do you want to drink? (<current()>)
         type: 'sc'
         sortOrder: <current()>
         survey: '@survey_single_choice'
 
     question_multiple_choice_{1..4}:
-        text: <sentence()>
+        text: What do you want to eat? (<current()>)
         type: 'mc'
         sortOrder: <current()>
         survey: '@survey_multiple_choice'
 
     question_text_{1..4}:
-        text: <sentence()>
-        type: 'sc'
+        text: What do you want to drink? (<current()>)
+        type: 'text'
         sortOrder: 0
         survey: '@survey_text'
 
     question_group_single_choice_1_{1..4}:
-        text: <sentence()>
+        text: What do you want to drink? (<current()>)
         type: 'sc'
         questionTemplate: '@horizontal_choices'
         sortOrder: <current()>
 
     question_group_single_choice_2_{1..4}:
-        text: <sentence()>
+        text: What do you want to eat? (<current()>)
         type: 'sc'
         questionTemplate: '@horizontal_choices'
         sortOrder: <current()>
 
     question_group_multiple_choice_1_{1..4}:
-        text: <sentence()>
+        text: What do you want to drink? (<current()>)
         type: 'mc'
         questionTemplate: '@horizontal_choices'
         sortOrder: <current()>
 
     question_group_multiple_choice_2_{1..4}:
-        text: <sentence()>
+        text: What do you want to eat? (<current()>)
         type: 'mc'
         questionTemplate: '@horizontal_choices'
         sortOrder: <current()>
