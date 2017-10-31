@@ -663,25 +663,25 @@ AppBundle\Entity\SurveyItems\Question:
         survey: '@survey_text'
 
     question_group_single_choice_1_{1..4}:
-        text: What do you want to drink? (<current()>)
+        text: What do you want to drink? (question group single choice 1 <current()>)
         type: 'sc'
         questionTemplate: '@horizontal_choices'
         sortOrder: <current()>
 
     question_group_single_choice_2_{1..4}:
-        text: What do you want to eat? (<current()>)
+        text: What do you want to eat? (question group single choice 2 <current()>)
         type: 'sc'
         questionTemplate: '@horizontal_choices'
         sortOrder: <current()>
 
     question_group_multiple_choice_1_{1..4}:
-        text: What do you want to drink? (<current()>)
+        text: What do you want to drink? (question group multiple choice 1 <current()>)
         type: 'mc'
         questionTemplate: '@horizontal_choices'
         sortOrder: <current()>
 
     question_group_multiple_choice_2_{1..4}:
-        text: What do you want to eat? (<current()>)
+        text: What do you want to eat? (question group multiple choice 2 <current()>)
         type: 'mc'
         questionTemplate: '@horizontal_choices'
         sortOrder: <current()>

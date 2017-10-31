@@ -1872,3 +1872,72 @@ AppBundle\Entity\Choice:
         text: 'Nutella'
         value: 1
         question: "@question_multiple_choice_<current()>"
+
+
+    choice_group_multiple_choice_tomato_{1..4}:
+        text: 'Tomato Juice'
+        value: 0
+        question: "@question_group_multiple_choice_1_<current()>"
+    choice_group_multiple_choice_grapefruit_{1..4}:
+        text: 'Grapefruit Juice'
+        value: 0
+        question: "@question_group_multiple_choice_1_<current()>"
+    choice_group_multiple_choice_apple_{1..4}:
+        text: 'Apple Juice'
+        value: 0
+        question: "@question_group_multiple_choice_1_<current()>"
+    choice_group_multiple_choice_orange_{1..4}:
+        text: 'Orange Juice'
+        value: 0
+        question: "@question_group_multiple_choice_1_<current()>"
+
+    choice_group_single_choice_tomato_{1..4}:
+        text: 'Tomato Juice'
+        value: 0
+        question: "@question_group_single_choice_1_<current()>"
+    choice_group_single_choice_grapefruit_{1..4}:
+        text: 'Grapefruit Juice'
+        value: 0
+        question: "@question_group_single_choice_1_<current()>"
+    choice_group_single_choice_apple_{1..4}:
+        text: 'Apple Juice'
+        value: 0
+        question: "@question_group_single_choice_1_<current()>"
+    choice_group_single_choice_orange_{1..4}:
+        text: 'Orange Juice'
+        value: 0
+        question: "@question_group_single_choice_1_<current()>"
+
+    choice_group_single_choice_cakes_{1..4}:
+        text: 'Cakes'
+        value: 0
+        question: "@question_group_single_choice_2_<current()>"
+    choice_group_single_choice_cookies_{1..4}:
+        text: 'Cookies'
+        value: 0
+        question: "@question_group_single_choice_2_<current()>"
+    choice_group_single_choice_flakes_{1..4}:
+        text: 'Flakes'
+        value: 0
+        question: "@question_group_single_choice_2_<current()>"
+    choice_group_single_choice_donuts_{1..4}:
+        text: 'Donuts'
+        value: 0
+        question: "@question_group_single_choice_2_<current()>"
+
+    choice_group_multiple_choice_cakes_{1..4}:
+        text: 'Cakes'
+        value: 0
+        question: "@question_group_multiple_choice_2_<current()>"
+    choice_group_multiple_choice_cookies_{1..4}:
+        text: 'Cookies'
+        value: 0
+        question: "@question_group_multiple_choice_2_<current()>"
+    choice_group_multiple_choice_flakes_{1..4}:
+        text: 'Flakes'
+        value: 0
+        question: "@question_group_multiple_choice_2_<current()>"
+    choice_group_multiple_choice_donuts_{1..4}:
+        text: 'Donuts'
+        value: 0
+        question: "@question_group_multiple_choice_2_<current()>"

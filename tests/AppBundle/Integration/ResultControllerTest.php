@@ -113,21 +113,21 @@ class ResultControllerTest extends WebTestCase
 
     public function testSurveyGroupSingleAndMultipleChoice()
     {
-        $this->markTestSkipped('groups not supported yet');
+//        $this->markTestSkipped('groups not supported yet');
         $fixtures = $this->loadAllFixturesWithoutUsersAndAllowedOrigins();
 
         /** @var Survey $survey */
         $survey = $fixtures['survey_group_single_and_multiple_choice'];
-        /** @var ItemGroup $firstSurveyItem */
-        $firstSurveyItem = $fixtures['item_group_1'];
+        /** @var ItemGroup $surveyGroupItem */
+        $surveyGroupItem = $fixtures['item_group_1'];
         /** @var Question $firstQuestion */
-        $firstQuestion = $fixtures['question_group_single_choice_1_1'];
+        $firstQuestion = $fixtures['choice_group_single_choice_grapefruit_1'];
         /** @var Question $secondQuestion */
-        $secondQuestion = $fixtures['question_group_single_choice_2_1'];
+        $secondQuestion = $fixtures['choice_group_single_choice_cakes_1'];
         /** @var Question $thirdQuestion */
-        $thirdQuestion = $fixtures['question_group_multiple_choice_1_1'];
+        $thirdQuestion = $fixtures['choice_group_multiple_choice_grapefruit_1'];
         /** @var Question $fourthQuestion */
-        $fourthQuestion = $fixtures['question_group_multiple_choice_2_1'];
+        $fourthQuestion = $fixtures['choice_group_multiple_choice_cakes_1'];
 
         $url = 'result/first/'.$survey->getId();
         $client = static::makeClient();
@@ -135,7 +135,11 @@ class ResultControllerTest extends WebTestCase
 
         $this->assertStatusCode(200, $client);
         $this->assertContains($survey->getTitle(), $crawler->text());
-        $this->assertContains($firstSurveyItem->getTitle(), $crawler->text());
+
+        /** @var Question $surveyItem */
+        foreach ($surveyGroupItem->getSurveyItems() as $surveyItem) {
+            $this->assertContains($surveyItem->getText(), $crawler->text());
+        }
         $this->assertContains($firstQuestion->getText(), $crawler->text());
         $this->assertContains($secondQuestion->getText(), $crawler->text());
         $this->assertContains($thirdQuestion->getText(), $crawler->text());

@@ -12,8 +12,8 @@ use AppBundle\Form\ResultItems\ResultTextItemType;
 use AppBundle\Form\ResultItems\SingleChoiceAnswerType;
 use AppBundle\Form\ResultItems\TextAnswerType;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,6 +30,10 @@ class ResultItemType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if (!isset($options['data'])) {
+            return;
+        }
+
         /** @var ResultItem $resultItem */
         $resultItem = $options['data'];
 
@@ -78,6 +82,7 @@ class ResultItemType extends AbstractType
                 break;
 
             case $resultItem->getContent() instanceof ArrayCollection:
+            case $resultItem->getContent() instanceof PersistentCollection:
                 $type = ResultItemCollectionType::class;
                 // begin no really clue what this is doing
                 if ($parent = $resultItem->getParentItem()) {
@@ -91,7 +96,7 @@ class ResultItemType extends AbstractType
 
                 $builder->add(
                     'childItems',
-                    CollectionType::class,
+                    ResultItemCollectionType::class,
                     [
                         'entry_type' => ResultItemType::class,
                         'label' => false,
@@ -110,18 +115,12 @@ class ResultItemType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'label' => false,
-            'data_class' => ResultItem::class,
-            'csrf_protection' => false
-        ));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return self::FORM_NAME;
+        $resolver->setDefaults(
+            [
+                'label' => false,
+                'data_class' => ResultItem::class,
+                'csrf_protection' => false,
+            ]
+        );
     }
 }
