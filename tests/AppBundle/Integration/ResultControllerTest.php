@@ -7,6 +7,11 @@ use AppBundle\Entity\Choice;
 use AppBundle\Entity\Survey;
 use AppBundle\Entity\SurveyItems\ItemGroup;
 use AppBundle\Entity\SurveyItems\Question;
+use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\DomCrawler\Field\ChoiceFormField;
+use Symfony\Component\DomCrawler\Field\FormField;
+use Symfony\Component\DomCrawler\Field\TextareaFormField;
+use Symfony\Component\HttpKernel\Client;
 
 class ResultControllerTest extends WebTestCase
 {
@@ -34,36 +39,9 @@ class ResultControllerTest extends WebTestCase
         $this->assertContains($firstChoice->getText(), $crawler->text());
         $this->assertContains($secondChoice->getText(), $crawler->text());
 
-        while ($button = $crawler->selectButton('weiter') and $button->count()) {
-//        for ($i = 1; $i <= 3; $i++) {
+        $client = $this->clickProceedUntilEndOfSurveyReached($crawler, $client);
 
-//            $button = $crawler->selectButton('weiter');
-            $form = $crawler->filter('form');
-            $inputField = $form->filter('input');
-            $inputName = $inputField->attr('name');
-            $inputValue = $inputField->attr('value');
-            $form = $form->form([$inputName => $inputValue]);
-            $weiterUri = $button->attr('data-url');
-            $crawler = $client->request('POST', $weiterUri, $form->getPhpValues(), $form->getPhpFiles());
-        }
-
-
-        $button = $crawler->selectButton('fertigstellen');
-        $form = $crawler->filter('form');
-        $inputField = $form->filter('input');
-        $inputName = $inputField->attr('name');
-        $inputValue = $inputField->attr('value');
-        $form = $form->form([$inputName => $inputValue]);
-        $fertigstellenUri = $button->attr('data-url');
-        $crawler = $client->request('POST', $fertigstellenUri, $form->getPhpValues(), $form->getPhpFiles());
-
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
-
-        $jsonResponseContent = json_decode($client->getResponse()->getContent());
-        $this->assertObjectHasAttribute('url', $jsonResponseContent);
-        $evaluationUri = $jsonResponseContent->url;
-
-        $crawler = $client->request('GET', $evaluationUri);
+        $crawler = $this->assertEvaluationResponse($client);
 
         $this->assertContains($firstChoice->getText(), $crawler->text());
         $this->assertContains($survey->getTitle(), $crawler->text());
@@ -84,6 +62,7 @@ class ResultControllerTest extends WebTestCase
 
         $url = 'result/first/'.$survey->getId();
         $client = static::makeClient();
+        $client->followRedirects();
         $crawler = $client->request('GET', $url);
 
         $this->assertStatusCode(200, $client);
@@ -91,6 +70,13 @@ class ResultControllerTest extends WebTestCase
         $this->assertContains($firstSurveyItem->getText(), $crawler->text());
         $this->assertContains($firstChoice->getText(), $crawler->text());
         $this->assertContains($secondChoice->getText(), $crawler->text());
+
+        $client = $this->clickProceedUntilEndOfSurveyReached($crawler, $client);
+
+        $crawler = $this->assertEvaluationResponse($client);
+
+        $this->assertContains($firstChoice->getText(), $crawler->text());
+        $this->assertContains($survey->getTitle(), $crawler->text());
     }
 
     public function testTextChoice()
@@ -104,16 +90,23 @@ class ResultControllerTest extends WebTestCase
 
         $url = 'result/first/'.$survey->getId();
         $client = static::makeClient();
+        $client->followRedirects();
         $crawler = $client->request('GET', $url);
 
         $this->assertStatusCode(200, $client);
         $this->assertContains($survey->getTitle(), $crawler->text());
         $this->assertContains($firstSurveyItem->getText(), $crawler->text());
+
+        $client = $this->clickProceedUntilEndOfSurveyReached($crawler, $client);;
+
+        $crawler = $this->assertEvaluationResponse($client);
+
+        $this->assertContains($firstSurveyItem->getText(), $crawler->text());
+        $this->assertContains($survey->getTitle(), $crawler->text());
     }
 
     public function testSurveyGroupSingleAndMultipleChoice()
     {
-//        $this->markTestSkipped('groups not supported yet');
         $fixtures = $this->loadAllFixturesWithoutUsersAndAllowedOrigins();
 
         /** @var Survey $survey */
@@ -131,6 +124,7 @@ class ResultControllerTest extends WebTestCase
 
         $url = 'result/first/'.$survey->getId();
         $client = static::makeClient();
+        $client->followRedirects();
         $crawler = $client->request('GET', $url);
 
         $this->assertStatusCode(200, $client);
@@ -144,6 +138,13 @@ class ResultControllerTest extends WebTestCase
         $this->assertContains($secondQuestion->getText(), $crawler->text());
         $this->assertContains($thirdQuestion->getText(), $crawler->text());
         $this->assertContains($fourthQuestion->getText(), $crawler->text());
+
+        $client = $this->clickProceedUntilEndOfSurveyReached($crawler, $client);
+
+        $crawler = $this->assertEvaluationResponse($client);
+
+        $this->assertContains($secondQuestion->getText(), $crawler->text());
+        $this->assertContains($survey->getTitle(), $crawler->text());
     }
 
     /**
@@ -164,5 +165,55 @@ class ResultControllerTest extends WebTestCase
                 '@AppBundle/DataFixtures/ORM/SurveyItems.TextItem.yml',
             ]
         );
+    }
+
+    private function clickProceedUntilEndOfSurveyReached(Crawler $crawler, Client $client): Client
+    {
+        $formUri = '';
+
+        while ($button = $crawler->filter('[data-test="next"]') and $button->count()) {
+            $form = $crawler->filter('form')->form();
+
+            if ($formUri === $form->getUri()) {
+                $this->fail(sprintf('form was not successfully submitted with last uri %s', $formUri));
+            }
+            $formUri = $form->getUri();
+            $formValues = [];
+
+            /**
+             * @var string    $name
+             * @var FormField $formField
+             */
+            foreach ($form->all() as $name => $formField) {
+                if ($formField instanceof ChoiceFormField) {
+                    if ($formField->getType() === 'checkbox') {
+                        $formField->tick();
+                    } else {
+                        $formValues[$name] = $formField->availableOptionValues()[0]; // simply use first value
+                    }
+                } elseif ($formField instanceof TextareaFormField) {
+                    $formField->setValue('some text for textarea');
+                }
+            }
+
+            $form->setValues($formValues);
+            $nextUri = $button->attr('data-url');
+            $crawler = $client->request('POST', $nextUri, $form->getPhpValues(), $form->getPhpFiles());
+        }
+
+        return $client;
+    }
+
+    private function assertEvaluationResponse(CLient $client): Crawler
+    {
+        $this->assertSame(200, $client->getResponse()->getStatusCode(), $client->getResponse()->getContent());
+
+        $jsonResponseContent = json_decode($client->getResponse()->getContent());
+        $this->assertObjectHasAttribute('url', $jsonResponseContent);
+        $evaluationUri = $jsonResponseContent->url;
+
+        $crawler = $client->request('GET', $evaluationUri);
+
+        return $crawler;
     }
 }
