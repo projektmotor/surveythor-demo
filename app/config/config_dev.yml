@@ -7,6 +7,17 @@ framework:
         strict_requirements: true
     profiler: { only_exceptions: false }
 
+
+nelmio_alice:
+    locale: en_US       # Locale to used for faker; must be a valid Faker locale otherwise will fallback to en_US
+    seed: 1             # A seed to make sure faker generates data consistently across runs, set to null to disable
+    loading_limit: 5    # Maximum number of time the loader will try to load the files passed
+    max_unique_values_retry: 150 # Maximum number of time Alice can try to
+                                   # generate a unique value before stopping and
+                                   # failing.
+hautelook_alice:
+    fixtures_path: 'app/Resources/fixtures/orm' # Path to which to look for fixtures relative to the project directory or the bundle path.
+
 web_profiler:
     toolbar: true
     intercept_redirects: false

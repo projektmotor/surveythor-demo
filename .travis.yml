@@ -35,7 +35,7 @@ before_script:
   - php bin/console doctrine:database:create --env=test
   - php bin/console doctrine:schema:create --env=test
   - php bin/console doctrine:schema:update --env=test --force
-  - php bin/console hautelook_alice:doctrine:fixtures:load --env=test --no-interaction
+  - php bin/console hautelook:fixtures:load --env=test --no-interaction
   - yarn install
   - node_modules/.bin/encore production
 

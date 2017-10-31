@@ -23,12 +23,10 @@
     "require": {
         "php": ">=7.1",
         "bugsnag/bugsnag-symfony": "^1.1",
-        "doctrine/data-fixtures": "^1.2",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/orm": "^2.5",
         "friendsofsymfony/user-bundle": "^2.0",
-        "hautelook/alice-bundle": "^1.4",
         "incenteev/composer-parameter-handler": "^2.0",
         "knplabs/knp-menu-bundle": "^2.1",
         "qafoolabs/no-framework-bundle": "^2.4",
@@ -45,10 +43,15 @@
     },
     "require-dev": {
         "aik099/phpunit-mink": "dev-master",
+        "doctrine/data-fixtures": "^1.2",
+        "fzaninotto/faker": "1.6.0",
+        "hautelook/alice-bundle": "dev-master",
         "liip/functional-test-bundle": "^1.8",
+        "nelmio/alice": "^3.1",
         "phpunit/phpunit": "^5.7",
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^3.0",
+        "theofidry/alice-data-fixtures": "^1.0@beta"
     },
     "scripts": {
         "compile": [
@@ -58,13 +61,13 @@
             "bin/console doctrine:database:drop --force",
             "bin/console doctrine:database:create -n",
             "bin/console doctrine:schema:update --force",
-            "bin/console hautelook_alice:doctrine:fixtures:load --no-interaction --purge-with-truncate"
+            "bin/console hautelook:fixtures:load --no-interaction --purge-with-truncate"
         ],
         "compile-dev": [
             "bin/console doctrine:database:drop --force",
             "bin/console doctrine:database:create -n",
             "bin/console doctrine:schema:update --force",
-            "bin/console hautelook_alice:doctrine:fixtures:load --no-interaction --purge-with-truncate"
+            "bin/console hautelook:fixtures:load --no-interaction --purge-with-truncate"
         ],
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",

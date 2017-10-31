@@ -1,4 +1,4 @@
 AppBundle\Entity\ResultItemTemplate:
     software_happiness_template:
         name: 'Software Happiness'
-        formType: '\AppBundle\Form\Result\ChoicesChildrenGroupedBelowType'
+        formType: '\\AppBundle\\Form\\Result\\ChoicesChildrenGroupedBelowType'

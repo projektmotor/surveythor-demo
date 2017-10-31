@@ -52,7 +52,7 @@ Still not features:
         ```
     * Load fixtures
         ```bash
-        $ docker-compose exec web php bin/console hautelook_alice:doctrine:fixtures:load -n
+        $ docker-compose exec web php bin/console hautelook:fixtures:load -n
         ```
 ### Use XDebug
 
