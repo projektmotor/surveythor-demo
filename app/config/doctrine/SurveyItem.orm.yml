@@ -34,6 +34,8 @@ AppBundle\Entity\SurveyItem:
         survey:
             targetEntity: AppBundle\Entity\Survey
             inversedBy: surveyItems
+            joinColumn:
+                nullable: false
         template:
             targetEntity: AppBundle\Entity\ResultItemTemplate
         itemGroup:
