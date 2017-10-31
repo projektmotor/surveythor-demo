@@ -11,7 +11,7 @@
     <p class="st-description">{{ resultItem.description }}</p>
 {% endif %}
 
-{{ form(form) }}
+{{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
 <div class="clearfix"></div>
 
@@ -27,6 +27,7 @@
     <button
             class="btn btn-default st-button pull-right js-st-survey-button"
             data-url="{{ url('result_next', { 'resultItem' : resultItem.getId, 'result': result.getId }, true) }}"
+            data-test="next"
     >
         {{- 'button.next'|trans -}}
     </button>
@@ -34,6 +35,7 @@
     <button
             class="btn btn-default st-button pull-right js-st-survey-button"
             data-url="{{ url('result_last', { 'resultItem' : resultItem.getId, 'result': result.getId }, true) }}"
+            data-test="next"
     >
         {{- 'button.done'|trans -}}
     </button>

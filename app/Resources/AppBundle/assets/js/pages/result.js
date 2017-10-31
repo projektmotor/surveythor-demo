@@ -27,11 +27,17 @@ module.exports = function (params) {
 
             let form = container.find('form').first();
             let url = $(e.target).data('url');
+            let data = form.serialize();
+
+            if (data === '') {
+                // we have to send at least this to trigger form submit
+                data = {'result_item': ''};
+            }
 
             $.ajax({
                 url: url,
                 method: 'post',
-                data: form.serialize(),
+                data: data,
                 success: function (response) {
                     if (response.url !== undefined) {
                         $.ajax({

@@ -51,7 +51,7 @@ class SingleChoiceAnswer implements Answer
     /**
      * @param Choice $choice
      */
-    public function setChoice(Choice $choice)
+    public function setChoice(?Choice $choice)
     {
         $this->choice = $choice;
     }

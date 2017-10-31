@@ -1,5 +1,0 @@
-AppBundle\Entity\ResultItems\SingleChoiceAnswer:
-    properties:
-        choice:
-            - NotBlank: ~
-            - NotNull: ~

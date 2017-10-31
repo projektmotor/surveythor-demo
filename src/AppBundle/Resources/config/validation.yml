@@ -1,0 +1,56 @@
+
+AppBundle\Entity\ResultItems\SingleChoiceAnswer:
+    properties:
+        choice:
+#            - Choice:
+#                callback: 'getChoices'
+#                message: 'validation.single_choice_answer.choice'
+            - NotBlank:
+                message: 'single_choice_answer.not_blank'
+AppBundle\Entity\ResultItems\MultipleChoiceAnswer:
+    properties:
+        choices:
+            - Count:
+                min: 1
+                minMessage: 'multiple_choice_answer.min_count'
+#            - Collection:
+#                fields:
+#                    choices: ~
+#                        - Choice:
+#                        - NotNull:
+#                            message: 'multiple_choice_answer.not_blank'
+#                            multiple: true
+#                            callback: getChoices.getChoice
+#                            message: 'multiple_choice_answer.not_blank2'
+#                            min: 1
+#                            minMessage: 'multiple_choice_answer.not_blank1'
+#                            max: 5
+#                            maxMessage: 'multiple_choice_answer.not_blank5'
+#                            strict: true
+#                message: 'multiple_choice_answer.not_blank1'
+#            - NotNull:
+#                message: 'multiple_choice_answer.not_blank'
+#            - NotBlank:
+#                message: 'multiple_choice_answer.not_blank'
+AppBundle\Entity\ResultItems\TextAnswer:
+    properties:
+        value:
+            - NotBlank:
+                message: 'text_answer.not_blank'
+AppBundle\Entity\ResultItem:
+    properties:
+        singleChoiceAnswer:
+            - Valid: ~
+        multipleChoiceAnswer:
+            - Valid: ~
+        textAnswer:
+            - Valid: ~
+        childItems:
+            - Valid: ~
+AppBundle\Entity\Survey:
+    properties:
+        title:
+            - NotBlank: ~
+#    constraints:
+#        - Callback: validate
+

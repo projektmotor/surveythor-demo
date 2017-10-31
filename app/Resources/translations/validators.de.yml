@@ -1,0 +1,7 @@
+single_choice_answer:
+  not_blank: Bitte wählen Sie eine Antwort.
+  choice: Bitte wählen Sie ein Antwort.
+multiple_choice_answer:
+  min_count: Bitte wählen Sie mindestens eine Antwort aus.
+text_answer:
+  not_blank: Bitte tragen Sie ihre Antwort ein.
