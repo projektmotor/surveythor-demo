@@ -6,7 +6,7 @@ use AppBundle\Entity\Result;
 use AppBundle\Entity\ResultItem;
 use AppBundle\Entity\Survey;
 use AppBundle\Event\ResultEvent;
-use AppBundle\Event\ResultReadySubscriber;
+use AppBundle\Event\ResultReadySubscriberInterface;
 use AppBundle\Form\ResultItemType;
 use AppBundle\Repository\ResultRepository;
 use QafooLabs\MVC\FormRequest;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ResultController
 {
     /**
-     * @var ResultReadySubscriber
+     * @var ResultReadySubscriberInterface
      */
     private $resultReadySubscriber;
 
@@ -31,11 +31,11 @@ class ResultController
     private $resultRepository;
 
     /**
-     * @param ResultReadySubscriber $resultReadySubscriber
-     * @param ResultRepository      $resultRepository
+     * @param ResultReadySubscriberInterface $resultReadySubscriber
+     * @param ResultRepository               $resultRepository
      */
     public function __construct(
-        ResultReadySubscriber $resultReadySubscriber,
+        ResultReadySubscriberInterface $resultReadySubscriber,
         ResultRepository $resultRepository
     ) {
         $this->resultReadySubscriber = $resultReadySubscriber;

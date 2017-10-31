@@ -22,8 +22,8 @@ services:
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
 
-    result_ready_subscriber:
-        class: AppBundle\Event\ResultReadySubscriber
+    app.event_subscriber.custom_result_ready_subscriber:
+        class: AppBundle\Event\CustomResultReadySubscriber
         autowire: true
         tags:
             - { name: kernel.event_listener, event: result.ready, method: onResultReady }
