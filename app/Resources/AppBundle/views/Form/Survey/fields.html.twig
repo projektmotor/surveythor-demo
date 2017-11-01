@@ -140,11 +140,13 @@
 
 {% block surveyitem_widget %}
 {% if form.vars.value is not null and form.vars.value.itemGroup is not null %}
-    <div class="panel panel-default parent-item survey-item" data-sortorder-url="{{ path('surveyitem_set_sortorder', {'item':form.vars.value.id})}}">
+<div class="panel panel-default parent-item survey-item"
+     data-sortorder-url="{{ path('survey_item_set_sort_order', {'surveyItem': form.vars.value.id}) }}">
         <div class="panel-heading">
             <span class="panel-title clearfix">
                 <span class="pull-left item-title panel-indicator">
-                    <a class="item-title clearfix " href="{{ path('surveyitem_form', {'item' : form.vars.value.id }) }}">
+                    <a class="item-title clearfix "
+                       href="{{ path('survey_item_form', {'surveyItem' : form.vars.value.id }) }}">
                         <span class="pull-left">
                             <span class="panel-indicator-bottom">
                                 <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -159,7 +161,7 @@
                 <span class="pull-right">
                     {{ form.vars.value.contentTypeName }}
                     |
-                    <a href="{{ path('surveyitem_remove', {'item' : form.vars.value.id}) }}" class="item-delete">
+                    <a href="{{ path('survey_item_remove', {'surveyItem' : form.vars.value.id}) }}" class="item-delete">
                         <span class="glyphicon glyphicon-trash"></span>
                     </a>
                 </span>

@@ -1,8 +1,10 @@
-<div class="panel panel-default parent-item survey-item" data-sortorder-url="{{ path('surveyitem_set_sortorder', {'item':item.id})}}">
+{# surveyItem \AppBundle\Entity\SurveyItem #}
+<div class="panel panel-default parent-item survey-item"
+     data-sortorder-url="{{ path('survey_item_set_sort_order', {'surveyItem': surveyItem.id}) }}">
     <div class="panel-heading">
         <span class="panel-title clearfix">
             <span class="pull-left item-title panel-indicator">
-                <a class="item-title clearfix " href="{{ path('surveyitem_form', {'item' : item.id }) }}">
+                <a class="item-title clearfix " href="{{ path('survey_item_form', {'surveyItem' : surveyItem.id }) }}">
                     <span class="pull-left">
                         <span class="panel-indicator-bottom">
                             <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -11,20 +13,20 @@
                             <span class="glyphicon glyphicon-triangle-top"></span>
                         </span>
                     </span>
-                    &nbsp;<span class="item-title-text">{{ item.backendTitle }}</span>
+                    &nbsp;<span class="item-title-text">{{ surveyItem.backendTitle }}</span>
                 </a>
             </span>
             <span class="pull-right">
-                {{ item.contentTypeName }}
+                {{ surveyItem.contentTypeName }}
                 |
-                <a href="{{ path('surveyitem_remove', {'item' : item.id}) }}" class="item-delete">
+                <a href="{{ path('survey_item_remove', {'surveyItem' : surveyItem.id}) }}" class="item-delete">
                     <span class="glyphicon glyphicon-trash"></span>
                 </a>
             </span>
         </span>
     </div>
 
-    <div id="item-{{ item.id }}" class="panel-collapse collapse parent-item">
+    <div id="item-{{ surveyItem.id }}" class="panel-collapse collapse parent-item">
         {% if form is defined %}
             {{ form_widget(form) }}
         {% endif %}

@@ -1,19 +1,19 @@
-surveyitem_new:
+survey_item_new:
     path: /new/{survey}/{type}
     defaults: { _controller: app.controller.survey_item_controller:newAction }
-surveyitem_update:
-    path: /update/{item}
+survey_item_update:
+    path: /update/{surveyItem}
     defaults: { _controller: app.controller.survey_item_controller:updateAction }
-itemgroup_add_item:
+item_group_add_item:
     path: /group-additem/{survey}/{type}
     defaults: { _controller: app.controller.survey_item_controller:itemGroupAddItemAction}
-surveyitem_form:
-    path: /form/{item}
+survey_item_form:
+    path: /form/{surveyItem}
     defaults: { _controller: app.controller.survey_item_controller:formAction }
-surveyitem_set_sortorder:
-    path: /sortorder/{item}
+survey_item_set_sort_order:
+    path: /sort-order/{surveyItem}
     defaults: { _controller: app.controller.survey_item_controller:setSortOrderAction}
-surveyitem_remove:
-    path: /remove/{item}
+survey_item_remove:
+    path: /remove/{surveyItem}
     defaults: { _controller: app.controller.survey_item_controller:removeAction }
 

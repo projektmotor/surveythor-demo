@@ -28,10 +28,10 @@
                     </div>
 
                     <div class="panel-collapse collapse in">
-                        <div class="panel-body" id="survey-elements">
+                        <div class="panel-body noselect" id="survey-elements">
                             <div class="panel-group sortable draggable-connect">
-                                {% for item in survey.surveyItems %}
-                                    {% include '@AppBundle/Survey/Partials/surveyItem.html.twig' with { 'item' : item } %}
+                                {% for surveyItem in survey.surveyItems %}
+                                    {% include '@AppBundle/Survey/Partials/surveyItem.html.twig' with { 'surveyItem' : surveyItem } %}
                                 {% endfor %}
                             </div>
                         </div>
@@ -69,37 +69,37 @@
                 <div id="info-panel" class="panel-collapse collapse in">
                     <div class="panel-body" id="new-items">
                         <div
-                            class="new-item single-choice"
-                            data-url="{{ path('surveyitem_new', {'type' : 'singleChoice', 'survey' : survey.id }) }}"
-                            data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'singleChoice', 'survey' : survey.id }) }}"
+                                class="new-item single-choice btn"
+                                data-url="{{ path('survey_item_new', {'type' : 'singleChoice', 'survey' : survey.id }) }}"
+                                data-itemgroup-add-item-url="{{ path('item_group_add_item', {'type' : 'singleChoice', 'survey' : survey.id }) }}"
                         >
                             Single Choice Frage
                         </div>
                         <div
-                            class="new-item multiple-choice"
-                            data-url="{{ path('surveyitem_new', {'type' : 'multipleChoice', 'survey' : survey.id }) }}"
-                            data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'multipleChoice', 'survey' : survey.id }) }}"
+                                class="new-item multiple-choice btn"
+                                data-url="{{ path('survey_item_new', {'type' : 'multipleChoice', 'survey' : survey.id }) }}"
+                                data-itemgroup-add-item-url="{{ path('item_group_add_item', {'type' : 'multipleChoice', 'survey' : survey.id }) }}"
                         >
                             Multiple Choice Frage
                         </div>
                         <div
-                            class="new-item text-question"
-                            data-url="{{ path('surveyitem_new', {'type' : 'textQuestion', 'survey' : survey.id }) }}"
-                            data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'textQuestion', 'survey' : survey.id }) }}"
+                                class="new-item text-question btn"
+                                data-url="{{ path('survey_item_new', {'type' : 'textQuestion', 'survey' : survey.id }) }}"
+                                data-itemgroup-add-item-url="{{ path('item_group_add_item', {'type' : 'textQuestion', 'survey' : survey.id }) }}"
                         >
                             Freitext Frage
                         </div>
                         <div
-                            class="new-item text-element"
-                            data-url="{{ path('surveyitem_new', {'type' : 'textItem', 'survey' : survey.id }) }}"
-                            data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'textItem', 'survey' : survey.id }) }}"
+                                class="new-item text-element btn"
+                                data-url="{{ path('survey_item_new', {'type' : 'textItem', 'survey' : survey.id }) }}"
+                                data-itemgroup-add-item-url="{{ path('item_group_add_item', {'type' : 'textItem', 'survey' : survey.id }) }}"
                         >
                             Textelement
                         </div>
                         <div
-                            class="new-item item-group"
-                            data-url="{{ path('surveyitem_new', {'type' : 'itemGroup', 'survey' : survey.id }) }}"
-                            data-itemgroup-add-item-url="{{ path('itemgroup_add_item', {'type' : 'itemGroup', 'survey' : survey.id }) }}"
+                                class="new-item item-group btn"
+                                data-url="{{ path('survey_item_new', {'type' : 'itemGroup', 'survey' : survey.id }) }}"
+                                data-itemgroup-add-item-url="{{ path('item_group_add_item', {'type' : 'itemGroup', 'survey' : survey.id }) }}"
                         >
                             Gruppe von Elementen
                         </div>

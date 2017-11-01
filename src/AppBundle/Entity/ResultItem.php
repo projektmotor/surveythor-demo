@@ -122,20 +122,14 @@ class ResultItem
         return $this->isCurrent;
     }
 
-    /**
-     * @return bool
-     */
     public function setIsCurrent()
     {
-        return $this->isCurrent = true;
+        $this->isCurrent = true;
     }
 
-    /**
-     * @return bool
-     */
     public function setIsNotCurrent()
     {
-        return $this->isCurrent = false;
+        $this->isCurrent = false;
     }
 
     /**

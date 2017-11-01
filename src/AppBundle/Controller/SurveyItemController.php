@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Condition;
 use AppBundle\Entity\Factory\SurveyItemFactory;
 use AppBundle\Entity\Survey;
 use AppBundle\Entity\SurveyItem;
@@ -71,35 +72,35 @@ class SurveyItemController
 
     /**
      * @param FormRequest $formRequest
-     * @param SurveyItem  $item
+     * @param SurveyItem  $surveyItem
      *
      * @return JsonResponse
      */
-    public function updateAction(FormRequest $formRequest, SurveyItem $item)
+    public function updateAction(FormRequest $formRequest, SurveyItem $surveyItem)
     {
         if (!$formRequest->handle(
             SurveyItemType::class,
-            $item,
+            $surveyItem,
             array('action' => $this->router->generate(
-                'surveyitem_update',
-                array('item' => $item->getId())
+                'survey_item_update',
+                array('surveyItem' => $surveyItem->getId())
             ))
         )) {
             return new JsonResponse(
                 [
                     'status' => 'NOT VALID',
-                    'open' => [$item->getId()],
+                    'open' => [$surveyItem->getId()],
                 ]
             );
         }
 
-        $item = $formRequest->getValidData();
-        $this->surveyItemRepository->save($item);
+        $surveyItem = $formRequest->getValidData();
+        $this->surveyItemRepository->save($surveyItem);
 
         return new JsonResponse(
             [
                 'status' => 'OK',
-                'open' => [$item->getId()],
+                'open' => [$surveyItem->getId()],
             ]
         );
     }
@@ -112,29 +113,29 @@ class SurveyItemController
      */
     public function newAction(Survey $survey, $type)
     {
-        $item = SurveyItemFactory::createByType($type);
-        $item->setSurvey($survey);
-        $this->surveyItemRepository->save($item);
+        $surveyItem = SurveyItemFactory::createByType($type);
+        $surveyItem->setSurvey($survey);
+        $this->surveyItemRepository->save($surveyItem);
 
         $form = $this->formFactory->create(
             SurveyItemType::class,
-            $item,
-            array('action' => $this->router->generate(
-                'surveyitem_update',
-                array('item' => $item->getId())
-            ))
+            $surveyItem,
+            [
+                'action' => $this->router->generate(
+                    'survey_item_update',
+                    ['surveyItem' => $surveyItem->getId()]
+                ),
+            ]
         );
         $html = $this->twig->render(
             '@AppBundle/SurveyItem/new.html.twig',
-            array(
-                'form'  => $form->createView()
-            )
+            ['form' => $form->createView()]
         );
 
         return new JsonResponse(
             [
                 'html' => $html,
-                'open' => [$item->getId()],
+                'open' => [$surveyItem->getId()],
                 'status' => 'OK',
             ]
         );
@@ -170,15 +171,17 @@ class SurveyItemController
         $form = $this->formFactory->create(
             SurveyItemType::class,
             $parentItemGroup->getRoot(),
-            array('action' => $this->router->generate(
-                'surveyitem_update',
-                array('item' => $parentItemGroup->getRoot()->getId())
-            ))
+            [
+                'action' => $this->router->generate(
+                    'survey_item_update',
+                    ['surveyItem' => $parentItemGroup->getRoot()->getId()]
+                ),
+            ]
         );
 
         $html = $this->twig->render(
             '@AppBundle/SurveyItem/itemGroupAddItem.html.twig',
-            array('form'  => $form->createView())
+            ['form' => $form->createView()]
         );
 
         return new JsonResponse(
@@ -192,50 +195,52 @@ class SurveyItemController
     }
 
     /**
-     * @param SurveyItem $item
+     * @param SurveyItem $surveyItem
      *
      * @return array
      */
-    public function formAction(SurveyItem $item)
+    public function formAction(SurveyItem $surveyItem)
     {
-         $form = $this->formFactory->create(
-             SurveyItemType::class,
-             $item,
-             array('action' => $this->router->generate(
-                 'surveyitem_update',
-                 array('item' => $item->getId())
-             ))
-         );
+        $form = $this->formFactory->create(
+            SurveyItemType::class,
+            $surveyItem,
+            [
+                'action' => $this->router->generate(
+                    'survey_item_update',
+                    ['surveyItem' => $surveyItem->getId()]
+                ),
+            ]
+        );
 
-         return array('form' => $form->createView());
+        return ['form' => $form->createView()];
     }
 
     /**
      * @param Request    $request
-     * @param SurveyItem $item
+     * @param SurveyItem $surveyItem
      *
      * @return JsonResponse
      */
-    public function setSortOrderAction(Request $request, SurveyItem $item)
+    public function setSortOrderAction(Request $request, SurveyItem $surveyItem)
     {
         $sortOrder = $request->query->get('sortorder');
-        $item->setSortOrder($sortOrder);
-        $this->surveyItemRepository->save($item);
+        $surveyItem->setSortOrder($sortOrder);
+        $this->surveyItemRepository->save($surveyItem);
 
         return new JsonResponse(['status' => 'OK']);
     }
 
     /**
-     * @param SurveyItem $item
+     * @param SurveyItem $surveyItem
      *
      * @return JsonResponse
      */
-    public function removeAction(SurveyItem $item)
+    public function removeAction(SurveyItem $surveyItem)
     {
-        $conditions = $this->getItemConditions($item);
+        $conditions = $this->getItemConditions($surveyItem);
         if (empty(($conditions))) {
-            $id = $item->getId();
-            $this->surveyItemRepository->remove($item);
+            $id = $surveyItem->getId();
+            $this->surveyItemRepository->remove($surveyItem);
 
             return new JsonResponse(
                 [
@@ -253,16 +258,22 @@ class SurveyItemController
         }
     }
 
-    private function getItemConditions(SurveyItem $item, $conditions = null)
+    /**
+     * @param SurveyItem $surveyItem
+     * @param array      $conditions
+     *
+     * @return Condition[]
+     */
+    private function getItemConditions(SurveyItem $surveyItem, $conditions = []): array
     {
         $conditions = $conditions === null ? array() : $conditions;
-        switch (get_class($item)) {
-            case Question::class:
-                $conditions = $this->conditionRepository->getConditionsByQuestion($item);
+        switch (true) {
+            case ($surveyItem instanceof Question):
+                $conditions = $this->conditionRepository->getConditionsByQuestion($surveyItem);
                 break;
-            case ItemGroup::class:
-                foreach ($item->getSurveyItems() as $item) {
-                    $conditions = $this->getItemConditions($item, $conditions);
+            case ($surveyItem instanceof ItemGroup):
+                foreach ($surveyItem->getSurveyItems() as $surveyItem) {
+                    $conditions = $this->getItemConditions($surveyItem, $conditions);
                 }
                 break;
         }
