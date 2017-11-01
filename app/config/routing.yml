@@ -26,7 +26,7 @@ choice:
     prefix:     /choice
 
 result_evaluation:
-    path: /result/evaluation/{id}
+    path: /result/evaluation/{result}
     defaults: { _controller: app.controller.evaluation_controller:evaluateResultAction }
 
 user_list:

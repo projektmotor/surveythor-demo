@@ -25,7 +25,7 @@ class CustomResultReadySubscriber extends ResultReadySubscriber
     {
         $url = $this->router->generate(
             'result_evaluation',
-            ['id' => $event->getResult()->getId()],
+            ['result' => $event->getResult()->getId()],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
         $event->setUrl($url);
