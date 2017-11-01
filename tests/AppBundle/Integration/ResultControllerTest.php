@@ -7,11 +7,11 @@ use AppBundle\Entity\Survey;
 use AppBundle\Entity\SurveyItems\ItemGroup;
 use AppBundle\Entity\SurveyItems\Question;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\DomCrawler\Field\FormField;
 use Symfony\Component\DomCrawler\Field\TextareaFormField;
-use Symfony\Component\HttpKernel\Client;
 
 class ResultControllerTest extends WebTestCase
 {
@@ -44,6 +44,7 @@ class ResultControllerTest extends WebTestCase
         $this->assertContains($firstSurveyItem->getText(), $crawler->text());
         $this->assertContains($firstChoice->getText(), $crawler->text());
         $this->assertContains($secondChoice->getText(), $crawler->text());
+        $this->assertThereIsNoPrevButton($crawler);
 
         $client = $this->assertValidationMessageIsShown($crawler, $client);
 
@@ -78,6 +79,7 @@ class ResultControllerTest extends WebTestCase
         $this->assertContains($firstSurveyItem->getText(), $crawler->text());
         $this->assertContains($firstChoice->getText(), $crawler->text());
         $this->assertContains($secondChoice->getText(), $crawler->text());
+        $this->assertThereIsNoPrevButton($crawler);
 
         $client = $this->assertValidationMessageIsShown($crawler, $client);
 
@@ -106,6 +108,7 @@ class ResultControllerTest extends WebTestCase
         $this->assertStatusCode(200, $client);
         $this->assertContains($survey->getTitle(), $crawler->text());
         $this->assertContains($firstSurveyItem->getText(), $crawler->text());
+        $this->assertThereIsNoPrevButton($crawler);
 
         $client = $this->assertValidationMessageIsShown($crawler, $client);
 
@@ -150,6 +153,7 @@ class ResultControllerTest extends WebTestCase
         $this->assertContains($secondQuestion->getText(), $crawler->text());
         $this->assertContains($thirdQuestion->getText(), $crawler->text());
         $this->assertContains($fourthQuestion->getText(), $crawler->text());
+        $this->assertThereIsNoPrevButton($crawler);
 
         $client = $this->assertValidationMessageIsShown($crawler, $client);
 
@@ -159,6 +163,50 @@ class ResultControllerTest extends WebTestCase
 
         $this->assertContains($secondQuestion->getText(), $crawler->text());
         $this->assertContains($survey->getTitle(), $crawler->text());
+    }
+
+    public function testPrevButton()
+    {
+        $fixtures = $this->loadAllFixturesWithoutUsersAndAllowedOrigins();
+
+        /** @var Survey $survey */
+        $survey = $fixtures['survey_multiple_choice'];
+        /** @var Question $firstSurveyItem */
+        $firstSurveyItem = $fixtures['question_multiple_choice_1'];
+        /** @var Choice $firstChoice */
+        $firstChoice = $fixtures['choice_multiple_sausage_1'];
+        /** @var Choice $secondChoice */
+        $secondChoice = $fixtures['choice_multiple_milk_1'];
+
+        /**
+         * @var $client  Client
+         * @var $crawler Crawler
+         */
+        list($client, $crawler) = $this->getClientAndCrawlerFromUri('result/first/'.$survey->getId());
+
+        $form = $crawler->filter('form')->form();
+        $nextUri = $this->getNextUriOfForm($crawler);
+
+        $firstPage = $crawler->text();
+
+        /**
+         * @var ChoiceFormField $formField
+         */
+        foreach ($form->all() as $formField) {
+            $formField->tick();
+        }
+
+        $firstFormValues = $form->getValues();
+        $crawler = $client->request('POST', $nextUri, $form->getPhpValues(), $form->getPhpFiles());
+
+        $prevUri = $this->getPrevUriOfForm($crawler);
+        $crawler = $client->request('POST', $prevUri);
+
+        $firstPageAfterClickOnPrev = $crawler->text();
+        $formAfterClickOnPrev = $crawler->filter('form')->form();
+
+        $this->assertSame($firstPage, $firstPageAfterClickOnPrev);
+        $this->assertSame($firstFormValues, $formAfterClickOnPrev->getValues());
     }
 
     /**
@@ -265,5 +313,35 @@ class ResultControllerTest extends WebTestCase
         }
 
         return $nextUri;
+    }
+
+    private function getPrevUriOfForm(Crawler $crawler): string
+    {
+        $nextUri = '';
+        $button = $crawler->filter('[data-test="prev"]');
+        if ($button->count()) {
+            $nextUri = $button->attr('data-url');
+        }
+
+        return $nextUri;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return array
+     */
+    private function getClientAndCrawlerFromUri(string $url): array
+    {
+        $client = static::makeClient();
+        $client->followRedirects();
+        $crawler = $client->request('GET', $url);
+
+        return [$client, $crawler];
+    }
+
+    private function assertThereIsNoPrevButton(Crawler $crawler): void
+    {
+        $this->assertEmpty($this->getPrevUriOfForm($crawler), 'there should be no prev button on first page');
     }
 }

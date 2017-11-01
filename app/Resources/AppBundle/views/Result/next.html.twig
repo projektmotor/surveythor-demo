@@ -19,6 +19,7 @@
     <button
             class="btn btn-default st-button pull-left js-st-survey-button"
             data-url="{{ url('result_prev', { 'resultItem' : resultItem.getId, 'result': result.getId }, true) }}"
+            data-test="prev"
     >
         {{- 'button.back'|trans -}}
     </button>

@@ -100,7 +100,6 @@ class ResultController
             ];
         }
 
-        $resultItem = $formRequest->getValidData();
         $result->markNextResultItemAsCurrent();
         $this->resultRepository->save($result);
 
@@ -147,7 +146,6 @@ class ResultController
             ];
         }
 
-        $resultItem = $formRequest->getValidData();
         $this->resultRepository->save($result);
 
         $dispatcher = new EventDispatcher();
