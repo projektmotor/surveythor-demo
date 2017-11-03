@@ -10,19 +10,19 @@ homepage:
         ignoreAttributes: true
 
 survey:
-    resource: "routing/survey.yml"
+    resource: "routing_survey.yml"
     prefix:     /survey
 
 result:
-    resource: "routing/result.yml"
+    resource: "routing_result.yml"
     prefix: /result
 
 survey_item:
-    resource: "routing/survey-item.yml"
-    prefix:     /surveyitem
+    resource: "routing_survey_item.yml"
+    prefix:     /survey-item
 
 choice:
-    resource: "routing/choice.yml"
+    resource: "routing_choice.yml"
     prefix:     /choice
 
 result_evaluation:
