@@ -67,7 +67,7 @@ $hr-color: #DDDDDD;
         //padding: 10px 60px;
         text-transform: uppercase;
         text-decoration: none;
-        border-radius: 20px;
+        border-radius: 4px;
         &:hover {
             background: $button-color-hover;
         }
@@ -80,7 +80,7 @@ $hr-color: #DDDDDD;
         line-height: 1.4;
         min-width: 185px;
         transition: color .25s ease-in;
-        margin-top: 87px;
+        margin: 120px 95px 20px 0px;
     }
     .btn, label, input {
         cursor: pointer;
