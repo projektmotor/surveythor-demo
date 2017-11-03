@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Survey;
+use AppBundle\Form\SurveyResultEvaluationRouteNameType;
 use AppBundle\Form\SurveyTitleType;
 use AppBundle\Repository\SurveyRepository;
 use QafooLabs\MVC\FormRequest;
@@ -70,12 +71,22 @@ class SurveyController
             'surveyTitleForm' => $this->formFactory->create(
                 SurveyTitleType::class,
                 $survey,
-                array(
+                [
                     'action' => $this->router->generate(
                         'survey_update_title',
-                        array('survey' => $survey->getId())
+                        ['survey' => $survey->getId()]
                     ),
-                )
+                ]
+            )->createView(),
+            'surveyResultEvaluationRouteNameForm' => $this->formFactory->create(
+                SurveyResultEvaluationRouteNameType::class,
+                $survey,
+                [
+                    'action' => $this->router->generate(
+                        'survey_update_result_evaluation_route_name',
+                        ['survey' => $survey->getId()]
+                    ),
+                ]
             )->createView(),
         );
     }
@@ -104,13 +115,27 @@ class SurveyController
         );
     }
 
-    /**
-     * @param FormRequest $formRequest
-     * @param Survey      $survey
-     *
-     * @return JsonResponse
-     */
-    public function updateTitleAction(FormRequest $formRequest, Survey $survey)
+    public function updateResultEvaluationRouteNameAction(FormRequest $formRequest, Survey $survey): JsonResponse
+    {
+        if (!$formRequest->handle(SurveyResultEvaluationRouteNameType::class, $survey)) {
+            return new JsonResponse(
+                [
+                    'status' => 'INVALID',
+                ]
+            );
+        }
+
+        $survey = $formRequest->getValidData();
+        $this->surveyRepository->save($survey);
+
+        return new JsonResponse(
+            [
+                'status' => 'OK',
+            ]
+        );
+    }
+
+    public function updateTitleAction(FormRequest $formRequest, Survey $survey): JsonResponse
     {
         if (!$formRequest->handle(SurveyTitleType::class, $survey)) {
             return new JsonResponse(

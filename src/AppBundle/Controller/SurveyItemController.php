@@ -214,7 +214,7 @@ class SurveyItemController
             ]
         );
 
-        return ['form' => $form->createView()];
+        return ['surveyItemForm' => $form->createView()];
     }
 
     /**

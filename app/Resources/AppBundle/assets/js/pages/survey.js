@@ -11,7 +11,7 @@ const
 
 $(document).ready(function () {
     survey.bindDisableSurveyWhileAjaxLoading();
-    survey.bindSaveTitleOnEdit();
+    survey.bindSaveSurveyAttributeOnEdit();
     surveyItem.init();
     sortable.init();
     draggable.bindDraggable('#new-items > div');

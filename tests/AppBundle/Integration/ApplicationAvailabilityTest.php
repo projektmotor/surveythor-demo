@@ -70,8 +70,15 @@ class ApplicationAvailabilityTest extends WebTestCase
 
         return [
             [['admin', 'editor'], '/survey/'],
+            [['admin', 'editor'], '/survey/new'],
             [['admin', 'editor'], '/survey/edit/'.$fixtures['fragenkatalog']->getId()],
+            [['admin', 'editor'], '/survey/update-title/'.$fixtures['fragenkatalog']->getId()],
+            [['admin', 'editor'], '/survey/update-result-evaluation-route-name/'.$fixtures['fragenkatalog']->getId()],
             [['admin', 'editor'], '/survey/evaluations/'.$fixtures['fragenkatalog']->getId()],
+            [['admin', 'editor'], '/survey-item/form/'.$fixtures['question_single_choice_1']->getId()],
+            [['admin', 'editor'], '/survey-item/form/'.$fixtures['item_group_1']->getId()],
+            [['admin', 'editor'], '/survey-item/form/'.$fixtures['text_item_survey_text_1']->getId()],
+            [['admin', 'editor'], '/survey-item/form/'.$fixtures['text_item_survey_text_1']->getId()],
             [['anonymous', 'admin', 'editor'], '/result/new/'.$fixtures['fragenkatalog']->getId()],
             [['admin'], '/user/list'],
             [['admin'], '/user/create'],

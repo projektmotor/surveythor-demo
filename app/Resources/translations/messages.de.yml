@@ -18,3 +18,23 @@ button:
   back: 'zurück'
   next: 'weiter'
   done: 'fertigstellen'
+
+survey:
+  edit:
+    panel-header:
+      evaluation: Folgeaktion nach Ausfüllen der Umfrage
+      survey-items: Umfrageelemente
+      title: Name und Beschreibung der Umfrage
+      widget: Code zum Einbetten in die Webseite
+      add-survey-items: Umfrageelemente anlegen
+
+form:
+  choices:
+    result_evaluation:
+      bunny: Bunny - Lead-Generierung und Auswertung
+      custom: Custom - nur Auswertung
+  label:
+    result_evaluation: Typ der Folgeaktion
+    survey_title:
+      description: Beschreibung
+      title: Name der Umfrage

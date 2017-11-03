@@ -1,3 +1,5 @@
+let popoverTool = require('./popoverTool');
+
 module.exports = {
     bindDisableSurveyWhileAjaxLoading: function () {
         "use strict";
@@ -15,17 +17,22 @@ module.exports = {
             }
         });
     },
-    bindSaveTitleOnEdit: function () {
+    bindSaveSurveyAttributeOnEdit: function () {
         "use strict";
-        $('.survey-title-field').change(function () {
-            var form = $('form[name=survey_title]');
-            $.ajax({
-                url: form.attr('action'),
-                method: 'post',
-                data: form.serialize(),
-                isLocal: true,
-                success: function () {
-                } // mal sehen
+        let fields = $('.js-survey-attribute-form-field');
+        $.each(fields, function (index, field) {
+            field = $(field);
+            field.change(function () {
+                let form = $(field).closest('form');
+                console.log(form);
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'post',
+                    data: form.serialize()
+                })
+                    .done(function () {
+                        popoverTool.showAndDestroySavePopover(field);
+                    });
             });
         });
     }

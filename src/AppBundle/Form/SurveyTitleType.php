@@ -43,24 +43,22 @@ class SurveyTitleType extends AbstractType
                 if (is_null($survey)) {
                     $form->add('submit', SubmitType::class);
                 } else {
-                    $form->remove('title');
-                    $form->remove('description');
                     $form
                         ->add(
                             'title',
                             TextType::class,
                             [
-                                'label' => 'Name der Umfrage',
-                                'attr' => ['class' => 'survey-title-field'],
+                                'attr' => ['class' => 'js-survey-attribute-form-field'],
+                                'label' => 'form.label.survey_title.title',
                             ]
                         )
                         ->add(
                             'description',
                             TextareaType::class,
                             [
-                                'label' => 'Beschreibung',
+                                'attr' => ['class' => 'js-survey-attribute-form-field'],
+                                'label' => 'form.label.survey_title.description',
                                 'required' => false,
-                                'attr' => ['class' => 'survey-title-field'],
                             ]
                         );
                 }

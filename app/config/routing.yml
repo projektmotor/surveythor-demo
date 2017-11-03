@@ -26,11 +26,11 @@ choice:
     prefix:     /choice
 
 bunny_result_evaluation:
-    path: /result/evaluation/{result}
+    path: /result/evaluation/bunny/{result}
     defaults: { _controller: app.controller.bunny_evaluation_controller:evaluateResultAction }
 
 custom_result_evaluation:
-    path: /result/evaluation/{result}
+    path: /result/evaluation/custom/{result}
     defaults: { _controller: app.controller.custom_evaluation_controller:evaluateResultAction }
 
 user_list:
