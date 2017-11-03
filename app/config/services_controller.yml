@@ -3,8 +3,10 @@ services:
         autowire: true
         autoconfigure: true
 
-    app.controller.evaluation_controller:
-        class: AppBundle\Controller\EvaluationController
+    app.controller.bunny_evaluation_controller:
+        class: AppBundle\Controller\Evaluation\BunnyEvaluationController
+    app.controller.custom_evaluation_controller:
+        class: AppBundle\Controller\Evaluation\CustomEvaluationController
     app.controller.user_controller:
         class: AppBundle\Controller\UserController
     app.controller.allowed_origin_controller:

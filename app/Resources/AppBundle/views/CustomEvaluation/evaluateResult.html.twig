@@ -1,0 +1,7 @@
+{% import ':macros:evaluateResult.html.twig' as macros %}
+
+<h4>{{ result.survey.title }}</h4>
+{% for resultItem in result.resultItems %}
+    {{ macros.renderResultItem(resultItem) }}
+    <hr/>
+{% endfor %}

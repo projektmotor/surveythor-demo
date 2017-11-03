@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
  */
 class CrossOriginResourceSharingTest extends WebTestCase
 {
-    public static $routes = ['result_next', 'result_first', 'result_prev', 'result_last', 'result_evaluation'];
+    public static $routes = ['result_next', 'result_first', 'result_prev', 'result_last', '*_result_evaluation'];
 
     /**
      * @var Client
@@ -136,8 +136,10 @@ class CrossOriginResourceSharingTest extends WebTestCase
                     $uri = $router->generate('result_last', ['result' => $resultId, 'resultItem' => $resultItemId]);
                     $uris[$routeName] = $uri;
                     break;
-                case 'result_evaluation':
-                    $uri = $router->generate('result_evaluation', ['result' => $resultId]);
+                case '*_result_evaluation':
+                    $uri = $router->generate('bunny_result_evaluation', ['result' => $resultId]);
+                    $uris[$routeName] = $uri;
+                    $uri = $router->generate('custom_result_evaluation', ['result' => $resultId]);
                     $uris[$routeName] = $uri;
                     break;
                 default:

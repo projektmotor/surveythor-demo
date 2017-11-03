@@ -1,14 +1,10 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Evaluation;
 
 use AppBundle\Entity\Result;
 
-/**
- * EvaluationController
- * @author Rombo Kraft <kraft@projektmotor.de>
- */
-class EvaluationController
+class BunnyEvaluationController
 {
     /**
      * @param Result $result
