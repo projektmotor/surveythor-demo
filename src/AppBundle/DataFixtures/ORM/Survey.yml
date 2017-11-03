@@ -1,18 +1,25 @@
 AppBundle\Entity\Survey:
     fragenkatalog:
         title: 'Fragenkatalog'
+        description: <sentence()>
+        resultEvaluationRouteName: 'result_evaluation'
     eu_dsgvo:
         title: "EU-DSGVO Check"
         description: <sentence()>
+        resultEvaluationRouteName: 'result_evaluation'
     survey_multiple_choice:
         title: "Multiple Choice Fragen"
         description: <sentence()>
+        resultEvaluationRouteName: 'result_evaluation'
     survey_single_choice:
         title: "Single Choice Fragen"
         description: <sentence()>
+        resultEvaluationRouteName: 'result_evaluation'
     survey_text:
         title: "Textfragen"
         description: <sentence()>
+        resultEvaluationRouteName: 'result_evaluation'
     survey_group_single_and_multiple_choice:
         title: "Gruppen mit Single und Multiple Choice Fragen"
         description: <sentence()>
+        resultEvaluationRouteName: 'result_evaluation'

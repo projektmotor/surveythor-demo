@@ -40,10 +40,10 @@ class Survey
      */
     private $results;
 
-    public function __toString()
-    {
-        return get_class($this);
-    }
+    /**
+     * @var string
+     */
+    private $resultEvaluationRouteName;
 
     public function __construct()
     {
@@ -235,5 +235,15 @@ class Survey
     public function getFirstSurveyItem()
     {
         return $this->getSurveyItems()->first();
+    }
+
+    public function getResultEvaluationRouteName(): string
+    {
+        return $this->resultEvaluationRouteName;
+    }
+
+    public function setResultEvaluationRouteName(string $resultEvaluationRouteName): void
+    {
+        $this->resultEvaluationRouteName = $resultEvaluationRouteName;
     }
 }
