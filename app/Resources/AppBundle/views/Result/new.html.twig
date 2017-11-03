@@ -19,13 +19,6 @@
     Et similique qui non expedita quia dolorum. Ex rem incidunt ea accusantium temporibus minus non.
 </div>
 
-<script type="application/javascript" src="{{ asset('build/frontend.js') }}"></script>
-<script type="application/javascript">
-    var params = {
-        surveyId: {{ survey.getId }},
-        surveythorHost: '{{ surveythorHost }}'
-    };
+{{- include('@AppBundle/Result/widget.html.twig', {'survey': survey}) -}}
 
-    Surveythor(params);
-</script>
 </body>

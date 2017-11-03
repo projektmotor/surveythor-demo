@@ -47,15 +47,37 @@
 
                     <div id="survey-resultranges" class="panel-collapse collapse" role="tabpanel" aria-labelledby="resultranges-heading">
                         <div class="panel-body">
-                                maximal erreichbare Punktzahl: 100
-                                <div class="form-row">
-                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                    </div>
+                            maximal erreichbare Punktzahl: 100
+                            <div class="form-row">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                 </div>
+                            </div>
                             <a href="#" class="btn btn-primary" id="add-resultrange">Ergebnis hinzufügen</a>
                         </div>
                     </div>
                 </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab">
+                    <h4 class="panel-title" id="widget-code-heading">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                           href="#survey-widget-code" aria-expanded="false" aria-controls="collapseThree">Code zum
+                            Einbetten in die Webseite</a>
+                    </h4>
+                </div>
+
+                <div id="survey-widget-code" class="panel-collapse collapse in" role="tabpanel"
+                     aria-labelledby="widget-code-heading">
+                    <div class="panel-body">
+                            <pre>
+                                {{- '<div id="js-st-surveythor-container"></div>'|e('html') }}
+                                <br>
+                                {{- include('@AppBundle/Result/widget.html.twig', {'survey': survey})|e('html') -}}
+                            </pre>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
         <div class="col-md-2" id="survey-tools">

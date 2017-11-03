@@ -1,0 +1,9 @@
+<script type="application/javascript" src="{{ asset('build/frontend.js') }}"></script>
+<script type="application/javascript">
+    const params = {
+        surveyId: {{ survey.getId }},
+        surveythorHost: '{{ surveythorHost }}'
+    };
+
+    Surveythor(params);
+</script>
