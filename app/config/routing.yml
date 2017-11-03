@@ -11,7 +11,7 @@ homepage:
 
 evaluation:
     resource: "routing_evaluation.yml"
-    prefix:     /evaluation
+    prefix:     /result/evaluation
 
 survey:
     resource: "routing_survey.yml"
