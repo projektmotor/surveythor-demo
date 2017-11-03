@@ -171,12 +171,6 @@ class ResultControllerTest extends WebTestCase
 
         /** @var Survey $survey */
         $survey = $fixtures['survey_multiple_choice'];
-        /** @var Question $firstSurveyItem */
-        $firstSurveyItem = $fixtures['question_multiple_choice_1'];
-        /** @var Choice $firstChoice */
-        $firstChoice = $fixtures['choice_multiple_sausage_1'];
-        /** @var Choice $secondChoice */
-        $secondChoice = $fixtures['choice_multiple_milk_1'];
 
         /**
          * @var $client  Client
@@ -249,15 +243,7 @@ class ResultControllerTest extends WebTestCase
              * @var FormField $formField
              */
             foreach ($form->all() as $name => $formField) {
-                if ($formField instanceof ChoiceFormField) {
-                    if ($formField->getType() === 'checkbox') {
-                        $formField->tick();
-                    } else {
-                        $formValues[$name] = $formField->availableOptionValues()[0]; // simply use first value
-                    }
-                } elseif ($formField instanceof TextareaFormField) {
-                    $formField->setValue('some text for textarea');
-                }
+                $formValues = $this->fillInAllFormFieldsWithValidValues($formField, $formValues, $name);
             }
 
             $form->setValues($formValues);
@@ -343,5 +329,20 @@ class ResultControllerTest extends WebTestCase
     private function assertThereIsNoPrevButton(Crawler $crawler): void
     {
         $this->assertEmpty($this->getPrevUriOfForm($crawler), 'there should be no prev button on first page');
+    }
+
+    private function fillInAllFormFieldsWithValidValues(FormField $formField, array $formValues, string $name): array
+    {
+        if ($formField instanceof ChoiceFormField) {
+            if ($formField->getType() === 'checkbox') {
+                $formField->tick();
+            } else {
+                $formValues[$name] = $formField->availableOptionValues()[0]; // simply use first value
+            }
+        } elseif ($formField instanceof TextareaFormField) {
+            $formField->setValue('some text for textarea');
+        }
+
+        return $formValues;
     }
 }
