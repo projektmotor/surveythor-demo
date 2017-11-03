@@ -62,7 +62,7 @@ class ResultTextItem
     {
         return $this->text;
     }
-    
+
     /**
      * @return ResultItem
      */

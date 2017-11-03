@@ -28,8 +28,8 @@ class TextAnswerType extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'question' => null,
-            'data_class' => TextAnswer::class
+                'question' => null,
+                'data_class' => TextAnswer::class,
             ]
         );
     }

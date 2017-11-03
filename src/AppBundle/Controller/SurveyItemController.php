@@ -81,10 +81,12 @@ class SurveyItemController
         if (!$formRequest->handle(
             SurveyItemType::class,
             $surveyItem,
-            array('action' => $this->router->generate(
-                'survey_item_update',
-                array('surveyItem' => $surveyItem->getId())
-            ))
+            array(
+                'action' => $this->router->generate(
+                    'survey_item_update',
+                    array('surveyItem' => $surveyItem->getId())
+                ),
+            )
         )) {
             return new JsonResponse(
                 [
