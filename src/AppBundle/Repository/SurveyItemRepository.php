@@ -3,18 +3,18 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\SurveyItem;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
 
 class SurveyItemRepository
 {
     /**
-     * @var Registry
+     * @var ManagerRegistry
      */
     private $registry;
 
-    public function __construct(Registry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

@@ -3,17 +3,17 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Choice;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 
 class ChoiceRepository
 {
     /**
-     * @var Registry
+     * @var ManagerRegistry
      */
     private $registry;
 
-    public function __construct(Registry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

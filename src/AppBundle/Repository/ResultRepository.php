@@ -4,17 +4,17 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Result;
 use AppBundle\Entity\Survey;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 
 class ResultRepository
 {
     /**
-     * @var Registry
+     * @var ManagerRegistry
      */
     private $registry;
 
-    public function __construct(Registry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

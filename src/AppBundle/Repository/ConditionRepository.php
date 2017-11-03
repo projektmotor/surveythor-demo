@@ -5,17 +5,17 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Choice;
 use AppBundle\Entity\Condition;
 use AppBundle\Entity\SurveyItems\Question;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
 
 class ConditionRepository
 {
     /**
-     * @var Registry
+     * @var ManagerRegistry
      */
     private $registry;
 
-    public function __construct(Registry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }
