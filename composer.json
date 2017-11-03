@@ -57,13 +57,13 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "node_modules/.bin/encore production",
             "rm web/app_dev.php",
-            "bin/console doctrine:database:drop --force",
+            "bin/console doctrine:database:drop --force --if-exists",
             "bin/console doctrine:database:create -n",
             "bin/console doctrine:schema:update --force",
             "bin/console hautelook_alice:doctrine:fixtures:load --no-interaction --purge-with-truncate"
         ],
         "compile-dev": [
-            "bin/console doctrine:database:drop --force",
+            "bin/console doctrine:database:drop --force --if-exists",
             "bin/console doctrine:database:create -n",
             "bin/console doctrine:schema:update --force",
             "bin/console hautelook_alice:doctrine:fixtures:load --no-interaction --purge-with-truncate"
