@@ -10,7 +10,7 @@
     </head>
     <body>
         {% block navbar %}
-            <nav class="navbar navbar-default">
+            <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
@@ -24,17 +24,14 @@
                         <a class="navbar-brand pm-navbar-brand" href="" style="padding: 0;">
                             <img src="{{ asset('/images/survey.png') }}" style="height: 50px;" />
                         </a>
-
-                        <ul class="nav navbar-nav">
-                            <li><a>Dashboard</a></li>
-                        </ul>
-
-                        {% set menu = knp_menu_get('main', [], {'currentRoute': app.request.attributes.get('_route')}) %}
-                        {{ knp_menu_render(menu) }}
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                        {% set menu = knp_menu_get('main', [], {'currentRoute': app.request.attributes.get('_route')}) %}
+                        {{ knp_menu_render(menu) }}
+
                         <p class="navbar-text navbar-right">
                             {{- 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') -}}
                             &nbsp;|
