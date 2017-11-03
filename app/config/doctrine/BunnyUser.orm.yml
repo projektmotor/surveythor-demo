@@ -1,0 +1,47 @@
+AppBundle\Entity\BunnyUser:
+    type:  entity
+    id:
+        id:
+            type: uuid
+            generator:
+                strategy: CUSTOM
+            customIdGenerator:
+                class: Ramsey\Uuid\Doctrine\UuidGenerator
+    fields:
+        firstName:
+            type: string
+            nullable: false
+        lastName:
+            type: string
+            nullable: false
+        email:
+            type: string
+            nullable: false
+        telephoneNumber:
+            type: string
+            nullable: false
+        companyTitle:
+            type: string
+            nullable: false
+        street:
+            type: string
+            length: 255
+            nullable: false
+        streetNumber:
+            type: string
+            length: '31'
+            nullable: false
+        city:
+            type: string
+            length: 255
+            nullable: false
+        zipCode:
+            type: string
+            length: 5
+            nullable: false
+        isDataProcessingConfirmed:
+            type: boolean
+            nullable: false
+    oneToOne:
+        result:
+            targetEntity: AppBundle\Entity\Result

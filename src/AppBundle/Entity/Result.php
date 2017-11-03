@@ -29,6 +29,10 @@ class Result
      */
     private $survey;
 
+    /**
+     * @var \AppBundle\Entity\BunnyUser
+     */
+    private $bunnyUser;
 
     public function __construct()
     {
@@ -187,5 +191,15 @@ class Result
             }
         }
         $newCurrentResultItem->setIsCurrent();
+    }
+
+    public function setBunnyUser(BunnyUser $bunnyUser = null): void
+    {
+        $this->bunnyUser = $bunnyUser;
+    }
+
+    public function getBunnyUser(): BunnyUser
+    {
+        return $this->bunnyUser;
     }
 }

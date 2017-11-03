@@ -38,3 +38,7 @@ form:
     survey_title:
       description: Beschreibung
       title: Name der Umfrage
+
+bunny_evaluation:
+  button:
+    next: 'Weiter zum Umfrageergebnis'

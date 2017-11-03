@@ -16,6 +16,7 @@ class ResponseHeaderListener
         'result_last',
         'result_prev',
         'bunny_result_evaluation',
+        'bunny_result_evaluation_finished',
         'custom_result_evaluation',
     ];
     /** @var AllowedOriginRepository */

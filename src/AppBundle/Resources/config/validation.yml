@@ -53,4 +53,28 @@ AppBundle\Entity\Survey:
             - NotBlank: ~
 #    constraints:
 #        - Callback: validate
+AppBundle\Entity\BunnyUser:
+    properties:
+        firstName:
+            - NotBlank: ~
+        lastName:
+            - NotBlank: ~
+        email:
+            - NotBlank: ~
+            - Email: ~
+        telephoneNumber:
+            - NotBlank: ~
+        companyTitle:
+            - NotBlank: ~
+        street:
+            - NotBlank: ~
+        streetNumber:
+            - NotBlank: ~
+        city:
+            - NotBlank: ~
+        zipCode:
+            - NotBlank: ~
+        isDataProcessingConfirmed:
+            - IsTrue: ~
+            - NotBlank: ~
 

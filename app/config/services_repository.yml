@@ -4,6 +4,8 @@ services:
 
     AppBundle\Repository\AllowedOriginRepository: ~
 
+    AppBundle\Repository\BunnyUserRepository: ~
+
     AppBundle\Repository\ChoiceRepository: ~
 
     AppBundle\Repository\ConditionRepository: ~

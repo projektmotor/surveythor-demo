@@ -2,6 +2,10 @@ bunny_result_evaluation:
     path: /bunny/{result}
     defaults: { _controller: app.controller.bunny_evaluation_controller:evaluateResultAction }
 
+bunny_result_evaluation_finished:
+    path: /bunny/finished/{result}
+    defaults: { _controller: app.controller.bunny_evaluation_controller:evaluationFinishedAction }
+
 custom_result_evaluation:
     path: /custom/{result}
     defaults: { _controller: app.controller.custom_evaluation_controller:evaluateResultAction }

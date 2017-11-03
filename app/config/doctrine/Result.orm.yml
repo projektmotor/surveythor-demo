@@ -26,3 +26,7 @@ AppBundle\Entity\Result:
 
     lifecycleCallbacks:
         prePersist: [ setCreatedValue ]
+
+    oneToOne:
+        bunnyUser:
+            targetEntity: AppBundle\Entity\BunnyUser
