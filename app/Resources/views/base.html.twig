@@ -21,7 +21,7 @@
                             <span class="icon-bar"></span>
                         </button>
 
-                        <a class="navbar-brand pm-navbar-brand" href="" style="padding: 0;">
+                        <a class="navbar-brand pm-navbar-brand" href="{{ path('homepage') }}" style="padding: 0;">
                             <img src="{{ asset('/images/survey.png') }}" style="height: 50px;" />
                         </a>
                     </div>
@@ -50,6 +50,7 @@
         <div id="loading-indicator"></div>
         <div id="dialog"></div>
         {% block javascripts %}
+            <script type="application/javascript" src="{{ asset('build/base.js') }}"></script>
         {% endblock %}
     </body>
 </html>

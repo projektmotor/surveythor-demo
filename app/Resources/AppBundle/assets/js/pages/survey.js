@@ -1,5 +1,3 @@
-require('bootstrap-sass');
-
 const
     survey = require('../survey'),
     surveyItem = require('../surveyItem'),
