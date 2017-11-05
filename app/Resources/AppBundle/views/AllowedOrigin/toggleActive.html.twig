@@ -1,0 +1,3 @@
+<a class="btn btn-lg" href="{{ path('allowed_origin_toggle_active', {'allowedOrigin': allowedOrigin.getId}) }}">
+    <span class="glyphicon {% if allowedOrigin.active %}glyphicon-ok-circle text-success{% else %}glyphicon-remove-circle text-danger{% endif %}"></span>
+</a>

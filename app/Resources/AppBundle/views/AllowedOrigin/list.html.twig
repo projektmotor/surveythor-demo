@@ -10,16 +10,29 @@
             <th>{{ 'allowed_origin.title'|trans }}</th>
             <th>{{ 'allowed_origin.origin_name'|trans }}</th>
             <th>{{ 'allowed_origin.is_active'|trans }}</th>
+            <th>{{ 'allowed_origin.description'|trans }}</th>
             <th>{{ 'allowed_origin.created_by_at'|trans }}</th>
             <th>{{ 'allowed_origin.updated_by_at'|trans }}</th>
         </tr>
         {% for allowedOrigin in allowedOrigins %}
             <tr>
                 <td>
-                    <a href="{{ path('allowed_origin_edit', { 'allowedOrigin': allowedOrigin.getId }) }}">{{ allowedOrigin.title }}</a>
+                    <a class="text-nowrap"
+                       href="{{ path('allowed_origin_edit', { 'allowedOrigin': allowedOrigin.getId }) }}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        {{ allowedOrigin.title }}
+                    </a>
                 </td>
-                <td><a href="{{ allowedOrigin.originName }}">{{ allowedOrigin.originName }}</a></td>
-                <td>{{ allowedOrigin.active }}</td>
+                <td>
+                    <a class="text-nowrap" target="_blank" href="{{ allowedOrigin.originName }}">
+                        <span class="glyphicon glyphicon-new-window"></span>
+                        {{ allowedOrigin.originName }}
+                    </a>
+                </td>
+                <td class="js-toggle-boolean-value">
+                    {{ include('@AppBundle/AllowedOrigin/toggleActive.html.twig', {'allowedOrigin': allowedOrigin}) }}
+                </td>
+                <td>{{ allowedOrigin.description }}</td>
                 <td>{{ allowedOrigin.createdBy }} am {{ allowedOrigin.createdAt|localizeddate('short', 'short') }}</td>
                 <td>{{ allowedOrigin.updatedBy }} am {{ allowedOrigin.updatedAt|localizeddate('short', 'short') }}</td>
             </tr>
@@ -32,4 +45,9 @@
         neue Domainfreigabe erstellen
     </a>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="application/javascript" src="{{ asset('build/allowedOrigin.js') }}"></script>
 {% endblock %}

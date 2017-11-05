@@ -73,4 +73,12 @@ class AllowedOriginController
 
         return ['allowedOrigins' => $allowedOrigins];
     }
+
+    public function toggleActiveAction(AllowedOrigin $allowedOrigin): array
+    {
+        $allowedOrigin->setIsActive(!$allowedOrigin->isActive());
+        $this->allowedOriginRepository->save($allowedOrigin);
+
+        return ['allowedOrigin' => $allowedOrigin];
+    }
 }

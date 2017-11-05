@@ -52,3 +52,7 @@ allowed_origin_create:
 allowed_origin_edit:
     path: /origin/edit/{allowedOrigin}
     defaults: { _controller: app.controller.allowed_origin_controller:editAction }
+
+allowed_origin_toggle_active:
+    path: /origin/toggle-active/{allowedOrigin}
+    defaults: { _controller: app.controller.allowed_origin_controller:toggleActiveAction }

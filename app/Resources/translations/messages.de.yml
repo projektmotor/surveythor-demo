@@ -4,6 +4,16 @@ allowed_origin:
   is_active: Freigabe aktiv?
   created_by_at: Erstellt
   updated_by_at: Bearbeitet
+  description: Beschreibung
+  form:
+    example: 'https://www.example.com'
+    help_message: |
+      Der Wert für Domain muss ein Protokoll enthalten (http:// oder https://).
+      Der Wert für Domain darf kein Verzeichnis enthalten.
+      Der Wert für Domain darf keinen trailing Slash enthalten.
+
+      Richtig: https://www.example.com oder http://example.com
+      Falsch: https://www.example.com/ oder http://example.com/sub-dir
 
 menu:
   allowed_origins: Domainfreigaben
@@ -14,6 +24,7 @@ menu:
 Title: Name
 Origin name: Domain
 Is active: Domainfreigabe aktiv?
+Description: Beschreibung
 button:
   back: 'zurück'
   next: 'weiter'

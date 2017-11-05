@@ -78,3 +78,10 @@ AppBundle\Entity\BunnyUser:
             - IsTrue: ~
             - NotBlank: ~
 
+AppBundle\Entity\AllowedOrigin:
+    properties:
+        originName:
+            - Url: ~
+            - NotBlank: ~
+        title:
+            - NotBlank: ~

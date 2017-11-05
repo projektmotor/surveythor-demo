@@ -86,6 +86,7 @@ class ApplicationAvailabilityTest extends WebTestCase
             [['admin'], '/origin/list'],
             [['admin'], '/origin/create'],
             [['admin'], '/origin/edit/'.$fixtures['allowed_origin_1']->getId()],
+            [['admin'], '/origin/toggle-active/'.$fixtures['allowed_origin_1']->getId()],
             // ...
         ];
     }

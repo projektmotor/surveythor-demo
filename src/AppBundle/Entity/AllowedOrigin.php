@@ -11,6 +11,8 @@ class AllowedOrigin
     /** @var string */
     private $originName;
     /** @var string */
+    private $description;
+    /** @var string */
     private $title;
     /** @var boolean */
     private $isActive = false;
@@ -169,5 +171,15 @@ class AllowedOrigin
     public function getUpdatedBy()
     {
         return $this->updatedBy;
+    }
+
+    public function getDescription(): string
+    {
+        return (string)$this->description;
+    }
+
+    public function setDescription(?string $description)
+    {
+        $this->description = $description;
     }
 }

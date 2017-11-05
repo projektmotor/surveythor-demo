@@ -15,6 +15,7 @@ Encore
     .cleanupOutputBeforeBuild()
 
     // will output as web/build/survey.js
+    .addEntry('allowedOrigin', assets_dir + '/js/pages/allowedOrigin.js')
     .addEntry('survey', assets_dir + '/js/pages/survey.js')
     .addEntry('result', assets_dir + '/js/pages/result.js')
     .addEntry('frontend', assets_dir + '/js/pages/frontend.js')

@@ -7,7 +7,11 @@
     <h1>Domainfreigabe für "{{ allowedOrigin.title }}" ändern</h1>
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.originName) }}
+    <p class="help-block">{{ 'allowed_origin.form.help_message'|trans|nl2br }}</p>
+    {{ form_row(form.description) }}
+    {{ form_row(form.isActive) }}
 
     <input type="submit" value="Speichern und zurück zur Liste"
            class="btn btn-default pull-right"/>
