@@ -96,8 +96,10 @@ body {
     border: 1px dotted #454545;
 }
 
-#survey-tools.affix{
+@media screen and (min-width: 992px) {
+  #survey-tools.affix {
     margin-left: 83.3333%;
+  }
 }
 
 .droppable,
