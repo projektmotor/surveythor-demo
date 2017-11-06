@@ -182,6 +182,7 @@ class BunnyUser
 
     public function setResult(Result $result): void
     {
+        $result->setBunnyUser($this);
         $this->result = $result;
     }
 
