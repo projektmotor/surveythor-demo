@@ -2,6 +2,7 @@
 
 <button
         class="btn btn-default st-button pull-right js-st-survey-button"
+        data-test="next"
         data-url="{{ url('bunny_result_evaluation', { 'result': result.getId }, true) }}"
 >
     {{- 'bunny_evaluation.button.next'|trans -}}

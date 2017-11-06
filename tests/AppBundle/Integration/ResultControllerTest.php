@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 use Symfony\Component\DomCrawler\Field\FormField;
+use Symfony\Component\DomCrawler\Field\InputFormField;
 use Symfony\Component\DomCrawler\Field\TextareaFormField;
 
 class ResultControllerTest extends WebTestCase
@@ -19,9 +20,10 @@ class ResultControllerTest extends WebTestCase
         'Bitte wählen Sie eine Antwort.',
         'Bitte wählen Sie mindestens eine Antwort aus.',
         'Bitte tragen Sie ihre Antwort ein.',
+        'Bitte tragen Sie ihre E-Mail-Adresse ein.',
     ];
 
-    public function testSingleChoice()
+    public function testSingleChoiceWithBunnyUserType()
     {
         $fixtures = $this->loadAllFixturesWithoutUsersAndAllowedOrigins();
 
@@ -52,7 +54,11 @@ class ResultControllerTest extends WebTestCase
 
         $crawler = $this->assertEvaluationResponse($client);
 
-        $this->markTestSkipped('cause single choice uses lead generation atm');
+        //test for bunny user form
+        $client = $this->assertValidationMessageIsShown($crawler, $client);
+        $client = $this->clickProceedUntilEndOfSurveyReached($crawler, $client);
+        $crawler = $client->getCrawler();
+
         $this->assertContains($firstChoice->getText(), $crawler->text());
         $this->assertContains($survey->getTitle(), $crawler->text());
     }
@@ -234,7 +240,11 @@ class ResultControllerTest extends WebTestCase
             $this->assertNotSame(
                 $formUri,
                 $form->getUri(),
-                sprintf('form was not successfully submitted with last uri %s', $formUri)
+                sprintf(
+                    'form was not successfully submitted with last uri "%s" and text content "%s"',
+                    $formUri,
+                    $crawler->text()
+                )
             );
             $formUri = $form->getUri();
             $formValues = [];
@@ -270,7 +280,7 @@ class ResultControllerTest extends WebTestCase
     private function assertValidationMessageIsShown(Crawler $crawler, Client $client): Client
     {
         $nextUri = $this->getNextUriOfForm($crawler);
-        $crawler = $client->request('POST', $nextUri, ['result_item' => '']);
+        $crawler = $client->request('POST', $nextUri, ['result_item' => '', 'bunny_user' => '']);
 
         $hasValidation = false;
         foreach (self::$validationMessages as $validationMessage) {
@@ -339,6 +349,12 @@ class ResultControllerTest extends WebTestCase
                 $formField->tick();
             } else {
                 $formValues[$name] = $formField->availableOptionValues()[0]; // simply use first value
+            }
+        } elseif ($formField instanceof InputFormField) {
+            if (false !== strpos($formField->getName(), 'mail')) {
+                $formField->setValue('bunnyuser@example.com');
+            } else {
+                $formField->setValue('some text for input field');
             }
         } elseif ($formField instanceof TextareaFormField) {
             $formField->setValue('some text for textarea');

@@ -56,27 +56,39 @@ AppBundle\Entity\Survey:
 AppBundle\Entity\BunnyUser:
     properties:
         firstName:
-            - NotBlank: ~
+            - NotBlank:
+                message: 'first_name.not_blank'
         lastName:
-            - NotBlank: ~
+            - NotBlank:
+                message: 'last_name.not_blank'
         email:
-            - NotBlank: ~
-            - Email: ~
+            - NotBlank:
+                message: 'email.not_blank'
+            - Email:
+                message: 'email.email'
         telephoneNumber:
-            - NotBlank: ~
+            - NotBlank:
+                message: 'telephone_number.not_blank'
         companyTitle:
-            - NotBlank: ~
+            - NotBlank:
+                message: 'company_title.not_blank'
         street:
-            - NotBlank: ~
+            - NotBlank:
+                message: 'street.not_blank'
         streetNumber:
-            - NotBlank: ~
+            - NotBlank:
+                message: 'street_number.not_blank'
         city:
-            - NotBlank: ~
+            - NotBlank:
+                message: 'city.not_blank'
         zipCode:
-            - NotBlank: ~
+            - NotBlank:
+                message: 'zip_code.not_blank'
         isDataProcessingConfirmed:
-            - IsTrue: ~
-            - NotBlank: ~
+            - IsTrue:
+                message: 'is_data_processing_confirmed.not_blank'
+            - NotBlank:
+                message: 'is_data_processing_confirmed.not_blank'
 
 AppBundle\Entity\AllowedOrigin:
     properties:

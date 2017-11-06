@@ -5,3 +5,36 @@ multiple_choice_answer:
   min_count: Bitte wählen Sie mindestens eine Antwort aus.
 text_answer:
   not_blank: Bitte tragen Sie ihre Antwort ein.
+
+first_name:
+  not_blank:
+    Bitte tragen Sie ihren Vornamen ein.
+last_name:
+  not_blank:
+    Bitte tragen Sie ihren Nachnamen ein.
+email:
+  not_blank:
+    Bitte tragen Sie ihre E-Mail-Adresse ein.
+  email:
+    Bitte tragen Sie eine gültige E-Mail-Adresse ein.
+telephone_number:
+  not_blank:
+    Bitte tragen Sie ihren Telefonnummer ein.
+company_title:
+  not_blank:
+    Bitte tragen Sie ihren Unternehmensnamen ein.
+street:
+  not_blank:
+    Bitte tragen Sie ihren Unternehmensnamen ein.
+street_number:
+  not_blank:
+    Bitte tragen Sie ihre Straßennummer ein.
+city:
+  not_blank:
+    Bitte tragen Sie ihre Stadt ein.
+zip_code:
+  not_blank:
+    Bitte tragen Sie ihre Postleitzahl ein.
+is_data_processing_confirmed:
+  not_blank:
+    Bitte stimmen Sie der Einwilligungserklärung zur Datenverarbeitung zu.
