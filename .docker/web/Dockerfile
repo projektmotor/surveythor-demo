@@ -1,4 +1,7 @@
+FROM composer:1.5 as composer
 FROM php:7.1-apache
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 COPY ./init-container.sh /init-container.sh
 COPY ./init-project.sh /init-project.sh
@@ -55,5 +58,10 @@ RUN a2enmod headers
 RUN ["/init-container.sh"]
 
 WORKDIR /var/www/html
+
+# https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
+ENV COMPOSER_ALLOW_SUPERUSER 1
+# contains dev-mode packages
+RUN composer global require "hirak/prestissimo:^0.3" "sllh/composer-versions-check:^2.0" "pyrech/composer-changelogs:^1.5" --prefer-dist --no-progress --no-suggest --classmap-authoritative
 
 EXPOSE 80

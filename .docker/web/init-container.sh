@@ -50,9 +50,3 @@ sh -c "echo 'zend_extension='$(find /usr/local/lib/php/extensions/ -name xdebug.
 sh -c "echo 'xdebug.remote_enable=1'                                                 >> /usr/local/etc/php/conf.d/xdebug.ini"
 sh -c "echo 'xdebug.remote_autostart=1'                                              >> /usr/local/etc/php/conf.d/xdebug.ini"
 sh -c "echo 'xdebug.remote_host=172.17.0.1'                                          >> /usr/local/etc/php/conf.d/xdebug.ini"
-
-# ###############################################
-# Install symfony installer
-# ###############################################
-curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
-chmod a+x /usr/local/bin/symfony
