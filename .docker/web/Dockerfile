@@ -19,8 +19,17 @@ RUN apt-get update && apt-get install -y \
         libpng-dev \
         git-core \
         acl \
-        mysql-client && \
-        docker-php-ext-configure opcache --enable-opcache && \
+        # begin libs for wkhtmltopdf
+        libxrender1 libfontconfig libxtst6 xz-utils \
+        # end libs for wkhtmltopdf
+        mysql-client
+
+RUN curl "https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz" -L -o "wkhtmltopdf.tar.xz"
+RUN tar Jxvf wkhtmltopdf.tar.xz
+RUN mv wkhtmltox/bin/wkhtmltopdf /usr/bin/wkhtmltopdf
+RUN mv wkhtmltox/bin/wkhtmltoimage /usr/bin/wkhtmltoimage
+
+RUN docker-php-ext-configure opcache --enable-opcache && \
         docker-php-ext-install opcache && \
         pecl install apcu && \
         docker-php-ext-enable apcu && \

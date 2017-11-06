@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new QafooLabs\Bundle\NoFrameworkBundle\QafooLabsNoFrameworkBundle(),
             new Hautelook\AliceBundle\HautelookAliceBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -58,6 +58,18 @@ hautelook_alice:
     persist_once: false # Only persist objects once if multiple files are passed
     loading_limit: 5    # Maximum number of time the loader will try to load the files passed
 
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/bin/wkhtmltopdf
+        options:    []
+    image:
+        enabled:    false
+        binary:     /usr/bin/wkhtmltoimage
+        options:    []
+    temporary_folder: %kernel.cache_dir%/snappy
+    process_timeout: 30 # In seconds
+
 # Twig Configuration
 twig:
     debug: '%kernel.debug%'
