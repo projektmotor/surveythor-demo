@@ -1,0 +1,12 @@
+{% extends '@AppBundle/Embed/github_frame.html.twig' %}
+
+{% block dropdownMenu %}
+{% endblock %}
+
+{% block surveythor_container %}
+    <div id="js-st-surveythor-container" class="flex-container"></div>
+{% endblock %}
+
+{% block result_widget %}
+    {{- include('@AppBundle/Result/widget.html.twig', {'survey': survey}) -}}
+{% endblock %}

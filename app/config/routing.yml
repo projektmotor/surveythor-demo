@@ -56,3 +56,7 @@ allowed_origin_create:
 allowed_origin_edit:
     path: /origin/edit/{allowedOrigin}
     defaults: { _controller: app.controller.allowed_origin_controller:editAction }
+
+frame_embed:
+    path: /embed/{survey}
+    defaults: { _controller: app.controller.embed_controller:showAction }
