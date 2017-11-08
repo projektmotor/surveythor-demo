@@ -19,3 +19,5 @@ services:
         class: AppBundle\Controller\SurveyItemController
     app.controller.choice_controller:
         class: AppBundle\Controller\ChoiceController
+    app.controller.embed_controller:
+        class: AppBundle\Controller\EmbedController
