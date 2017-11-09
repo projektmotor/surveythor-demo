@@ -8,6 +8,9 @@ homepage:
         route: survey_index
         permanent: false
         ignoreAttributes: true
+embed:
+    resource: "routing_embed.yml"
+    prefix:     /embed
 
 evaluation:
     resource: "routing_evaluation.yml"
