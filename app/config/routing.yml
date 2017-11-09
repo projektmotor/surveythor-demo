@@ -8,6 +8,9 @@ homepage:
         route: survey_index
         permanent: false
         ignoreAttributes: true
+embed:
+    resource: "routing_embed.yml"
+    prefix:     /embed
 
 evaluation:
     resource: "routing_evaluation.yml"
@@ -56,8 +59,3 @@ allowed_origin_edit:
 allowed_origin_toggle_active:
     path: /origin/toggle-active/{allowedOrigin}
     defaults: { _controller: app.controller.allowed_origin_controller:toggleActiveAction }
-
-frame_embed:
-    path: /embed/{survey}
-    defaults: { _controller: app.controller.embed_controller:showAction }
-

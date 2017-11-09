@@ -1,0 +1,24 @@
+{% extends '@AppBundle/Embed/github_frame.html.twig' %}
+
+{% block embed_links %}
+    {% include('@AppBundle/Embed/embedMenu.html.twig') %}
+{% endblock %}
+
+
+{% block surveythor_container %}
+    <div id="js-st-surveythor-container" class="flex-container"></div>
+{% endblock %}
+
+{% block result_widget %}
+    {#Include führt zum einbinden der surveythor navbar, da die templates base extenden.#}
+    {% if  block('body','@AppBundle/Survey/evaluations.html.twig') is defined  %}
+        {{   block('body','@AppBundle/Survey/evaluations.html.twig') }}
+    {% endif %}
+
+    {% if  block('javascripts','@AppBundle/Survey/evaluations.html.twig') is defined  %}
+        {{   block('javascripts','@AppBundle/Survey/evaluations.html.twig') }}
+    {% endif %}
+    {% if  block('stylesheets','@AppBundle/Survey/evaluations.html.twig') is defined  %}
+        {{   block('stylesheets','@AppBundle/Survey/evaluations.html.twig') }}
+    {% endif %}
+{% endblock %}
