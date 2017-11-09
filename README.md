@@ -138,6 +138,12 @@ Start tests:
 ```BASH
 $ docker-compose exec web vendor/bin/phpunit
 ```
+Embedded View
+-------------
+You can see how the app embeds into a frame site on:
+domain.tld/embed/edit/1
+domain.tld/embed/result/1
+domain.tld/embed/evaluate/1
 
 License
 -------
