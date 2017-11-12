@@ -37241,9 +37241,6 @@
                 <div class="d-flex">
 
                     <ul class="user-nav d-flex flex-items-center list-style-none" id="user-links">
-                        {% block embed_links %}
-
-                        {% endblock %}
                     </ul>
 
 
@@ -38113,10 +38110,9 @@
 
 
                     <div class="file-wrap">
-                        {% block surveythor_container %}
-                        {% endblock %}
-                        {% block result_widget %}
-                        {% endblock %}
+                        {% block embed_links %}{% endblock %}
+                        {% block surveythor_container %}{% endblock %}
+                        {% block result_widget %}{% endblock %}
                     </div>
 
 

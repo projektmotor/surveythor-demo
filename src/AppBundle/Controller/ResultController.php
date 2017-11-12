@@ -13,6 +13,8 @@ use QafooLabs\MVC\FormRequest;
 use QafooLabs\MVC\RedirectRoute;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Exception\SessionUnavailableException;
 
 /**
  * Class ResultController
@@ -44,13 +46,25 @@ class ResultController
 
     /**
      * @param Survey $survey
-     *
+     * @param string $embedFrame
+     * @param SessionInterface $session
      * @return array
      */
-    public function newAction(Survey $survey)
+    public function newAction(Survey $survey, SessionInterface $session, $embedFrame = null)
     {
+        if (!$embedFrame) {
+            try {
+                $embedFrame = $session->get('lastEmbedFrame');
+            } catch(SessionUnavailableException $e) {
+                throw new SessionUnavailableException('Fehler beim Zugriff auf Session. '.$e->getMessage());
+            }
+        }
+
+        $session->set('lastEmbedFrame', $embedFrame);
+
         return [
             'survey' => $survey,
+            'embedFrame' => $embedFrame,
         ];
     }
 

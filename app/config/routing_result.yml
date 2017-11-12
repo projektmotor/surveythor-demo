@@ -1,6 +1,6 @@
 result_new:
-    path: /new/{survey}
-    defaults: { _controller: app.controller.result_controller:newAction }
+    path: /new/{survey}/{embedFrame}
+    defaults: { _controller: app.controller.result_controller:newAction, embedFrame: null}
 result_next:
     path: /next/{result}/{resultItem}
     defaults: { _controller: app.controller.result_controller:nextAction }
