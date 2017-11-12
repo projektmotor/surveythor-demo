@@ -50,17 +50,26 @@ class ResultController
      * @param SessionInterface $session
      * @return array
      */
-    public function newAction(Survey $survey, SessionInterface $session, $embedFrame = null)
+    public function newAction(Survey $survey, SessionInterface $session, $embedFrame = null): array
     {
+        // if embedFrame parameter was omitted try to get
+        // embedFrame from session
         if (!$embedFrame) {
             try {
-                $embedFrame = $session->get('lastEmbedFrame');
+                $embedFrame = $session->get('embedFrame');
             } catch(SessionUnavailableException $e) {
                 throw new SessionUnavailableException('Fehler beim Zugriff auf Session. '.$e->getMessage());
             }
         }
 
-        $session->set('lastEmbedFrame', $embedFrame);
+        // if embedFrame parameter was omitted and not set in session
+        // use github frame; setting github as default parameter value
+        // defeats the purpose of loading it from the session
+        if (!$embedFrame) {
+            $embedFrame = 'github';
+        }
+
+        $session->set('embedFrame', $embedFrame);
 
         return [
             'survey' => $survey,
