@@ -36,7 +36,7 @@ class ResultControllerTest extends WebTestCase
         /** @var Choice $secondChoice */
         $secondChoice = $fixtures['choice_single_50_1'];
 
-        $url = 'result/first/'.$survey->getId();
+        $url = 'result/first/' . $survey->getId();
         $client = static::makeClient();
         $client->followRedirects();
         $crawler = $client->request('GET', $url);
@@ -76,7 +76,7 @@ class ResultControllerTest extends WebTestCase
         /** @var Choice $secondChoice */
         $secondChoice = $fixtures['choice_multiple_milk_1'];
 
-        $url = 'result/first/'.$survey->getId();
+        $url = 'result/first/' . $survey->getId();
         $client = static::makeClient();
         $client->followRedirects();
         $crawler = $client->request('GET', $url);
@@ -107,7 +107,7 @@ class ResultControllerTest extends WebTestCase
         /** @var Question $firstSurveyItem */
         $firstSurveyItem = $fixtures['question_text_1'];
 
-        $url = 'result/first/'.$survey->getId();
+        $url = 'result/first/' . $survey->getId();
         $client = static::makeClient();
         $client->followRedirects();
         $crawler = $client->request('GET', $url);
@@ -144,7 +144,7 @@ class ResultControllerTest extends WebTestCase
         /** @var Question $fourthQuestion */
         $fourthQuestion = $fixtures['choice_group_multiple_choice_cakes_1'];
 
-        $url = 'result/first/'.$survey->getId();
+        $url = 'result/first/' . $survey->getId();
         $client = static::makeClient();
         $client->followRedirects();
         $crawler = $client->request('GET', $url);
@@ -172,6 +172,26 @@ class ResultControllerTest extends WebTestCase
         $this->assertContains($survey->getTitle(), $crawler->text());
     }
 
+    public function testNewActionSavesFrameParameterToSession()
+    {
+
+        $this->loadAllFixturesWithoutUsersAndAllowedOrigins();
+
+        $frame = 'github';
+        $url = 'result/new/1/' . $frame;
+        $client = static::makeClient();
+        $client->followRedirects();
+        $client->request('GET', $url);
+
+        $this->assertStatusCode(200, $client);
+
+        $this->assertEquals(
+            $frame,
+            $client->getRequest()->getSession()->get('embedFrame'),
+            'embedFrame parameter was not stored in session.'
+        );
+    }
+
     public function testPrevButton()
     {
         $fixtures = $this->loadAllFixturesWithoutUsersAndAllowedOrigins();
@@ -183,7 +203,7 @@ class ResultControllerTest extends WebTestCase
          * @var $client  Client
          * @var $crawler Crawler
          */
-        list($client, $crawler) = $this->getClientAndCrawlerFromUri('result/first/'.$survey->getId());
+        list($client, $crawler) = $this->getClientAndCrawlerFromUri('result/first/' . $survey->getId());
 
         $form = $crawler->filter('form')->form();
         $nextUri = $this->getNextUriOfForm($crawler);
@@ -250,7 +270,7 @@ class ResultControllerTest extends WebTestCase
             $formValues = [];
 
             /**
-             * @var string    $name
+             * @var string $name
              * @var FormField $formField
              */
             foreach ($form->all() as $name => $formField) {
